@@ -7,4 +7,31 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ## Project team
 
+### Chun Jie
+
+<img src="images/cj-lee01.png" width="200px">
+
+[[homepage](http://www.comp.nus.edu.sg/~damithch)]
+[[github](https://github.com/CJ-Lee01)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Member
+
+### Bryan Lee
+
+<img src="images/mcnabry.png" width="200px">
+
+[[github](http://github.com/mcnabry)]
+[[portfolio](team/mcnabry.md)]
+
+* Member
+
+### Shi Yu
+
+<img src="images/shiyu.png" width="200px">
+
+[[github](https://github.com/tanshiyu1999)] [[portfolio](team/shiyu.md)]
+
+* Role: Member
+
 
