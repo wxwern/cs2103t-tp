@@ -32,7 +32,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/shiyu.png" width="200px">
 
-[[github](https://github.com/tanshiyu1999)] [[portfolio](team/shiyu.md)]
+[[github](https://github.com/tanshiyu1999)] [[portfolio](team/tanshiyu1999.md)]
 
 * Role: Member
 
