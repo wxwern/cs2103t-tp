@@ -22,7 +22,7 @@ hs_err_pid[0-9]*.log
 # Test sandbox files
 src/test/data/sandbox/
 
-# Attributes files created by Finder and File Explorer
+# Attribute files created by Finder and File Explorer
 .DS_Store
 Desktop.ini
 

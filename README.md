@@ -2,7 +2,7 @@
 
 [![CI Status](https://github.com/AY2324S1-CS2103T-W08-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2324S1-CS2103T-W08-3/tp/actions)
 
-SJ++ is a desktop application helps manage job applications by allowing you to easily record organization and recruiter contacts, plus note down information about your applications. It is optimized for CLI use, so you can operate the application with only your keyboard.
+SJ++ is a desktop application that helps you manage your job applications by easily recording organization and recruiter contacts, plus note down information about your applications. It is optimized for CLI use, so you can operate the application with only your keyboard.
 
 ![Ui](docs/images/Ui.png)
 
