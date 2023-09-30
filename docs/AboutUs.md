@@ -9,6 +9,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Wern
+
+<img src="images/wxwern.png" width="200px">
+
+[[homepage](https://wern.cc/)]
+[[github](https://github.com/wxwern)]
+[[portfolio](team/wxwern.md)]
+
+* Role: Member
+
 ### John Doe
 
 <img src="images/johndoe.png" width="200px">
