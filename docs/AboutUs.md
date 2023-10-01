@@ -40,7 +40,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 <img src="images/shiyu.png" width="200px">
 
-[[github](https://github.com/tanshiyu1999)] [[portfolio](team/shiyu.md)]
+[[github](https://github.com/tanshiyu1999)] [[portfolio](team/tanshiyu1999.md)]
 
 * Role: Member
 
