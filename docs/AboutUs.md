@@ -7,6 +7,16 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ## Project team
 
+### Wern
+
+<img src="images/wxwern.png" width="200px">
+
+[[homepage](https://wern.cc/)]
+[[github](https://github.com/wxwern)]
+[[portfolio](team/wxwern.md)]
+
+* Role: Member
+
 ### Chun Jie
 
 <img src="images/cj-lee01.png" width="200px">
