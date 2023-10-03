@@ -102,7 +102,7 @@ Acceptable Parameters:
 
 * `STATUS` must be one of _interested, applied, pending, offered, rejected, current_ (case-insensitive, prefix-only match allowed).
 
-* `POSITION` may be any value. It designates the position you are intend to apply to.
+* `POSITION` may be any value. It designates the position you intend to apply to.
 
 * `TAG` can accept any value and may have multiple inputs.
 
