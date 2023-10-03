@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.DemoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -120,5 +121,19 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String type} into a {@code DemoCommand.Type}.
+     *
+     * @throws ParseException if the given {@code type} is invalid.
+     */
+    public static DemoCommand.Type parseDemoCommandType(String type) throws ParseException {
+        requireNonNull(type);
+        String trimmedType = type.trim();
+        if (!DemoCommand.Type.isValidTypeFormat(trimmedType)) {
+            throw new ParseException(DemoCommand.Type.MESSAGE_CONSTRAINTS);
+        }
+        return DemoCommand.Type.getTypeFromString(trimmedType);
     }
 }
