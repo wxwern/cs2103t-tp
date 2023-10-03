@@ -16,13 +16,13 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
 
 1. Download the latest `sjobs.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the home folder for your SteveJobs Application.
+1. Copy the file to the folder you want to use as the _home folder_ for your SteveJobs Application.
 
-1. Open a command terminal, cd into the folder you put the jar file in, and use the `java -jar sjobs.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar sjobs.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+1. Type a command in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -35,7 +35,7 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used as `add --name John Doe`.
+  e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used like `add --name John Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
@@ -59,7 +59,7 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
 This is a pending update. Command formats aren't updated as of the current build, and are still using the legacy `parameter/value` syntax instead of this new `--parameter value` syntax. Additionally, commands are in the middle of being revamped.
 </div>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message explaning how to access the help page.
 
@@ -74,14 +74,14 @@ Format: `add --type CLASS <additional parameters and values...>`
 
 Adds a contact to the address book of the given class type: Organization or Recruiter.
 
-Notice that `CLASS` must be either _Organization_ or _Recruiter_ (case-insensitive, prefix-only unambiguous match allowed, so “org” will match “Organization” automatically)
+Notice that `CLASS` must be either _Organization_ or _Recruiter_ (or any case-insensitive unambiguous prefix match, so “org” will match “Organization” automatically)
 
 Details specifically on organization and recruiter level are specified in the next sections.
 
 
 #### Adding an organization contact: `add --type organization`
 
-_{Pending update...}_
+_{Work in progress...}_
 
 Format: `add --type o[rganization] --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]... `
 
@@ -121,7 +121,7 @@ Examples:
 
 ### Adding a recruiter: `add --type recruiter`
 
-_{Pending update...}_
+_{Work in progress...}_
 
 Format: `add --type r[ecruiter] --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
 
@@ -147,7 +147,7 @@ Examples:
 * `add --name John Doe --type Recruiter --oid paypal-sg`
 
 
-### Listing all contacts : `list`
+### Listing all contacts: `list`
 
 _{To be updated...}_
 
@@ -156,7 +156,7 @@ Shows a list of all persons in the address book.
 Format: `list`
 
 
-### Editing a contact : `edit`
+### Editing a contact: `edit`
 
 _{To be updated...}_
 
@@ -183,7 +183,9 @@ Examples:
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
-### Deleting a contact : `delete`
+### Deleting a contact: `delete`
+
+_{To be updated...}_
 
 Deletes the specified person from the address book.
 
@@ -192,21 +194,21 @@ Format: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 
-### Clearing all entries : `clear`
+### Clearing all entries: `clear`
 
 Clears all data from the app.
 
 Format: `clear`
 
 
-### Exiting the program : `exit`
+### Exiting the program: `exit`
 
 Exits the program.
 
