@@ -40,6 +40,9 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
 * Items in square brackets are optional.<br>
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
 
+* Items in angled brackets describe what the content should be.<br>
+  e.g. `--date <yyyymmdd formatted DATE>` means the parameter `DATE`, which is supplied after the `--date` prefix, should be formated as `yyyymmdd`.
+
 * Items with `...` after them can be used multiple times including zero times.<br>
   e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
 
@@ -67,7 +70,7 @@ Format: `help`
 
 ### Adding a contact: `add`
 
-Format: `add --type CLASS <additional arguments...>`
+Format: `add --type CLASS <additional parameters and values...>`
 
 Adds a contact to the address book of the given class type: Organization or Recruiter.
 
