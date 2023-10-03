@@ -5,8 +5,8 @@ title: Bryan's Project Portfolio Page
 
 ### Project: SteveJobs++
 
-SteveJobs++ (SJ++) is a desktop app for managing job applications and contacts, 
-optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). 
+SteveJobs++ (SJ++) is a desktop app for managing job applications and contacts,
+optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
 SJ++ can help you manage tracking your job applications and contacts in a more streamlined fashion.
 
 Given below are my contributions to the project.
@@ -19,17 +19,17 @@ Given below are my contributions to the project.
 
 * **Code contributed**: [RepoSense link]()
 
-* **Project management**: 
+* **Project management**:
   * To be added soon.
 
-* **Documentation**: 
+* **Documentation**:
   * User Guide:
     * To be added soon.
   * Developer Guide:
     * To be added soon.
 
-* **Community**: 
+* **Community**:
   * To be added soon.
 
-* **Tools**: 
+* **Tools**:
   * To be added soon.
