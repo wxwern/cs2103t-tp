@@ -273,14 +273,17 @@ Allows for comprehensive tracking of job applications and the information of com
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the app                 |
-| `* * *`  | user                                       | add a new contact              | keep track of organizations and recruiters I'm interested in           |
-| `* * *`  | user                                       | delete contacts                | remove organizations and recruiters that I no longer need              |
-| `* * *`  | user                                       | find a contact by name         | locate details of persons without having to go through the entire list |
-
-*{More to be added}*
+| Priority | As a(n) ...              | I want to ...                                                | So that I can ...                                                          |
+| -------- | ------------------------ | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| `* * *`  | new user                 | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
+| `* * *`  | user                     | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
+| `* * *`  | user                     | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
+| `* *`    | user                     | edit my contacts                                             | be up to date with changes in organization and recruiter details           |
+| `* *`    | user                     | find contacts by saved details                               | locate a contact without going through the entire list                     |
+| `* *`    | user                     | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user                     | tag contacts                                                 | organize my contact list for more efficient access of different categories |
+| `* *`    | efficient user           | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
+| `*`      | user                     | import and export contacts                                   | share my list of contacts with my peers                                    |
 
 ### Use cases
 
