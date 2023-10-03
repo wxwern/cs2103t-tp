@@ -151,7 +151,7 @@ Examples:
 
 _{To be updated...}_
 
-Shows a list of all persons in the address book.
+Shows a list of all contacts in the address book.
 
 Format: `list`
 
@@ -161,7 +161,7 @@ Format: `list`
 _{To be updated...}_
 
 
-### Locating persons by name: `find`
+### Locating contacts by name: `find`
 
 _{To be updated...}_
 
