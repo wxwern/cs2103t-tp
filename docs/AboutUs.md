@@ -44,4 +44,12 @@ We are a team based in the [School of Computing, National University of Singapor
 
 * Role: Member
 
+### Juanpa Abola
+
+<img src="images/wamps-jp.png" width="200px">
+
+[[github](https://github.com/wamps-jp)] [[portfolio](team/wamps-jp.md)]
+
+* Role: Member
+
 
