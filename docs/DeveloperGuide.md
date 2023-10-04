@@ -336,6 +336,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. Names of arguments are to be lowercase.
 3. Arguments in the command line are to be preceded by a double dash `--`. (e.g. to use the argument `email`, users must type `--email` as part of the arguments)
 4. Names of arguments can be multiple words long if necessary, and the words are separated by underscores. (e.g. `start_time`)
+5. Names of arguments can be shortened to a single character if used frequently, but still must support the full argument name. (e.g. `--name` can be shortened to `--n` if used frequently, but `--name` must still be supported)
 5. Ordering of arguments do not matter in the command line.
 6. The argument should carry the same meaning across different commands.
 
