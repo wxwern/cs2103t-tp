@@ -257,42 +257,46 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* students looking to apply for jobs
+* have a need to manage a significant number of organization and recruiter contacts and application statuses
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable and familiar with using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+
+Allows for comprehensive tracking of job applications and the information of companies and recruiters the user may be interested in, and manage them faster than a typical mouse/GUI driven app
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a(n) ...              | I want to ...                                                | So that I can ...                                                          |
+| -------- | ------------------------ | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| `* * *`  | new user                 | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
+| `* * *`  | user                     | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
+| `* * *`  | user                     | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
+| `* *`    | user                     | edit my contacts                                             | be up to date with changes in organization and recruiter details           |
+| `* *`    | user                     | find contacts by saved details                               | locate a contact without going through the entire list                     |
+| `* *`    | user                     | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user                     | tag contacts                                                 | organize my contact list for more efficient access of different categories |
+| `* *`    | efficient user           | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
+| `*`      | user                     | import and export contacts                                   | share my list of contacts with my peers                                    |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `SJ++` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Delete a contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list organizations
+2.  SJ++ shows a list of organizations
+3.  User requests to delete a specific organization in the list
+4.  SJ++ deletes the organization
 
     Use case ends.
 
@@ -304,7 +308,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. SJ++ shows an error message.
 
       Use case resumes at step 2.
 
@@ -315,13 +319,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of SJ++ to match their habits and easy to pick up.
+5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+
 
 *{More to be added}*
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Mainstream OS**: Windows, macOS, Linux, Unix
+* **Commands**: A set of keywords that defines the operations the user wishes to execute.
+* **Arguments**: A set of keywords that defines the type of data the user wishes to pass into the command line.
 
 --------------------------------------------------------------------------------------------------------------------
 
