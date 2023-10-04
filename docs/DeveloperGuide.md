@@ -316,11 +316,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
+**Generic user requirements**
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of SJ++ to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+
+**Command syntax requirements**
+1. Names of commands are to be short and simple. 
+2. Names of commands are to be lowercase.
+3. Names of commands are singular.
+4. Names of commands should only contain alphabets.
+5. Names of commands should only be 1 word long. (i.e. no commands like `add_note`)
+6. Names of commands should not be confused with other commands. (e.g. `empty` and `clear`)
+
+**Argument syntax requirements**
+1. Names of arguments are to be short and simple.
+2. Names of arguments are to be lowercase.
+3. Arguments in the command line are to be preceded by a double dash `--`. (e.g. to use the argument `email`, users must type `--email` as part of the arguments)
+4. Names of arguments can be multiple words long if necessary, and the words are separated by underscores. (e.g. `start_time`)
+5. Ordering of arguments do not matter in the command line.
+6. The argument should carry the same meaning across different commands.
+
 
 *{More to be added}*
 
