@@ -345,6 +345,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, macOS, Linux, Unix
+* **Commands**: A set of keywords that defines the operations the user wishes to execute.
+* **Arguments**: A set of keywords that defines the type of data the user wishes to pass into the command line.
 
 --------------------------------------------------------------------------------------------------------------------
 
