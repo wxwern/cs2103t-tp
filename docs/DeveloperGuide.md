@@ -322,11 +322,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of SJ++ to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
 
+
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, macOS, Linux, Unix
+* **Commands**: A set of keywords that defines the operations the user wishes to execute.
+* **Arguments**: A set of keywords that defines the type of data the user wishes to pass into the command line.
 
 --------------------------------------------------------------------------------------------------------------------
 
