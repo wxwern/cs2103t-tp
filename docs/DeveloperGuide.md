@@ -340,7 +340,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6. Ordering of arguments do not matter in the command line.
 7. The argument should carry the same meaning across different commands.
 
-Add single character argument syntax requirements
 *{More to be added}*
 
 ### Glossary
