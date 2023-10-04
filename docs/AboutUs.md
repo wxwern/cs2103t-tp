@@ -38,7 +38,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Shi Yu
 
-<img src="images/shiyu.png" width="200px">
+<img src="images/tanshiyu1999.png" width="200px">
 
 [[github](https://github.com/tanshiyu1999)] [[portfolio](team/tanshiyu1999.md)]
 
