@@ -13,17 +13,17 @@ import seedu.address.model.person.Contact;
 /**
  * Panel containing the list of persons.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class ContactListPanel extends UiPart<Region> {
+    private static final String FXML = "ContactListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ContactListPanel.class);
 
     @FXML
     private ListView<Contact> personListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code ContactListPanel} with the given {@code ObservableList}.
      */
-    public PersonListPanel(ObservableList<Contact> contactList) {
+    public ContactListPanel(ObservableList<Contact> contactList) {
         super(FXML);
         personListView.setItems(contactList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
