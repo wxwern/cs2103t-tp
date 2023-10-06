@@ -335,7 +335,7 @@ save it with `Model#setPerson()`.
 //...
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Person> lastShownList = model.getFilteredContactList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -347,7 +347,7 @@ save it with `Model#setPerson()`.
                 contactToEdit.getAddress(), remark, contactToEdit.getTags());
 
         model.setPerson(contactToEdit, editedContact);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
         return new CommandResult(generateSuccessMessage(editedContact));
     }

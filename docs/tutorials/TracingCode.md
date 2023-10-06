@@ -191,11 +191,11 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
        ...
        Person contactToEdit = lastShownList.get(index.getZeroBased());
        Person editedContact = createEditedPerson(contactToEdit, editPersonDescriptor);
-       if (!contactToEdit.isSamePerson(editedContact) && model.hasPerson(editedContact)) {
+       if (!contactToEdit.isSamePerson(editedContact) && model.hasContact(editedContact)) {
            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
        }
        model.setPerson(contactToEdit, editedContact);
-       model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+       model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedContact));
    }
    ```
