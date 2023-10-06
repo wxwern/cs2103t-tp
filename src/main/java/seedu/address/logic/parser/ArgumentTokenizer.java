@@ -47,11 +47,11 @@ public class ArgumentTokenizer {
     private static List<FlagPosition> findFlagPositions(String argsString, Flag flag) {
         List<FlagPosition> positions = new ArrayList<>();
 
-        int prefixPosition = findFlagPosition(argsString, flag.getName(), 0);
+        int prefixPosition = findFlagPosition(argsString, flag.getFlagString(), 0);
         while (prefixPosition != -1) {
             FlagPosition extendedPrefix = new FlagPosition(flag, prefixPosition);
             positions.add(extendedPrefix);
-            prefixPosition = findFlagPosition(argsString, flag.getName(), prefixPosition);
+            prefixPosition = findFlagPosition(argsString, flag.getFlagString(), prefixPosition);
         }
 
         return positions;
@@ -90,11 +90,11 @@ public class ArgumentTokenizer {
         flagPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
         // Insert a PrefixPosition to represent the preamble
-        FlagPosition preambleMarker = new FlagPosition(new Flag(""), 0);
+        FlagPosition preambleMarker = new FlagPosition(new Flag("", null, null), 0);
         flagPositions.add(0, preambleMarker);
 
         // Add a dummy PrefixPosition to represent the end of the string
-        FlagPosition endPositionMarker = new FlagPosition(new Flag(""), argsString.length());
+        FlagPosition endPositionMarker = new FlagPosition(new Flag("", null, null), argsString.length());
         flagPositions.add(endPositionMarker);
 
         // Map prefixes to their argument values (if any)
@@ -119,7 +119,7 @@ public class ArgumentTokenizer {
     ) {
         Flag flag = currentFlagPosition.getFlag();
 
-        int valueStartPos = currentFlagPosition.getStartPosition() + flag.getName().length();
+        int valueStartPos = currentFlagPosition.getStartPosition() + flag.getFlagString().length();
         String value = argsString.substring(valueStartPos, nextFlagPosition.getStartPosition());
 
         return value.trim();

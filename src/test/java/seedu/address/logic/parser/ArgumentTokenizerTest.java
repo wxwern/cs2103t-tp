@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 public class ArgumentTokenizerTest {
 
-    private final Flag unknownFlag = new Flag("--u");
-    private final Flag pSlash = new Flag("p/");
-    private final Flag dashT = new Flag("-t");
-    private final Flag hatQ = new Flag("^Q");
+    private final Flag unknownFlag = new Flag("u", "--", null);
+    private final Flag pSlash = new Flag("p", null, "/");
+    private final Flag dashT = new Flag("t", "-", null);
+    private final Flag hatQ = new Flag("Q", "^", null);
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -138,13 +138,14 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void equalsMethod() {
-        Flag aaa = new Flag("aaa");
+        Flag aaa = new Flag("aaa", "-", "");
 
         assertEquals(aaa, aaa);
-        assertEquals(aaa, new Flag("aaa"));
+        assertEquals(aaa, new Flag("aaa", "-", null));
 
-        assertNotEquals(aaa, "aaa");
-        assertNotEquals(aaa, new Flag("aab"));
+        assertNotEquals(aaa, "-aaa");
+        assertNotEquals(aaa, new Flag("aab", "-", null));
+        assertNotEquals(aaa, new Flag("aaa", null, "/"));
     }
 
 }
