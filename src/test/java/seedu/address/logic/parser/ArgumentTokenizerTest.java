@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 public class ArgumentTokenizerTest {
 
-    private final Prefix unknownPrefix = new Prefix("--u");
-    private final Prefix pSlash = new Prefix("p/");
-    private final Prefix dashT = new Prefix("-t");
-    private final Prefix hatQ = new Prefix("^Q");
+    private final Flag unknownFlag = new Flag("--u");
+    private final Flag pSlash = new Flag("p/");
+    private final Flag dashT = new Flag("-t");
+    private final Flag hatQ = new Flag("^Q");
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -35,26 +35,26 @@ public class ArgumentTokenizerTest {
      * Asserts all the arguments in {@code argMultimap} with {@code prefix} match the {@code expectedValues}
      * and only the last value is returned upon calling {@code ArgumentMultimap#getValue(Prefix)}.
      */
-    private void assertArgumentPresent(ArgumentMultimap argMultimap, Prefix prefix, String... expectedValues) {
+    private void assertArgumentPresent(ArgumentMultimap argMultimap, Flag flag, String... expectedValues) {
 
         // Verify the last value is returned
-        assertEquals(expectedValues[expectedValues.length - 1], argMultimap.getValue(prefix).get());
+        assertEquals(expectedValues[expectedValues.length - 1], argMultimap.getValue(flag).get());
 
         // Verify the number of values returned is as expected
-        assertEquals(expectedValues.length, argMultimap.getAllValues(prefix).size());
+        assertEquals(expectedValues.length, argMultimap.getAllValues(flag).size());
 
         // Verify all values returned are as expected and in order
         for (int i = 0; i < expectedValues.length; i++) {
-            assertEquals(expectedValues[i], argMultimap.getAllValues(prefix).get(i));
+            assertEquals(expectedValues[i], argMultimap.getAllValues(flag).get(i));
         }
     }
 
-    private void assertArgumentAbsent(ArgumentMultimap argMultimap, Prefix prefix) {
-        assertFalse(argMultimap.getValue(prefix).isPresent());
+    private void assertArgumentAbsent(ArgumentMultimap argMultimap, Flag flag) {
+        assertFalse(argMultimap.getValue(flag).isPresent());
     }
 
     @Test
-    public void tokenize_noPrefixes_allTakenAsPreamble() {
+    public void tokenize_noFlags_allTakenAsPreamble() {
         String argsString = "  some random string /t tag with leading and trailing spaces ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString);
 
@@ -109,9 +109,9 @@ public class ArgumentTokenizerTest {
         /* Also covers: testing for prefixes not specified as a prefix */
 
         // Prefixes not previously given to the tokenizer should not return any values
-        argsString = unknownPrefix + "some value";
+        argsString = unknownFlag + "some value";
         argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
-        assertArgumentAbsent(argMultimap, unknownPrefix);
+        assertArgumentAbsent(argMultimap, unknownFlag);
         assertPreamblePresent(argMultimap, argsString); // Unknown prefix is taken as part of preamble
     }
 
@@ -138,13 +138,13 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void equalsMethod() {
-        Prefix aaa = new Prefix("aaa");
+        Flag aaa = new Flag("aaa");
 
         assertEquals(aaa, aaa);
-        assertEquals(aaa, new Prefix("aaa"));
+        assertEquals(aaa, new Flag("aaa"));
 
         assertNotEquals(aaa, "aaa");
-        assertNotEquals(aaa, new Prefix("aab"));
+        assertNotEquals(aaa, new Flag("aab"));
     }
 
 }

@@ -20,11 +20,11 @@ public class ArgumentTokenizer {
      * respective argument values. Only the given prefixes will be recognized in the arguments string.
      *
      * @param argsString Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
-     * @param prefixes   Prefixes to tokenize the arguments string with
+     * @param flags   Prefixes to tokenize the arguments string with
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
-    public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
-        List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
+    public static ArgumentMultimap tokenize(String argsString, Flag... flags) {
+        List<FlagPosition> positions = findAllFlagPositions(argsString, flags);
         return extractArguments(argsString, positions);
     }
 
@@ -32,26 +32,26 @@ public class ArgumentTokenizer {
      * Finds all zero-based prefix positions in the given arguments string.
      *
      * @param argsString Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
-     * @param prefixes   Prefixes to find in the arguments string
+     * @param flags   Prefixes to find in the arguments string
      * @return           List of zero-based prefix positions in the given arguments string
      */
-    private static List<PrefixPosition> findAllPrefixPositions(String argsString, Prefix... prefixes) {
-        return Arrays.stream(prefixes)
-                .flatMap(prefix -> findPrefixPositions(argsString, prefix).stream())
+    private static List<FlagPosition> findAllFlagPositions(String argsString, Flag... flags) {
+        return Arrays.stream(flags)
+                .flatMap(prefix -> findFlagPositions(argsString, prefix).stream())
                 .collect(Collectors.toList());
     }
 
     /**
      * {@see findAllPrefixPositions}
      */
-    private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
-        List<PrefixPosition> positions = new ArrayList<>();
+    private static List<FlagPosition> findFlagPositions(String argsString, Flag flag) {
+        List<FlagPosition> positions = new ArrayList<>();
 
-        int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
+        int prefixPosition = findFlagPosition(argsString, flag.getName(), 0);
         while (prefixPosition != -1) {
-            PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
+            FlagPosition extendedPrefix = new FlagPosition(flag, prefixPosition);
             positions.add(extendedPrefix);
-            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+            prefixPosition = findFlagPosition(argsString, flag.getName(), prefixPosition);
         }
 
         return positions;
@@ -69,7 +69,7 @@ public class ArgumentTokenizer {
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
-    private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
+    private static int findFlagPosition(String argsString, String prefix, int fromIndex) {
         int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
         return prefixIndex == -1 ? -1
                 : prefixIndex + 1; // +1 as offset for whitespace
@@ -81,29 +81,29 @@ public class ArgumentTokenizer {
      * {@code argsString}.
      *
      * @param argsString      Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
-     * @param prefixPositions Zero-based positions of all prefixes in {@code argsString}
+     * @param flagPositions Zero-based positions of all prefixes in {@code argsString}
      * @return                ArgumentMultimap object that maps prefixes to their arguments
      */
-    private static ArgumentMultimap extractArguments(String argsString, List<PrefixPosition> prefixPositions) {
+    private static ArgumentMultimap extractArguments(String argsString, List<FlagPosition> flagPositions) {
 
         // Sort by start position
-        prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
+        flagPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
         // Insert a PrefixPosition to represent the preamble
-        PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
-        prefixPositions.add(0, preambleMarker);
+        FlagPosition preambleMarker = new FlagPosition(new Flag(""), 0);
+        flagPositions.add(0, preambleMarker);
 
         // Add a dummy PrefixPosition to represent the end of the string
-        PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());
-        prefixPositions.add(endPositionMarker);
+        FlagPosition endPositionMarker = new FlagPosition(new Flag(""), argsString.length());
+        flagPositions.add(endPositionMarker);
 
         // Map prefixes to their argument values (if any)
         ArgumentMultimap argMultimap = new ArgumentMultimap();
-        for (int i = 0; i < prefixPositions.size() - 1; i++) {
+        for (int i = 0; i < flagPositions.size() - 1; i++) {
             // Extract and store prefixes and their arguments
-            Prefix argPrefix = prefixPositions.get(i).getPrefix();
-            String argValue = extractArgumentValue(argsString, prefixPositions.get(i), prefixPositions.get(i + 1));
-            argMultimap.put(argPrefix, argValue);
+            Flag argFlag = flagPositions.get(i).getFlag();
+            String argValue = extractArgumentValue(argsString, flagPositions.get(i), flagPositions.get(i + 1));
+            argMultimap.put(argFlag, argValue);
         }
 
         return argMultimap;
@@ -114,12 +114,13 @@ public class ArgumentTokenizer {
      * The end position of the value is determined by {@code nextPrefixPosition}.
      */
     private static String extractArgumentValue(String argsString,
-                                        PrefixPosition currentPrefixPosition,
-                                        PrefixPosition nextPrefixPosition) {
-        Prefix prefix = currentPrefixPosition.getPrefix();
+                                        FlagPosition currentFlagPosition,
+                                        FlagPosition nextFlagPosition
+    ) {
+        Flag flag = currentFlagPosition.getFlag();
 
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
-        String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
+        int valueStartPos = currentFlagPosition.getStartPosition() + flag.getName().length();
+        String value = argsString.substring(valueStartPos, nextFlagPosition.getStartPosition());
 
         return value.trim();
     }
@@ -127,12 +128,12 @@ public class ArgumentTokenizer {
     /**
      * Represents a prefix's position in an arguments string.
      */
-    private static class PrefixPosition {
+    private static class FlagPosition {
         private int startPosition;
-        private final Prefix prefix;
+        private final Flag flag;
 
-        PrefixPosition(Prefix prefix, int startPosition) {
-            this.prefix = prefix;
+        FlagPosition(Flag flag, int startPosition) {
+            this.flag = flag;
             this.startPosition = startPosition;
         }
 
@@ -140,8 +141,8 @@ public class ArgumentTokenizer {
             return startPosition;
         }
 
-        Prefix getPrefix() {
-            return prefix;
+        Flag getFlag() {
+            return flag;
         }
     }
 

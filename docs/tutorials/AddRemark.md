@@ -151,27 +151,27 @@ Thankfully, `ArgumentTokenizer#tokenize()` makes it trivial to parse user input.
 ``` java
 /**
  * Tokenizes an arguments string and returns an {@code ArgumentMultimap}
- * object that maps prefixes to their respective argument values. Only the
- * given prefixes will be recognized in the arguments string.
+ * object that maps flags to their respective argument values. Only the
+ * given flags will be recognized in the arguments string.
  *
  * @param argsString Arguments string of the form:
- * {@code preamble <prefix>value <prefix>value ...}
- * @param prefixes   Prefixes to tokenize the arguments string with
- * @return           ArgumentMultimap object that maps prefixes to their
+ * {@code preamble <flag>value <flag>value ...}
+ * @param flags   Prefixes to tokenize the arguments string with
+ * @return           ArgumentMultimap object that maps flags to their
  * arguments
  */
 ```
 
-We can tell `ArgumentTokenizer#tokenize()` to look out for our new prefix `r/` and it will return us an instance of `ArgumentMultimap`. Now let’s find out what we need to do in order to obtain the Index and String that we need. Let’s look through `ArgumentMultimap` :
+We can tell `ArgumentTokenizer#tokenize()` to look out for our new flag `r/` and it will return us an instance of `ArgumentMultimap`. Now let’s find out what we need to do in order to obtain the Index and String that we need. Let’s look through `ArgumentMultimap` :
 
 **`ArgumentMultimap.java`:**
 
 ``` java
 /**
- * Returns the last value of {@code prefix}.
+ * Returns the last value of {@code flag}.
  */
-public Optional<String> getValue(Prefix prefix) {
-    List<String> values = getAllValues(prefix);
+public Optional<String> getValue(Prefix flag) {
+    List<String> values = getAllValues(flag);
     return values.isEmpty() ? Optional.empty() :
         Optional.of(values.get(values.size() - 1));
 }
