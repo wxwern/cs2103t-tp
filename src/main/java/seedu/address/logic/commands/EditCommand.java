@@ -61,10 +61,10 @@ public class EditCommand extends Command {
      */
     public EditCommand(Index index, EditContactDescriptor editContactDescriptor) {
         requireNonNull(index);
-        requireNonNull(this.editContactDescriptor);
+        requireNonNull(editContactDescriptor);
 
         this.index = index;
-        this.editContactDescriptor = new EditContactDescriptor(this.editContactDescriptor);
+        this.editContactDescriptor = new EditContactDescriptor(editContactDescriptor);
     }
 
     @Override

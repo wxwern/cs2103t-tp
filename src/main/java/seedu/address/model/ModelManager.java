@@ -33,7 +33,7 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredContacts = new FilteredList<>(this.addressBook.getPersonList());
+        filteredContacts = new FilteredList<>(this.addressBook.getContactList());
     }
 
     public ModelManager() {
@@ -90,17 +90,17 @@ public class ModelManager implements Model {
     @Override
     public boolean hasPerson(Contact contact) {
         requireNonNull(contact);
-        return addressBook.hasPerson(contact);
+        return addressBook.hasContact(contact);
     }
 
     @Override
     public void deletePerson(Contact target) {
-        addressBook.removePerson(target);
+        addressBook.removeContact(target);
     }
 
     @Override
     public void addPerson(Contact contact) {
-        addressBook.addPerson(contact);
+        addressBook.addContact(contact);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -108,7 +108,7 @@ public class ModelManager implements Model {
     public void setPerson(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
 
-        addressBook.setPerson(target, editedContact);
+        addressBook.setContact(target, editedContact);
     }
 
     //=========== Filtered Contact List Accessors =============================================================
