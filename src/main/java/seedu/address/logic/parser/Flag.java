@@ -3,14 +3,14 @@ package seedu.address.logic.parser;
 import java.util.Objects;
 
 /**
- * A flag is an argument in and of itself. It functions as a option specifier, or as a marker for the beginning of an
+ * A flag is an argument in and of itself. It functions as a option specifier, or as a marker for the beginning of a
  * command argument.
- * E.g. 't/' in 'add James t/ friend'.
+ * E.g. '--t' in 'add James --t friend'.
  */
 public class Flag {
 
-    public static final String DEFAULT_PREFIX = "";
-    public static final String DEFAULT_POSTFIX = "/";
+    public static final String DEFAULT_PREFIX = "--";
+    public static final String DEFAULT_POSTFIX = "";
 
     private final String name;
     private final String prefix;
@@ -18,6 +18,7 @@ public class Flag {
 
     /**
      * Constructs a flag with the {@link #DEFAULT_PREFIX} and {@link #DEFAULT_POSTFIX} surrounding the name.
+     * If the name has any leading or trailing whitespace, it'll be trimmed.
      *
      * @param name The name of the flag. May be null, which will set it to an empty string.
      */
@@ -27,15 +28,16 @@ public class Flag {
 
     /**
      * Constructs a flag with a custom prefix and custom postfix.
+     * Any fields with leading or trailing whitespace are trimmed.
      *
      * @param name The name of the flag. May be null, which will set it to an empty string.
      * @param prefix The prefix of the flag. May be null, which will set it to an empty string.
      * @param postfix The postfix of the flag. May be null, which will set it to an empty string.
      */
     public Flag(String name, String prefix, String postfix) {
-        this.name = name == null ? "" : name;
-        this.prefix = prefix == null ? "" : prefix;
-        this.postfix = postfix == null ? "" : postfix;
+        this.name = name == null ? "" : name.trim();
+        this.prefix = prefix == null ? "" : prefix.trim();
+        this.postfix = postfix == null ? "" : postfix.trim();
     }
 
     public String getName() {
