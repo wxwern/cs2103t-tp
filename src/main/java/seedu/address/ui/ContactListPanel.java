@@ -26,13 +26,13 @@ public class ContactListPanel extends UiPart<Region> {
     public ContactListPanel(ObservableList<Contact> contactList) {
         super(FXML);
         personListView.setItems(contactList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setCellFactory(listView -> new ContactListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Contact} using a {@code ContactCard}.
      */
-    class PersonListViewCell extends ListCell<Contact> {
+    class ContactListViewCell extends ListCell<Contact> {
         @Override
         protected void updateItem(Contact contact, boolean empty) {
             super.updateItem(contact, empty);
