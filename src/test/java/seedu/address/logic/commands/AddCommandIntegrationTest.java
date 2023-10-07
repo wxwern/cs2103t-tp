@@ -42,7 +42,7 @@ public class AddCommandIntegrationTest {
     public void execute_duplicateContact_throwsCommandException() {
         Contact contactInList = model.getAddressBook().getContactList().get(0);
         assertCommandFailure(new AddCommand(contactInList), model,
-                AddCommand.MESSAGE_DUPLICATE_PERSON);
+                AddCommand.MESSAGE_DUPLICATE_CONTACT);
     }
 
 }
