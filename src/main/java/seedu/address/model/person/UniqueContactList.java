@@ -20,7 +20,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * @see Contact#isSamePerson(Contact)
+ * @see Contact#isSameContact(Contact)
  */
 public class UniqueContactList implements Iterable<Contact> {
 
@@ -53,7 +53,7 @@ public class UniqueContactList implements Iterable<Contact> {
      * {@code target} must exist in the list.
      * The contact identity of {@code editedContact} must not be the same as another existing contact in the list.
      */
-    public void setPerson(Contact target, Contact editedContact) {
+    public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
 
         int index = internalList.indexOf(target);
@@ -79,7 +79,7 @@ public class UniqueContactList implements Iterable<Contact> {
         }
     }
 
-    public void setPersons(UniqueContactList replacement) {
+    public void setContacts(UniqueContactList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -88,9 +88,9 @@ public class UniqueContactList implements Iterable<Contact> {
      * Replaces the contents of this list with {@code contacts}.
      * {@code contacts} must not contain duplicate contacts.
      */
-    public void setPersons(List<Contact> contacts) {
+    public void setContacts(List<Contact> contacts) {
         requireAllNonNull(contacts);
-        if (!personsAreUnique(contacts)) {
+        if (!contactsAreUnique(contacts)) {
             throw new DuplicatePersonException();
         }
 
@@ -137,7 +137,7 @@ public class UniqueContactList implements Iterable<Contact> {
     /**
      * Returns true if {@code contacts} contains only unique contacts.
      */
-    private boolean personsAreUnique(List<Contact> contacts) {
+    private boolean contactsAreUnique(List<Contact> contacts) {
         for (int i = 0; i < contacts.size() - 1; i++) {
             for (int j = i + 1; j < contacts.size(); j++) {
                 if (contacts.get(i).isSameContact(contacts.get(j))) {

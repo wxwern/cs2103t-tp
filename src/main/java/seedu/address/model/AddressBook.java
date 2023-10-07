@@ -45,7 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code contacts} must not contain duplicate contacts.
      */
     public void setContacts(List<Contact> contacts) {
-        this.contacts.setPersons(contacts);
+        this.contacts.setContacts(contacts);
     }
 
     /**
@@ -83,7 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setContact(Contact target, Contact editedContact) {
         requireNonNull(editedContact);
 
-        contacts.setPerson(target, editedContact);
+        contacts.setContact(target, editedContact);
     }
 
     /**
