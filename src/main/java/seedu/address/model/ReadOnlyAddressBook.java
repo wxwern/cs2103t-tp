@@ -9,8 +9,8 @@ import seedu.address.model.person.Contact;
 public interface ReadOnlyAddressBook {
 
     /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * Returns an unmodifiable view of the contacts list.
+     * This list will not contain any duplicate contacts.
      */
     ObservableList<Contact> getContactList();
 
