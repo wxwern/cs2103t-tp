@@ -187,18 +187,18 @@ Examples:
 
 _{To be updated...}_
 
-Deletes the specified person from the address book.
+Deletes the specified contact from the address book.
 
 Format: `delete INDEX`
 
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the contact at the specified `INDEX`.
+* The index refers to the index number shown in the displayed contact list.
 * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd contact in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st contact in the results of the `find` command.
 
 
 ### Clearing all entries: `clear`
@@ -222,7 +222,7 @@ SJ++ data are saved in the hard disk automatically after any command that change
 
 ### Editing the data file
 
-SJ++ data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+SJ++ data are saved automatically as a JSON file `[JAR file location]/data/sjobs.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, SJ++ will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
