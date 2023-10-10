@@ -41,7 +41,7 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
 
 * Items in angled brackets describe what the content should be.<br>
-  e.g. `--date <yyyymmdd formatted DATE>` means the parameter `DATE`, which is supplied after the `--date` prefix, should be formated as `yyyymmdd`.
+  e.g. `--date <yyyymmdd formatted DATE>` means the parameter `DATE`, which is supplied after the `--date` flag, should be formated as `yyyymmdd`.
 
 * Items with `...` after them can be used multiple times including zero times.<br>
   e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
