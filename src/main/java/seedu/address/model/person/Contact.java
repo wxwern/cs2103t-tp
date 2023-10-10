@@ -87,6 +87,11 @@ public class Contact {
         return new Contact[]{};
     }
 
+    public void addChild(Contact childContact) {
+        // Should throw exception if the type of contact cannot have child contacts.
+        // TODO add to DG, do JavaDocs
+    }
+
     /**
      * Returns true if both contacts have the same identity and data fields.
      * This defines a stronger notion of equality between two contacts.
