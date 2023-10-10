@@ -51,11 +51,11 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true if none of the flags contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean areFlagsPresent(ArgumentMultimap argumentMultimap, Flag... flags) {
-        return Stream.of(flags).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return Stream.of(flags).allMatch(flag -> argumentMultimap.getValue(flag).isPresent());
     }
 
 }

@@ -20,7 +20,7 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
 
     /**
-     * Returns an error message indicating the duplicate prefixes.
+     * Returns an error message indicating the duplicate flags.
      */
     public static String getErrorMessageForDuplicateFlags(Flag... duplicateFlags) {
         assert duplicateFlags.length > 0;
