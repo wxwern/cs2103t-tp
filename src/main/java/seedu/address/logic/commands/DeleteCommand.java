@@ -26,6 +26,10 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
 
     public static DeleteCommand selectIndex(Index targetIndex, boolean deleteChildren) {
+        //TODO Add documentation to DG
+        if (deleteChildren) {
+            return new DeleteWithChildrenCommand(targetIndex);
+        }
         return new DeleteCommand(targetIndex);
     }
 
