@@ -75,6 +75,19 @@ public class Contact {
     }
 
     /**
+     * Gives the array of contacts that are linked under this contact.
+     *
+     * For example, organizations will give the list of recruiters working for it.
+     * Recruiters do not have any contacts under them.
+     * @return the array of contacts linked under this contact.
+     */
+    public Contact[] getChildren() {
+        // default return value
+        // TODO add to DG
+        return new Contact[]{};
+    }
+
+    /**
      * Returns true if both contacts have the same identity and data fields.
      * This defines a stronger notion of equality between two contacts.
      */
