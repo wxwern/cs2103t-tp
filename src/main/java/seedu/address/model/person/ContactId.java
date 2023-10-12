@@ -13,7 +13,7 @@ public class ContactId {
             "Contact ID should not be blank";
 
     // TODO: I need help with this part
-    public static final String VALIDATION_REGEX = "";
+    public static final String VALIDATION_REGEX = "^[a-zA-Z0-9\\-_]+$";
 
     public final String contactId;
 
