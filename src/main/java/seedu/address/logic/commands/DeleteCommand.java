@@ -27,6 +27,10 @@ public class DeleteCommand extends Command {
 
     private final Index targetIndex;
 
+    public DeleteCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
     /**
      * Creates an executable DeleteCommand based on whether to delete recursively.
      *
@@ -39,10 +43,6 @@ public class DeleteCommand extends Command {
             return new DeleteWithChildrenCommand(targetIndex);
         }
         return new DeleteCommand(targetIndex);
-    }
-
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
     }
 
     @Override
