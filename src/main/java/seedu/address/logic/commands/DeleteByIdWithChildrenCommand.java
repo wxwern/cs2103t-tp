@@ -8,7 +8,7 @@ import seedu.address.model.person.ContactId;
 public class DeleteByIdWithChildrenCommand extends DeleteByIdCommand {
 
     /**
-     * @param id of the contact to be deleted along with its child contacts
+     * @param id of the contact to be deleted along with its child contacts.
      */
     public DeleteByIdWithChildrenCommand(ContactId id) {
         super(id);

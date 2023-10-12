@@ -10,6 +10,9 @@ public class DeleteByIdCommand extends DeleteCommand {
 
     private final ContactId contactId;
 
+    /**
+     * @param id of the contact to be deleted.
+     */
     public DeleteByIdCommand(ContactId id) {
         // TODO: Might want to change this since null is dangerous
         super(null);
