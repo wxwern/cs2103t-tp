@@ -54,4 +54,9 @@ public class ContactId {
         ContactId otherId = (ContactId) other;
         return contactId.equals(otherId.contactId);
     }
+
+    @Override
+    public int hashCode() {
+        return contactId.hashCode();
+    }
 }
