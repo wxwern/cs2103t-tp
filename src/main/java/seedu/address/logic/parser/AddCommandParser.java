@@ -17,6 +17,7 @@ import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Recruiter;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,9 +34,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_TAG);
 
-        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ADDRESS, FLAG_PHONE, FLAG_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+
+        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ADDRESS, FLAG_PHONE, FLAG_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
+        if ("recruiter".startsWith(argMultimap.getPreamble())) {
+            Recruiter recruiter = parseRecruiter(argMultimap);
+            return new AddCommand(recruiter);
         }
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
@@ -48,6 +54,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         Contact contact = new Contact(name, phone, email, address, tagList);
 
         return new AddCommand(contact);
+    }
+
+    private Recruiter parseRecruiter(ArgumentMultimap argMultimap) throws ParseException {
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        return new Recruiter(name, phone, email, address, tagList);
     }
 
     /**
