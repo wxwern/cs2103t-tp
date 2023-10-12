@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Contact;
 
 /**
- * Deletes a contact identified using it's displayed index from the address book.
+ * Deletes a contact identified using its displayed index from the address book.
  */
 public class DeleteCommand extends Command {
 
@@ -25,15 +25,21 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
 
-    public static DeleteCommand selectIndex(Index targetIndex, boolean deleteChildren) {
-        // TODO Add documentation to DG
-        if (deleteChildren) {
+    private final Index targetIndex;
+
+    /**
+     * Creates an executable DeleteCommand based on whether to delete recursively.
+     *
+     * @param targetIndex of the contact to delete in the current list
+     * @param shouldDeleteChildren specifies if child contacts should be deleted
+     */
+    public static DeleteCommand selectIndex(Index targetIndex, boolean shouldDeleteChildren) {
+        // TODO: Add documentation to DG
+        if (shouldDeleteChildren) {
             return new DeleteWithChildrenCommand(targetIndex);
         }
         return new DeleteCommand(targetIndex);
     }
-
-    private final Index targetIndex;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
