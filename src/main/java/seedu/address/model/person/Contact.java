@@ -79,10 +79,6 @@ public class Contact {
 
     /**
      * Gives the array of contacts that are linked under this contact.
-     *
-     * For example, organizations will give the list of recruiters working for it.
-     * Recruiters do not have any contacts under them.
-     * @return the array of contacts linked under this contact.
      */
     public Contact[] getChildren() {
         // default return value
@@ -90,6 +86,10 @@ public class Contact {
         return new Contact[]{};
     }
 
+    /**
+     * Adds a child contact under this contact.
+     * @throws IllegalOperationException if this contact cannot accept child contacts
+     */
     public void addChild(Contact childContact) throws IllegalOperationException {
         // Should throw exception if the type of contact cannot have child contacts.
         // TODO add to DG, do JavaDocs
