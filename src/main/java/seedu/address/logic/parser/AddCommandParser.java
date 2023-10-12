@@ -1,11 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -31,19 +31,19 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ADDRESS, FLAG_PHONE, FLAG_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
         Contact contact = new Contact(name, phone, email, address, tagList);
 
@@ -51,11 +51,11 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true if none of the flags contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    private static boolean areFlagsPresent(ArgumentMultimap argumentMultimap, Flag... flags) {
+        return Stream.of(flags).allMatch(flag -> argumentMultimap.getValue(flag).isPresent());
     }
 
 }

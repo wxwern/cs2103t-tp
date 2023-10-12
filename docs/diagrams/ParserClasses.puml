@@ -15,7 +15,7 @@ Class CliSyntax
 Class ParserUtil
 Class ArgumentMultimap
 Class ArgumentTokenizer
-Class Prefix
+Class Flag
 }
 
 Class HiddenOutside #FFFFFF
@@ -30,9 +30,9 @@ XYZCommandParser ..> ArgumentMultimap
 XYZCommandParser ..> ArgumentTokenizer
 ArgumentTokenizer .left.> ArgumentMultimap
 XYZCommandParser ..> CliSyntax
-CliSyntax ..> Prefix
+CliSyntax ..> Flag
 XYZCommandParser ..> ParserUtil
-ParserUtil .down.> Prefix
-ArgumentTokenizer .down.> Prefix
+ParserUtil .down.> Flag
+ArgumentTokenizer .down.> Flag
 XYZCommand -up-|> Command
 @enduml
