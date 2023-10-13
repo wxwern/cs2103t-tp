@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -28,6 +29,7 @@ class JsonAdaptedContact {
     private final String phone;
     private final String email;
     private final String address;
+    private final String status;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -46,18 +48,40 @@ class JsonAdaptedContact {
         }
     }
 
+
+    /**
+     * Constructs a {@code JsonAdaptedContact} with the given contact details.
+     */
+    @JsonCreator
+    public JsonAdaptedContact(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
+                              @JsonProperty("email") String email, @JsonProperty("address") String address,
+                              @JsonProperty("status") String status,
+                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.status = status;
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
+    }
+
     /**
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
+
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+//        status = source.getStatus().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
+
 
     /**
      * Converts this Jackson-friendly adapted contact object into the model's {@code Contact} object.

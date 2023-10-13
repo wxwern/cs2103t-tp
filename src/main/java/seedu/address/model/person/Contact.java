@@ -41,6 +41,10 @@ public class Contact {
         return name;
     }
 
+    public Status getStatus() {
+        return new Status("null");
+    };
+
     public Phone getPhone() {
         return phone;
     }
@@ -73,6 +77,8 @@ public class Contact {
         return otherContact != null
                 && otherContact.getName().equals(getName());
     }
+
+
 
     /**
      * Returns true if both contacts have the same identity and data fields.

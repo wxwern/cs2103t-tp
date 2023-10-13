@@ -50,6 +50,8 @@ public class AddCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        System.out.println("\n" + toAdd);
+
         requireNonNull(model);
 
         if (model.hasContact(toAdd)) {
