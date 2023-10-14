@@ -14,17 +14,4 @@ public class AddOrganizationCommand extends AddCommand{
         super(contact);
     }
 
-
-//    @Override
-//    public CommandResult execute(Model model) throws CommandException {
-//        requireNonNull(model);
-//
-//        if (model.hasContact(toAdd)) {
-//            throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
-//        }
-//
-//        model.addContact(toAdd);
-//        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
-//    }
-
 }

@@ -26,9 +26,13 @@ public class Organization extends Contact {
 //        this.position = position;
     }
 
-    @Override
     public Status getStatus() {
         return status;
+    }
+
+    @Override
+    public Boolean isOrganization() {
+        return true;
     }
 
 //    public Position getPosition() {

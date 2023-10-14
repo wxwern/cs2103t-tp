@@ -37,13 +37,13 @@ public class Contact {
         this.tags.addAll(tags);
     }
 
+    public Boolean isOrganization() {
+        return false;
+    }
+
     public Name getName() {
         return name;
     }
-
-    public Status getStatus() {
-        return new Status("null");
-    };
 
     public Phone getPhone() {
         return phone;

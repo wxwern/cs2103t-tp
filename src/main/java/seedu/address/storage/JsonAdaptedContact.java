@@ -29,25 +29,8 @@ class JsonAdaptedContact {
     private final String phone;
     private final String email;
     private final String address;
-    private final String status;
+    private String status;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-
-    /**
-     * Constructs a {@code JsonAdaptedContact} with the given contact details.
-     */
-    @JsonCreator
-    public JsonAdaptedContact(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
-    }
-
 
     /**
      * Constructs a {@code JsonAdaptedContact} with the given contact details.
@@ -71,12 +54,14 @@ class JsonAdaptedContact {
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
+        if (source.isOrganization()) {
+            status = ((Organization) source).getStatus().applicationStatus;
+        }
 
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-//        status = source.getStatus().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));

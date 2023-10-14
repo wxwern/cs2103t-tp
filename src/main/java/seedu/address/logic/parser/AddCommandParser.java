@@ -84,7 +84,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
-        Contact contact = new Organization(name, phone, email, address, tagList);
+        Contact contact = new Contact(name, phone, email, address, tagList);
 
         return new AddCommand(contact);
     }
