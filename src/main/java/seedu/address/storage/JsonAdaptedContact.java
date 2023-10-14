@@ -17,6 +17,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Position;
+import java.util.UUID;
+
 
 /**
  * Jackson-friendly version of {@link Contact}.
@@ -30,6 +33,8 @@ class JsonAdaptedContact {
     private final String email;
     private final String address;
     private String status;
+    private String position;
+    private String id;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,13 +43,16 @@ class JsonAdaptedContact {
     @JsonCreator
     public JsonAdaptedContact(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                               @JsonProperty("email") String email, @JsonProperty("address") String address,
-                              @JsonProperty("status") String status,
+                              @JsonProperty("status") String status, @JsonProperty("position") String position,
+                              @JsonProperty("id") String id,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.status = status;
+        this.position = position;
+        this.id = id;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -56,12 +64,13 @@ class JsonAdaptedContact {
     public JsonAdaptedContact(Contact source) {
         if (source.isOrganization()) {
             status = ((Organization) source).getStatus().applicationStatus;
+            position = ((Organization) source).getPosition().jobPosition;
         }
-
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        id = UUID.randomUUID().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));

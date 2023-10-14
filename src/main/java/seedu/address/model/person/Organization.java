@@ -14,7 +14,7 @@ import seedu.address.model.tag.Tag;
 public class Organization extends Contact {
 
     private final Status status;
-    //private final Position position;
+    private final Position position;
     //private final Url url;
 
     // Data fields
@@ -24,11 +24,11 @@ public class Organization extends Contact {
      * Every field must be present and not null.
      */
     public Organization(Name name, Phone phone, Email email, Address address,
-                        Set<Tag> tags, Status status) {
+                        Set<Tag> tags, Status status, Position position) {
         super(name, phone, email, address, tags);
         requireAllNonNull(status);
         this.status = status;
-        //this.position = position;
+        this.position = position;
     }
 
     public Status getStatus() {
@@ -40,9 +40,9 @@ public class Organization extends Contact {
         return true;
     }
 
-    //    public Position getPosition() {
-    //        return position;
-    //    }
+        public Position getPosition() {
+            return position;
+        }
 
     //    public Address getUrl() {
     //        return url;

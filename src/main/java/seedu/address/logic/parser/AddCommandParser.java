@@ -24,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
 import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
@@ -76,8 +77,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
         Status status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
+        Position position = ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get());
 
-        return new Organization(name, phone, email, address, tagList, status);
+        return new Organization(name, phone, email, address, tagList, status, position);
     }
 
     /**
