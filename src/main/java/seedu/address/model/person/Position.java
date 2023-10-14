@@ -15,7 +15,7 @@ public class Position {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ][^(?![\\s\\S])]*";
 
     public final String jobPosition;
 
@@ -28,6 +28,11 @@ public class Position {
         requireNonNull(position);
         checkArgument(isValidPosition(position), MESSAGE_CONSTRAINTS);
         jobPosition = position;
+    }
+
+    public Position() {
+        jobPosition = "";
+
     }
 
     /**

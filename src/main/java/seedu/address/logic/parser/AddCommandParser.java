@@ -27,6 +27,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -76,8 +77,18 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-        Status status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
-        Position position = ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get());
+        Status status;
+        Position position;
+        try {
+            position = ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get());
+        } catch (Exception e) {
+            position = new Position();
+        }
+        try {
+            status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
+        } catch (Exception e) {
+            status = new Status();
+        }
 
         return new Organization(name, phone, email, address, tagList, status, position);
     }

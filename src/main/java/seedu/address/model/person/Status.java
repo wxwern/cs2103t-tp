@@ -30,6 +30,12 @@ public class Status {
         applicationStatus = status;
     }
 
+
+    public Status() {
+        applicationStatus = "";
+
+    }
+
     /**
      * Returns true if a given string is a valid name.
      */

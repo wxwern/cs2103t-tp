@@ -26,7 +26,7 @@ public class Organization extends Contact {
     public Organization(Name name, Phone phone, Email email, Address address,
                         Set<Tag> tags, Status status, Position position) {
         super(name, phone, email, address, tags);
-        requireAllNonNull(status);
+        requireAllNonNull(status, position);
         this.status = status;
         this.position = position;
     }
