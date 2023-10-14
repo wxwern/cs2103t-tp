@@ -4,13 +4,13 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
-import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
-import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -45,8 +45,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_STATUS, FLAG_POSITION,
                 FLAG_ORG, FLAG_RECRUITER);
 
-        if ((!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ORG)
-            && !areFlagsPresent(argMultimap, FLAG_NAME, FLAG_RECRUITER))
+        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
             || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }

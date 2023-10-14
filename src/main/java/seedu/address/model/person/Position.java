@@ -2,6 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Represents an Organisation's position (that the user is applying to) in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPosition(String)}
+ */
 public class Position {
     public static final String MESSAGE_CONSTRAINTS =
             "Positions should only contain alphanumeric characters and spaces, and it should not be blank";

@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents an Organisation's status in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPosition(String)}
+ */
 public class Status {
     public static final String MESSAGE_CONSTRAINTS =
             "Status should only contain alphanumeric characters and spaces, and it should not be blank";

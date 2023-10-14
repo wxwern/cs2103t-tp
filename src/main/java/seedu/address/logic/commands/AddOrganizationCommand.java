@@ -1,14 +1,11 @@
 package seedu.address.logic.commands;
-import static java.util.Objects.requireNonNull;
 
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.person.Contact;
-import seedu.address.model.person.Organization;
 
-public class AddOrganizationCommand extends AddCommand{
-
+/**
+ * Adds an organisation to the address book.
+ */
+public class AddOrganizationCommand extends AddCommand {
 
     public AddOrganizationCommand(Contact contact) {
         super(contact);
