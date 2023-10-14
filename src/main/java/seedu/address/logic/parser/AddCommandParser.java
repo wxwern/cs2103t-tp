@@ -38,45 +38,25 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-
-        if (args.startsWith(" org")) {
-            args = args.substring(4);
-            ArgumentMultimap argMultimap =
-                    ArgumentTokenizer.tokenize(args,
-                            FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
-                            FLAG_ADDRESS,  FLAG_TAG, FLAG_URL,
-                            FLAG_STATUS, FLAG_POSITION, FLAG_RECRUITER);
-
-            if (!areFlagsPresent(argMultimap, FLAG_NAME)
-                    || !argMultimap.getPreamble().isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-            }
-
-
-            argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
-            Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-            Status status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
-
-            Organization organization = new Organization(name, phone, email, address, tagList, status);
-
-            return new AddOrganizationCommand(organization);
-        }
-
-
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_TAG);
+            ArgumentTokenizer.tokenize(args,
+                FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
+                FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
+                FLAG_STATUS, FLAG_POSITION,
+                FLAG_ORG, FLAG_RECRUITER);
 
-
-        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ADDRESS, FLAG_PHONE, FLAG_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if ((!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_ORG)
+            && !areFlagsPresent(argMultimap, FLAG_NAME, FLAG_RECRUITER))
+            || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
+        if (areFlagsPresent(argMultimap, FLAG_ORG)) {
+            Organization organization = parseAsOrganization(argMultimap);
+            return new AddOrganizationCommand(organization);
+        }
 
+        // Depreciated.
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
@@ -89,6 +69,17 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(contact);
     }
 
+    private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
+        Status status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
+
+        return new Organization(name, phone, email, address, tagList, status);
+    }
 
     /**
      * Returns true if none of the flags contains empty {@code Optional} values in the given
