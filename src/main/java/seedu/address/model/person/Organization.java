@@ -40,9 +40,9 @@ public class Organization extends Contact {
         return true;
     }
 
-        public Position getPosition() {
-            return position;
-        }
+    public Position getPosition() {
+        return position;
+    }
 
     //    public Address getUrl() {
     //        return url;

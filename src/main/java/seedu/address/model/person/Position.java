@@ -30,9 +30,11 @@ public class Position {
         jobPosition = position;
     }
 
+    /**
+     * Constructs an empty {@code Position}.
+     */
     public Position() {
         jobPosition = "";
-
     }
 
     /**

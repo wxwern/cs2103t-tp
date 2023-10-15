@@ -27,7 +27,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Parses input arguments and creates a new AddCommand object

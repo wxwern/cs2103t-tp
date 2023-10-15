@@ -20,9 +20,9 @@ public class Status {
     public final String applicationStatus;
 
     /**
-     * Constructs a {@code Position}.
+     * Constructs a {@code Status}.
      *
-     * @param status A valid position.
+     * @param status A valid status.
      */
     public Status(String status) {
         requireNonNull(status);
@@ -30,7 +30,9 @@ public class Status {
         applicationStatus = status;
     }
 
-
+    /**
+     * Constructs an empty {@code Status}.
+     */
     public Status() {
         applicationStatus = "";
 
