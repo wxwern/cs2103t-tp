@@ -97,6 +97,7 @@ public class ContactTest {
                 + ", id=" + ALICE.getId()
                 + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail()
+                + ", url=" + ALICE.getUrl()
                 + ", address=" + ALICE.getAddress()
                 + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());

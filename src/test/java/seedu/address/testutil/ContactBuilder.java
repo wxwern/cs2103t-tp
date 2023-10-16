@@ -10,6 +10,7 @@ import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,7 @@ public class ContactBuilder {
     public static final String DEFAULT_ID = "test_1-123";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
+    public static final String DEFAULT_URL = "www.google.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_STATUS = "Applied";
 
@@ -29,6 +31,7 @@ public class ContactBuilder {
     private Id id;
     private Phone phone;
     private Email email;
+    private Url url;
     private Address address;
     private Status status;
     private Set<Tag> tags;
@@ -41,6 +44,7 @@ public class ContactBuilder {
         id = new Id(DEFAULT_ID);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+        url = new Url(DEFAULT_URL);
         address = new Address(DEFAULT_ADDRESS);
         status = new Status(DEFAULT_STATUS);
         tags = new HashSet<>();
@@ -54,6 +58,7 @@ public class ContactBuilder {
         id = contactToCopy.getId();
         phone = contactToCopy.getPhone();
         email = contactToCopy.getEmail();
+        url = contactToCopy.getUrl();
         address = contactToCopy.getAddress();
         tags = new HashSet<>(contactToCopy.getTags());
     }
@@ -75,7 +80,7 @@ public class ContactBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Contact} that we are building.
+     * Sets the {@code Status} of the {@code Contact} that we are building.
      */
     public ContactBuilder withStatus(String status) {
         this.status = new Status(status);
@@ -87,6 +92,14 @@ public class ContactBuilder {
      */
     public ContactBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Url} of the {@code Contact} that we are building.
+     */
+    public ContactBuilder withUrl(String url) {
+        this.url = new Url(url);
         return this;
     }
 
@@ -115,7 +128,7 @@ public class ContactBuilder {
     }
 
     public Contact build() {
-        return new Contact(name, id, phone, email, address, tags);
+        return new Contact(name, id, phone, email, url, address, tags);
     }
 
 }

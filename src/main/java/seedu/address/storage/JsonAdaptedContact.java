@@ -38,8 +38,8 @@ class JsonAdaptedContact {
     private final String address;
     private String status;
     private String position;
-    private String id;
-    private String url;
+    private final String id;
+    private final String url;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -160,7 +160,8 @@ class JsonAdaptedContact {
             final Position modelPosition = position == null ? new Position() : new Position(position);
 
             return new Organization(
-                    modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress, modelTags, modelStatus, modelPosition
+                    modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
+                    modelTags, modelStatus, modelPosition
             );
         }
         default:

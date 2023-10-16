@@ -32,6 +32,7 @@ public class TypicalContacts {
     public static final Contact BENSON = new ContactBuilder()
             .withName("Benson Meier")
             .withId("test_2-123")
+            .withUrl("www.google.com")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
