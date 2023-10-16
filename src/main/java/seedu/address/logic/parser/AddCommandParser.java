@@ -56,7 +56,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             return new AddOrganizationCommand(organization);
         }
 
-        // Depreciated.
+        // Deprecated contact format. Will be removed in future versions.
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
