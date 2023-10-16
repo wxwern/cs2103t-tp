@@ -78,7 +78,7 @@ public interface Model {
     void setContact(Contact target, Contact editedContact);
 
     /**
-     * Gives a contact hsa the given id.
+     * Gives a contact which matches the given id.
      * Gives null if no such contact is found.
      * Given id must not be null.
      */

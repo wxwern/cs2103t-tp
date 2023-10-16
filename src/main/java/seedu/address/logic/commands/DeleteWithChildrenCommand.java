@@ -41,7 +41,9 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
         Contact contactToDelete = lastShownList.get(targetIndex.getZeroBased());
         Contact[] childContacts = contactToDelete.getChildren();
         model.deleteContact(contactToDelete);
-        Arrays.stream(childContacts).forEach(contact -> {model.deleteContact(contactToDelete);});
+        Arrays.stream(childContacts).forEach(contact -> {
+            model.deleteContact(contactToDelete);
+        });
         return new CommandResult(String.format(
                 MESSAGE_DELETE_CONTACT_SUCCESS,
                 Messages.format(contactToDelete),
