@@ -37,8 +37,9 @@ public class Contact {
         this.tags.addAll(tags);
     }
 
-    public Boolean isOrganization() {
-        return false;
+    public Type getType() {
+        // TODO: This should be an abstract method.
+        return Type.UNKNOWN;
     }
 
     public Name getName() {

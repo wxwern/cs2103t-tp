@@ -31,13 +31,13 @@ public class Organization extends Contact {
         this.position = position;
     }
 
-    public Status getStatus() {
-        return status;
+    @Override
+    public Type getType() {
+        return Type.ORGANIZATION;
     }
 
-    @Override
-    public Boolean isOrganization() {
-        return true;
+    public Status getStatus() {
+        return status;
     }
 
     public Position getPosition() {

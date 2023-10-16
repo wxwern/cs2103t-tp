@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Status;
+import seedu.address.model.person.Type;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
@@ -27,6 +30,7 @@ class JsonAdaptedContact {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Contact's %s field is missing!";
 
+    private final String type;
     private final String name;
     private final String phone;
     private final String email;
@@ -40,11 +44,13 @@ class JsonAdaptedContact {
      * Constructs a {@code JsonAdaptedContact} with the given contact details.
      */
     @JsonCreator
-    public JsonAdaptedContact(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
+    public JsonAdaptedContact(@JsonProperty("type") String type,
+                              @JsonProperty("name") String name, @JsonProperty("phone") String phone,
                               @JsonProperty("email") String email, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
                               @JsonProperty("id") String id,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this.type = type;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -61,10 +67,12 @@ class JsonAdaptedContact {
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
-        if (source.isOrganization()) {
+        if (source.getType() == Type.ORGANIZATION) {
             status = ((Organization) source).getStatus().applicationStatus;
             position = ((Organization) source).getPosition().jobPosition;
         }
+
+        type = source.getType().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -86,6 +94,9 @@ class JsonAdaptedContact {
         for (JsonAdaptedTag tag : tags) {
             contactTags.add(tag.toModelType());
         }
+
+        // Type#fromString implicitly returns UNKNOWN if type is null. May change if UNKNOWN is removed in the future.
+        final Type modelType = Type.fromString(type);
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -120,7 +131,21 @@ class JsonAdaptedContact {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
-        return new Contact(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+
+        switch (modelType) {
+        case ORGANIZATION: {
+
+            final Status modelStatus = status == null ? new Status() : new Status(status);
+
+            final Position modelPosition = position == null ? new Position() : new Position(position);
+
+            return new Organization(
+                    modelName, modelPhone, modelEmail, modelAddress, modelTags, modelStatus, modelPosition
+            );
+        }
+        default:
+            return new Contact(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        }
     }
 
 }
