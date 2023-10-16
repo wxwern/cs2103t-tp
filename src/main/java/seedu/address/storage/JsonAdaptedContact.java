@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -14,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
@@ -45,10 +45,10 @@ class JsonAdaptedContact {
      */
     @JsonCreator
     public JsonAdaptedContact(@JsonProperty("type") String type,
-                              @JsonProperty("name") String name, @JsonProperty("phone") String phone,
+                              @JsonProperty("name") String name, @JsonProperty("id") String id,
+                              @JsonProperty("phone") String phone,
                               @JsonProperty("email") String email, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
-                              @JsonProperty("id") String id,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.type = type;
         this.name = name;
@@ -77,7 +77,7 @@ class JsonAdaptedContact {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        id = UUID.randomUUID().toString();
+        id = source.getId().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -105,6 +105,14 @@ class JsonAdaptedContact {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
+
+        if (id == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName()));
+        }
+        if (!Id.isValidId(id)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+        }
+        final Id modelId = new Id(id);
 
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
@@ -140,11 +148,11 @@ class JsonAdaptedContact {
             final Position modelPosition = position == null ? new Position() : new Position(position);
 
             return new Organization(
-                    modelName, modelPhone, modelEmail, modelAddress, modelTags, modelStatus, modelPosition
+                    modelName, modelId, modelPhone, modelEmail, modelAddress, modelTags, modelStatus, modelPosition
             );
         }
         default:
-            return new Contact(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+            return new Contact(modelName, modelId, modelPhone, modelEmail, modelAddress, modelTags);
         }
     }
 

@@ -22,7 +22,7 @@ public class Status {
      */
     public Status(String status) {
         requireNonNull(status);
-        checkArgument(isValidPosition(status), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidStatus(status), MESSAGE_CONSTRAINTS);
         applicationStatus = status;
     }
 
@@ -35,9 +35,9 @@ public class Status {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a valid status.
      */
-    public static boolean isValidPosition(String test) {
+    public static boolean isValidStatus(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 

@@ -18,6 +18,7 @@ public class Contact {
 
     // Identity fields
     private final Name name;
+    private final Id id;
     private final Phone phone;
     private final Email email;
 
@@ -28,9 +29,10 @@ public class Contact {
     /**
      * Every field must be present and not null.
      */
-    public Contact(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Contact(Name name, Id id, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
+        this.id = id;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -58,6 +60,10 @@ public class Contact {
         return address;
     }
 
+    public Id getId() {
+        return id;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -78,8 +84,6 @@ public class Contact {
         return otherContact != null
                 && otherContact.getName().equals(getName());
     }
-
-
 
     /**
      * Returns true if both contacts have the same identity and data fields.
@@ -107,13 +111,14 @@ public class Contact {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, id, phone, email, address, tags);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
+                .add("id", id)
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)

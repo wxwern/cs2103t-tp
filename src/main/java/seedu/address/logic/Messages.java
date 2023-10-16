@@ -37,6 +37,8 @@ public class Messages {
     public static String format(Contact contact) {
         final StringBuilder builder = new StringBuilder();
         builder.append(contact.getName())
+                .append("; Id: ")
+                .append(contact.getId())
                 .append("; Phone: ")
                 .append(contact.getPhone())
                 .append("; Email: ")
