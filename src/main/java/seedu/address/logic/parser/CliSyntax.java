@@ -16,6 +16,7 @@ public class CliSyntax {
     public static final Flag FLAG_URL = new Flag("url");
     public static final Flag FLAG_STATUS = new Flag("stat");
     public static final Flag FLAG_POSITION = new Flag("pos");
+    public static final Flag FLAG_ID = new Flag("id");
 
 
 

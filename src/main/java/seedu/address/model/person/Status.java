@@ -9,13 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Status {
     public static final String MESSAGE_CONSTRAINTS =
-            "Status should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Status should only contain alphanumeric characters and spaces";
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum} ]*";
 
     public final String applicationStatus;
 
@@ -26,7 +22,7 @@ public class Status {
      */
     public Status(String status) {
         requireNonNull(status);
-        checkArgument(isValidPosition(status), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidStatus(status), MESSAGE_CONSTRAINTS);
         applicationStatus = status;
     }
 
@@ -39,9 +35,9 @@ public class Status {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a valid status.
      */
-    public static boolean isValidPosition(String test) {
+    public static boolean isValidStatus(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 

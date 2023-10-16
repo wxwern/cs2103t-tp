@@ -24,24 +24,51 @@ import seedu.address.model.person.Contact;
 public class TypicalContacts {
 
     public static final Contact ALICE = new ContactBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withId("test_1-123")
+            .withAddress("123, Jurong West Ave 6, #08-111")
+            .withEmail("alice@example.com")
             .withPhone("94351253")
             .withTags("friends").build();
-    public static final Contact BENSON = new ContactBuilder().withName("Benson Meier")
+    public static final Contact BENSON = new ContactBuilder()
+            .withName("Benson Meier")
+            .withId("test_2-123")
+            .withUrl("www.google.com")
             .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
+            .withEmail("johnd@example.com")
+            .withPhone("98765432")
             .withStatus("Applied")
             .withTags("owesMoney", "friends").build();
-    public static final Contact CARL = new ContactBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Contact DANIEL = new ContactBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Contact ELLE = new ContactBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Contact FIONA = new ContactBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Contact GEORGE = new ContactBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+    public static final Contact CARL = new ContactBuilder()
+            .withName("Carl Kurz")
+            .withId("test_3-123")
+            .withPhone("95352563")
+            .withEmail("heinz@example.com")
+            .withAddress("wall street").build();
+    public static final Contact DANIEL = new ContactBuilder()
+            .withName("Daniel Meier")
+            .withId("test_4-123")
+            .withPhone("87652533")
+            .withEmail("cornelia@example.com")
+            .withAddress("10th street")
+            .withTags("friends").build();
+    public static final Contact ELLE = new ContactBuilder()
+            .withName("Elle Meyer")
+            .withId("test_5-123")
+            .withPhone("9482224")
+            .withEmail("werner@example.com")
+            .withAddress("michegan ave").build();
+    public static final Contact FIONA = new ContactBuilder()
+            .withName("Fiona Kunz")
+            .withId("test_6-123")
+            .withPhone("9482427")
+            .withEmail("lydia@example.com")
+            .withAddress("little tokyo").build();
+    public static final Contact GEORGE = new ContactBuilder()
+            .withName("George Best")
+            .withId("test_7-123")
+            .withPhone("9482442")
+            .withEmail("anna@example.com")
+            .withAddress("4th street").build();
 
     // Manually added
     public static final Contact HOON = new ContactBuilder().withName("Hoon Meier").withPhone("8482424")

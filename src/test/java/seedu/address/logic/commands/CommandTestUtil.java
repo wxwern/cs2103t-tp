@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
@@ -28,6 +29,8 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_ID_AMY = "3a6e0af8-5092-47c0-baf7-18d6dc535823";
+    public static final String VALID_ID_BOB = "18dfa74c-2229-4f4f-99a5-336c25e6783e";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
@@ -39,6 +42,8 @@ public class CommandTestUtil {
 
     public static final String NAME_DESC_AMY = " " + FLAG_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + FLAG_NAME + VALID_NAME_BOB;
+    public static final String ID_DESC_AMY = " " + FLAG_ID + VALID_ID_AMY;
+    public static final String ID_DESC_BOB = " " + FLAG_ID + VALID_ID_BOB;
     public static final String PHONE_DESC_AMY = " " + FLAG_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + FLAG_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + FLAG_EMAIL + VALID_EMAIL_AMY;
@@ -49,6 +54,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + FLAG_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + FLAG_NAME + "James&"; // '&' not allowed in names
+    public static final String INVALID_ID_DESC = " " + FLAG_ID + "e91724&_18273"; // '&' not allowed in ids
     public static final String INVALID_PHONE_DESC = " " + FLAG_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + FLAG_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + FLAG_ADDRESS; // empty string not allowed for addresses

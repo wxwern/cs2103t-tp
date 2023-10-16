@@ -18,27 +18,32 @@ public class Contact {
 
     // Identity fields
     private final Name name;
+    private final Id id;
     private final Phone phone;
     private final Email email;
 
     // Data fields
+    private final Url url;
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Contact(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
+        this.id = id;
         this.phone = phone;
         this.email = email;
+        this.url = url;
         this.address = address;
         this.tags.addAll(tags);
     }
 
-    public Boolean isOrganization() {
-        return false;
+    public Type getType() {
+        // TODO: This should be an abstract method.
+        return Type.UNKNOWN;
     }
 
     public Name getName() {
@@ -55,6 +60,14 @@ public class Contact {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Id getId() {
+        return id;
+    }
+
+    public Url getUrl() {
+        return url;
     }
 
     /**
@@ -77,8 +90,6 @@ public class Contact {
         return otherContact != null
                 && otherContact.getName().equals(getName());
     }
-
-
 
     /**
      * Returns true if both contacts have the same identity and data fields.
@@ -106,15 +117,17 @@ public class Contact {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, id, phone, email, url, address, tags);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
+                .add("id", id)
                 .add("phone", phone)
                 .add("email", email)
+                .add("url", url)
                 .add("address", address)
                 .add("tags", tags)
                 .toString();

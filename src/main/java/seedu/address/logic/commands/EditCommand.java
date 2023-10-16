@@ -24,8 +24,10 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -96,12 +98,14 @@ public class EditCommand extends Command {
         assert contactToEdit != null;
 
         Name updatedName = editContactDescriptor.getName().orElse(contactToEdit.getName());
+        Id updatedId = editContactDescriptor.getId().orElse(contactToEdit.getId());
         Phone updatedPhone = editContactDescriptor.getPhone().orElse(contactToEdit.getPhone());
         Email updatedEmail = editContactDescriptor.getEmail().orElse(contactToEdit.getEmail());
+        Url updatedUrl = editContactDescriptor.getUrl().orElse(contactToEdit.getUrl());
         Address updatedAddress = editContactDescriptor.getAddress().orElse(contactToEdit.getAddress());
         Set<Tag> updatedTags = editContactDescriptor.getTags().orElse(contactToEdit.getTags());
 
-        return new Contact(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
     }
 
     @Override
@@ -134,8 +138,10 @@ public class EditCommand extends Command {
      */
     public static class EditContactDescriptor {
         private Name name;
+        private Id id;
         private Phone phone;
         private Email email;
+        private Url url;
         private Address address;
         private Set<Tag> tags;
 
@@ -147,8 +153,10 @@ public class EditCommand extends Command {
          */
         public EditContactDescriptor(EditContactDescriptor toCopy) {
             setName(toCopy.name);
+            setId(toCopy.id);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
+            setUrl(toCopy.url);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
         }
@@ -168,6 +176,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
+        public Optional<Id> getId() {
+            return Optional.ofNullable(id);
+        }
+
+        public void setId(Id id) {
+            this.id = id;
+        }
+
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
@@ -182,6 +198,14 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
+        }
+
+        public Optional<Url> getUrl() {
+            return Optional.ofNullable(url);
+        }
+
+        public void setUrl(Url url) {
+            this.url = url;
         }
 
         public void setAddress(Address address) {
