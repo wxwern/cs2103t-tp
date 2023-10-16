@@ -23,6 +23,11 @@ public class Recruiter extends Contact {
         return true;
     }
 
+    @Override
+    public Type getType() {
+        return Type.RECRUITER;
+    }
+
     // TODO: Append orgID to string.
     @Override
     public String toString() {

@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
+import seedu.address.model.person.Recruiter;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.Type;
 import seedu.address.model.person.Url;
@@ -73,6 +74,9 @@ class JsonAdaptedContact {
         if (source.getType() == Type.ORGANIZATION) {
             status = ((Organization) source).getStatus().applicationStatus;
             position = ((Organization) source).getPosition().jobPosition;
+        } else if (source.getType() == Type.RECRUITER) {
+            status = "";
+            position = "";
         }
 
         type = source.getType().toString();
@@ -138,7 +142,7 @@ class JsonAdaptedContact {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
         }
         if (!Url.isValidUrl(url)) {
-            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(Url.MESSAGE_CONSTRAINTS);
         }
         final Url modelUrl = new Url(url);
 
@@ -162,6 +166,12 @@ class JsonAdaptedContact {
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
                     modelTags, modelStatus, modelPosition
+            );
+        }
+        case RECRUITER: {
+            return new Recruiter(
+                    modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
+                    modelTags
             );
         }
         default:

@@ -7,6 +7,7 @@ import seedu.address.model.person.exceptions.InvalidContactTypeStringException;
  */
 public enum Type {
     ORGANIZATION("organization"),
+    RECRUITER("recruiter"),
     UNKNOWN("unknown");
 
 
