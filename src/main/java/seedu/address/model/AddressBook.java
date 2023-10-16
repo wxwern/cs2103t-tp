@@ -95,6 +95,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         contacts.remove(key);
     }
 
+    /**
+     * Gives a contact which id matches the given id.
+     * Gives null if a contact with such id does not exist.
+     * Given id must not be null.
+     */
     public Contact getContactById(ContactId id) {
         requireNonNull(id);
         for (Contact c: contacts) {

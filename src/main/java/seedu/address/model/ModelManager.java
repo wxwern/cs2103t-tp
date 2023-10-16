@@ -111,6 +111,8 @@ public class ModelManager implements Model {
         addressBook.setContact(target, editedContact);
     }
 
+
+
     //=========== Filtered Contact List Accessors =============================================================
 
     /**
