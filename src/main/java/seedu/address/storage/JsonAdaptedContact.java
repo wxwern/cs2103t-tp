@@ -20,6 +20,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.Type;
+import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 
 
@@ -38,6 +39,7 @@ class JsonAdaptedContact {
     private String status;
     private String position;
     private String id;
+    private String url;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -46,18 +48,19 @@ class JsonAdaptedContact {
     @JsonCreator
     public JsonAdaptedContact(@JsonProperty("type") String type,
                               @JsonProperty("name") String name, @JsonProperty("id") String id,
-                              @JsonProperty("phone") String phone,
-                              @JsonProperty("email") String email, @JsonProperty("address") String address,
+                              @JsonProperty("phone") String phone, @JsonProperty("email") String email,
+                              @JsonProperty("url") String url, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.type = type;
         this.name = name;
+        this.id = id;
         this.phone = phone;
         this.email = email;
+        this.url = url;
         this.address = address;
         this.status = status;
         this.position = position;
-        this.id = id;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -76,6 +79,7 @@ class JsonAdaptedContact {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        url = source.getUrl().value;
         address = source.getAddress().value;
         id = source.getId().value;
         tags.addAll(source.getTags().stream()
@@ -130,6 +134,14 @@ class JsonAdaptedContact {
         }
         final Email modelEmail = new Email(email);
 
+        if (url == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
+        }
+        if (!Url.isValidUrl(url)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+        }
+        final Url modelUrl = new Url(url);
+
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -148,11 +160,11 @@ class JsonAdaptedContact {
             final Position modelPosition = position == null ? new Position() : new Position(position);
 
             return new Organization(
-                    modelName, modelId, modelPhone, modelEmail, modelAddress, modelTags, modelStatus, modelPosition
+                    modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress, modelTags, modelStatus, modelPosition
             );
         }
         default:
-            return new Contact(modelName, modelId, modelPhone, modelEmail, modelAddress, modelTags);
+            return new Contact(modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress, modelTags);
         }
     }
 

@@ -19,9 +19,9 @@ public class Organization extends Contact {
     /**
      * Every field must be present and not null.
      */
-    public Organization(Name name, Id id, Phone phone, Email email, Address address,
-                        Set<Tag> tags, Status status, Position position) {
-        super(name, id, phone, email, address, tags);
+    public Organization(Name name, Id id, Phone phone, Email email, Url url,
+                        Address address, Set<Tag> tags, Status status, Position position) {
+        super(name, id, phone, email, url, address, tags);
         requireAllNonNull(status, position);
         this.status = status;
         this.position = position;
@@ -86,8 +86,10 @@ public class Organization extends Contact {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", super.getName())
+                .add("id", super.getId())
                 .add("phone", super.getPhone())
                 .add("email", super.getEmail())
+                .add("url", super.getUrl())
                 .add("address", super.getAddress())
                 .add("tags", super.getTags())
                 .add("status", status)

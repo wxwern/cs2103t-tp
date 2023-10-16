@@ -29,6 +29,7 @@ import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -54,7 +55,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_URL, FLAG_ADDRESS);
 
         if (areFlagsPresent(argMultimap, FLAG_ORG)) {
             Organization organization = parseAsOrganization(argMultimap);
@@ -71,10 +72,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
+        Url url;
+        try {
+            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
+        } catch (NoSuchElementException e) {
+            url = new Url();
+        }
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
-        Contact contact = new Contact(name, id, phone, email, address, tagList);
+        Contact contact = new Contact(name, id, phone, email, url, address, tagList);
 
         return new AddCommand(contact);
     }
@@ -85,26 +92,35 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-        Status status;
-        Position position;
         Id id;
         try {
             id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
         } catch (NoSuchElementException e) {
             id = new Id();
         }
+
+        Url url;
+        try {
+            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
+        } catch (NoSuchElementException e) {
+            url = new Url();
+        }
+
+        Position position;
         try {
             position = ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get());
         } catch (NoSuchElementException e) {
             position = new Position();
         }
+
+        Status status;
         try {
             status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
         } catch (NoSuchElementException e) {
             status = new Status();
         }
 
-        return new Organization(name, id, phone, email, address, tagList, status, position);
+        return new Organization(name, id, phone, email, url, address, tagList, status, position);
     }
 
     /**

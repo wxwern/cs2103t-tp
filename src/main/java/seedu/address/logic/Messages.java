@@ -43,6 +43,8 @@ public class Messages {
                 .append(contact.getPhone())
                 .append("; Email: ")
                 .append(contact.getEmail())
+                .append("; Url: ")
+                .append(contact.getUrl())
                 .append("; Address: ")
                 .append(contact.getAddress())
                 .append("; Tags: ");
