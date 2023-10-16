@@ -20,6 +20,7 @@ public class Contact {
     private static String illegalOperationMessage = "Contact cannot have child contacts";
 
     // Identity fields
+    private final ContactId contactId = null;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -38,6 +39,10 @@ public class Contact {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    public ContactId getContactId() {
+        return contactId;
     }
 
     public Name getName() {
