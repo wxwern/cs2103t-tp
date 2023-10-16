@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -14,8 +15,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Jackson-friendly version of {@link Contact}.
@@ -28,6 +31,9 @@ class JsonAdaptedContact {
     private final String phone;
     private final String email;
     private final String address;
+    private String status;
+    private String position;
+    private String id;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -36,11 +42,16 @@ class JsonAdaptedContact {
     @JsonCreator
     public JsonAdaptedContact(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                               @JsonProperty("email") String email, @JsonProperty("address") String address,
+                              @JsonProperty("status") String status, @JsonProperty("position") String position,
+                              @JsonProperty("id") String id,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.status = status;
+        this.position = position;
+        this.id = id;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -50,14 +61,20 @@ class JsonAdaptedContact {
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
+        if (source.isOrganization()) {
+            status = ((Organization) source).getStatus().applicationStatus;
+            position = ((Organization) source).getPosition().jobPosition;
+        }
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        id = UUID.randomUUID().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
+
 
     /**
      * Converts this Jackson-friendly adapted contact object into the model's {@code Contact} object.

@@ -37,6 +37,10 @@ public class Contact {
         this.tags.addAll(tags);
     }
 
+    public Boolean isOrganization() {
+        return false;
+    }
+
     public Name getName() {
         return name;
     }
@@ -73,6 +77,8 @@ public class Contact {
         return otherContact != null
                 && otherContact.getName().equals(getName());
     }
+
+
 
     /**
      * Returns true if both contacts have the same identity and data fields.
