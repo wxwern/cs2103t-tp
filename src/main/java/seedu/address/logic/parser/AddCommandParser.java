@@ -55,6 +55,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (areFlagsPresent(argMultimap, FLAG_ORG)) {
             Organization organization = parseAsOrganization(argMultimap);
             return new AddOrganizationCommand(organization);
+        } else if (areFlagsPresent(argMultimap, FLAG_RECRUITER)) {
+            Recruiter recruiter = parseAsRecruiter(argMultimap);
+            return new AddCommand(recruiter);
         }
 
         // Deprecated contact format. Will be removed in future versions.
