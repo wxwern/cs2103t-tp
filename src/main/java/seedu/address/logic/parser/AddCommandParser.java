@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ORG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANISATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
@@ -48,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
                 FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                 FLAG_ID, FLAG_STATUS, FLAG_POSITION,
-                FLAG_ORG, FLAG_RECRUITER);
+                FLAG_ORGANISATION, FLAG_RECRUITER);
 
         if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
             || !argMultimap.getPreamble().isEmpty()) {
@@ -57,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_URL, FLAG_ADDRESS);
 
-        if (areFlagsPresent(argMultimap, FLAG_ORG)) {
+        if (areFlagsPresent(argMultimap, FLAG_ORGANISATION)) {
             Organization organization = parseAsOrganization(argMultimap);
             return new AddOrganizationCommand(organization);
         }
