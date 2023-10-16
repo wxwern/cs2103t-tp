@@ -16,7 +16,8 @@ import seedu.address.model.person.Contact;
  */
 public class DeleteWithChildrenCommand extends DeleteCommand {
 
-    public static String MESSAGE_DELETE_CONTACT_SUCCESS = DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS + "with:\n%s";
+    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS + "with"
+            + ":\n%s";
 
     private final Index targetIndex;
 
