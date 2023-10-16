@@ -97,8 +97,21 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        Id id;
+        try {
+            id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
+        } catch (NoSuchElementException e) {
+            id = new Id();
+        }
 
-        return new Recruiter(name, phone, email, address, tagList);
+        Url url;
+        try {
+            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
+        } catch (NoSuchElementException e) {
+            url = new Url();
+        }
+
+        return new Recruiter(name, id, phone, email, url, address, tagList);
     }
 
     private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {

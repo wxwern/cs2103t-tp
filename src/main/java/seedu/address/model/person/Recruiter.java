@@ -14,8 +14,8 @@ public class Recruiter extends Contact {
     // TODO: Convert to ID class.
     private String orgID;
 
-    public Recruiter(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        super(name, phone, email, address, tags);
+    public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
+        super(name, id, phone, email, url, address, tags);
     }
 
     // TODO: Implement method to check if recruiter is linked to a certain organisation.
@@ -28,8 +28,10 @@ public class Recruiter extends Contact {
     public String toString() {
         return new ToStringBuilder(this)
             .add("name", super.getName())
+            .add("id", super.getId())
             .add("phone", super.getPhone())
             .add("email", super.getEmail())
+            .add("url", super.getUrl())
             .add("address", super.getAddress())
             .add("tags", super.getTags())
             .toString();

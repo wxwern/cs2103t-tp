@@ -40,8 +40,10 @@ public class RecruiterBuilder extends ContactBuilder {
         Contact contact = super.build();
         return new Recruiter(
             contact.getName(),
+            contact.getId(),
             contact.getPhone(),
             contact.getEmail(),
+            contact.getUrl(),
             contact.getAddress(),
             contact.getTags()
         );
