@@ -2,9 +2,11 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Set;
 
@@ -31,9 +33,11 @@ public class ContactUtil {
     public static String getContactDetails(Contact contact) {
         StringBuilder sb = new StringBuilder();
         sb.append(FLAG_NAME + contact.getName().fullName + " ");
+        sb.append(FLAG_ID + contact.getId().value + " ");
         sb.append(FLAG_PHONE + contact.getPhone().value + " ");
         sb.append(FLAG_EMAIL + contact.getEmail().value + " ");
         sb.append(FLAG_ADDRESS + contact.getAddress().value + " ");
+        sb.append(FLAG_URL + contact.getUrl().value + " ");
         contact.getTags().stream().forEach(
             s -> sb.append(FLAG_TAG + s.tagName + " ")
         );
@@ -46,6 +50,7 @@ public class ContactUtil {
     public static String getEditContactDescriptorDetails(EditContactDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(FLAG_NAME).append(name.fullName).append(" "));
+        descriptor.getId().ifPresent(id -> sb.append(FLAG_ID).append(id.value).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(FLAG_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(FLAG_EMAIL).append(email.value).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(FLAG_ADDRESS).append(address.value).append(" "));
