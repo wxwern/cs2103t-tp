@@ -14,7 +14,7 @@ import seedu.address.model.person.Contact;
 import seedu.address.model.person.ContactId;
 
 /**
- * Deletes a contact identified using its displayed index from the address book.
+ * Deletes a contact identified using its displayed index or its contact id from the address book.
  */
 public class DeleteCommand extends Command {
 

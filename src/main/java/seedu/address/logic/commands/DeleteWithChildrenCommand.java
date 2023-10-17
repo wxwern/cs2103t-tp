@@ -12,7 +12,7 @@ import seedu.address.model.person.Contact;
 import seedu.address.model.person.ContactId;
 
 /**
- * Deletes a contact identified with its displayed index and also deletes its child contacts.
+ * Deletes a contact and also deletes its child contacts.
  */
 public class DeleteWithChildrenCommand extends DeleteCommand {
 
