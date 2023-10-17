@@ -20,6 +20,8 @@ public class Messages {
             "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_EXTRA_FIELDS =
             "Extra irrelevant flags found in the command: ";
+    public static final String MESSAGE_INVALID_FIELD =
+            "The term '%s' is not a valid flag!";
 
     /**
      * Returns an error message indicating the duplicate flags.
@@ -43,6 +45,15 @@ public class Messages {
                 Stream.of(extraneousFlags).map(Flag::toString).collect(Collectors.toSet());
 
         return MESSAGE_EXTRA_FIELDS + String.join(" ", duplicateFields);
+    }
+
+    /**
+     * Returns an error message indicating the invalid flag.
+     */
+    public static String getErrorMessageForInvalidFlagString(String flagString) {
+        return String.format(
+                MESSAGE_INVALID_FIELD, flagString
+        );
     }
 
     /**

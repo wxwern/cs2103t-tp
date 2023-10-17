@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <flag> value <flag> value ...}<br>
@@ -102,8 +103,9 @@ public class ArgumentTokenizer {
             String flagString = words[start];
             String valueString = String.join(" ", wordsList.subList(start + 1, end)).trim();
 
-            Flag flag = Flag.findMatch(words[start], targetedFlags) // Try to get it from the explicit flags first...
-                    .orElse(Flag.parse(flagString)); // ...or otherwise parse with the default rules.
+            Flag flag = Flag.findMatch(flagString, targetedFlags)
+                    .or(() -> Flag.parseOptional(flagString))
+                    .orElseThrow(); // We should never get here since the flags are validated in findFlagIndices.
 
             argMultimap.put(flag, valueString);
         }

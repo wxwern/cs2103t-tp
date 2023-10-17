@@ -3,6 +3,9 @@ package seedu.address.logic.parser;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.logic.Messages;
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * A flag is an argument in and of itself. It functions as a option specifier, or as a marker for the beginning of a
  * command argument.
@@ -45,12 +48,14 @@ public class Flag {
      * Parses the given string using the default prefix and postfix format into a {@link Flag}.
      *
      * @param string The string to check for flag-like formats.
-     * @return true if the string resembles a flag, false otherwise.
-     * @throws IllegalArgumentException if the flag is invalid.
+     * @return The corresponding {@link Flag} instance.
+     * @throws ParseException if the flag is invalid.
      */
-    public static Flag parse(String string) {
+    public static Flag parse(String string) throws ParseException {
         if (!isFlagSyntax(string)) {
-            throw new IllegalArgumentException("Attempted to parse non-flag string as flag");
+            throw new ParseException(
+                    Messages.getErrorMessageForInvalidFlagString(string)
+            );
         }
 
         return new Flag(string.substring(
@@ -58,6 +63,22 @@ public class Flag {
                 string.length() - DEFAULT_POSTFIX.length()
         ));
     }
+
+    /**
+     * Parses the given string using the default prefix and postfix format into an optional {@link Flag},
+     * which will return an empty optional if it's invalid.
+     *
+     * @param string The string to check for flag-like formats.
+     * @return An optional containing the flag if it is a valid flag format.
+     */
+    public static Optional<Flag> parseOptional(String string) {
+        try {
+            return Optional.of(parse(string));
+        } catch (ParseException e) {
+            return Optional.empty();
+        }
+    }
+
 
     /**
      * Finds a {@link Flag} from the given {@code flags} that matches the given string representation.
