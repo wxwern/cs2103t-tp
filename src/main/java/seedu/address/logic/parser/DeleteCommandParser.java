@@ -42,7 +42,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     private static DeleteCommand parseDeleteIdCommand(String idString, boolean isRecursive) throws ParseException {
         Id id;
         try {
-            // We are guaranteed that there is something by
             id = ParserUtil.parseId(idString);
             return DeleteCommand.selectId(id, isRecursive);
         } catch (ParseException pe) {
