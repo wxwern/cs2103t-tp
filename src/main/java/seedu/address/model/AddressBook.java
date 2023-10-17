@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.UniqueContactList;
 
 /**
@@ -92,6 +93,21 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeContact(Contact key) {
         contacts.remove(key);
+    }
+
+    /**
+     * Gives a contact which id matches the given id.
+     * Gives null if a contact with such id does not exist.
+     * Given id must not be null.
+     */
+    public Contact getContactById(Id id) {
+        requireNonNull(id);
+        for (Contact c: contacts) {
+            if (id.equals(c.getId())) {
+                return c;
+            }
+        }
+        return null;
     }
 
     //// util methods
