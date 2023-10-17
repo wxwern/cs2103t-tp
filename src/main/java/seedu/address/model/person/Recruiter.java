@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
+import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -10,7 +12,7 @@ import seedu.address.model.tag.Tag;
  */
 public class Recruiter extends Contact {
 
-    private Id oid;
+    private final Id oid;
 
     /**
      * Every field except oid must be present and not null.
@@ -30,7 +32,38 @@ public class Recruiter extends Contact {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls implicitly
+        if (!(other instanceof Recruiter)) {
+            return false;
+        }
+
+        Recruiter otherContact = (Recruiter) other;
+        return getId().equals(otherContact.getId())
+                && getType().equals(otherContact.getType())
+                && getName().equals(otherContact.getName())
+                && getPhone().equals(otherContact.getPhone())
+                && getEmail().equals(otherContact.getEmail())
+                && getAddress().equals(otherContact.getAddress())
+                && getUrl().equals(otherContact.getUrl())
+                && getTags().equals(otherContact.getTags())
+                && oid.equals(otherContact.oid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), oid
+        );
+    }
+
+    @Override
+    public ToStringBuilder toStringBuilder() {
+        return super.toStringBuilder()
+                .add("oid", oid);
     }
 }
