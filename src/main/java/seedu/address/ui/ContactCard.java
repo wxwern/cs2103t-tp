@@ -11,7 +11,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.Organization;
+import seedu.address.model.person.Recruiter;
 
 /**
  * An UI component that displays information of a {@code Contact}.
@@ -93,16 +95,15 @@ public class ContactCard extends UiPart<Region> {
             break;
         }
         case RECRUITER: {
-            /* TODO: Use Recruiter class instead */
-            Contact recruiter = contact;
+            Recruiter recruiter = (Recruiter) contact;
 
-            final Organization linkedOrg = null /* TODO: recruiter.getOrganization() */;
+            final Id linkedOrgId = recruiter.getOrganizationId();
 
             setVboxInnerLabelText(
-                    linkedParentOrganization, () -> linkedOrg == null
+                    linkedParentOrganization, () -> linkedOrgId == null
                             ? null
                             : String.format(
-                                    "from %s (%s)", linkedOrg.getName().fullName, linkedOrg.getId()
+                                    "from %s (%s)", "organization" /* TODO: Use org name instead */, linkedOrgId.value
                             )
             );
             cardPaneInnerVbox.getChildren().removeAll(status, position);
