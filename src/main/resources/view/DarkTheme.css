@@ -337,6 +337,12 @@
     -fx-background-radius: 0;
 }
 
+.label#id {
+    -fx-text-fill: #d0d0d088;
+    -fx-font-size: 10px;
+    -fx-font-style: italic;
+}
+
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;
@@ -349,4 +355,8 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#tags .label#type {
+    -fx-background-color: #3f917e;
 }
