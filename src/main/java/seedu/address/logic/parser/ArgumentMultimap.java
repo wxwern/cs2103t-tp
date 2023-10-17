@@ -19,24 +19,39 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ArgumentMultimap {
 
-    /** Prefixes mapped to their respective arguments**/
+    /** Flags mapped to their respective arguments. **/
     private final Map<Flag, List<String>> argMultimap = new HashMap<>();
+
+    /** The preamble value (the text before the first valid flag). **/
+    private String preamble = "";
 
     /**
      * Associates the specified argument value with {@code flag} key in this map.
      * If the map previously contained a mapping for the key, the new value is appended to the list of existing values.
+     * Leading and trailing whitespaces are trimmed.
      *
-     * @param flag   Prefix key with which the specified argument value is to be associated
-     * @param argValue Argument value to be associated with the specified flag key
+     * @param flag     Flag key with which the specified argument value is to be associated.
+     * @param argValue Argument value to be associated with the specified flag key.
      */
     public void put(Flag flag, String argValue) {
         List<String> argValues = getAllValues(flag);
-        argValues.add(argValue);
+        argValues.add(argValue.trim());
         argMultimap.put(flag, argValues);
     }
 
     /**
-     * Returns the last value of {@code flag}.
+     * Associates the specified value with the preamble of this map.
+     * If the map previously contained a preamble, it will be replaced with this one.
+     * Leading and trailing whitespaces are trimmed.
+     *
+     * @param preamble Argument value to be associated with the preamble.
+     */
+    public void putPreamble(String preamble) {
+        this.preamble = preamble == null ? "" : preamble.trim();
+    }
+
+    /**
+     * Returns the last value of {@code flag}, if the flag exists.
      */
     public Optional<String> getValue(Flag flag) {
         List<String> values = getAllValues(flag);
@@ -44,8 +59,17 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Returns whether there exists at least one occurrence the given defined {@code flag} in this map.
+     * Invoking {@code .hasFlag(flag)} is equivalent to the result in {@code .getValue(flag).isPresent()}.
+     */
+    public boolean hasFlag(Flag flag) {
+        List<String> values = getAllValues(flag);
+        return !values.isEmpty() && values.get(values.size() - 1) != null;
+    }
+
+    /**
      * Returns all values of {@code flag}.
-     * If the flag does not exist or has no values, this will return an empty list.
+     * If the flag does not exist or has no values assigned (i.e., not even empty strings), this returns an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
     public List<String> getAllValues(Flag flag) {
@@ -56,10 +80,10 @@ public class ArgumentMultimap {
     }
 
     /**
-     * Returns the preamble (text before the first valid flag). Trims any leading/trailing spaces.
+     * Returns the preamble (text before the first valid flag).
      */
     public String getPreamble() {
-        return getValue(new Flag("", null, null)).orElse("");
+        return preamble;
     }
 
     /**
@@ -73,6 +97,22 @@ public class ArgumentMultimap {
 
         if (duplicatedFlags.length > 0) {
             throw new ParseException(Messages.getErrorMessageForDuplicateFlags(duplicatedFlags));
+        }
+    }
+
+    /**
+     * Throws a {@code ParseException} if there exists any more flags than the ones given in {@code flags}
+     * among the ones put in this map.
+     */
+    public void verifyNoExtraneousFlagsOnTopOf(Flag... flags) throws ParseException {
+        List<Flag> referenceFlagsList = List.of(flags);
+
+        Flag[] extraneousFlags = argMultimap.keySet().stream()
+                .filter(f -> !referenceFlagsList.contains(f))
+                .toArray(Flag[]::new);
+
+        if (extraneousFlags.length > 0) {
+            throw new ParseException(Messages.getErrorMessageForExtraneousFlags(extraneousFlags));
         }
     }
 }

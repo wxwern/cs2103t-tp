@@ -17,7 +17,9 @@ public class Messages {
     public static final String MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX = "The contact index provided is invalid";
     public static final String MESSAGE_CONTACTS_LISTED_OVERVIEW = "%1$d contacts listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+            "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_EXTRA_FIELDS =
+            "Extra irrelevant flags found in the command: ";
 
     /**
      * Returns an error message indicating the duplicate flags.
@@ -29,6 +31,18 @@ public class Messages {
                 Stream.of(duplicateFlags).map(Flag::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+    }
+
+    /**
+     * Returns an error message indicating the extraneous flags.
+     */
+    public static String getErrorMessageForExtraneousFlags(Flag... extraneousFlags) {
+        assert extraneousFlags.length > 0;
+
+        Set<String> duplicateFields =
+                Stream.of(extraneousFlags).map(Flag::toString).collect(Collectors.toSet());
+
+        return MESSAGE_EXTRA_FIELDS + String.join(" ", duplicateFields);
     }
 
     /**
