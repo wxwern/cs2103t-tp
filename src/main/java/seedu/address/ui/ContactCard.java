@@ -68,6 +68,10 @@ public class ContactCard extends UiPart<Region> {
         id.setText(contact.getId().value);
         name.setText(contact.getName().fullName);
 
+        final Label typeLabel = new Label(contact.getType().toString());
+        typeLabel.setId("type");
+        tags.getChildren().add(typeLabel); // add it to the front of tags
+
         setVboxInnerLabelText(phone, () -> contact.getPhone().value);
         setVboxInnerLabelText(address, () -> contact.getAddress().value);
         setVboxInnerLabelText(email, () -> contact.getEmail().value);
