@@ -16,7 +16,7 @@ public class Url {
      * The first character of the url must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = ".+\\..+";
+    public static final String VALIDATION_REGEX = "(.+\\..+|)";
 
     public final String value;
 
