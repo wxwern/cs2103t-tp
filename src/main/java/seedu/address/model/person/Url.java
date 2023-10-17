@@ -10,12 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Url {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Url should at least contain a dot, and it should not be blank";
+            "Url should minimally contain a dot surrounded by text, like example.com";
 
-    /**
-     * The first character of the url must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
     public static final String VALIDATION_REGEX = "(.+\\..+|)";
 
     public final String value;
@@ -36,7 +32,6 @@ public class Url {
      */
     public Url() {
         value = "";
-
     }
 
     /**

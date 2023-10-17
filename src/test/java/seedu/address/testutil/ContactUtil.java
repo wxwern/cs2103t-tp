@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Set;
 
@@ -36,6 +37,7 @@ public class ContactUtil {
         sb.append(FLAG_PHONE + contact.getPhone().value + " ");
         sb.append(FLAG_EMAIL + contact.getEmail().value + " ");
         sb.append(FLAG_ADDRESS + contact.getAddress().value + " ");
+        sb.append(FLAG_URL + contact.getUrl().value + " ");
         contact.getTags().stream().forEach(
             s -> sb.append(FLAG_TAG + s.tagName + " ")
         );
