@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
@@ -49,6 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
                 FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                 FLAG_ID, FLAG_STATUS, FLAG_POSITION,
+                FLAG_ORGANIZATION_ID,
                 FLAG_ORGANIZATION, FLAG_RECRUITER);
 
         if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
@@ -91,7 +93,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     private Recruiter parseAsRecruiter(ArgumentMultimap argMultimap) throws ParseException {
-        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_ORGANIZATION_ID);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
@@ -111,7 +113,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             url = new Url();
         }
 
-        return new Recruiter(name, id, phone, email, url, address, tagList);
+        Id oid;
+        try {
+            oid = ParserUtil.parseId(argMultimap.getValue(FLAG_ORGANIZATION_ID).get());
+        } catch (NoSuchElementException e) {
+            oid = null;
+        }
+
+        return new Recruiter(name, id, phone, email, url, address, tagList, oid);
     }
 
     private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {

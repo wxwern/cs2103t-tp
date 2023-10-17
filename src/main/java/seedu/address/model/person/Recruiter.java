@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import java.util.Set;
 
-import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -11,16 +10,18 @@ import seedu.address.model.tag.Tag;
  */
 public class Recruiter extends Contact {
 
-    // TODO: Convert to ID class.
-    private String orgID;
+    private Id oid;
 
-    public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
+    /**
+     * Every field except oid must be present and not null.
+     */
+    public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags, Id oid) {
         super(name, id, phone, email, url, address, tags);
+        this.oid = oid;
     }
 
-    // TODO: Implement method to check if recruiter is linked to a certain organisation.
-    public boolean hasOrganisation() {
-        return true;
+    public Id getOid() {
+        return oid;
     }
 
     @Override
@@ -28,17 +29,8 @@ public class Recruiter extends Contact {
         return Type.RECRUITER;
     }
 
-    // TODO: Append orgID to string.
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-            .add("name", super.getName())
-            .add("id", super.getId())
-            .add("phone", super.getPhone())
-            .add("email", super.getEmail())
-            .add("url", super.getUrl())
-            .add("address", super.getAddress())
-            .add("tags", super.getTags())
-            .toString();
+        return super.toString();
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.Recruiter;
 
 /**
@@ -8,16 +9,16 @@ import seedu.address.model.person.Recruiter;
  */
 public class RecruiterBuilder extends ContactBuilder {
 
-    public static final String DEFAULT_ORG_ID = "111111";
+    public static final String DEFAULT_OID = "111111";
 
-    private String orgID;
+    private Id oid;
 
     /**
      * Creates a {@code RecruiterBuilder} with the default details.
      */
     public RecruiterBuilder() {
         super();
-        this.orgID = DEFAULT_ORG_ID;
+        this.oid = new Id(DEFAULT_OID);
     }
 
     /**
@@ -28,10 +29,10 @@ public class RecruiterBuilder extends ContactBuilder {
     }
 
     /**
-     * Sets the {@code ID} of the {@code Contact} that we are building.
+     * Sets the organization {@code Id} of the {@code Recruiter} that we are building.
      */
-    public RecruiterBuilder withOrgID(String orgID) {
-        this.orgID = orgID;
+    public RecruiterBuilder withOid(String oid) {
+        this.oid = new Id(oid);
         return this;
     }
 
@@ -45,7 +46,8 @@ public class RecruiterBuilder extends ContactBuilder {
             contact.getEmail(),
             contact.getUrl(),
             contact.getAddress(),
-            contact.getTags()
+            contact.getTags(),
+            oid
         );
     }
 
