@@ -94,6 +94,7 @@ class RecruiterTest {
     public void toStringMethod() {
         String expected = Contact.class.getCanonicalName()
                 + "{name=" + ALICE.getName()
+                + ", type=" + ALICE.getType()
                 + ", id=" + ALICE.getId()
                 + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail()
