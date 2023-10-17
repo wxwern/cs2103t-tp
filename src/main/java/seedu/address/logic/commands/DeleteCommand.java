@@ -11,7 +11,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Contact;
-import seedu.address.model.person.ContactId;
+import seedu.address.model.person.Id;
 
 /**
  * Deletes a contact identified using its displayed index or its contact id from the address book.
@@ -53,7 +53,7 @@ public class DeleteCommand extends Command {
     /**
      * @param targetId of the contact to be deleted
      */
-    public DeleteCommand(ContactId targetId) {
+    public DeleteCommand(Id targetId) {
         this.selector = targetId;
         this.contactFunction = (Model model) -> model.getContactById(targetId);
         this.commandException = new CommandException(Messages.MESSAGE_NO_SUCH_CONTACT);
@@ -77,16 +77,16 @@ public class DeleteCommand extends Command {
     /**
      * Creates an executable DeleteCommand based on whether to delete recursively.
      *
-     * @param contactId of the contact to delete in the current list
+     * @param id of the contact to delete in the current list
      * @param shouldDeleteChildren specifies if child contacts should be deleted
      */
-    public static DeleteCommand selectId(ContactId contactId, boolean shouldDeleteChildren) {
+    public static DeleteCommand selectId(Id id, boolean shouldDeleteChildren) {
         // TODO: Add documentation to DG
-        requireNonNull(contactId);
+        requireNonNull(id);
         if (shouldDeleteChildren) {
-            return new DeleteWithChildrenCommand(contactId);
+            return new DeleteWithChildrenCommand(id);
         }
-        return new DeleteCommand(contactId);
+        return new DeleteCommand(id);
     }
 
     @Override

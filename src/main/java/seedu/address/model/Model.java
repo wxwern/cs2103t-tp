@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Contact;
-import seedu.address.model.person.ContactId;
+import seedu.address.model.person.Id;
 
 /**
  * The API of the Model component.
@@ -82,7 +82,7 @@ public interface Model {
      * Gives null if no such contact is found.
      * Given id must not be null.
      */
-    Contact getContactById(ContactId id);
+    Contact getContactById(Id id);
 
     /** Returns an unmodifiable view of the filtered contact list */
     ObservableList<Contact> getFilteredContactList();

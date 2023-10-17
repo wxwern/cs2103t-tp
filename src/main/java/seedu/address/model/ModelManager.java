@@ -12,7 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Contact;
-import seedu.address.model.person.ContactId;
+import seedu.address.model.person.Id;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -113,7 +113,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Contact getContactById(ContactId id) {
+    public Contact getContactById(Id id) {
         return addressBook.getContactById(id);
     }
 

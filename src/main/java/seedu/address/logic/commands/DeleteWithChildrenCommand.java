@@ -9,7 +9,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Contact;
-import seedu.address.model.person.ContactId;
+import seedu.address.model.person.Id;
 
 /**
  * Deletes a contact and also deletes its child contacts.
@@ -28,7 +28,7 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
         super(targetIndex);
     }
 
-    public DeleteWithChildrenCommand(ContactId targetId) {
+    public DeleteWithChildrenCommand(Id targetId) {
         super(targetId);
     }
 
