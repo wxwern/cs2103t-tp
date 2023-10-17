@@ -97,40 +97,61 @@ public class Contact {
      */
     @Override
     public boolean equals(Object other) {
+        // TODO: This should be an abstract method.
+
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles nulls implicitly
         if (!(other instanceof Contact)) {
             return false;
         }
 
         Contact otherContact = (Contact) other;
-        return name.equals(otherContact.name)
-                && phone.equals(otherContact.phone)
-                && email.equals(otherContact.email)
-                && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags);
+        if (this.getType() != otherContact.getType()) {
+            return false;
+        }
+
+        if (this.getType() == Type.UNKNOWN) {
+            return id.equals(otherContact.id)
+                    && name.equals(otherContact.name)
+                    && phone.equals(otherContact.phone)
+                    && email.equals(otherContact.email)
+                    && address.equals(otherContact.address)
+                    && url.equals(otherContact.url)
+                    && tags.equals(otherContact.tags);
+        }
+
+        throw new IllegalStateException("The equality comparison should be overriden by a subclass.");
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, id, phone, email, url, address, tags);
+        return Objects.hash(id, getType(), name, phone, email, url, address, tags);
     }
 
-    @Override
-    public String toString() {
+    /**
+     * Returns a builder for the {@link #toString} method of this class using {@code ToStringBuilder}.
+     * This can be overriden by subclasses to add properties to the builder.
+     *
+     * @return An instance of {@code ToStringBuilder} capable of crafting a string representation of this instance.
+     */
+    protected ToStringBuilder toStringBuilder() {
         return new ToStringBuilder(this)
                 .add("name", name)
+                .add("type", getType())
                 .add("id", id)
                 .add("phone", phone)
                 .add("email", email)
                 .add("url", url)
                 .add("address", address)
-                .add("tags", tags)
-                .toString();
+                .add("tags", tags);
+    }
+
+    @Override
+    public String toString() {
+        return toStringBuilder().toString();
     }
 
 }

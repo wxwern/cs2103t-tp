@@ -2,14 +2,15 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents an Organisation in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Represents an Organisation in the address book. Guarantees: details are present and not null, field values are
+ * validated, immutable.
  */
 public class Organization extends Contact {
 
@@ -19,8 +20,10 @@ public class Organization extends Contact {
     /**
      * Every field must be present and not null.
      */
-    public Organization(Name name, Id id, Phone phone, Email email, Url url,
-                        Address address, Set<Tag> tags, Status status, Position position) {
+    public Organization(
+            Name name, Id id, Phone phone, Email email, Url url,
+            Address address, Set<Tag> tags, Status status, Position position
+    ) {
         super(name, id, phone, email, url, address, tags);
         requireAllNonNull(status, position);
         this.status = status;
@@ -40,60 +43,42 @@ public class Organization extends Contact {
         return position;
     }
 
-    /**
-     * Returns true if both contacts have the same name.
-     * This defines a weaker notion of equality between two contacts.
-     */
-    public boolean isSameOrganization(Organization otherOrganization) {
-        if (otherOrganization == this) {
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
             return true;
         }
 
-        return otherOrganization != null
-                && otherOrganization.getName().equals(getName());
+        // instanceof handles nulls implicitly
+        if (!(other instanceof Organization)) {
+            return false;
+        }
+
+        Organization otherContact = (Organization) other;
+        return getId().equals(otherContact.getId())
+                && getType().equals(otherContact.getType())
+                && getName().equals(otherContact.getName())
+                && getPhone().equals(otherContact.getPhone())
+                && getEmail().equals(otherContact.getEmail())
+                && getAddress().equals(otherContact.getAddress())
+                && getUrl().equals(otherContact.getUrl())
+                && getTags().equals(otherContact.getTags())
+                && status.equals(otherContact.status)
+                && position.equals(otherContact.position);
     }
 
-    /**
-     * Returns true if both contacts have the same identity and data fields.
-     * This defines a stronger notion of equality between two contacts.
-     */
-    //    @Override
-    //    public boolean equals(Object other) {
-    //        if (other == this) {
-    //            return true;
-    //        }
-    //
-    //        // instanceof handles nulls
-    //        if (!(other instanceof Contact)) {
-    //            return false;
-    //        }
-    //
-    //        Contact otherContact = (Contact) other;
-    //        return name.equals(otherContact.name)
-    //                && phone.equals(otherContact.phone)
-    //                && email.equals(otherContact.email)
-    //                && address.equals(otherContact.address)
-    //                && tags.equals(otherContact.tags);
-    //    }
-
-    //    @Override
-    //    public int hashCode() {
-    //        // use this method for custom fields hashing instead of implementing your own
-    //        return Objects.hash(name, phone, email, address, tags);
-    //    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), status, position
+        );
+    }
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", super.getName())
-                .add("id", super.getId())
-                .add("phone", super.getPhone())
-                .add("email", super.getEmail())
-                .add("url", super.getUrl())
-                .add("address", super.getAddress())
-                .add("tags", super.getTags())
+    public ToStringBuilder toStringBuilder() {
+        return super.toStringBuilder()
                 .add("status", status)
-                .toString();
+                .add("position", position);
     }
 
 }
