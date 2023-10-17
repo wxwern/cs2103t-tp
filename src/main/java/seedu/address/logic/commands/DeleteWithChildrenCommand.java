@@ -16,8 +16,8 @@ import seedu.address.model.person.Id;
  */
 public class DeleteWithChildrenCommand extends DeleteCommand {
 
-    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS + "with"
-            + ":\n%s";
+    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS + " with"
+            + ":\n%2$s";
 
 
     /**
@@ -49,7 +49,8 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
                 Messages.format(contactToDelete),
                 Arrays.stream(childContacts)
                         .map(c -> Messages.format(c) + "\n")
-                        .reduce((c1, c2) -> c1 + c2) // I can't find a better method.
+                        .reduce((c1, c2) -> c1 + c2)
+                        .orElse("No other contacts found") // I can't find a better method.
         ));
     }
 }
