@@ -11,8 +11,12 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Status;
+import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -51,6 +55,51 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String id} into a {@code Status}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code id} is invalid.
+     */
+    public static Id parseId(String id) throws ParseException {
+        requireNonNull(id);
+        String trimmedId = id.trim();
+        if (!Id.isValidId(id)) {
+            throw new ParseException(Id.MESSAGE_CONSTRAINTS);
+        }
+        return new Id(trimmedId);
+    }
+
+    /**
+     * Parses a {@code String status} into a {@code Status}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code status} is invalid.
+     */
+    public static Status parseStatus(String status) throws ParseException {
+        requireNonNull(status);
+        String trimmedStatus = status.trim();
+        if (!Status.isValidStatus(status)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new Status(trimmedStatus);
+    }
+
+    /**
+     * Parses a {@code String position} into a {@code Position}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code position} is invalid.
+     */
+    public static Position parsePosition(String position) throws ParseException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Name.isValidName(position)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new Position(trimmedPosition);
+    }
+
+    /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -63,6 +112,21 @@ public class ParserUtil {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
         return new Phone(trimmedPhone);
+    }
+
+    /**
+     * Parses a {@code String url} into an {@code Url}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code url} is invalid.
+     */
+    public static Url parseUrl(String url) throws ParseException {
+        requireNonNull(url);
+        String trimmedUrl = url.trim();
+        if (!Url.isValidUrl(trimmedUrl)) {
+            throw new ParseException(Url.MESSAGE_CONSTRAINTS);
+        }
+        return new Url(trimmedUrl);
     }
 
     /**

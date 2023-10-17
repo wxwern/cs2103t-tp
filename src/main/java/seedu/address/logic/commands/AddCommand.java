@@ -3,10 +3,14 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,6 +27,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a contact to the address book. "
             + "Parameters: "
             + FLAG_NAME + " NAME "
+            + FLAG_ID + " ID "
             + FLAG_PHONE + " PHONE "
             + FLAG_EMAIL + " EMAIL "
             + FLAG_ADDRESS + " ADDRESS "
@@ -38,6 +43,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New contact added: %1$s";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book";
 
+    private static final Logger logger = LogsCenter.getLogger(AddCommand.class);
+
     private final Contact toAdd;
 
     /**
@@ -50,6 +57,8 @@ public class AddCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        logger.fine(String.format("Adding contact: %s", toAdd));
+
         requireNonNull(model);
 
         if (model.hasContact(toAdd)) {
