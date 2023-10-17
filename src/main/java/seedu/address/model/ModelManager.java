@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -109,6 +110,11 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedContact);
 
         addressBook.setContact(target, editedContact);
+    }
+
+    @Override
+    public Contact getContactById(Id id) {
+        return addressBook.getContactById(id);
     }
 
     //=========== Filtered Contact List Accessors =============================================================

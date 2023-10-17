@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.exceptions.IllegalOperationException;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
@@ -15,6 +16,8 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Contact {
+
+    private static final String ILLEGAL_OPERATION_MESSAGE = "Contact cannot have child contacts";
 
     // Identity fields
     private final Name name;
@@ -89,6 +92,25 @@ public class Contact {
 
         return otherContact != null
                 && otherContact.getName().equals(getName());
+    }
+
+    /**
+     * Gives the array of contacts that are linked under this contact.
+     */
+    public Contact[] getChildren() {
+        // default return value
+        // TODO add to DG
+        return new Contact[]{};
+    }
+
+    /**
+     * Adds a child contact under this contact.
+     * @throws IllegalOperationException if this contact cannot accept child contacts
+     */
+    public void addChild(Contact childContact) throws IllegalOperationException {
+        // Should throw exception if the type of contact cannot have child contacts.
+        // TODO add to DG, do JavaDocs
+        throw new IllegalOperationException(ILLEGAL_OPERATION_MESSAGE);
     }
 
     /**

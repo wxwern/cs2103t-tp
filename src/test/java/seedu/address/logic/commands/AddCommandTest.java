@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
 import seedu.address.testutil.ContactBuilder;
 
 public class AddCommandTest {
@@ -145,6 +146,11 @@ public class AddCommandTest {
 
         @Override
         public void setContact(Contact target, Contact editedContact) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Contact getContactById(Id id) {
             throw new AssertionError("This method should not be called.");
         }
 

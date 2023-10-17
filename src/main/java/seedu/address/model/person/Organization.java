@@ -13,6 +13,7 @@ import seedu.address.model.tag.Tag;
  * validated, immutable.
  */
 public class Organization extends Contact {
+    // TODO: Override the getChildren method
 
     private final Status status;
     private final Position position;

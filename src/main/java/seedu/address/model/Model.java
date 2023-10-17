@@ -6,13 +6,18 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Id;
+import seedu.address.model.person.Type;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = unused -> true;
+    Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = contact -> true;
+    Predicate<Contact> PREDICATE_SHOW_ONLY_ORGANIZATIONS = contact -> contact.getType() == Type.ORGANIZATION;
+    Predicate<Contact> PREDICATE_SHOW_ONLY_RECRUITERS = contact -> contact.getType() == Type.RECRUITER;
+
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -75,6 +80,13 @@ public interface Model {
      * The contact identity of {@code editedContact} must not be the same as another existing one in the address book.
      */
     void setContact(Contact target, Contact editedContact);
+
+    /**
+     * Gives a contact which matches the given id.
+     * Gives null if no such contact is found.
+     * Given id must not be null.
+     */
+    Contact getContactById(Id id);
 
     /** Returns an unmodifiable view of the filtered contact list */
     ObservableList<Contact> getFilteredContactList();
