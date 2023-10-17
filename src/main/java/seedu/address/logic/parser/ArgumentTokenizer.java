@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <flag> value <flag> value ...}<br>
