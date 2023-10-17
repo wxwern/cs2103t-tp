@@ -28,21 +28,21 @@ public class ArgumentMultimap {
     /**
      * Associates the specified argument value with {@code flag} key in this map.
      * If the map previously contained a mapping for the key, the new value is appended to the list of existing values.
-     * Leading and trailing whitespaces are trimmed.
+     * Leading and trailing whitespaces are trimmed, and null values are treated as empty strings.
      *
      * @param flag     Flag key with which the specified argument value is to be associated.
      * @param argValue Argument value to be associated with the specified flag key.
      */
     public void put(Flag flag, String argValue) {
         List<String> argValues = getAllValues(flag);
-        argValues.add(argValue.trim());
+        argValues.add(argValue == null ? "" : argValue.trim());
         argMultimap.put(flag, argValues);
     }
 
     /**
      * Associates the specified value with the preamble of this map.
      * If the map previously contained a preamble, it will be replaced with this one.
-     * Leading and trailing whitespaces are trimmed.
+     * Leading and trailing whitespaces are trimmed, and null values are treated as empty strings.
      *
      * @param preamble Argument value to be associated with the preamble.
      */
@@ -51,20 +51,11 @@ public class ArgumentMultimap {
     }
 
     /**
-     * Returns the last value of {@code flag}, if the flag exists.
-     */
-    public Optional<String> getValue(Flag flag) {
-        List<String> values = getAllValues(flag);
-        return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
-    }
-
-    /**
      * Returns whether there exists at least one occurrence of the given {@code flag} in this map.
      * Invoking {@code .hasFlag(flag)} is equivalent to the result obtained via {@code .getValue(flag).isPresent()}.
      */
     public boolean hasFlag(Flag flag) {
-        List<String> values = getAllValues(flag);
-        return !values.isEmpty() && values.get(values.size() - 1) != null;
+        return !getAllValues(flag).isEmpty();
     }
 
     /**
@@ -91,6 +82,14 @@ public class ArgumentMultimap {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the last value of {@code flag}, if the flag exists.
+     */
+    public Optional<String> getValue(Flag flag) {
+        List<String> values = getAllValues(flag);
+        return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
     /**
