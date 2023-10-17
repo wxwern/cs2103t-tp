@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Organization;
 
 /**
  * An UI component that displays information of a {@code Contact}.
@@ -64,20 +65,19 @@ public class ContactCard extends UiPart<Region> {
         this.contact = contact;
 
         index.setText(String.format("%d. ", displayedIndex));
-        id.setText("(id goes here)" /* TODO: contact.getId().value */);
+        id.setText(contact.getId().value);
         name.setText(contact.getName().fullName);
 
         setVboxInnerLabelText(phone, () -> contact.getPhone().value);
         setVboxInnerLabelText(address, () -> contact.getAddress().value);
         setVboxInnerLabelText(email, () -> contact.getEmail().value);
-        setVboxInnerLabelText(url, () -> null /* TODO: contact.getUrl().value */);
+        setVboxInnerLabelText(url, () -> contact.getUrl().value);
 
-        switch ("" /* TODO: Use contact.getType() enum instead */) {
-        case "organization": {
-            /* TODO: Use Organization class instead */
-            Contact organization = contact;
-            final String statusString = null /* TODO: organization.getStatus().value */;
-            final String positionString = null /* TODO: organization.getPosition().value */;
+        switch (contact.getType()) {
+        case ORGANIZATION: {
+            Organization organization = (Organization) contact;
+            final String statusString = organization.getStatus().applicationStatus;
+            final String positionString = organization.getPosition().jobPosition;
 
             setVboxInnerLabelText(
                     status, () -> StringUtil.formatWithNullFallback("Application Status: %s", statusString)
@@ -88,18 +88,17 @@ public class ContactCard extends UiPart<Region> {
             cardPaneInnerVbox.getChildren().remove(linkedParentOrganization);
             break;
         }
-        case "recruiter": {
+        case RECRUITER: {
             /* TODO: Use Recruiter class instead */
             Contact recruiter = contact;
 
-            /* TODO: Use Organization class instead */
-            final Contact linkedOrg = null /* TODO: recruiter.getOrganization() */;
+            final Organization linkedOrg = null /* TODO: recruiter.getOrganization() */;
 
             setVboxInnerLabelText(
                     linkedParentOrganization, () -> linkedOrg == null
                             ? null
                             : String.format(
-                                    "from %s (%s)", linkedOrg.getName().fullName, "" /* TODO: linkedOrg.getId() */
+                                    "from %s (%s)", linkedOrg.getName().fullName, linkedOrg.getId()
                             )
             );
             cardPaneInnerVbox.getChildren().removeAll(status, position);

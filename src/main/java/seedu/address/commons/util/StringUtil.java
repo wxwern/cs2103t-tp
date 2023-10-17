@@ -67,7 +67,7 @@ public class StringUtil {
     }
 
     /**
-     * Formats the given values with the format string, but return null if any of the given values are null.
+     * Formats the given values with the format string, but return null if any of the given values are null or empty.
      *
      * @param format The format string to use.
      * @param values The values to insert into the format string.
@@ -79,7 +79,7 @@ public class StringUtil {
         }
 
         for (Object v : values) {
-            if (v == null) {
+            if (v == null || v.toString().isBlank()) {
                 return null;
             }
         }
