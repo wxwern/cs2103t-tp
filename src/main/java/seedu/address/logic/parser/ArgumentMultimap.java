@@ -59,12 +59,38 @@ public class ArgumentMultimap {
     }
 
     /**
-     * Returns whether there exists at least one occurrence the given defined {@code flag} in this map.
-     * Invoking {@code .hasFlag(flag)} is equivalent to the result in {@code .getValue(flag).isPresent()}.
+     * Returns whether there exists at least one occurrence of the given {@code flag} in this map.
+     * Invoking {@code .hasFlag(flag)} is equivalent to the result obtained via {@code .getValue(flag).isPresent()}.
      */
     public boolean hasFlag(Flag flag) {
         List<String> values = getAllValues(flag);
         return !values.isEmpty() && values.get(values.size() - 1) != null;
+    }
+
+    /**
+     * Returns whether there exists at least one occurrence of all of these {@code flags} in this map.
+     * Equivalent to the AND of booleans obtained via {@link #hasFlag} for all provided flags.
+     */
+    public boolean hasAllOfFlags(Flag... flags) {
+        for (Flag flag : flags) {
+            if (!this.hasFlag(flag)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns whether there exists at least one occurrence of at least one of these {@code flags} in this map.
+     * Equivalent to the OR of booleans obtained via {@link #hasFlag} for all provided flags.
+     */
+    public boolean hasAnyOfFlags(Flag... flags) {
+        for (Flag flag : flags) {
+            if (this.hasFlag(flag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
