@@ -18,23 +18,32 @@ public class Contact {
 
     // Identity fields
     private final Name name;
+    private final Id id;
     private final Phone phone;
     private final Email email;
 
     // Data fields
+    private final Url url;
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Contact(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
+        this.id = id;
         this.phone = phone;
         this.email = email;
+        this.url = url;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    public Type getType() {
+        // TODO: This should be an abstract method.
+        return Type.UNKNOWN;
     }
 
     public Name getName() {
@@ -51,6 +60,14 @@ public class Contact {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Id getId() {
+        return id;
+    }
+
+    public Url getUrl() {
+        return url;
     }
 
     /**
@@ -80,38 +97,61 @@ public class Contact {
      */
     @Override
     public boolean equals(Object other) {
+        // TODO: This should be an abstract method.
+
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles nulls implicitly
         if (!(other instanceof Contact)) {
             return false;
         }
 
         Contact otherContact = (Contact) other;
-        return name.equals(otherContact.name)
-                && phone.equals(otherContact.phone)
-                && email.equals(otherContact.email)
-                && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags);
+        if (this.getType() != otherContact.getType()) {
+            return false;
+        }
+
+        if (this.getType() == Type.UNKNOWN) {
+            return id.equals(otherContact.id)
+                    && name.equals(otherContact.name)
+                    && phone.equals(otherContact.phone)
+                    && email.equals(otherContact.email)
+                    && address.equals(otherContact.address)
+                    && url.equals(otherContact.url)
+                    && tags.equals(otherContact.tags);
+        }
+
+        throw new IllegalStateException("The equality comparison should be overriden by a subclass.");
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(id, getType(), name, phone, email, url, address, tags);
+    }
+
+    /**
+     * Returns a builder for the {@link #toString} method of this class using {@code ToStringBuilder}.
+     * This can be overriden by subclasses to add properties to the builder.
+     *
+     * @return An instance of {@code ToStringBuilder} capable of crafting a string representation of this instance.
+     */
+    protected ToStringBuilder toStringBuilder() {
+        return new ToStringBuilder(this)
+                .add("name", name)
+                .add("type", getType())
+                .add("id", id)
+                .add("phone", phone)
+                .add("email", email)
+                .add("url", url)
+                .add("address", address)
+                .add("tags", tags);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .add("phone", phone)
-                .add("email", email)
-                .add("address", address)
-                .add("tags", tags)
-                .toString();
+        return toStringBuilder().toString();
     }
 
 }
