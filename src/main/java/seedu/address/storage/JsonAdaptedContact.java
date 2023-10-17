@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
+import seedu.address.model.person.Recruiter;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.Type;
 import seedu.address.model.person.Url;
@@ -40,6 +41,7 @@ class JsonAdaptedContact {
     private String position;
     private final String id;
     private final String url;
+    private String oid;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -51,7 +53,7 @@ class JsonAdaptedContact {
                               @JsonProperty("phone") String phone, @JsonProperty("email") String email,
                               @JsonProperty("url") String url, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
-                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.type = type;
         this.name = name;
         this.id = id;
@@ -61,6 +63,7 @@ class JsonAdaptedContact {
         this.address = address;
         this.status = status;
         this.position = position;
+        this.oid = oid;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -73,6 +76,12 @@ class JsonAdaptedContact {
         if (source.getType() == Type.ORGANIZATION) {
             status = ((Organization) source).getStatus().applicationStatus;
             position = ((Organization) source).getPosition().jobPosition;
+            oid = "";
+        } else if (source.getType() == Type.RECRUITER) {
+            status = "";
+            position = "";
+            Id tmp = ((Recruiter) source).getOrganizationId();
+            oid = tmp == null ? null : tmp.value;
         }
 
         type = source.getType().toString();
@@ -138,7 +147,7 @@ class JsonAdaptedContact {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
         }
         if (!Url.isValidUrl(url)) {
-            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(Url.MESSAGE_CONSTRAINTS);
         }
         final Url modelUrl = new Url(url);
 
@@ -162,6 +171,14 @@ class JsonAdaptedContact {
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
                     modelTags, modelStatus, modelPosition
+            );
+        }
+        case RECRUITER: {
+            final Id modelOid = oid == null ? null : new Id(oid);
+
+            return new Recruiter(
+                    modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
+                    modelTags, modelOid
             );
         }
         default:

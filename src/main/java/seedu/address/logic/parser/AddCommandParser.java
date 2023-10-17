@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
@@ -28,6 +29,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
+import seedu.address.model.person.Recruiter;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
@@ -48,6 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
                 FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                 FLAG_ID, FLAG_STATUS, FLAG_POSITION,
+                FLAG_ORGANIZATION_ID,
                 FLAG_ORGANIZATION, FLAG_RECRUITER);
 
         if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
@@ -60,6 +63,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (areFlagsPresent(argMultimap, FLAG_ORGANIZATION)) {
             Organization organization = parseAsOrganization(argMultimap);
             return new AddOrganizationCommand(organization);
+        } else if (areFlagsPresent(argMultimap, FLAG_RECRUITER)) {
+            Recruiter recruiter = parseAsRecruiter(argMultimap);
+            return new AddCommand(recruiter);
         }
 
         // Deprecated contact format. Will be removed in future versions.
@@ -86,12 +92,44 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(contact);
     }
 
-    private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
+    private Recruiter parseAsRecruiter(ArgumentMultimap argMultimap) throws ParseException {
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_ORGANIZATION_ID);
+        Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        Id id;
+        try {
+            id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
+        } catch (NoSuchElementException e) {
+            id = new Id();
+        }
+
+        Url url;
+        try {
+            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
+        } catch (NoSuchElementException e) {
+            url = new Url();
+        }
+
+        Id oid;
+        try {
+            oid = ParserUtil.parseId(argMultimap.getValue(FLAG_ORGANIZATION_ID).get());
+        } catch (NoSuchElementException e) {
+            oid = null;
+        }
+
+        return new Recruiter(name, id, phone, email, url, address, tagList, oid);
+    }
+
+    private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
         Id id;
         try {
             id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
