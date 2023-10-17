@@ -53,7 +53,8 @@ public class ContactUtil {
         descriptor.getId().ifPresent(id -> sb.append(FLAG_ID).append(" ").append(id.value).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(FLAG_PHONE).append(" ").append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(FLAG_EMAIL).append(" ").append(email.value).append(" "));
-        descriptor.getAddress().ifPresent(address -> sb.append(FLAG_ADDRESS).append(" ").append(address.value).append(" "));
+        descriptor.getAddress().ifPresent(address ->
+                sb.append(FLAG_ADDRESS).append(" ").append(address.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {
