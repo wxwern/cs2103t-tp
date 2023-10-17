@@ -80,7 +80,7 @@ class JsonAdaptedContact {
         } else if (source.getType() == Type.RECRUITER) {
             status = "";
             position = "";
-            Id tmp = ((Recruiter) source).getOid();
+            Id tmp = ((Recruiter) source).getOrganizationId();
             oid = tmp == null ? null : tmp.value;
         }
 

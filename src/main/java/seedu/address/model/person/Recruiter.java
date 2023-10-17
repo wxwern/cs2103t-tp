@@ -20,7 +20,7 @@ public class Recruiter extends Contact {
         this.oid = oid;
     }
 
-    public Id getOid() {
+    public Id getOrganizationId() {
         return oid;
     }
 
