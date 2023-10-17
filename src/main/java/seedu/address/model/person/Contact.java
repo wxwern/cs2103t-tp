@@ -17,7 +17,7 @@ import seedu.address.model.tag.Tag;
  */
 public class Contact {
 
-    private static String illegalOperationMessage = "Contact cannot have child contacts";
+    private static final String ILLEGAL_OPERATION_MESSAGE = "Contact cannot have child contacts";
 
     // Identity fields
     private final Name name;
@@ -110,7 +110,7 @@ public class Contact {
     public void addChild(Contact childContact) throws IllegalOperationException {
         // Should throw exception if the type of contact cannot have child contacts.
         // TODO add to DG, do JavaDocs
-        throw new IllegalOperationException(illegalOperationMessage);
+        throw new IllegalOperationException(ILLEGAL_OPERATION_MESSAGE);
     }
 
     /**
