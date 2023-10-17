@@ -65,4 +65,25 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Formats the given values with the format string, but return null if any of the given values are null or empty.
+     *
+     * @param format The format string to use.
+     * @param values The values to insert into the format string.
+     * @return The formatted string, or null if any of the values are null.
+     */
+    public static String formatWithNullFallback(String format, Object... values) {
+        if (format == null) {
+            return null;
+        }
+
+        for (Object v : values) {
+            if (v == null || v.toString().isBlank()) {
+                return null;
+            }
+        }
+
+        return String.format(format, values);
+    }
 }
