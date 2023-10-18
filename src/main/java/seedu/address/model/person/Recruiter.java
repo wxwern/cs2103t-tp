@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -12,17 +13,17 @@ import seedu.address.model.tag.Tag;
  */
 public class Recruiter extends Contact {
 
-    private final Id oid;
+    private final Optional<Id> oid;
 
     /**
      * Every field except oid must be present and not null.
      */
     public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags, Id oid) {
         super(name, id, phone, email, url, address, tags);
-        this.oid = oid;
+        this.oid = Optional.ofNullable(oid);
     }
 
-    public Id getOrganizationId() {
+    public Optional<Id> getOrganizationId() {
         return oid;
     }
 

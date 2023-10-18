@@ -78,10 +78,12 @@ class JsonAdaptedContact {
             position = ((Organization) source).getPosition().jobPosition;
             oid = "";
         } else if (source.getType() == Type.RECRUITER) {
+            Recruiter recruiter = (Recruiter) source;
             status = "";
             position = "";
-            Id tmp = ((Recruiter) source).getOrganizationId();
-            oid = tmp == null ? null : tmp.value;
+            oid = recruiter.getOrganizationId()
+                    .map(oid -> oid.value)
+                    .orElse(null);
         }
 
         type = source.getType().toString();

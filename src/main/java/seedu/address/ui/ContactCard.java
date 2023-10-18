@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javafx.fxml.FXML;
@@ -97,14 +98,14 @@ public class ContactCard extends UiPart<Region> {
         case RECRUITER: {
             Recruiter recruiter = (Recruiter) contact;
 
-            final Id linkedOrgId = recruiter.getOrganizationId();
+            final Optional<Id> linkedOrgId = recruiter.getOrganizationId();
 
             setVboxInnerLabelText(
-                    linkedParentOrganization, () -> linkedOrgId == null
-                            ? null
-                            : String.format(
-                                    "from %s (%s)", "organization" /* TODO: Use org name instead */, linkedOrgId.value
-                            )
+                    linkedParentOrganization, () -> linkedOrgId.map(oid ->
+                        String.format(
+                            "from %s (%s)", "organization" /* TODO: Use org name instead */, oid.value
+                        ))
+                    .orElse(null)
             );
             cardPaneInnerVbox.getChildren().removeAll(status, position);
             break;
