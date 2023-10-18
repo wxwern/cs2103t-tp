@@ -85,7 +85,21 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Returns whether the given {@code flag} has a non-empty value assigned to it.
+     * This returns true if the flag exists and is set to some non-empty string, and false otherwise.
+     */
+    public boolean hasNonEmptyValue(Flag flag) {
+        for (String value : getAllValues(flag)) {
+            if (!value.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns the last value of {@code flag}, if the flag exists.
+     * Note that an empty string or longer is guaranteed to be given if the flag exists.
      */
     public Optional<String> getValue(Flag flag) {
         List<String> values = getAllValues(flag);
@@ -138,6 +152,21 @@ public class ArgumentMultimap {
 
         if (extraneousFlags.length > 0) {
             throw new ParseException(Messages.getErrorMessageForExtraneousFlags(extraneousFlags));
+        }
+    }
+
+    /**
+     * Throws a {@code ParseException} if any of the flags given in {@code flags} have a non-empty value
+     * assigned to it.
+     */
+    public void verifyAllEmptyValuesAssignedFor(Flag... flags) throws ParseException {
+        Flag[] flagsWithUsefulValues = Stream.of(flags).distinct()
+                .filter(argMultimap::containsKey)
+                .filter(f -> argMultimap.get(f).stream().anyMatch(s -> !s.isEmpty()))
+                .toArray(Flag[]::new);
+
+        if (flagsWithUsefulValues.length > 0) {
+            throw new ParseException(Messages.getErrorMessageForNonEmptyValuedFlags(flagsWithUsefulValues));
         }
     }
 }
