@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,17 +20,22 @@ public class Organization extends Contact {
     private final Status status;
     private final Position position;
 
+    private final Set<Id> rids = new HashSet<>();
+
+
     /**
      * Every field must be present and not null.
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position
+            Address address, Set<Tag> tags, Status status, Position position,
+            Set<Id> rids
     ) {
         super(name, id, phone, email, url, address, tags);
         requireAllNonNull(status, position);
         this.status = status;
         this.position = position;
+        this.rids.addAll(rids);
     }
 
     @Override
@@ -44,6 +51,13 @@ public class Organization extends Contact {
         return position;
     }
 
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Id> getRids() {
+        return Collections.unmodifiableSet(rids);
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

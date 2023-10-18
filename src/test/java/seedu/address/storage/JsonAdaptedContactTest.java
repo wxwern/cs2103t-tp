@@ -45,6 +45,11 @@ public class JsonAdaptedContactTest {
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 
+
+//    private static final List<JsonAdaptedId> VALID_RIDS = BENSON.getTags().stream()
+//            .map(JsonAdaptedTag::new)
+//            .collect(Collectors.toList());
+
     @Test
     public void toModelType_validContactDetails_returnsContact() throws Exception {
         JsonAdaptedContact person = new JsonAdaptedContact(BENSON);
@@ -129,7 +134,7 @@ public class JsonAdaptedContactTest {
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, invalidTags);
+                VALID_OID);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 

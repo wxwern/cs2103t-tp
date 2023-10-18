@@ -43,6 +43,8 @@ class JsonAdaptedContact {
     private final String url;
     private String oid;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedId> rids = new ArrayList<>();
+
 
     /**
      * Constructs a {@code JsonAdaptedContact} with the given contact details.
@@ -53,7 +55,8 @@ class JsonAdaptedContact {
                               @JsonProperty("phone") String phone, @JsonProperty("email") String email,
                               @JsonProperty("url") String url, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
-                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                              @JsonProperty("rid") List<JsonAdaptedId> rids) {
         this.type = type;
         this.name = name;
         this.id = id;
@@ -67,6 +70,9 @@ class JsonAdaptedContact {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        if (rids != null) {
+            this.rids.addAll(rids);
+        }
     }
 
     /**
@@ -77,6 +83,9 @@ class JsonAdaptedContact {
             status = ((Organization) source).getStatus().applicationStatus;
             position = ((Organization) source).getPosition().jobPosition;
             oid = "";
+            rids.addAll(((Organization)source).getRids().stream()
+                    .map(JsonAdaptedId::new)
+                    .collect(Collectors.toList()));
         } else if (source.getType() == Type.RECRUITER) {
             status = "";
             position = "";
@@ -106,6 +115,11 @@ class JsonAdaptedContact {
         final List<Tag> contactTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             contactTags.add(tag.toModelType());
+        }
+
+        final List<Id> contactRids = new ArrayList<>();
+        for (JsonAdaptedId rid : rids) {
+            contactRids.add(rid.toModelType());
         }
 
         // Type#fromString implicitly returns UNKNOWN if type is null. May change if UNKNOWN is removed in the future.
@@ -161,6 +175,8 @@ class JsonAdaptedContact {
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
 
+        final Set<Id> modelRids = new HashSet<>(contactRids);
+
         switch (modelType) {
         case ORGANIZATION: {
 
@@ -170,7 +186,7 @@ class JsonAdaptedContact {
 
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition
+                    modelTags, modelStatus, modelPosition, modelRids
             );
         }
         case RECRUITER: {

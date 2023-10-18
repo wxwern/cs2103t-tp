@@ -185,4 +185,18 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses {@code Collection<String> ids} into a {@code Set<Tag>}.
+     */
+    public static Set<Id> parseIds(Collection<String> ids) throws ParseException {
+        requireNonNull(ids);
+        final Set<Id> idSet = new HashSet<>();
+        for (String idName : ids) {
+            idSet.add(parseId(idName));
+        }
+        return idSet;
+    }
+
+
 }

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
@@ -19,7 +20,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddOrganizationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                 FLAG_ID, FLAG_STATUS, FLAG_POSITION,
                 FLAG_ORGANIZATION_ID,
-                FLAG_ORGANIZATION, FLAG_RECRUITER);
+                FLAG_ORGANIZATION, FLAG_RECRUITER_ID);
 
         if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
             || !argMultimap.getPreamble().isEmpty()) {
@@ -62,7 +62,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (areFlagsPresent(argMultimap, FLAG_ORGANIZATION)) {
             Organization organization = parseAsOrganization(argMultimap);
-            return new AddOrganizationCommand(organization);
+            return new AddCommand(organization);
         } else if (areFlagsPresent(argMultimap, FLAG_RECRUITER)) {
             Recruiter recruiter = parseAsRecruiter(argMultimap);
             return new AddCommand(recruiter);
@@ -130,6 +130,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        Set<Id> ridList = ParserUtil.parseIds(argMultimap.getAllValues(FLAG_RECRUITER_ID));
         Id id;
         try {
             id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
@@ -158,7 +159,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             status = new Status();
         }
 
-        return new Organization(name, id, phone, email, url, address, tagList, status, position);
+        return new Organization(name, id, phone, email, url, address, tagList, status, position, ridList);
     }
 
     /**
