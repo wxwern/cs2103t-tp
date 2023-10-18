@@ -6,8 +6,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_ORGANIZATIONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 
-import java.util.stream.Stream;
-
 import seedu.address.logic.commands.ListCommand;
 
 /**
@@ -22,25 +20,17 @@ public class ListCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, FLAG_ORGANIZATION, FLAG_RECRUITER);
 
-        if (areFlagsPresent(argMultimap, FLAG_ORGANIZATION, FLAG_RECRUITER)) {
+        if (argMultimap.hasAllOfFlags(FLAG_ORGANIZATION, FLAG_RECRUITER)) {
             return new ListCommand(PREDICATE_SHOW_ALL_CONTACTS);
         }
 
-        if (areFlagsPresent(argMultimap, FLAG_ORGANIZATION)) {
+        if (argMultimap.hasFlag(FLAG_ORGANIZATION)) {
             return new ListCommand(PREDICATE_SHOW_ONLY_ORGANIZATIONS);
-        } else if (areFlagsPresent(argMultimap, FLAG_RECRUITER)) {
+        } else if (argMultimap.hasFlag(FLAG_RECRUITER)) {
             return new ListCommand(PREDICATE_SHOW_ONLY_RECRUITERS);
         }
 
         return new ListCommand(PREDICATE_SHOW_ALL_CONTACTS);
-    }
-
-    /**
-     * Returns true if none of the flags contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean areFlagsPresent(ArgumentMultimap argumentMultimap, Flag... flags) {
-        return Stream.of(flags).allMatch(flag -> argumentMultimap.getValue(flag).isPresent());
     }
 
 }

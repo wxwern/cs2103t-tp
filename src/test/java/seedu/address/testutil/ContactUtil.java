@@ -32,12 +32,12 @@ public class ContactUtil {
      */
     public static String getContactDetails(Contact contact) {
         StringBuilder sb = new StringBuilder();
-        sb.append(FLAG_NAME + contact.getName().fullName + " ");
-        sb.append(FLAG_ID + contact.getId().value + " ");
-        sb.append(FLAG_PHONE + contact.getPhone().value + " ");
-        sb.append(FLAG_EMAIL + contact.getEmail().value + " ");
-        sb.append(FLAG_ADDRESS + contact.getAddress().value + " ");
-        sb.append(FLAG_URL + contact.getUrl().value + " ");
+        sb.append(FLAG_NAME + " " + contact.getName().fullName + " ");
+        sb.append(FLAG_ID + " " + contact.getId().value + " ");
+        sb.append(FLAG_PHONE + " " + contact.getPhone().value + " ");
+        sb.append(FLAG_EMAIL + " " + contact.getEmail().value + " ");
+        sb.append(FLAG_ADDRESS + " " + contact.getAddress().value + " ");
+        sb.append(FLAG_URL + " " + contact.getUrl().value + " ");
         contact.getTags().stream().forEach(
             s -> sb.append(FLAG_TAG + s.tagName + " ")
         );
@@ -49,17 +49,18 @@ public class ContactUtil {
      */
     public static String getEditContactDescriptorDetails(EditContactDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getName().ifPresent(name -> sb.append(FLAG_NAME).append(name.fullName).append(" "));
-        descriptor.getId().ifPresent(id -> sb.append(FLAG_ID).append(id.value).append(" "));
-        descriptor.getPhone().ifPresent(phone -> sb.append(FLAG_PHONE).append(phone.value).append(" "));
-        descriptor.getEmail().ifPresent(email -> sb.append(FLAG_EMAIL).append(email.value).append(" "));
-        descriptor.getAddress().ifPresent(address -> sb.append(FLAG_ADDRESS).append(address.value).append(" "));
+        descriptor.getName().ifPresent(name -> sb.append(FLAG_NAME).append(" ").append(name.fullName).append(" "));
+        descriptor.getId().ifPresent(id -> sb.append(FLAG_ID).append(" ").append(id.value).append(" "));
+        descriptor.getPhone().ifPresent(phone -> sb.append(FLAG_PHONE).append(" ").append(phone.value).append(" "));
+        descriptor.getEmail().ifPresent(email -> sb.append(FLAG_EMAIL).append(" ").append(email.value).append(" "));
+        descriptor.getAddress().ifPresent(address ->
+                sb.append(FLAG_ADDRESS).append(" ").append(address.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {
                 sb.append(FLAG_TAG);
             } else {
-                tags.forEach(s -> sb.append(FLAG_TAG).append(s.tagName).append(" "));
+                tags.forEach(s -> sb.append(FLAG_TAG).append(" ").append(s.tagName).append(" "));
             }
         }
         return sb.toString();
