@@ -71,21 +71,21 @@ public class ArgumentTokenizer {
 
         List<String> wordsList = List.of(words);
 
-        // Define a "segment" to be the end of a value or preamble.
-        // We prepare a list that marks the upper bound for a segment via an *exclusive* index.
-        // In other words, if the list has [3, 5], it means there are two segments with ranges [0,3) and [3,5).
-        List<Integer> endOfBoundsIndices = new ArrayList<>();
+        // Define an "end of range" to be the end of a value or preamble.
+        // We prepare a list that marks the end of ranges via *exclusive* indices (i.e., end index + 1).
+        // In other words, if the list has [3, 5], it means there are two ranges [0,3) and [3,5).
+        List<Integer> endOfRangeIndices = new ArrayList<>();
 
-        endOfBoundsIndices.addAll(findFlagIndices(words, targetedFlags));
-        endOfBoundsIndices.add(words.length);
+        endOfRangeIndices.addAll(findFlagIndices(words, targetedFlags));
+        endOfRangeIndices.add(words.length);
 
         // Search through the ranges and map flag to their argument values (if any)
         ArgumentMultimap argMultimap = new ArgumentMultimap();
-        for (int i = 0; i < endOfBoundsIndices.size(); i++) {
+        for (int i = 0; i < endOfRangeIndices.size(); i++) {
 
             // Note that the bounds are [start, end), i.e., start <= x < end.
-            int start = i == 0 ? 0 : endOfBoundsIndices.get(i - 1);
-            int end = endOfBoundsIndices.get(i);
+            int start = i == 0 ? 0 : endOfRangeIndices.get(i - 1);
+            int end = endOfRangeIndices.get(i);
 
             if (start >= end) {
                 continue;
