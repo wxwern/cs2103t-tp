@@ -18,7 +18,14 @@ public class Messages {
     public static final String MESSAGE_NO_SUCH_CONTACT = "No such contact";
     public static final String MESSAGE_CONTACTS_LISTED_OVERVIEW = "%1$d contacts listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+            "Multiple values specified for the following single-valued option(s): ";
+    public static final String MESSAGE_EXTRA_FIELDS =
+            "Extra irrelevant options found in the command: ";
+    public static final String MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS =
+            "The following options may not have any value: ";
+
+    public static final String MESSAGE_INVALID_FIELD =
+            "The term '%s' is not a valid option!";
 
     /**
      * Returns an error message indicating the duplicate flags.
@@ -30,6 +37,37 @@ public class Messages {
                 Stream.of(duplicateFlags).map(Flag::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+    }
+
+    /**
+     * Returns an error message indicating the extraneous flags.
+     */
+    public static String getErrorMessageForExtraneousFlags(Flag... extraneousFlags) {
+        assert extraneousFlags.length > 0;
+
+        Set<String> extraneousFields =
+                Stream.of(extraneousFlags).map(Flag::toString).collect(Collectors.toSet());
+
+        return MESSAGE_EXTRA_FIELDS + String.join(" ", extraneousFields);
+    }
+
+    public static String getErrorMessageForNonEmptyValuedFlags(Flag... nonEmptyValuedFlags) {
+        assert nonEmptyValuedFlags.length > 0;
+
+        Set<String> nonEmptyValuedFields =
+                Stream.of(nonEmptyValuedFlags).map(Flag::toString).collect(Collectors.toSet());
+
+        return MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS + String.join(" ", nonEmptyValuedFields);
+
+    }
+
+    /**
+     * Returns an error message indicating the invalid flag.
+     */
+    public static String getErrorMessageForInvalidFlagString(String flagString) {
+        return String.format(
+                MESSAGE_INVALID_FIELD, flagString
+        );
     }
 
     /**
