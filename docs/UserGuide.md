@@ -61,9 +61,6 @@ title: User Guide
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Note:**
-This is a pending update. Command formats aren't updated as of the current build, and are still using the legacy `parameter/value` syntax instead of this new `--parameter value` syntax. Additionally, commands are in the middle of being revamped.
-</div>
 
 ### Viewing help: `help`
 
