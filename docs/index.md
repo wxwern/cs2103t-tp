@@ -1,6 +1,6 @@
 ---
 layout: page
-title: SteveJobs++
+title: Jobby
 ---
 
 [![CI Status](https://github.com/AY2324S1-CS2103T-W08-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2324S1-CS2103T-W08-3/tp/actions)
@@ -8,13 +8,12 @@ title: SteveJobs++
 
 ![Ui](images/Ui.png)
 
-**SteveJobs++ (SJ++) is a desktop application for managing your job application details, specifically organization and recruiter contacts, plus application info and status.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
+**Jobby is a desktop application for managing your job application details, specifically organization and recruiter contacts, plus application info and status.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
-* If you are interested in using SJ++, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
-* If you are interested about developing SJ++, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
+* If you are interested in using++, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
+* If you are interested about developing++, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
 
 
 **Acknowledgements**
 
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
-* Named in honor of [Steve Jobs](https://en.wikipedia.org/wiki/Steve_Jobs)

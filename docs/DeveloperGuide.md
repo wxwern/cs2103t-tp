@@ -287,16 +287,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is `SJ++` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a contact**
 
 **MSS**
 
 1.  User requests to list organizations
-2.  SJ++ shows a list of organizations
+2.  Jobby shows a list of organizations
 3.  User requests to delete a specific organization in the list
-4.  SJ++ deletes the organization
+4.  Jobby deletes the organization
 
     Use case ends.
 
@@ -308,7 +308,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. SJ++ shows an error message.
+    * 3a1. Jobby shows an error message.
 
       Use case resumes at step 2.
 
@@ -319,7 +319,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of SJ++ to match their habits and easy to pick up.
+4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
 
 
