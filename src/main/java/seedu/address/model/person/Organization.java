@@ -9,7 +9,8 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Represents an Organisation in the address book.
- * Guarantees: Guarantees: name and id are present and not null, field values are immutable and if present, are validated.
+ * Guarantees: Guarantees: name and id are present and not null,
+ * field values are immutable and if present, are validated.
  */
 public class Organization extends Contact {
     // TODO: Override the getChildren method
@@ -18,7 +19,9 @@ public class Organization extends Contact {
     private final Optional<Position> position;
 
     /**
-     * Every field must be present and not null.
+     * Name and id fields must be non-null.
+     * Tags must be non-null but can be empty as well.
+     * The other fields can be null.
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
