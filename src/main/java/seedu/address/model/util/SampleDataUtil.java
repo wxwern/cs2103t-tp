@@ -66,4 +66,13 @@ public class SampleDataUtil {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Returns a id set containing the list of strings given.
+     */
+    public static Set<Id> getIdSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Id::new)
+                .collect(Collectors.toSet());
+    }
+
 }
