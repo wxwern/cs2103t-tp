@@ -12,7 +12,7 @@ public class Url {
     public static final String MESSAGE_CONSTRAINTS =
             "Url should minimally contain a dot surrounded by text, like example.com";
 
-    public static final String VALIDATION_REGEX = "(.+\\..+|)";
+    public static final String VALIDATION_REGEX = ".+\\..+";
 
     public final String value;
 

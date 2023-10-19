@@ -97,13 +97,20 @@ public class EditCommand extends Command {
     private static Contact createEditedContact(Contact contactToEdit, EditContactDescriptor editContactDescriptor) {
         assert contactToEdit != null;
 
-        Name updatedName = editContactDescriptor.getName().orElse(contactToEdit.getName());
-        Id updatedId = editContactDescriptor.getId().orElse(contactToEdit.getId());
-        Phone updatedPhone = editContactDescriptor.getPhone().orElse(contactToEdit.getPhone());
-        Email updatedEmail = editContactDescriptor.getEmail().orElse(contactToEdit.getEmail());
-        Url updatedUrl = editContactDescriptor.getUrl().orElse(contactToEdit.getUrl());
-        Address updatedAddress = editContactDescriptor.getAddress().orElse(contactToEdit.getAddress());
-        Set<Tag> updatedTags = editContactDescriptor.getTags().orElse(contactToEdit.getTags());
+        Name updatedName = editContactDescriptor.getName()
+            .orElse(contactToEdit.getName());
+        Id updatedId = editContactDescriptor.getId()
+            .orElse(contactToEdit.getId());
+        Phone updatedPhone = editContactDescriptor.getPhone()
+            .orElse(contactToEdit.getPhone().orElse(null));
+        Email updatedEmail = editContactDescriptor.getEmail()
+            .orElse(contactToEdit.getEmail().orElse(null));
+        Url updatedUrl = editContactDescriptor.getUrl()
+            .orElse(contactToEdit.getUrl().orElse(null));
+        Address updatedAddress = editContactDescriptor.getAddress()
+            .orElse(contactToEdit.getAddress().orElse(null));
+        Set<Tag> updatedTags = editContactDescriptor.getTags()
+            .orElse(contactToEdit.getTags());
 
         return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
     }

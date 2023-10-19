@@ -5,8 +5,14 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.logging.Logger;
 
@@ -24,21 +30,57 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a contact to the address book. "
+    public static final String MESSAGE_ORGANIZATION_USAGE = "Adds an organization. "
             + "Parameters: "
+            + FLAG_ORGANIZATION + " "
             + FLAG_NAME + " NAME "
-            + FLAG_ID + " ID "
-            + FLAG_PHONE + " PHONE "
-            + FLAG_EMAIL + " EMAIL "
-            + FLAG_ADDRESS + " ADDRESS "
+            + "[" + FLAG_ID + " ID] "
+            + "[" + FLAG_PHONE + " PHONE] "
+            + "[" + FLAG_EMAIL + " EMAIL] "
+            + "[" + FLAG_URL + " URL] "
+            + "[" + FLAG_ADDRESS + " ADDRESS] "
+            + "[" + FLAG_STATUS + " STATUS] "
+            + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + FLAG_NAME + " John Doe "
+            + FLAG_ORGANIZATION + " "
+            + FLAG_NAME + " JobsInc "
+            + FLAG_ID + " id_12345-1 "
             + FLAG_PHONE + " 98765432 "
-            + FLAG_EMAIL + " johnd@example.com "
+            + FLAG_EMAIL + " jobsInc@example.com "
+            + FLAG_URL + " www.jobsinc.com "
             + FLAG_ADDRESS + " 311, Clementi Ave 2, #02-25 "
-            + FLAG_TAG + " friends "
-            + FLAG_TAG + " owesMoney";
+            + FLAG_STATUS + " applied "
+            + FLAG_POSITION + " Junior Software Engineer "
+            + FLAG_TAG + " softwareEngineering "
+            + FLAG_TAG + " competitive ";
+
+    public static final String MESSAGE_RECRUITER_USAGE = "Adds a recruiter. "
+            + "Parameters: "
+            + FLAG_RECRUITER + " "
+            + FLAG_NAME + " NAME "
+            + "[" + FLAG_ID + " ID] "
+            + "[" + FLAG_ORGANIZATION_ID + " ORG_ID] "
+            + "[" + FLAG_PHONE + " PHONE] "
+            + "[" + FLAG_EMAIL + " EMAIL] "
+            + "[" + FLAG_URL + " URL] "
+            + "[" + FLAG_ADDRESS + " ADDRESS] "
+            + "[" + FLAG_TAG + " TAG]...\n"
+            + "Example: " + COMMAND_WORD + " "
+            + FLAG_RECRUITER + " "
+            + FLAG_NAME + " Steve "
+            + FLAG_ID + " id_98765-1 "
+            + FLAG_PHONE + " 83452145 "
+            + FLAG_EMAIL + " steveJobsInc@example.com "
+            + FLAG_URL + " www.linkedin.com/in/steve/ "
+            + FLAG_ADDRESS + " 311 W Coast Walk, #02-30 "
+            + FLAG_TAG + " friendly ";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds a contact to the address book of the class type Organization or Recruiter."
+            + " The input format varies depending on the class:\n\n"
+            + MESSAGE_ORGANIZATION_USAGE + "\n\n"
+            + MESSAGE_RECRUITER_USAGE;
 
     public static final String MESSAGE_SUCCESS = "New contact added: %1$s";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book";
