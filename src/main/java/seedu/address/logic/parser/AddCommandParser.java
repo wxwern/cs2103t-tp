@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
-import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
@@ -51,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                         FLAG_ID, FLAG_STATUS, FLAG_POSITION,
                         FLAG_ORGANIZATION_ID,
-                        FLAG_ORGANIZATION, FLAG_RECRUITER, FLAG_RECRUITER_ID
+                        FLAG_ORGANIZATION, FLAG_RECRUITER
                 );
 
         if (!argMultimap.hasAllOfFlags(FLAG_NAME)
@@ -136,7 +135,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Status status = ParserUtil.parseOptionally(
                 argMultimap.getValue(FLAG_STATUS), ParserUtil::parseStatus);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
-        Set<Id> ridList = ParserUtil.parseIds(argMultimap.getAllValues(FLAG_RECRUITER_ID));
+        Set<Id> ridList = Set.of(); // TODO: This should be dynamically determined from oid in Recruiter.
 
         return new Organization(name, id, phone, email, url, address, tagList, status, position, ridList);
     }

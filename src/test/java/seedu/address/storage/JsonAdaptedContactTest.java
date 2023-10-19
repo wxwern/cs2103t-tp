@@ -61,7 +61,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, INVALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -70,7 +70,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, null, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -79,7 +79,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 INVALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -88,7 +88,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_nullPhone_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 null, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         assertDoesNotThrow(person::toModelType);
     }
 
@@ -96,7 +96,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, INVALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -105,7 +105,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_nullEmail_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, null, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         assertDoesNotThrow(person::toModelType);
     }
 
@@ -113,7 +113,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, INVALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -122,7 +122,7 @@ public class JsonAdaptedContactTest {
     public void toModelType_nullAddress_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, null, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, VALID_RIDS);
+                VALID_OID, VALID_TAGS);
         assertDoesNotThrow(person::toModelType);
     }
 
@@ -132,7 +132,7 @@ public class JsonAdaptedContactTest {
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, invalidTags, VALID_RIDS);
+                VALID_OID, invalidTags);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 
