@@ -1,30 +1,32 @@
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents an Organisation in the address book. Guarantees: details are present and not null, field values are
- * validated, immutable.
+ * Represents an Organisation in the address book.
+ * Guarantees: Guarantees: name and id are present and not null,
+ * field values are immutable and if present, are validated.
  */
 public class Organization extends Contact {
     // TODO: Override the getChildren method
 
-    private final Status status;
-    private final Position position;
+    private final Optional<Status> status;
+    private final Optional<Position> position;
 
     private final Set<Id> rids = new HashSet<>();
 
 
     /**
-     * Every field must be present and not null.
+     * Name and id fields must be non-null.
+     * Tags must be non-null but can be empty as well.
+     * The other fields can be null.
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
@@ -32,9 +34,8 @@ public class Organization extends Contact {
             Set<Id> rids
     ) {
         super(name, id, phone, email, url, address, tags);
-        requireAllNonNull(status, position);
-        this.status = status;
-        this.position = position;
+        this.status = Optional.ofNullable(status);
+        this.position = Optional.ofNullable(position);
         this.rids.addAll(rids);
     }
 
@@ -43,11 +44,11 @@ public class Organization extends Contact {
         return Type.ORGANIZATION;
     }
 
-    public Status getStatus() {
+    public Optional<Status> getStatus() {
         return status;
     }
 
-    public Position getPosition() {
+    public Optional<Position> getPosition() {
         return position;
     }
 

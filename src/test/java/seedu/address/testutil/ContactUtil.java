@@ -34,10 +34,10 @@ public class ContactUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(FLAG_NAME + " " + contact.getName().fullName + " ");
         sb.append(FLAG_ID + " " + contact.getId().value + " ");
-        sb.append(FLAG_PHONE + " " + contact.getPhone().value + " ");
-        sb.append(FLAG_EMAIL + " " + contact.getEmail().value + " ");
-        sb.append(FLAG_ADDRESS + " " + contact.getAddress().value + " ");
-        sb.append(FLAG_URL + " " + contact.getUrl().value + " ");
+        sb.append(FLAG_PHONE + " " + contact.getPhone().map(phone -> phone.value).orElse("") + " ");
+        sb.append(FLAG_EMAIL + " " + contact.getEmail().map(email -> email.value).orElse("") + " ");
+        sb.append(FLAG_ADDRESS + " " + contact.getAddress().map(address -> address.value).orElse("") + " ");
+        sb.append(FLAG_URL + " " + contact.getUrl().map(url -> url.value).orElse("") + " ");
         contact.getTags().stream().forEach(
             s -> sb.append(FLAG_TAG + s.tagName + " ")
         );

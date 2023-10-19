@@ -1,6 +1,6 @@
-### Project: SteveJobs++
+### Project: Jobby
 
-SteveJobs++ is a desktop address book and job application tracking tool. The user interacts with it using a CLI, and it has a GUI created in JavaFX. It is written in Java.
+Jobby is a desktop address book and job application tracking tool. The user interacts with it using a CLI, and it has a GUI created in JavaFX. It is written in Java.
 
 Given below are my contributions to the project.
 

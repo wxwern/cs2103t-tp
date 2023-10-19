@@ -79,13 +79,13 @@ public class Messages {
                 .append("; Id: ")
                 .append(contact.getId())
                 .append("; Phone: ")
-                .append(contact.getPhone())
+                .append(contact.getPhone().map(p -> p.value).orElse("(none)"))
                 .append("; Email: ")
-                .append(contact.getEmail())
+                .append(contact.getEmail().map(e -> e.value).orElse("(none)"))
                 .append("; Url: ")
-                .append(contact.getUrl())
+                .append(contact.getUrl().map(u -> u.value).orElse("(none)"))
                 .append("; Address: ")
-                .append(contact.getAddress())
+                .append(contact.getAddress().map(a -> a.value).orElse("(none)"))
                 .append("; Tags: ");
         contact.getTags().forEach(builder::append);
         return builder.toString();
