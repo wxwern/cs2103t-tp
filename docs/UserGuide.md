@@ -46,6 +46,9 @@ title: User Guide
 * Items with `...` after them can be used multiple times including zero times.<br>
   e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
 
+* Items separated by `/` means that only one of them can be used per command.<br>
+  e.g. `--org/--rec` means that either `--org` or `--rec` can be supplied as a flag but not both at the same time.
+
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
 
@@ -70,11 +73,11 @@ Format: `help`
 
 ### Adding a contact: `add`
 
-Format: `add --type CLASS <additional parameters and values...>`
+Format: `add --org/--rec <additional parameters and values...>`
 
 Adds a contact to the address book of the given class type: Organization or Recruiter.
 
-Notice that `CLASS` must be either _Organization_ or _Recruiter_ (or any case-insensitive unambiguous prefix match, so “org” will match “Organization” automatically)
+Supplying `--org` adds an Organization while supplying `--rec` adds a Recruiter to the address book.
 
 Details specifically on organization and recruiter level are specified in the next sections.
 
