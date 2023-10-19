@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). SJ++ can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, SJ++ can get your contact management tasks done faster than traditional GUI apps.
+**Jobby** is a **desktop app for managing job applications and contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -14,11 +14,11 @@ SteveJobs++ (SJ++) is a **desktop app for managing job applications and contacts
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `sjobs.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
+1. Download the latest `jobby.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your SteveJobs Application.
+1. Copy the file to the folder you want to use as the _home folder_ for your Jobby Application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar sjobs.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar jobby.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -217,15 +217,15 @@ Format: `exit`
 
 ### Saving the data
 
-SJ++ data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Jobby data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 
 ### Editing the data file
 
-SJ++ data are saved automatically as a JSON file `[JAR file location]/data/sjobs.json`. Advanced users are welcome to update data directly by editing that data file.
+Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, SJ++ will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
+If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </div>
 
 
@@ -234,7 +234,7 @@ If your changes to the data file makes its format invalid, SJ++ will discard all
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous SJ++ home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Jobby home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
