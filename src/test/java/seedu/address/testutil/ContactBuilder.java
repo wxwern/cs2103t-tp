@@ -9,7 +9,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Status;
 import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;

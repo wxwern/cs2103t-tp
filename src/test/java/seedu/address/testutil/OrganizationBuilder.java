@@ -3,16 +3,16 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Id;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Position;
-import seedu.address.model.person.Recruiter;
 import seedu.address.model.person.Status;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
+/**
+ * A utility class to help with building Organization objects.
+ */
 public class OrganizationBuilder extends ContactBuilder {
     public static final String DEFAULT_STATUS = "Applied";
     public static final String DEFAULT_POSITION = "Manager";
