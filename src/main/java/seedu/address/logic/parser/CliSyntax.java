@@ -19,5 +19,7 @@ public class CliSyntax {
     public static final Flag FLAG_ID = new Flag("id");
     public static final Flag FLAG_RECURSIVE = new Flag("recursive");
     public static final Flag FLAG_ORGANIZATION_ID = new Flag("oid");
+    public static final Flag FLAG_RECRUITER_ID = new Flag("rid");
+
 
 }
