@@ -117,7 +117,7 @@ Examples:
 
 * `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
 
-* `add --org --name Example --url www.organization.org --tag freelance work`
+* `add --org --name Example --url www.organization.org --tag freelance`
 
 * `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
 
