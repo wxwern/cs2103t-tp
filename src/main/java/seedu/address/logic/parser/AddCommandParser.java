@@ -50,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
                 FLAG_ID, FLAG_STATUS, FLAG_POSITION,
                 FLAG_ORGANIZATION_ID,
-                FLAG_ORGANIZATION, FLAG_RECRUITER_ID);
+                FLAG_ORGANIZATION, FLAG_RECRUITER, FLAG_RECRUITER_ID);
 
         if (!argMultimap.hasAllOfFlags(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
             || !argMultimap.getPreamble().isEmpty()) {
