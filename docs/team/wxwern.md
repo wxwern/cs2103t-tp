@@ -3,9 +3,9 @@ layout: page
 title: Wern's Project Portfolio Page
 ---
 
-### Project: SteveJobs++
+### Project: Jobby
 
-SteveJobs++ is a desktop application used for tracking job applications.
+Jobby is a desktop application used for tracking job applications.
 
 Given below are my contributions to the project.
 
