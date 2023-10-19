@@ -122,11 +122,11 @@ Examples:
 * `add --type o --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
 
 
-#### Adding a recruiter contact: `add --type recruiter`
+#### Adding a recruiter contact: `add --rec`
 
 _{Work in progress...}_
 
-Format: `add --type r[ecruiter] --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
 
 
 Acceptable Parameters:
@@ -135,7 +135,7 @@ Acceptable Parameters:
 * `ID` refers to a unique identifier which is used to uniquely identify the recruiter (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
-* `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to.
+* `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
 
 * `NUMBER` should be a valid phone number.
 
