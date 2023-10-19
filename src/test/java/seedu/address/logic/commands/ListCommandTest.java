@@ -1,8 +1,12 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showContactAtIndex;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_ORGANIZATIONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 import static seedu.address.testutil.TypicalContacts.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
@@ -38,5 +42,32 @@ public class ListCommandTest {
         showContactAtIndex(model, INDEX_FIRST_CONTACT);
         assertCommandSuccess(new ListCommand(PREDICATE_SHOW_ALL_CONTACTS),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_CONTACTS, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        ListCommand showAllListCommand = new ListCommand(PREDICATE_SHOW_ALL_CONTACTS);
+        ListCommand organizationListCommand = new ListCommand(PREDICATE_SHOW_ONLY_ORGANIZATIONS);
+        ListCommand recruiterListCommand = new ListCommand(PREDICATE_SHOW_ONLY_RECRUITERS);
+
+        // same object -> returns true
+        assertTrue(showAllListCommand.equals(showAllListCommand));
+        assertTrue(organizationListCommand.equals(organizationListCommand));
+        assertTrue(recruiterListCommand.equals(recruiterListCommand));
+
+        // same predicate -> returns true
+        ListCommand showAllListCommandCopy = new ListCommand(PREDICATE_SHOW_ALL_CONTACTS);
+        assertTrue(showAllListCommand.equals(showAllListCommandCopy));
+
+        // different types -> returns false
+        assertFalse(showAllListCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(showAllListCommand.equals(null));
+
+        // different predicate -> returns false
+        assertFalse(showAllListCommand.equals(organizationListCommand));
+        assertFalse(showAllListCommand.equals(recruiterListCommand));
+        assertFalse(organizationListCommand.equals(recruiterListCommand));
     }
 }

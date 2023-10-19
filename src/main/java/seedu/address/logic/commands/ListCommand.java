@@ -42,4 +42,19 @@ public class ListCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS_ALL_CONTACTS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        ListCommand otherListCommand = (ListCommand) other;
+        return predicate.equals(otherListCommand.predicate);
+    }
 }
