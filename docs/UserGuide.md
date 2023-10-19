@@ -37,6 +37,9 @@ title: User Guide
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used like `add --name John Doe`.
 
+* Terms prefixed with `--` are used to assign a value to some action or property, or to choose an option out of a few settings.
+  e.g. the `--name` field (which requires a `NAME` supplied after it) may configure the name of a contact, while a switch like `--recursive` (which doesn't accept values) may explicitly activate a recursive mode for an action.
+
 * Items in square brackets are optional.<br>
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
 
@@ -49,8 +52,8 @@ title: User Guide
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* Extraneous parameters and values for all commands will be ignored by default.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extras like `list 123 --other --org 456` will be interpreted as `list --org` (i.e., ignoring all other parameters).
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
