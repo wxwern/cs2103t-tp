@@ -27,18 +27,18 @@ public class SampleDataUtil {
         return new Contact[] {
             new Organization(new Name("Alex Yeoh Inc"), new Id("alex_yeoh_inc"), new Phone("87438807"),
                     new Email("contact@alexyeoh.example.com"), new Url("alexyeoh.example.com"),
-                    null, getTagSet("parttime"), new Status("interested"), null),
+                    null, getTagSet("parttime"), new Status("interested"), null, Set.of()),
             new Organization(new Name("Google"), new Id("google"), new Phone("65218000"), null,
                     new Url("careers.google.com"),
                     new Address("70 Pasir Panjang Road, #03-71, "
                             + "Mapletree Business City, "
                             + "Singapore 117371"),
                     getTagSet("bigtech", "internship", "competitive"),
-                    new Status("applied"), new Position("Software Engineer")),
+                    new Status("applied"), new Position("Software Engineer"), Set.of()),
             new Organization(new Name("Job Seeker Plus"), new Id("job_seeker_plus"), new Phone("93210283"),
                     new Email("jobseekerplus@example.com"), null,
                     new Address("Blk 16 Real Street 128, #08-04"),
-                    getTagSet("startup", "internship"), null, null),
+                    getTagSet("startup", "internship"), null, null, Set.of()),
             new Recruiter(new Name("David Li"), new Id("david_li"), new Phone("91031282"),
                     new Email("davidli@alexyeoh.example.com"), null,
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
