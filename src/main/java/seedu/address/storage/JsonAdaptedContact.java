@@ -44,6 +44,7 @@ class JsonAdaptedContact {
     private String oid;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
+
     /**
      * Constructs a {@code JsonAdaptedContact} with the given contact details.
      */
@@ -158,6 +159,8 @@ class JsonAdaptedContact {
 
         switch (modelType) {
         case ORGANIZATION: {
+            final Set<Id> modelRids = new HashSet<>();
+
             if (status != null && !Status.isValidStatus(status)) {
                 throw new IllegalValueException(Status.MESSAGE_CONSTRAINTS);
             }
@@ -170,7 +173,7 @@ class JsonAdaptedContact {
 
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition
+                    modelTags, modelStatus, modelPosition, modelRids
             );
         }
         case RECRUITER: {

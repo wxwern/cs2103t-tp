@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedContact.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalContacts.BENSON;
+import static seedu.address.testutil.TypicalContacts.JESUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,13 @@ public class JsonAdaptedContactTest {
     private static final String VALID_URL = BENSON.getUrl().get().value;
     private static final String VALID_ADDRESS = BENSON.getAddress().get().value;
     private static final String VALID_OID = "78a36caf-6d42-4fd2-a017-7f6a92fa3155";
-
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
+            .collect(Collectors.toList());
+
+
+    private static final List<JsonAdaptedId> VALID_RIDS = JESUS.getRecruiterIds().stream()
+            .map(JsonAdaptedId::new)
             .collect(Collectors.toList());
 
     @Test

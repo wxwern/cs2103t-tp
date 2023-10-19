@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddOrganizationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
@@ -63,7 +62,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (argMultimap.hasFlag(FLAG_ORGANIZATION)) {
             Organization organization = parseAsOrganization(argMultimap);
-            return new AddOrganizationCommand(organization);
+            return new AddCommand(organization);
         } else if (argMultimap.hasFlag(FLAG_RECRUITER)) {
             Recruiter recruiter = parseAsRecruiter(argMultimap);
             return new AddCommand(recruiter);
@@ -136,7 +135,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Status status = ParserUtil.parseOptionally(
                 argMultimap.getValue(FLAG_STATUS), ParserUtil::parseStatus);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
+        Set<Id> ridList = Set.of(); // TODO: This should be dynamically determined from oid in Recruiter.
 
-        return new Organization(name, id, phone, email, url, address, tagList, status, position);
+        return new Organization(name, id, phone, email, url, address, tagList, status, position, ridList);
     }
 }
