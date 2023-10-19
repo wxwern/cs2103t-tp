@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -27,8 +28,9 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     /**
-     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -79,7 +81,7 @@ public class ParserUtil {
         requireNonNull(status);
         String trimmedStatus = status.trim();
         if (!Status.isValidStatus(status)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
         return new Status(trimmedStatus);
     }
@@ -93,8 +95,8 @@ public class ParserUtil {
     public static Position parsePosition(String position) throws ParseException {
         requireNonNull(position);
         String trimmedPosition = position.trim();
-        if (!Name.isValidName(position)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        if (!Position.isValidPosition(position)) {
+            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
         }
         return new Position(trimmedPosition);
     }
@@ -184,5 +186,31 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * References a function that parses a string into an expected output within the {@link ParserUtil} utility class.
+     * @param <R> The return result.
+     */
+    @FunctionalInterface
+    public interface StringParserFunction<R> {
+        R parse(String value) throws ParseException;
+    }
+
+    /**
+     * Returns an object of type R that is given by passing the given string into {@code parseFunction} if
+     * {@code optionalString} is non-empty, otherwise returns null.
+     *
+     * @param <R> The type of object returned by parsing the optionalString.
+     *
+     * @throws ParseException if the given {@code optionalString} is invalid as determined by {@code parseFunction}
+     */
+    public static <R> R parseOptionally(Optional<String> optionalString, StringParserFunction<R> parseFunction)
+            throws ParseException {
+
+        if (optionalString.isPresent()) {
+            return parseFunction.parse(optionalString.get());
+        }
+        return null;
     }
 }

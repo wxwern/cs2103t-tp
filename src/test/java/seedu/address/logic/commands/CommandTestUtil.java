@@ -27,7 +27,6 @@ import seedu.address.testutil.EditContactDescriptorBuilder;
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
-
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_ID_AMY = "3a6e0af8-5092-47c0-baf7-18d6dc535823";
@@ -64,7 +63,7 @@ public class CommandTestUtil {
     public static final String INVALID_ID_DESC = " " + FLAG_ID + " " + "e91724&_18273"; // '&' not allowed in ids
     public static final String INVALID_PHONE_DESC = " " + FLAG_PHONE + " " + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + FLAG_EMAIL + " " + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + FLAG_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_ADDRESS_DESC = " " + FLAG_ADDRESS + " "; // address cannot be empty string
     public static final String INVALID_URL_DESC = " " + FLAG_URL + " " + "asdfjkl";
     public static final String INVALID_TAG_DESC = " " + FLAG_TAG + " " + "hubby*"; // '*' not allowed in tags
 

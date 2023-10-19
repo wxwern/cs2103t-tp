@@ -9,7 +9,7 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Recruiter in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: Guarantees: name and id are present and not null, field values are immutable and if present, are validated.
  */
 public class Recruiter extends Contact {
 
