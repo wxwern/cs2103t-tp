@@ -55,7 +55,7 @@ public class Organization extends Contact {
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Id> getRids() {
+    public Set<Id> getRecruiterIds() {
         return Collections.unmodifiableSet(rids);
     }
     @Override
