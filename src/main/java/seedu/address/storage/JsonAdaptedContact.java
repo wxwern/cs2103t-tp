@@ -83,7 +83,7 @@ class JsonAdaptedContact {
             status = ((Organization) source).getStatus().applicationStatus;
             position = ((Organization) source).getPosition().jobPosition;
             oid = "";
-            rids.addAll(((Organization) source).getRids().stream()
+            rids.addAll(((Organization) source).getRecruiterIds().stream()
                     .map(JsonAdaptedId::new)
                     .collect(Collectors.toList()));
         } else if (source.getType() == Type.RECRUITER) {
