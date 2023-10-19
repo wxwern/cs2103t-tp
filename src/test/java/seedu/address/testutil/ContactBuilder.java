@@ -56,10 +56,10 @@ public class ContactBuilder {
     public ContactBuilder(Contact contactToCopy) {
         name = contactToCopy.getName();
         id = contactToCopy.getId();
-        phone = contactToCopy.getPhone();
-        email = contactToCopy.getEmail();
-        url = contactToCopy.getUrl();
-        address = contactToCopy.getAddress();
+        phone = contactToCopy.getPhone().orElse(null);
+        email = contactToCopy.getEmail().orElse(null);
+        url = contactToCopy.getUrl().orElse(null);
+        address = contactToCopy.getAddress().orElse(null);
         tags = new HashSet<>(contactToCopy.getTags());
     }
 
@@ -83,7 +83,7 @@ public class ContactBuilder {
      * Sets the {@code Status} of the {@code Contact} that we are building.
      */
     public ContactBuilder withStatus(String status) {
-        this.status = new Status(status);
+        this.status = status == null ? null : new Status(status);
         return this;
     }
 
@@ -99,7 +99,7 @@ public class ContactBuilder {
      * Sets the {@code Url} of the {@code Contact} that we are building.
      */
     public ContactBuilder withUrl(String url) {
-        this.url = new Url(url);
+        this.url = url == null ? null : new Url(url);
         return this;
     }
 
@@ -107,7 +107,7 @@ public class ContactBuilder {
      * Sets the {@code Address} of the {@code Contact} that we are building.
      */
     public ContactBuilder withAddress(String address) {
-        this.address = new Address(address);
+        this.address = address == null ? null : new Address(address);
         return this;
     }
 
@@ -115,7 +115,7 @@ public class ContactBuilder {
      * Sets the {@code Phone} of the {@code Contact} that we are building.
      */
     public ContactBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+        this.phone = phone == null ? null : new Phone(phone);
         return this;
     }
 
@@ -123,7 +123,7 @@ public class ContactBuilder {
      * Sets the {@code Email} of the {@code Contact} that we are building.
      */
     public ContactBuilder withEmail(String email) {
-        this.email = new Email(email);
+        this.email = email == null ? null : new Email(email);
         return this;
     }
 

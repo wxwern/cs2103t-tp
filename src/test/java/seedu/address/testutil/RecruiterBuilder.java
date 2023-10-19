@@ -42,10 +42,10 @@ public class RecruiterBuilder extends ContactBuilder {
         return new Recruiter(
             contact.getName(),
             contact.getId(),
-            contact.getPhone(),
-            contact.getEmail(),
-            contact.getUrl(),
-            contact.getAddress(),
+            contact.getPhone().orElse(null),
+            contact.getEmail().orElse(null),
+            contact.getUrl().orElse(null),
+            contact.getAddress().orElse(null),
             contact.getTags(),
             oid
         );
