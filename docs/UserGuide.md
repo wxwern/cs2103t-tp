@@ -119,7 +119,7 @@ Examples:
 * `add --type o --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
 
 
-### Adding a recruiter: `add --type recruiter`
+#### Adding a recruiter contact: `add --type recruiter`
 
 _{Work in progress...}_
 
