@@ -43,7 +43,7 @@ public class SampleDataUtil {
                     new Email("davidli@alexyeoh.example.com"), null,
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                     getTagSet("direct", "network"), new Id("alex_yeoh_inc")),
-            new Recruiter(new Name("Roy Balakrishnan"), new Id("test_6"), new Phone("92624417"),
+            new Recruiter(new Name("Roy Balakrishnan"), new Id("roy_balakrishnan"), new Phone("92624417"),
                     new Email("royb@example.com"), new Url("www.nus.edu.sg"),
                     null, getTagSet("friendly"), null)
         };
