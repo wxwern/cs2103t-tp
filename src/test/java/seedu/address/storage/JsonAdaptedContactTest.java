@@ -46,7 +46,7 @@ public class JsonAdaptedContactTest {
             .collect(Collectors.toList());
 
 
-    private static final List<JsonAdaptedId> VALID_RIDS = JESUS.getRids().stream()
+    private static final List<JsonAdaptedId> VALID_RIDS = JESUS.getRecruiterIds().stream()
             .map(JsonAdaptedId::new)
             .collect(Collectors.toList());
 
