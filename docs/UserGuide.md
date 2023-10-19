@@ -143,7 +143,7 @@ Acceptable Parameters:
 
 * `ADDRESS` can accept any value. It designates the contact’s physical address.
 
-* `TAG `can accept any value and may have multiple inputs.
+* `TAG` can accept any value and may have multiple inputs.
 
 
 Examples:
