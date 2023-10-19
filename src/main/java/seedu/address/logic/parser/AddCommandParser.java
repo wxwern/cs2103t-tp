@@ -14,12 +14,10 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddOrganizationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
@@ -40,51 +38,50 @@ import seedu.address.model.tag.Tag;
 public class AddCommandParser implements Parser<AddCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AddCommand and returns an AddCommand object
+     * for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(args,
-                FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
-                FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
-                FLAG_ID, FLAG_STATUS, FLAG_POSITION,
-                FLAG_ORGANIZATION_ID,
-                FLAG_ORGANIZATION, FLAG_RECRUITER);
+                ArgumentTokenizer.tokenize(args,
+                        FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
+                        FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
+                        FLAG_ID, FLAG_STATUS, FLAG_POSITION,
+                        FLAG_ORGANIZATION_ID,
+                        FLAG_ORGANIZATION, FLAG_RECRUITER
+                );
 
-        if (!areFlagsPresent(argMultimap, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS)
-            || !argMultimap.getPreamble().isEmpty()) {
+        if (!argMultimap.hasAllOfFlags(FLAG_NAME)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_URL, FLAG_ADDRESS);
 
-        if (areFlagsPresent(argMultimap, FLAG_ORGANIZATION)) {
+        if (argMultimap.hasFlag(FLAG_ORGANIZATION)) {
             Organization organization = parseAsOrganization(argMultimap);
-            return new AddOrganizationCommand(organization);
-        } else if (areFlagsPresent(argMultimap, FLAG_RECRUITER)) {
+            return new AddCommand(organization);
+        } else if (argMultimap.hasFlag(FLAG_RECRUITER)) {
             Recruiter recruiter = parseAsRecruiter(argMultimap);
             return new AddCommand(recruiter);
         }
 
         // Deprecated contact format. Will be removed in future versions.
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-        Id id;
-        try {
-            id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
-        } catch (NoSuchElementException e) {
-            id = new Id();
-        }
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
-        Url url;
-        try {
-            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
-        } catch (NoSuchElementException e) {
-            url = new Url();
-        }
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+        Optional<String> idString = argMultimap.getValue(FLAG_ID);
+        Id id = idString.isPresent()
+                ? ParserUtil.parseId(idString.get())
+                : new Id();
+        Phone phone = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_PHONE), ParserUtil::parsePhone);
+        Email email = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_EMAIL), ParserUtil::parseEmail);
+        Address address = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_ADDRESS), ParserUtil::parseAddress);
+        Url url = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_URL), ParserUtil::parseUrl);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
         Contact contact = new Contact(name, id, phone, email, url, address, tagList);
@@ -95,78 +92,51 @@ public class AddCommandParser implements Parser<AddCommand> {
     private Recruiter parseAsRecruiter(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_ORGANIZATION_ID);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+
+        Optional<String> idString = argMultimap.getValue(FLAG_ID);
+        Id id = idString.isPresent()
+                ? ParserUtil.parseId(idString.get())
+                : new Id();
+
+        Phone phone = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_PHONE), ParserUtil::parsePhone);
+        Email email = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_EMAIL), ParserUtil::parseEmail);
+        Address address = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_ADDRESS), ParserUtil::parseAddress);
+        Url url = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_URL), ParserUtil::parseUrl);
+        Id oid = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_ORGANIZATION_ID), ParserUtil::parseId);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
-        Id id;
-        try {
-            id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
-        } catch (NoSuchElementException e) {
-            id = new Id();
-        }
-
-        Url url;
-        try {
-            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
-        } catch (NoSuchElementException e) {
-            url = new Url();
-        }
-
-        Id oid;
-        try {
-            oid = ParserUtil.parseId(argMultimap.getValue(FLAG_ORGANIZATION_ID).get());
-        } catch (NoSuchElementException e) {
-            oid = null;
-        }
 
         return new Recruiter(name, id, phone, email, url, address, tagList, oid);
     }
 
     private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
-        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_POSITION, FLAG_STATUS);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(FLAG_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(FLAG_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get());
+
+        Optional<String> idString = argMultimap.getValue(FLAG_ID);
+        Id id = idString.isPresent()
+                ? ParserUtil.parseId(idString.get())
+                : new Id();
+
+        Phone phone = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_PHONE), ParserUtil::parsePhone);
+        Email email = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_EMAIL), ParserUtil::parseEmail);
+        Address address = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_ADDRESS), ParserUtil::parseAddress);
+        Url url = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_URL), ParserUtil::parseUrl);
+        Position position = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_POSITION), ParserUtil::parsePosition);
+        Status status = ParserUtil.parseOptionally(
+                argMultimap.getValue(FLAG_STATUS), ParserUtil::parseStatus);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
-        Id id;
-        try {
-            id = ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get());
-        } catch (NoSuchElementException e) {
-            id = new Id();
-        }
+        Set<Id> ridList = Set.of(); // TODO: This should be dynamically determined from oid in Recruiter.
 
-        Url url;
-        try {
-            url = ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get());
-        } catch (NoSuchElementException e) {
-            url = new Url();
-        }
-
-        Position position;
-        try {
-            position = ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get());
-        } catch (NoSuchElementException e) {
-            position = new Position();
-        }
-
-        Status status;
-        try {
-            status = ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get());
-        } catch (NoSuchElementException e) {
-            status = new Status();
-        }
-
-        return new Organization(name, id, phone, email, url, address, tagList, status, position);
+        return new Organization(name, id, phone, email, url, address, tagList, status, position, ridList);
     }
-
-    /**
-     * Returns true if none of the flags contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean areFlagsPresent(ArgumentMultimap argumentMultimap, Flag... flags) {
-        return Stream.of(flags).allMatch(flag -> argumentMultimap.getValue(flag).isPresent());
-    }
-
 }

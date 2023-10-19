@@ -3,11 +3,11 @@ layout: page
 title: Bryan's Project Portfolio Page
 ---
 
-### Project: SteveJobs++
+### Project: Jobby
 
-SteveJobs++ (SJ++) is a desktop app for managing job applications and contacts,
+Jobby is a desktop app for managing job applications and contacts,
 optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
-SJ++ can help you manage tracking your job applications and contacts in a more streamlined fashion.
+Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion.
 
 Given below are my contributions to the project.
 

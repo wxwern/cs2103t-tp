@@ -1,9 +1,11 @@
 package seedu.address.storage;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedContact.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalContacts.BENSON;
+import static seedu.address.testutil.TypicalContacts.JESUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +37,18 @@ public class JsonAdaptedContactTest {
     private static final String VALID_STATUS = "";
     private static final String VALID_POSITION = "";
     private static final String VALID_ID = "78a36caf-6d42-4fd2-a017-7f6a92fa3155";
-    private static final String VALID_PHONE = BENSON.getPhone().toString();
-    private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final String VALID_URL = BENSON.getUrl().toString();
-    private static final String VALID_ADDRESS = BENSON.getAddress().toString();
+    private static final String VALID_PHONE = BENSON.getPhone().get().value;
+    private static final String VALID_EMAIL = BENSON.getEmail().get().value;
+    private static final String VALID_URL = BENSON.getUrl().get().value;
+    private static final String VALID_ADDRESS = BENSON.getAddress().get().value;
     private static final String VALID_OID = "78a36caf-6d42-4fd2-a017-7f6a92fa3155";
-
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
+            .collect(Collectors.toList());
+
+
+    private static final List<JsonAdaptedId> VALID_RIDS = JESUS.getRecruiterIds().stream()
+            .map(JsonAdaptedId::new)
             .collect(Collectors.toList());
 
     @Test
@@ -79,12 +85,11 @@ public class JsonAdaptedContactTest {
     }
 
     @Test
-    public void toModelType_nullPhone_throwsIllegalValueException() {
+    public void toModelType_nullPhone_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 null, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
                 VALID_OID, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        assertDoesNotThrow(person::toModelType);
     }
 
     @Test
@@ -97,12 +102,11 @@ public class JsonAdaptedContactTest {
     }
 
     @Test
-    public void toModelType_nullEmail_throwsIllegalValueException() {
+    public void toModelType_nullEmail_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, null, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
                 VALID_OID, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        assertDoesNotThrow(person::toModelType);
     }
 
     @Test
@@ -115,12 +119,11 @@ public class JsonAdaptedContactTest {
     }
 
     @Test
-    public void toModelType_nullAddress_throwsIllegalValueException() {
+    public void toModelType_nullAddress_doesNotThrowException() {
         JsonAdaptedContact person = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, null, VALID_STATUS, VALID_POSITION,
                 VALID_OID, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        assertDoesNotThrow(person::toModelType);
     }
 
     @Test

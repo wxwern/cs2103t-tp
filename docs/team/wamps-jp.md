@@ -3,9 +3,9 @@ layout: page
 title: Juanpa's Project Portfolio Page
 ---
 
-### Project: SteveJobs++
+### Project: Jobby
 
-SteveJobs++ (SJ++) is a desktop app for tracking job applications.
+Jobby is a desktop app for tracking job applications.
 It saves organisations and recruiters as contacts in an addressbook.
 
 Given below are my contributions to the project.

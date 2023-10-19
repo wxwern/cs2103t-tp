@@ -9,7 +9,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Status;
 import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -25,7 +24,6 @@ public class ContactBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_URL = "www.google.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_STATUS = "Applied";
 
     private Name name;
     private Id id;
@@ -33,7 +31,6 @@ public class ContactBuilder {
     private Email email;
     private Url url;
     private Address address;
-    private Status status;
     private Set<Tag> tags;
 
     /**
@@ -46,7 +43,6 @@ public class ContactBuilder {
         email = new Email(DEFAULT_EMAIL);
         url = new Url(DEFAULT_URL);
         address = new Address(DEFAULT_ADDRESS);
-        status = new Status(DEFAULT_STATUS);
         tags = new HashSet<>();
     }
 
@@ -56,10 +52,10 @@ public class ContactBuilder {
     public ContactBuilder(Contact contactToCopy) {
         name = contactToCopy.getName();
         id = contactToCopy.getId();
-        phone = contactToCopy.getPhone();
-        email = contactToCopy.getEmail();
-        url = contactToCopy.getUrl();
-        address = contactToCopy.getAddress();
+        phone = contactToCopy.getPhone().orElse(null);
+        email = contactToCopy.getEmail().orElse(null);
+        url = contactToCopy.getUrl().orElse(null);
+        address = contactToCopy.getAddress().orElse(null);
         tags = new HashSet<>(contactToCopy.getTags());
     }
 
@@ -79,13 +75,7 @@ public class ContactBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Status} of the {@code Contact} that we are building.
-     */
-    public ContactBuilder withStatus(String status) {
-        this.status = new Status(status);
-        return this;
-    }
+
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Contact} that we are building.
@@ -99,7 +89,7 @@ public class ContactBuilder {
      * Sets the {@code Url} of the {@code Contact} that we are building.
      */
     public ContactBuilder withUrl(String url) {
-        this.url = new Url(url);
+        this.url = url == null ? null : new Url(url);
         return this;
     }
 
@@ -107,7 +97,7 @@ public class ContactBuilder {
      * Sets the {@code Address} of the {@code Contact} that we are building.
      */
     public ContactBuilder withAddress(String address) {
-        this.address = new Address(address);
+        this.address = address == null ? null : new Address(address);
         return this;
     }
 
@@ -115,7 +105,7 @@ public class ContactBuilder {
      * Sets the {@code Phone} of the {@code Contact} that we are building.
      */
     public ContactBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+        this.phone = phone == null ? null : new Phone(phone);
         return this;
     }
 
@@ -123,7 +113,7 @@ public class ContactBuilder {
      * Sets the {@code Email} of the {@code Contact} that we are building.
      */
     public ContactBuilder withEmail(String email) {
-        this.email = new Email(email);
+        this.email = email == null ? null : new Email(email);
         return this;
     }
 

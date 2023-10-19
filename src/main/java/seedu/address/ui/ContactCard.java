@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javafx.fxml.FXML;
@@ -23,9 +24,8 @@ public class ContactCard extends UiPart<Region> {
     private static final String FXML = "ContactListCard.fxml";
 
     /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX. As a consequence, UI
+     * elements' variable names cannot be set to such keywords or an exception will be thrown by JavaFX during runtime.
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
@@ -74,37 +74,42 @@ public class ContactCard extends UiPart<Region> {
         typeLabel.setId("type");
         tags.getChildren().add(typeLabel); // add it to the front of tags
 
-        setVboxInnerLabelText(phone, () -> contact.getPhone().value);
-        setVboxInnerLabelText(address, () -> contact.getAddress().value);
-        setVboxInnerLabelText(email, () -> contact.getEmail().value);
-        setVboxInnerLabelText(url, () -> contact.getUrl().value);
+        setVboxInnerLabelText(
+                phone, () -> contact.getPhone().map(phone -> phone.value).orElse(null));
+        setVboxInnerLabelText(
+                address, () -> contact.getAddress().map(address -> address.value).orElse(null));
+        setVboxInnerLabelText(
+                email, () -> contact.getEmail().map(email -> email.value).orElse(null));
+        setVboxInnerLabelText(
+                url, () -> contact.getUrl().map(url -> url.value).orElse(null));
 
         switch (contact.getType()) {
         case ORGANIZATION: {
             Organization organization = (Organization) contact;
-            final String statusString = organization.getStatus().applicationStatus;
-            final String positionString = organization.getPosition().jobPosition;
+            final String statusString = organization.getStatus()
+                    .map(status -> status.applicationStatus).orElse(null);
+            final String positionString = organization.getPosition()
+                    .map(position -> position.jobPosition).orElse(null);
 
             setVboxInnerLabelText(
-                    status, () -> StringUtil.formatWithNullFallback("Application Status: %s", statusString)
-            );
+                    status, () ->
+                            StringUtil.formatWithNullFallback("Application Status: %s", statusString));
             setVboxInnerLabelText(
-                    position, () -> StringUtil.formatWithNullFallback("Application Position: %s", positionString)
-            );
+                    position, () ->
+                            StringUtil.formatWithNullFallback("Job Position: %s", positionString));
             cardPaneInnerVbox.getChildren().remove(linkedParentOrganization);
             break;
         }
         case RECRUITER: {
             Recruiter recruiter = (Recruiter) contact;
 
-            final Id linkedOrgId = recruiter.getOrganizationId();
+            final Optional<Id> linkedOrgId = recruiter.getOrganizationId();
 
             setVboxInnerLabelText(
-                    linkedParentOrganization, () -> linkedOrgId == null
-                            ? null
-                            : String.format(
-                                    "from %s (%s)", "organization" /* TODO: Use org name instead */, linkedOrgId.value
-                            )
+                    linkedParentOrganization, () ->
+                            linkedOrgId.map(oid -> String.format(
+                                    "from %s (%s)", "organization" /* TODO: Use org name instead */, oid.value))
+                            .orElse(null)
             );
             cardPaneInnerVbox.getChildren().removeAll(status, position);
             break;
@@ -120,10 +125,10 @@ public class ContactCard extends UiPart<Region> {
     }
 
     /**
-     * Configures the inner label contained within the vbox container to show the given string,
-     * or remove the label entirely if the string is empty or null.
+     * Configures the inner label contained within the vbox container to show the given string, or remove the label
+     * entirely if the string is empty or null.
      *
-     * @param label The label to set the text to.
+     * @param label         The label to set the text to.
      * @param valueSupplier The string value supplier. This may be expressed as a lambda function.
      */
     private void setVboxInnerLabelText(Label label, Supplier<String> valueSupplier) {

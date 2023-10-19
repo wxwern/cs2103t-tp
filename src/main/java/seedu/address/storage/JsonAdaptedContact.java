@@ -44,6 +44,7 @@ class JsonAdaptedContact {
     private String oid;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
+
     /**
      * Constructs a {@code JsonAdaptedContact} with the given contact details.
      */
@@ -74,23 +75,30 @@ class JsonAdaptedContact {
      */
     public JsonAdaptedContact(Contact source) {
         if (source.getType() == Type.ORGANIZATION) {
-            status = ((Organization) source).getStatus().applicationStatus;
-            position = ((Organization) source).getPosition().jobPosition;
+            Organization organization = (Organization) source;
+            status = organization.getStatus()
+                    .map(status -> status.applicationStatus)
+                    .orElse(null);
+            position = organization.getPosition()
+                    .map(position -> position.jobPosition)
+                    .orElse(null);
             oid = "";
         } else if (source.getType() == Type.RECRUITER) {
+            Recruiter recruiter = (Recruiter) source;
             status = "";
             position = "";
-            Id tmp = ((Recruiter) source).getOrganizationId();
-            oid = tmp == null ? null : tmp.value;
+            oid = recruiter.getOrganizationId()
+                    .map(oid -> oid.value)
+                    .orElse(null);
         }
 
         type = source.getType().toString();
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        url = source.getUrl().value;
-        address = source.getAddress().value;
         id = source.getId().value;
+        phone = source.getPhone().map(phone -> phone.value).orElse(null);
+        email = source.getEmail().map(email -> email.value).orElse(null);
+        url = source.getUrl().map(url -> url.value).orElse(null);
+        address = source.getAddress().map(address -> address.value).orElse(null);
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -127,53 +135,51 @@ class JsonAdaptedContact {
         }
         final Id modelId = new Id(id);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
+        if (phone != null && !Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        final Phone modelPhone = phone == null ? null : new Phone(phone);
 
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
+        if (email != null && !Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
-        final Email modelEmail = new Email(email);
+        final Email modelEmail = email == null ? null : new Email(email);
 
-        if (url == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName()));
-        }
-        if (!Url.isValidUrl(url)) {
+        if (url != null && !Url.isValidUrl(url)) {
             throw new IllegalValueException(Url.MESSAGE_CONSTRAINTS);
         }
-        final Url modelUrl = new Url(url);
+        final Url modelUrl = url == null ? null : new Url(url);
 
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
+        if (address != null && !Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-        final Address modelAddress = new Address(address);
+        final Address modelAddress = address == null ? null : new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
 
         switch (modelType) {
         case ORGANIZATION: {
+            final Set<Id> modelRids = new HashSet<>();
 
+            if (status != null && !Status.isValidStatus(status)) {
+                throw new IllegalValueException(Status.MESSAGE_CONSTRAINTS);
+            }
             final Status modelStatus = status == null ? new Status() : new Status(status);
 
+            if (position != null && !Position.isValidPosition(position)) {
+                throw new IllegalValueException(Position.MESSAGE_CONSTRAINTS);
+            }
             final Position modelPosition = position == null ? new Position() : new Position(position);
 
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition
+                    modelTags, modelStatus, modelPosition, modelRids
             );
         }
         case RECRUITER: {
+            if (oid != null && !Id.isValidId(oid)) {
+                throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+            }
             final Id modelOid = oid == null ? null : new Id(oid);
 
             return new Recruiter(
