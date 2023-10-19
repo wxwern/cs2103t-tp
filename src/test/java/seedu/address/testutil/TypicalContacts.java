@@ -21,6 +21,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Contact;
+import seedu.address.model.person.Organization;
 
 /**
  * A utility class containing a list of {@code Contact} objects to be used in tests.
@@ -41,7 +42,6 @@ public class TypicalContacts {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
-            .withStatus("Applied")
             .withTags("owesMoney", "friends").build();
     public static final Contact CARL = new ContactBuilder()
             .withName("Carl Kurz")
@@ -74,6 +74,15 @@ public class TypicalContacts {
             .withPhone("9482442")
             .withEmail("anna@example.com")
             .withAddress("4th street").build();
+
+    public static final Organization JESUS = new OrganizationBuilder()
+            .withName("Jesus Christ")
+            .withId("test_7-123")
+            .withPhone("9482442")
+            .withEmail("anna@example.com")
+            .withAddress("4th street")
+            .withRids("cat")
+            .build();
 
     // Manually added
     public static final Contact HOON = new ContactBuilder().withName("Hoon Meier").withPhone("8482424")

@@ -14,7 +14,7 @@ class JsonAdaptedId {
     private final String idName;
 
     /**
-     * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
+     * Constructs a {@code JsonAdaptedId} with the given {@code idName}.
      */
     @JsonCreator
     public JsonAdaptedId(String idName) {
@@ -22,7 +22,7 @@ class JsonAdaptedId {
     }
 
     /**
-     * Converts a given {@code Tag} into this class for Jackson use.
+     * Converts a given {@code Id} into this class for Jackson use.
      */
     public JsonAdaptedId(Id source) {
         idName = source.value;
@@ -34,7 +34,7 @@ class JsonAdaptedId {
     }
 
     /**
-     * Converts this Jackson-friendly adapted tag object into the model's {@code Tag} object.
+     * Converts this Jackson-friendly adapted tag object into the model's {@code Id} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted tag.
      */

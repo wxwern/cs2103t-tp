@@ -25,7 +25,6 @@ public class ContactBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_URL = "www.google.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_STATUS = "Applied";
 
     private Name name;
     private Id id;
@@ -33,7 +32,6 @@ public class ContactBuilder {
     private Email email;
     private Url url;
     private Address address;
-    private Status status;
     private Set<Tag> tags;
 
     /**
@@ -46,7 +44,6 @@ public class ContactBuilder {
         email = new Email(DEFAULT_EMAIL);
         url = new Url(DEFAULT_URL);
         address = new Address(DEFAULT_ADDRESS);
-        status = new Status(DEFAULT_STATUS);
         tags = new HashSet<>();
     }
 
@@ -79,13 +76,7 @@ public class ContactBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Status} of the {@code Contact} that we are building.
-     */
-    public ContactBuilder withStatus(String status) {
-        this.status = new Status(status);
-        return this;
-    }
+
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Contact} that we are building.

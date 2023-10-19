@@ -1,48 +1,106 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Id;
 import seedu.address.model.person.Organization;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Recruiter;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 public class OrganizationBuilder extends ContactBuilder {
-    public static final String DEFAULT_OID = "111111";
-
-    private Id oid;
-
+    public static final String DEFAULT_STATUS = "Applied";
+    public static final String DEFAULT_POSITION = "Manager";
     private Position position;
-    private Set<Recruiter> recruiters;
+    private Set<Id> rids;
+    private Status status;
+
 
     /**
      * Creates a {@code OrganizationBuilder} with the default details.
      */
     public OrganizationBuilder() {
         super();
-        this.oid = new Id(DEFAULT_OID);
+        position = new Position(DEFAULT_POSITION);
+        status = new Status(DEFAULT_STATUS);
+        rids = new HashSet<>();
     }
 
     /**
-     * Initializes the RecruiterBuilder with the data of {@code recruiterToCopy}.
+     * Initializes the OrganizationBuilder with the data of {@code organizationToCopy}.
      */
     public OrganizationBuilder(Organization organizationToCopy) {
         super(organizationToCopy);
     }
 
+    @Override
+    public OrganizationBuilder withId(String id) {
+        return (OrganizationBuilder) super.withId(id);
+    }
+
+    @Override
+    public OrganizationBuilder withAddress(String address) {
+        return (OrganizationBuilder) super.withAddress(address);
+    }
+
+    @Override
+    public OrganizationBuilder withEmail(String email) {
+        return (OrganizationBuilder) super.withEmail(email);
+    }
+
+    @Override
+    public OrganizationBuilder withName(String name) {
+        return (OrganizationBuilder) super.withName(name);
+    }
+
+    @Override
+    public OrganizationBuilder withPhone(String phone) {
+        return (OrganizationBuilder) super.withPhone(phone);
+    }
+
+    @Override
+    public OrganizationBuilder withTags(String... tags) {
+        return (OrganizationBuilder) super.withTags(tags);
+    }
+
+    @Override
+    public OrganizationBuilder withUrl(String url) {
+        return (OrganizationBuilder) super.withUrl(url);
+    }
+
     /**
-     * Sets the organization {@code Id} of the {@code Recruiter} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Contact} that we are building.
      */
-    public OrganizationBuilder withOid(String oid) {
-        this.oid = new Id(oid);
+    public OrganizationBuilder withRids(String ... rids) {
+        this.rids = SampleDataUtil.getIdSet(rids);
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Status} of the {@code Contact} that we are building.
+     */
+    public OrganizationBuilder withStatus(String status) {
+        this.status = new Status(status);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code Contact} that we are building.
+     */
+    public OrganizationBuilder withPosition(String position) {
+        this.status = new Status(position);
         return this;
     }
 
     @Override
     public Organization build() {
-        Organization contact = (Organization) super.build();
+        Contact contact = super.build();
         return new Organization(
                 contact.getName(),
                 contact.getId(),
@@ -51,8 +109,9 @@ public class OrganizationBuilder extends ContactBuilder {
                 contact.getUrl(),
                 contact.getAddress(),
                 contact.getTags(),
-                contact.getStatus(),
-                contact.getPosition()
+                status,
+                position,
+                rids
         );
     }
 
