@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -18,6 +20,9 @@ public class Organization extends Contact {
     private final Optional<Status> status;
     private final Optional<Position> position;
 
+    private final Set<Id> rids = new HashSet<>();
+
+
     /**
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
@@ -25,11 +30,13 @@ public class Organization extends Contact {
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position
+            Address address, Set<Tag> tags, Status status, Position position,
+            Set<Id> rids
     ) {
         super(name, id, phone, email, url, address, tags);
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
+        this.rids.addAll(rids);
     }
 
     @Override
@@ -45,6 +52,13 @@ public class Organization extends Contact {
         return position;
     }
 
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Id> getRecruiterIds() {
+        return Collections.unmodifiableSet(rids);
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

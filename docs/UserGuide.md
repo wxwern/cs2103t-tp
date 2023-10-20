@@ -37,6 +37,9 @@ title: User Guide
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used like `add --name John Doe`.
 
+* Terms prefixed with `--` are used to assign a value to some action or property, or to choose an option out of a few settings.
+  e.g. the `--name` field (which requires a `NAME` supplied after it) may configure the name of a contact, while a switch like `--recursive` (which doesn't accept values) may explicitly activate a recursive mode for an action.
+
 * Items in square brackets are optional.<br>
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
 
@@ -46,18 +49,18 @@ title: User Guide
 * Items with `...` after them can be used multiple times including zero times.<br>
   e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
 
+* Items separated by `/` means that only one of them can be used per command.<br>
+  e.g. `--org/--rec` means that either `--org` or `--rec` can be supplied as a flag but not both at the same time.
+
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* Extraneous parameters and values for all commands will be ignored by default.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extras like `list 123 --other --org 456` will be interpreted as `list --org` (i.e., ignoring all other parameters).
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Note:**
-This is a pending update. Command formats aren't updated as of the current build, and are still using the legacy `parameter/value` syntax instead of this new `--parameter value` syntax. Additionally, commands are in the middle of being revamped.
-</div>
 
 ### Viewing help: `help`
 
@@ -70,20 +73,20 @@ Format: `help`
 
 ### Adding a contact: `add`
 
-Format: `add --type CLASS <additional parameters and values...>`
+Format: `add --org/--rec <additional parameters and values...>`
 
 Adds a contact to the address book of the given class type: Organization or Recruiter.
 
-Notice that `CLASS` must be either _Organization_ or _Recruiter_ (or any case-insensitive unambiguous prefix match, so “org” will match “Organization” automatically)
+Supplying `--org` adds an Organization while supplying `--rec` adds a Recruiter to the address book.
 
 Details specifically on organization and recruiter level are specified in the next sections.
 
 
-#### Adding an organization contact: `add --type organization`
+#### Adding an organization contact: `add --org`
 
 _{Work in progress...}_
 
-Format: `add --type o[rganization] --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]... `
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]... `
 
 
 Acceptable Parameters:
@@ -108,22 +111,22 @@ Acceptable Parameters:
 
 
 Examples:
-* `add --name J&J --type Organization`
+* `add --org --name J&J`
 
-* `add --name Google --type Org --id g-sg --phone 98765432 `
+* `add --org --name Google --id g-sg --phone 98765432 `
 
-* `add --name Hoyoverse --type organization --email mihoyo@example.com --tag example1 --tag example2`
+* `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
 
-* `add --name Example --type organi --url www.organization.org --tag freelance work`
+* `add --org --name Example --url www.organization.org --tag freelance`
 
-* `add --type o --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
 
 
-### Adding a recruiter: `add --type recruiter`
+#### Adding a recruiter contact: `add --rec`
 
 _{Work in progress...}_
 
-Format: `add --type r[ecruiter] --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
 
 
 Acceptable Parameters:
@@ -132,7 +135,7 @@ Acceptable Parameters:
 * `ID` refers to a unique identifier which is used to uniquely identify the recruiter (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
-* `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to.
+* `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
 
 * `NUMBER` should be a valid phone number.
 
@@ -140,20 +143,24 @@ Acceptable Parameters:
 
 * `ADDRESS` can accept any value. It designates the contact’s physical address.
 
-* `TAG `can accept any value and may have multiple inputs.
+* `TAG` can accept any value and may have multiple inputs.
 
 
 Examples:
-* `add --name John Doe --type Recruiter --oid paypal-sg`
+* `add --rec --name John Doe --oid paypal-sg`
 
 
 ### Listing all contacts: `list`
 
-_{To be updated...}_
+Format: `list [--org/--rec]`
 
 Shows a list of all contacts in the address book.
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
 
-Format: `list`
+Examples:
+* `list`
+* `list --org`
+* `list --rec`
 
 
 ### Editing a contact: `edit`
@@ -249,8 +256,8 @@ If your changes to the data file makes its format invalid, Jobby will discard al
 
 Action | Format, Examples
 --------|------------------
-**Add Organization** | `add --type o[rganization] --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --type o --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research`
-**Add Recruiter** | `add --type r[ecruiter] --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --name John Doe --type Recruiter --oid paypal-sg`
+**Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research`
+**Add Recruiter** | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`
 **Clear** | `clear`
 **Delete** | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`
 **Edit** | Coming soon...

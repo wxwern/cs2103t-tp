@@ -21,7 +21,6 @@ We are a team based in the [School of Computing, National University of Singapor
 
 <img src="images/cj-lee01.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/CJ-Lee01)]
 [[portfolio](team/johndoe.md)]
 
@@ -34,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](http://github.com/mcnabry)]
 [[portfolio](team/mcnabry.md)]
 
-* Member
+* Role: Member
 
 ### Shi Yu
 
