@@ -17,6 +17,8 @@ Class Contact
 Class Address
 Class Email
 Class Name
+Class Id
+Class Url
 Class Phone
 Class Tag
 
@@ -38,17 +40,21 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 AddressBook *--> "1" UniqueContactList
 UniqueContactList --> "~* all" Contact
 Contact *--> Name
+Contact *--> Id
 Contact *--> Phone
 Contact *--> Email
+Contact *--> Url
 Contact *--> Address
 Contact *--> "*" Tag
 
 Contact -[hidden]up--> I
 UniqueContactList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Name -[hidden]right-> Id
+Id -[hidden]right-> Phone
+Phone -[hidden]right-> Email
+Email -[hidden]right-> Url
+Url -[hidden]right-> Address
 
 ModelManager --> "~* filtered" Contact
 @enduml
