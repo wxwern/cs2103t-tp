@@ -96,7 +96,7 @@ public class ContactCard extends UiPart<Region> {
                             StringUtil.formatWithNullFallback("Application Status: %s", statusString));
             setVboxInnerLabelText(
                     position, () ->
-                            StringUtil.formatWithNullFallback("Application Position: %s", positionString));
+                            StringUtil.formatWithNullFallback("Job Position: %s", positionString));
             cardPaneInnerVbox.getChildren().remove(linkedParentOrganization);
             break;
         }

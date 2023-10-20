@@ -11,7 +11,11 @@ import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Id;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Organization;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Recruiter;
+import seedu.address.model.person.Status;
 import seedu.address.model.person.Url;
 import seedu.address.model.tag.Tag;
 
@@ -21,30 +25,27 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Contact[] getSampleContacts() {
         return new Contact[] {
-            new Contact(new Name("Alex Yeoh"), new Id("test_1"), new Phone("87438807"),
-                    new Email("alexyeoh@example.com"), new Url("www.google.com"),
-                    new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends")),
-            new Contact(new Name("Bernice Yu"), new Id("test_2"), new Phone("99272758"),
-                    new Email("berniceyu@example.com"), new Url("www.facebook.com"),
-                    new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends")),
-            new Contact(new Name("Charlotte Oliveiro"), new Id("test_3"), new Phone("93210283"),
-                    new Email("charlotte@example.com"), new Url("www.linkedin.com"),
-                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    getTagSet("neighbours")),
-            new Contact(new Name("David Li"), new Id("test_4"), new Phone("91031282"),
-                    new Email("lidavid@example.com"), new Url("www.nus.edu.sg"),
+            new Organization(new Name("Alex Yeoh Inc"), new Id("alex_yeoh_inc"), new Phone("87438807"),
+                    new Email("contact@alexyeoh.example.com"), new Url("alexyeoh.example.com"),
+                    null, getTagSet("parttime"), new Status("interested"), null, Set.of()),
+            new Organization(new Name("Google"), new Id("google"), new Phone("65218000"), null,
+                    new Url("careers.google.com"),
+                    new Address("70 Pasir Panjang Road, #03-71, "
+                            + "Mapletree Business City, "
+                            + "Singapore 117371"),
+                    getTagSet("bigtech", "internship", "competitive"),
+                    new Status("applied"), new Position("Software Engineer"), Set.of()),
+            new Organization(new Name("Job Seeker Plus"), new Id("job_seeker_plus"), new Phone("93210283"),
+                    new Email("jobseekerplus@example.com"), null,
+                    new Address("Blk 16 Real Street 128, #08-04"),
+                    getTagSet("startup", "internship"), null, null, Set.of()),
+            new Recruiter(new Name("David Li"), new Id("david_li"), new Phone("91031282"),
+                    new Email("davidli@alexyeoh.example.com"), null,
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("family")),
-            new Contact(new Name("Irfan Ibrahim"), new Id("test_5"), new Phone("92492021"),
-                    new Email("irfan@example.com"), new Url("www.google.com"),
-                    new Address("Blk 47 Tampines Street 20, #17-35"),
-                    getTagSet("classmates")),
-            new Contact(new Name("Roy Balakrishnan"), new Id("test_6"), new Phone("92624417"),
-                    new Email("royb@example.com"), new Url("www.luminus.nus.edu.sg"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    getTagSet("colleagues"))
+                    getTagSet("direct", "network"), new Id("alex_yeoh_inc")),
+            new Recruiter(new Name("Roy Balakrishnan"), new Id("roy_balakrishnan"), new Phone("92624417"),
+                    new Email("royb@example.com"), new Url("www.nus.edu.sg"),
+                    null, getTagSet("friendly"), null)
         };
     }
 
