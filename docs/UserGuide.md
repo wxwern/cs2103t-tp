@@ -152,11 +152,15 @@ Examples:
 
 ### Listing all contacts: `list`
 
-_{To be updated...}_
+Format: `list [--org/--rec]`
 
 Shows a list of all contacts in the address book.
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
 
-Format: `list`
+Examples:
+* `list`
+* `list --org`
+* `list --rec`
 
 
 ### Editing a contact: `edit`

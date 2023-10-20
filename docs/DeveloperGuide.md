@@ -317,6 +317,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+
+**Use case: List contacts**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  Jobby shows a list of contacts
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to list organizations.
+
+    * 1a1. Jobby shows a list of organizations.
+
+      Use case ends.
+
+* 1b. User requests to list recruiters.
+
+    * 1b1. Jobby shows a list of recruiters.
+
+      Use case ends.
+
+
 *{More to be added}*
 
 ### Non-Functional Requirements
