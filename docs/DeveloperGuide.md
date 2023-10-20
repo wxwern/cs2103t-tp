@@ -113,6 +113,11 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+How arguments from a raw command input may be obtained by parsers:
+* When arguments are needed for a command, `ArgumentTokenizer` is used to prepare and tokenize the raw input string, which can then convert it to an `ArgumentMultimap` for easy access.
+* An `ArgumentMultimap` represents the command data (which has the format `name preamble text --flag1 value 1 --flag2 value 2`) in their distinct fields: **preamble**, **flags** and their mapped **values**. Note that as a multimap, multiple values can be mapped to the same flag.
+* All parsers can use the `ArgumentMultimap` (obtained from using the raw input on `ArgumentTokenizer`) to access the required arguments to create and execute a `Command`.
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -311,6 +316,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. Jobby shows an error message.
 
       Use case resumes at step 2.
+
+
+**Use case: List contacts**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  Jobby shows a list of contacts
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to list organizations.
+
+    * 1a1. Jobby shows a list of organizations.
+
+      Use case ends.
+
+* 1b. User requests to list recruiters.
+
+    * 1b1. Jobby shows a list of recruiters.
+
+      Use case ends.
+
 
 *{More to be added}*
 
