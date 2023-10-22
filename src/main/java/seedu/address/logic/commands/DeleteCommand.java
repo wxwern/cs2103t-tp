@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
 import java.util.function.Function;
@@ -22,8 +24,14 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the contact identified by the index number used in the displayed contact list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: "
+            + "INDEX (must be a positive integer) "
+            + FLAG_ID + " ID "
+            + FLAG_RECURSIVE + " RECURSIVE "
+            + "\n"
+            + "Example 1: " + COMMAND_WORD + " 1\n"
+            + "Example 2: " + COMMAND_WORD + " --id 0d0h4\n"
+            + "Example 3: " + COMMAND_WORD + " 1 --recursive\n";
 
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
 
