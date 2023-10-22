@@ -317,6 +317,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+* 3b. The given ID does not match to any organization.
+
+    * 3b1. Jobby shows an error message.
+
+      Use case resumes at step 2.
+
+* 4a. The user has specified to delete recursively.
+
+    * 4a1. Jobby deletes all recruiter contacts associated with the recruiter (WIP)
+      
+      Use case ends.
+
+
 
 **Use case: List contacts**
 

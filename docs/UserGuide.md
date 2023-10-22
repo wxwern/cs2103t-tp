@@ -194,18 +194,19 @@ Examples:
 
 _{To be updated...}_
 
-Deletes the specified contact from the address book.
+Deletes the specified contact from the address book and its associated contacts if specified.
+Format: `delete INDEX [--recursive]` or `delete --id ID [--recursive]`
 
-Format: `delete INDEX`
-
-
-* Deletes the contact at the specified `INDEX`.
-* The index refers to the index number shown in the displayed contact list.
-* The index **must be a positive integer** 1, 2, 3, ...
+* `INDEX` refers to the index number shown on the list and must be a positive integer.
+* Deletes the person with id `ID` if specified, ignoring if the contact is shown in the list.
+* Deletes other contacts associated under the selected contact if `--recursive` is used, ignoring if the contact is shown in the list.
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd contact in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st contact in the results of the `find` command.
+* `delete 1` deletes the 1st contact in the list of contacts shown.
+* `delete --id 045f` deletes the contact with id `045f` in the address book.
+* `delete 1 --recursive` deletes the 1st contact along with other contacts associated under it.
+
+
 
 
 ### Clearing all entries: `clear`
@@ -258,7 +259,7 @@ Action | Format, Examples
 **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research`
 **Add Recruiter** | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Delete** | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`
 **Edit** | Coming soon...
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
