@@ -28,11 +28,46 @@ public class RecruiterBuilder extends ContactBuilder {
         super(recruiterToCopy);
     }
 
+    @Override
+    public RecruiterBuilder withName(String name) {
+        return (RecruiterBuilder) super.withName(name);
+    }
+
+    @Override
+    public RecruiterBuilder withId(String id) {
+        return (RecruiterBuilder) super.withId(id);
+    }
+
+    @Override
+    public RecruiterBuilder withPhone(String phone) {
+        return (RecruiterBuilder) super.withPhone(phone);
+    }
+
+    @Override
+    public RecruiterBuilder withEmail(String email) {
+        return (RecruiterBuilder) super.withEmail(email);
+    }
+
+    @Override
+    public RecruiterBuilder withUrl(String url) {
+        return (RecruiterBuilder) super.withUrl(url);
+    }
+
+    @Override
+    public RecruiterBuilder withAddress(String address) {
+        return (RecruiterBuilder) super.withAddress(address);
+    }
+
+    @Override
+    public RecruiterBuilder withTags(String... tags) {
+        return (RecruiterBuilder) super.withTags(tags);
+    }
+
     /**
      * Sets the organization {@code Id} of the {@code Recruiter} that we are building.
      */
     public RecruiterBuilder withOid(String oid) {
-        this.oid = new Id(oid);
+        this.oid = oid == null ? null : new Id(oid);
         return this;
     }
 
@@ -40,15 +75,14 @@ public class RecruiterBuilder extends ContactBuilder {
     public Recruiter build() {
         Contact contact = super.build();
         return new Recruiter(
-            contact.getName(),
-            contact.getId(),
-            contact.getPhone().orElse(null),
-            contact.getEmail().orElse(null),
-            contact.getUrl().orElse(null),
-            contact.getAddress().orElse(null),
-            contact.getTags(),
-            oid
+                contact.getName(),
+                contact.getId(),
+                contact.getPhone().orElse(null),
+                contact.getEmail().orElse(null),
+                contact.getUrl().orElse(null),
+                contact.getAddress().orElse(null),
+                contact.getTags(),
+                oid
         );
     }
-
 }
