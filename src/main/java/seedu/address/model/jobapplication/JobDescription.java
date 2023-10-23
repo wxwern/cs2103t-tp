@@ -40,7 +40,7 @@ public class JobDescription {
 
     @Override
     public String toString() {
-        return this.description.toString();
+        return this.description;
     }
     @Override
     public boolean equals(Object other) {
