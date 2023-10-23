@@ -85,10 +85,20 @@ public class TypicalContacts {
             .build();
 
     // Manually added
-    public static final Contact HOON = new ContactBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Contact IDA = new ContactBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Contact HOON = new ContactBuilder()
+            .withName("Hoon Meier")
+            .withId("test_8-123")
+            .withPhone("8482424")
+            .withEmail("stefan@example.com")
+            .withAddress("little india")
+            .build();
+    public static final Contact IDA = new ContactBuilder()
+            .withName("Ida Mueller")
+            .withId("test_9-123")
+            .withPhone("8482131")
+            .withEmail("hans@example.com")
+            .withAddress("chicago ave")
+            .build();
 
     // Manually added - Contact's details found in {@code CommandTestUtil}
     public static final Contact AMY = new ContactBuilder()
