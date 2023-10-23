@@ -22,8 +22,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Id;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
 import seedu.address.testutil.ContactBuilder;
 
 public class AddCommandTest {

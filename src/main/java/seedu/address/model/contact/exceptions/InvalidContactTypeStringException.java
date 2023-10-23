@@ -1,4 +1,4 @@
-package seedu.address.model.person.exceptions;
+package seedu.address.model.contact.exceptions;
 
 /**
  * Signals that the given string representation of a {@code ContactType} enum is invalid, i.e., there are no

@@ -1,4 +1,4 @@
-package seedu.address.model.person.exceptions;
+package seedu.address.model.contact.exceptions;
 
 /**
  * Signals that the operation will result in duplicate Contacts (Contacts are considered duplicates if they have the

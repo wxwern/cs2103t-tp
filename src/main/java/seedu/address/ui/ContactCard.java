@@ -11,10 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Id;
-import seedu.address.model.person.Organization;
-import seedu.address.model.person.Recruiter;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Recruiter;
 
 /**
  * An UI component that displays information of a {@code Contact}.

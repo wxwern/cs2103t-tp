@@ -8,8 +8,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Id;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
 
 /**
  * Deletes a contact and also deletes its child contacts.
