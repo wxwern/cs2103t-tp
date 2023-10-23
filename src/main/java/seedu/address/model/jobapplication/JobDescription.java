@@ -4,7 +4,6 @@ package seedu.address.model.jobapplication;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.model.contact.Id;
 
 /**
  * Describes the functions of the job to be applied to.
