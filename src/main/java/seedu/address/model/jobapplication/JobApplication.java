@@ -1,4 +1,4 @@
-package seedu.address.model.jobApplication;
+package seedu.address.model.jobapplication;
 
 /**
  * Represents a Job Application in the address book.
