@@ -12,8 +12,8 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Id;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
 
 /**
  * Deletes a contact identified using its displayed index or its contact id from the address book.

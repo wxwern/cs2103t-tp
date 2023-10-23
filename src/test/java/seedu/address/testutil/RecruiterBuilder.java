@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Id;
-import seedu.address.model.person.Recruiter;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Recruiter;
 
 /**
  * A utility class to help with building Recruiter objects.

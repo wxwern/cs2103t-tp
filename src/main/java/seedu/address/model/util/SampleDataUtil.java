@@ -6,17 +6,17 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Contact;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Id;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Organization;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Position;
-import seedu.address.model.person.Recruiter;
-import seedu.address.model.person.Status;
-import seedu.address.model.person.Url;
+import seedu.address.model.contact.Address;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Email;
+import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Name;
+import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Phone;
+import seedu.address.model.contact.Position;
+import seedu.address.model.contact.Recruiter;
+import seedu.address.model.contact.Status;
+import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
 /**

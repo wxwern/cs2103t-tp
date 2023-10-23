@@ -7,7 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 import java.util.function.Predicate;
 
 import seedu.address.model.Model;
-import seedu.address.model.person.Contact;
+import seedu.address.model.contact.Contact;
 
 /**
  * Lists all contacts in the address book to the user.

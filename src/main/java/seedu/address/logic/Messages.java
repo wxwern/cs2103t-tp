@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Flag;
-import seedu.address.model.person.Contact;
+import seedu.address.model.contact.Contact;
 
 /**
  * Container for user visible messages.

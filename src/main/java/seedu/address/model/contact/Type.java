@@ -1,6 +1,6 @@
-package seedu.address.model.person;
+package seedu.address.model.contact;
 
-import seedu.address.model.person.exceptions.InvalidContactTypeStringException;
+import seedu.address.model.contact.exceptions.InvalidContactTypeStringException;
 
 /**
  * Represents the type of {@code Contact} instances.

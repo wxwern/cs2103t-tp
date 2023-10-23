@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.contact;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,17 +15,17 @@ import static seedu.address.testutil.TypicalContacts.BOB;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.ContactBuilder;
-import seedu.address.testutil.RecruiterBuilder;
 
-class RecruiterTest {
+public class ContactTest {
+
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Recruiter recruiter = new RecruiterBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> recruiter.getTags().remove(0));
+        Contact contact = new ContactBuilder().build();
+        assertThrows(UnsupportedOperationException.class, () -> contact.getTags().remove(0));
     }
 
     @Test
-    public void isSameRecruiter() {
+    public void isSameContact() {
         // same object -> returns true
         assertTrue(ALICE.isSameContact(ALICE));
 
@@ -34,7 +34,7 @@ class RecruiterTest {
 
         // same name, all other attributes different -> returns true
         Contact editedAlice = new ContactBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-            .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameContact(editedAlice));
 
         // different name, all other attributes same -> returns false
