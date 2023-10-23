@@ -26,7 +26,12 @@ import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
+import seedu.address.model.contact.Position;
+import seedu.address.model.contact.Recruiter;
+import seedu.address.model.contact.Status;
+import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
@@ -112,6 +117,22 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editContactDescriptor.getTags()
             .orElse(contactToEdit.getTags());
 
+
+        if (contactToEdit.getType() == Type.ORGANIZATION) {
+            Status updatedStatus = editContactDescriptor.getStatus()
+                    .orElse(((Organization)contactToEdit).getStatus().orElse(null));
+
+            Position updatedPosition = editContactDescriptor.getPosition()
+                    .orElse(((Organization)contactToEdit).getPosition().orElse(null));
+            return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
+                    updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+        } else if (contactToEdit.getType() == Type.RECRUITER) {
+            Id updatedOid = editContactDescriptor.getOrganizationId()
+                    .orElse(((Recruiter)contactToEdit).getOrganizationId().orElse(null));
+            return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
+                    updatedAddress, updatedTags, updatedOid);
+        }
+
         return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
     }
 
@@ -151,6 +172,10 @@ public class EditCommand extends Command {
         private Url url;
         private Address address;
         private Set<Tag> tags;
+        private Status status;
+        private Position position;
+
+        private Id oid;
 
         public EditContactDescriptor() {}
 
@@ -166,17 +191,28 @@ public class EditCommand extends Command {
             setUrl(toCopy.url);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setStatus(toCopy.status);
+            setPosition(toCopy.position);
+            setOid(toCopy.oid);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, id, url, status, position, oid);
         }
 
         public void setName(Name name) {
             this.name = name;
+        }
+
+        public Optional<Id> getOrganizationId() {
+            return Optional.ofNullable(oid);
+        }
+
+        public void setOid(Id id) {
+            this.oid = id;
         }
 
         public Optional<Name> getName() {
@@ -218,6 +254,18 @@ public class EditCommand extends Command {
         public void setAddress(Address address) {
             this.address = address;
         }
+
+        public void setStatus(Status status) {
+            this.status = status;
+        }
+
+        public void setPosition(Position position) { this.position = position; }
+
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
+        public Optional<Position> getPosition() { return Optional.ofNullable(position); }
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
@@ -267,6 +315,9 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("url", url)
+                    .add("status", status)
+                    .add("position", position)
                     .toString();
         }
     }
