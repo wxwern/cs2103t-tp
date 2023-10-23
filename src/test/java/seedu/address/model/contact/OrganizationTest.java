@@ -26,7 +26,7 @@ public class OrganizationTest {
     }
 
     @Test
-    public void isSameOrganization() {
+    public void isSameContact() {
         // same object -> returns true
         assertTrue(ALICE.isSameContact(ALICE));
 

@@ -26,7 +26,7 @@ class RecruiterTest {
     }
 
     @Test
-    public void isSameRecruiter() {
+    public void isSameContact() {
         // same object -> returns true
         assertTrue(ALICE.isSameContact(ALICE));
 
