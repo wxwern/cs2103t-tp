@@ -12,12 +12,12 @@ public class ArgumentTokenizerTest {
     private final Flag unknownFlagMatchingDefault1 = new Flag("abc");
     private final Flag unknownFlagMatchingDefault2 = new Flag("def");
     private final Flag unknownFlagMatchingDefault3 = new Flag("ghi");
-    private final Flag unknownFlagNonDefault = new Flag("u", "**", null);
+    private final Flag unknownFlagNonDefault = Flag.ofCustomFormat("u", "**", null);
 
     private final Flag defaultFlag = new Flag("flag");
-    private final Flag pSlash = new Flag("p", null, "/");
-    private final Flag dashT = new Flag("t", "-", null);
-    private final Flag hatQ = new Flag("Q", "^", null);
+    private final Flag pSlash = Flag.ofCustomFormat("p", null, "/");
+    private final Flag dashT = Flag.ofCustomFormat("t", "-", null);
+    private final Flag hatQ = Flag.ofCustomFormat("Q", "^", null);
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -184,14 +184,14 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void equalsMethod() {
-        Flag aaa = new Flag("aaa", "-", "");
+        Flag aaa = Flag.ofCustomFormat("aaa", "-", "");
 
         assertEquals(aaa, aaa);
-        assertEquals(aaa, new Flag("aaa", "-", null));
+        assertEquals(aaa, Flag.ofCustomFormat("aaa", "-", null));
 
         assertNotEquals(aaa, "-aaa");
-        assertNotEquals(aaa, new Flag("aab", "-", null));
-        assertNotEquals(aaa, new Flag("aaa", null, "/"));
+        assertNotEquals(aaa, Flag.ofCustomFormat("aab", "-", null));
+        assertNotEquals(aaa, Flag.ofCustomFormat("aaa", null, "/"));
     }
 
 }
