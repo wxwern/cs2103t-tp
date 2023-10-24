@@ -51,4 +51,10 @@ public class JobDescriptionTest {
         // different description -> false
         assertNotEquals(jd1, jd3);
     }
+
+    @Test
+    public void toString_sameString_shouldBeSameString() {
+        JobDescription jd1 = new JobDescription("Pay: $100");
+        assertEquals(jd1.toString(), "Pay: $100");
+    }
 }
