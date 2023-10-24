@@ -74,6 +74,7 @@ public class JobApplicationTest {
                 validTitle.toString(),
                 validJobDescription.toString(),
                 validDeadline.toString(),
+                ja1.getLastUpdatedTime().toString(),
                 validStatus.toString()
         ));
     }
