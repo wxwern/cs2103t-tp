@@ -23,6 +23,8 @@ public class Messages {
             "Extra irrelevant options found in the command: ";
     public static final String MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS =
             "The following options may not have any value: ";
+    public static final String MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS =
+            "The following options conflict and cannot be set together: ";
 
     public static final String MESSAGE_INVALID_FIELD =
             "The term '%s' is not a valid option!";
@@ -58,7 +60,18 @@ public class Messages {
                 Stream.of(nonEmptyValuedFlags).map(Flag::toString).collect(Collectors.toSet());
 
         return MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS + String.join(" ", nonEmptyValuedFields);
+    }
 
+    /**
+     * Returns an error message indicating the flags should not exist in the same command together.
+     */
+    public static String getErrorMessageForSimultaneousUseDisallowedFlags(Flag... conflictingFlags) {
+        assert conflictingFlags.length > 1;
+
+        Set<String> conflictingFields =
+                Stream.of(conflictingFlags).map(Flag::toString).collect(Collectors.toSet());
+
+        return MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS + String.join(" ", conflictingFields);
     }
 
     /**
