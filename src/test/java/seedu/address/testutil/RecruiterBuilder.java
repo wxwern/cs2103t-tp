@@ -26,6 +26,7 @@ public class RecruiterBuilder extends ContactBuilder {
      */
     public RecruiterBuilder(Recruiter recruiterToCopy) {
         super(recruiterToCopy);
+        this.oid = recruiterToCopy.getOrganizationId().orElse(null);
     }
 
     @Override
