@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedContact.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalContacts.BENSON;
-import static seedu.address.testutil.TypicalContacts.JESUS;
+import static seedu.address.testutil.TypicalContacts.NUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class JsonAdaptedContactTest {
             .collect(Collectors.toList());
 
 
-    private static final List<JsonAdaptedId> VALID_RIDS = JESUS.getRecruiterIds().stream()
+    private static final List<JsonAdaptedId> VALID_RIDS = NUS.getRecruiterIds().stream()
             .map(JsonAdaptedId::new)
             .collect(Collectors.toList());
 
