@@ -22,6 +22,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Recruiter;
 
 /**
  * A utility class containing a list of {@code Contact} objects to be used in tests.
@@ -75,13 +76,24 @@ public class TypicalContacts {
             .withEmail("anna@example.com")
             .withAddress("4th street").build();
 
-    public static final Organization JESUS = new OrganizationBuilder()
-            .withName("Jesus Christ")
-            .withId("test_7-123")
-            .withPhone("9482442")
-            .withEmail("anna@example.com")
-            .withAddress("4th street")
-            .withRids("cat")
+    public static final Organization NUS = new OrganizationBuilder()
+            .withName("NUS SoC")
+            .withId("nus-soc_sg")
+            .withPhone("65162727")
+            .withEmail("socug@comp.nus.edu.sg")
+            .withAddress("Computing 1, 13 Computing Drive")
+            .withStatus("Applied")
+            .withPosition("Research Assistant")
+            .withRids("soc-rec_ryan")
+            .build();
+
+    public static final Recruiter RYAN = new RecruiterBuilder()
+            .withName("Ryan Lau")
+            .withId("soc-rec_ryan")
+            .withPhone("82930129")
+            .withEmail("ryanlau@comp.nus.edu.sg")
+            .withAddress("Computing 1, 13 Computing Drive")
+            .withOid("nus-soc_sg")
             .build();
 
     // Manually added
