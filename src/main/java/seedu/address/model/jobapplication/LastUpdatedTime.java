@@ -17,6 +17,14 @@ public class LastUpdatedTime {
         this.lastUpdatedTime = LocalDateTime.now();
     }
 
+    /**
+     * Constructs a {@code LastUpdatedTime} for testing purposes only.
+     * @param dateTime of the updated time.
+     */
+    public LastUpdatedTime(LocalDateTime dateTime) {
+        this.lastUpdatedTime = dateTime;
+    }
+
     @Override
     public String toString() {
         return lastUpdatedTime.toString();
