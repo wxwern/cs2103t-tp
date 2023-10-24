@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Represents the various job application deadlines.
@@ -19,12 +18,19 @@ public class Deadline {
     public static final String VALIDATION_REGEX = "";
     public final LocalDate deadline;
 
+    /**
+     * Gives a deadline given a string deadline.
+     * @param deadline in the appropriate format.
+     */
     public Deadline(String deadline) {
         requireNonNull(deadline);
         checkArgument(isValidDeadline(deadline), MESSAGE_CONSTRAINTS);
         this.deadline = LocalDate.parse(deadline);
     }
 
+    /**
+     * Gives a default deadline 14 days from now.
+     */
     public Deadline() {
         this.deadline = LocalDate.now().plusDays(14);
     }
