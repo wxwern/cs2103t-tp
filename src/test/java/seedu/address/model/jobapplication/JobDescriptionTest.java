@@ -1,2 +1,38 @@
-package seedu.address.model.jobapplication;public class JobDescriptionTest {
+package seedu.address.model.jobapplication;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.Assert.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.model.contact.Address;
+
+public class JobDescriptionTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new JobDescription(null));
+    }
+
+    @Test
+    public void constructor_invalidDescription_throwsIllegalArugmentException() {
+        String invalidDescription = "";
+        assertThrows(IllegalArgumentException.class, () -> new JobDescription(invalidDescription));
+    }
+
+    @Test
+    public void isValidDescription() {
+        // null description
+        assertThrows(NullPointerException.class, () -> JobDescription.isValidJobDescription(null));
+
+        // invalid description
+        assertFalse(JobDescription.isValidJobDescription(""));
+        assertFalse(JobDescription.isValidJobDescription(" "));
+
+        // valid description
+            assertTrue(JobDescription.isValidJobDescription("Pay: $100")); // Special characters
+        assertTrue(JobDescription.isValidJobDescription("To contact John for position"));
+        assertTrue(JobDescription.isValidJobDescription("First apply, then wait.")); // More special char
+    }
 }
