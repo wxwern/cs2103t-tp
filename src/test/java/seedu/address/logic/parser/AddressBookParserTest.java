@@ -36,8 +36,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Contact contact = new ContactBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
-        assertEquals(new AddCommand(contact), command);
+        AddCommand parsedAddCommand = (AddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
+        AddCommand addCommand = new AddCommand(
+                contact.getName(),
+                contact.getId(),
+                contact.getPhone().orElse(null),
+                contact.getEmail().orElse(null),
+                contact.getUrl().orElse(null),
+                contact.getAddress().orElse(null),
+                contact.getTags()
+        );
+        assertEquals(addCommand, parsedAddCommand);
     }
 
     @Test

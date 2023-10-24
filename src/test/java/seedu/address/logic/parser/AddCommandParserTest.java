@@ -56,20 +56,38 @@ public class AddCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         Contact expectedContact = new ContactBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
+        AddCommand addExpectedCommand = new AddCommand(
+                expectedContact.getName(),
+                expectedContact.getId(),
+                expectedContact.getPhone().orElse(null),
+                expectedContact.getEmail().orElse(null),
+                expectedContact.getUrl().orElse(null),
+                expectedContact.getAddress().orElse(null),
+                expectedContact.getTags()
+        );
 
         // whitespace only preamble
         assertParseSuccess(parser,
                 PREAMBLE_WHITESPACE + NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedContact));
+                + ADDRESS_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND, addExpectedCommand);
 
 
         // multiple tags - all accepted
         Contact expectedContactMultipleTags = new ContactBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
+        AddCommand addExpectedMultipleTagsCommand = new AddCommand(
+                expectedContactMultipleTags.getName(),
+                expectedContactMultipleTags.getId(),
+                expectedContactMultipleTags.getPhone().orElse(null),
+                expectedContactMultipleTags.getEmail().orElse(null),
+                expectedContactMultipleTags.getUrl().orElse(null),
+                expectedContactMultipleTags.getAddress().orElse(null),
+                expectedContactMultipleTags.getTags()
+        );
         assertParseSuccess(parser,
                 NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedContactMultipleTags));
+                addExpectedMultipleTagsCommand);
     }
 
     @Test
@@ -146,12 +164,24 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        // zero tags, no url
-        Contact expectedContact = new ContactBuilder(AMY).withUrl(null).withTags().build();
+        // zero tags, no phone, email, url and address
+        Contact expectedContact = new ContactBuilder(AMY)
+                .withPhone(null).withEmail(null)
+                .withUrl(null).withAddress(null)
+                .withTags().build();
+        AddCommand addExpectedCommand = new AddCommand(
+                expectedContact.getName(),
+                expectedContact.getId(),
+                expectedContact.getPhone().orElse(null),
+                expectedContact.getEmail().orElse(null),
+                expectedContact.getUrl().orElse(null),
+                expectedContact.getAddress().orElse(null),
+                expectedContact.getTags()
+        );
         assertParseSuccess(
                 parser,
-                NAME_DESC_AMY + ID_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
-                new AddCommand(expectedContact)
+                NAME_DESC_AMY + ID_DESC_AMY,
+                addExpectedCommand
         );
     }
 

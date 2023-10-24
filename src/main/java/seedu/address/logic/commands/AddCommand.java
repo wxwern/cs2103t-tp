@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
@@ -14,6 +15,9 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -21,7 +25,14 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Email;
+import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Name;
+import seedu.address.model.contact.Phone;
+import seedu.address.model.contact.Url;
+import seedu.address.model.tag.Tag;
 
 /**
  * Adds a contact to the address book.
@@ -87,18 +98,34 @@ public class AddCommand extends Command {
 
     private static final Logger logger = LogsCenter.getLogger(AddCommand.class);
 
-    private final Contact toAdd;
+    // Identity fields
+    protected final Name name;
+    protected final Id id;
+    protected final Phone phone;
+    protected final Email email;
+
+    // Data fields
+    protected final Url url;
+    protected final Address address;
+    protected final Set<Tag> tags = new HashSet<>();
 
     /**
-     * Creates an AddCommand to add the specified {@code Contact}
+     * Creates an AddCommand to add a {@code Contact} to the address book with the given parameters.
      */
-    public AddCommand(Contact contact) {
-        requireNonNull(contact);
-        toAdd = contact;
+    public AddCommand(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, id, tags);
+        this.name = name;
+        this.id = id;
+        this.phone = phone;
+        this.email = email;
+        this.url = url;
+        this.address = address;
+        this.tags.addAll(tags);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        Contact toAdd = createContact();
         logger.fine(String.format("Adding contact: %s", toAdd));
 
         requireNonNull(model);
@@ -109,6 +136,10 @@ public class AddCommand extends Command {
 
         model.addContact(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    protected Contact createContact() {
+        return new Contact(name, id, phone, email, url, address, tags);
     }
 
     @Override
@@ -123,13 +154,28 @@ public class AddCommand extends Command {
         }
 
         AddCommand otherAddCommand = (AddCommand) other;
-        return toAdd.equals(otherAddCommand.toAdd);
+        return id.equals(otherAddCommand.id)
+                && name.equals(otherAddCommand.name)
+                && Objects.equals(phone, otherAddCommand.phone)
+                && Objects.equals(email, otherAddCommand.email)
+                && Objects.equals(address, otherAddCommand.address)
+                && Objects.equals(url, otherAddCommand.url)
+                && tags.equals(otherAddCommand.tags);
+    }
+
+    protected ToStringBuilder toStringBuilder() {
+        return new ToStringBuilder(this)
+                .add("name", name)
+                .add("id", id)
+                .add("phone", phone)
+                .add("email", email)
+                .add("url", url)
+                .add("address", address)
+                .add("tags", tags);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("toAdd", toAdd)
-                .toString();
+        return toStringBuilder().toString();
     }
 }
