@@ -3,13 +3,16 @@ package seedu.address.model.contact;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_OID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.BOB;
+import static seedu.address.testutil.TypicalContacts.AMY;
 import static seedu.address.testutil.TypicalContacts.RYAN;
 
 import org.junit.jupiter.api.Test;
@@ -32,20 +35,18 @@ class RecruiterTest {
         assertFalse(RYAN.isSameContact(null));
 
         // same id, all other attributes different -> returns true
-        Recruiter editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .withOid("ntu-soc_sg").build();
+        Recruiter editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withUrl(VALID_URL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withTags(VALID_TAG_FRIEND).withOid(VALID_OID_AMY).build();
         assertTrue(RYAN.isSameContact(editedRyan));
 
-        String editedOrgId = RYAN.getOrganizationId()
-                .map(oid -> oid.value.toUpperCase()).orElse(null);
-
         // different id, all other attributes same -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withId("soc-rec_david").build();
+        editedRyan = new RecruiterBuilder(RYAN).withId(VALID_ID_AMY).build();
         assertFalse(RYAN.isSameContact(editedRyan));
 
         // id differs in case, all other attributes same -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withId(editedOrgId).build();
+        editedRyan = new RecruiterBuilder(RYAN).withId(RYAN.getId().value.toUpperCase()).build();
         assertFalse(RYAN.isSameContact(editedRyan));
     }
 
@@ -65,26 +66,34 @@ class RecruiterTest {
         assertFalse(RYAN.equals(5));
 
         // different contact -> returns false
-        assertFalse(RYAN.equals(BOB));
+        assertFalse(RYAN.equals(AMY));
 
         // different name -> returns false
-        Contact editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_BOB).build();
+        Contact editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_AMY).build();
         assertFalse(RYAN.equals(editedRyan));
 
         // different phone -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withPhone(VALID_PHONE_BOB).build();
+        editedRyan = new RecruiterBuilder(RYAN).withPhone(VALID_PHONE_AMY).build();
         assertFalse(RYAN.equals(editedRyan));
 
         // different email -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withEmail(VALID_EMAIL_BOB).build();
+        editedRyan = new RecruiterBuilder(RYAN).withEmail(VALID_EMAIL_AMY).build();
+        assertFalse(RYAN.equals(editedRyan));
+
+        // different url -> returns false
+        editedRyan = new RecruiterBuilder(RYAN).withUrl(VALID_URL_AMY).build();
         assertFalse(RYAN.equals(editedRyan));
 
         // different address -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withAddress(VALID_ADDRESS_BOB).build();
+        editedRyan = new RecruiterBuilder(RYAN).withAddress(VALID_ADDRESS_AMY).build();
         assertFalse(RYAN.equals(editedRyan));
 
         // different tags -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withTags(VALID_TAG_HUSBAND).build();
+        editedRyan = new RecruiterBuilder(RYAN).withTags(VALID_TAG_FRIEND).build();
+        assertFalse(RYAN.equals(editedRyan));
+
+        // different oid -> returns false
+        editedRyan = new RecruiterBuilder(RYAN).withOid(VALID_OID_AMY).build();
         assertFalse(RYAN.equals(editedRyan));
     }
 
