@@ -54,12 +54,12 @@ public class Status {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Position)) {
+        if (!(other instanceof Status)) {
             return false;
         }
 
-        Position otherPosition = (Position) other;
-        return applicationStatus.equals(otherPosition.jobPosition);
+        Status otherStatus = (Status) other;
+        return applicationStatus.equals(otherStatus.applicationStatus);
     }
 
     @Override
