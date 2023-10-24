@@ -66,11 +66,17 @@ public class Flag {
         this.prefix = prefix == null ? "" : prefix.trim();
         this.postfix = postfix == null ? "" : postfix.trim();
 
-        boolean isAliasAvailable = alias != null && !alias.isBlank() && !alias.trim().equals(this.name);
-        this.alias = !isAliasAvailable ? this.name : alias.trim();
+        boolean isAliasAvailable = alias != null && !alias.isBlank();
 
-        this.aliasPrefix = aliasPrefix == null ? this.prefix : aliasPrefix.trim();
-        this.aliasPostfix = aliasPostfix == null ? this.postfix : aliasPostfix.trim();
+        if (isAliasAvailable) {
+            this.alias = alias.trim();
+            this.aliasPrefix = aliasPrefix == null ? this.prefix : aliasPrefix.trim();
+            this.aliasPostfix = aliasPostfix == null ? this.postfix : aliasPostfix.trim();
+        } else {
+            this.alias = this.name;
+            this.aliasPrefix = this.prefix;
+            this.aliasPostfix = this.postfix;
+        }
     }
 
     /**
@@ -95,7 +101,7 @@ public class Flag {
      */
     public static Flag parse(String string) throws ParseException {
 
-        if (string.startsWith(DEFAULT_PREFIX) && string.endsWith(DEFAULT_POSTFIX)) {
+        if (string != null && string.startsWith(DEFAULT_PREFIX) && string.endsWith(DEFAULT_POSTFIX)) {
             String flag = string.substring(
                     DEFAULT_PREFIX.length(),
                     string.length() - DEFAULT_POSTFIX.length()
@@ -103,7 +109,7 @@ public class Flag {
             return new Flag(flag);
         }
 
-        if (string.startsWith(DEFAULT_ALIAS_PREFIX) && string.endsWith(DEFAULT_ALIAS_POSTFIX)) {
+        if (string != null && string.startsWith(DEFAULT_ALIAS_PREFIX) && string.endsWith(DEFAULT_ALIAS_POSTFIX)) {
             String alias = string.substring(
                     DEFAULT_ALIAS_PREFIX.length(),
                     string.length() - DEFAULT_ALIAS_POSTFIX.length()
@@ -239,7 +245,7 @@ public class Flag {
 
     @Override
     public int hashCode() {
-        return name == null ? 0 : name.hashCode();
+        return Objects.hash(name, prefix, postfix, alias, aliasPrefix, aliasPostfix);
     }
 
     /**

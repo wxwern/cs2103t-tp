@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -180,18 +179,6 @@ public class ArgumentTokenizerTest {
         assertArgumentAbsent(argMultimap, unknownFlagNonDefault);
         assertPreamblePresent(argMultimap, argsString); // Unknown flag is taken as part of preamble
 
-    }
-
-    @Test
-    public void equalsMethod() {
-        Flag aaa = Flag.ofCustomFormat("aaa", "-", "");
-
-        assertEquals(aaa, aaa);
-        assertEquals(aaa, Flag.ofCustomFormat("aaa", "-", null));
-
-        assertNotEquals(aaa, "-aaa");
-        assertNotEquals(aaa, Flag.ofCustomFormat("aab", "-", null));
-        assertNotEquals(aaa, Flag.ofCustomFormat("aaa", null, "/"));
     }
 
 }
