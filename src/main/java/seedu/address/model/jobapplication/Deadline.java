@@ -44,6 +44,6 @@ public class Deadline {
         }
 
         Deadline otherDeadline = (Deadline) other;
-        return deadline.equals(otherDeadline.deadline)
+        return deadline.equals(otherDeadline.deadline);
     }
 }
