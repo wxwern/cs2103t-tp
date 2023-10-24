@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.util.Objects;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.contact.Id;
@@ -62,6 +64,18 @@ public class JobApplicationTest {
         assertNotEquals(ja1, ja4); // different title
         assertNotEquals(ja1, ja5); // different description
         assertNotEquals(ja1, ja6); // different status
+    }
+
+    @Test
+    public void hashCode_sameFields_getSameHashCode() {
+        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus);
+        assertEquals(ja1.hashCode(), Objects.hash(
+                id1.toString(),
+                validTitle.toString(),
+                validJobDescription.toString(),
+                validDeadline.toString(),
+                validStatus.toString()
+        ));
     }
 
     @Test
