@@ -6,8 +6,6 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.contact.Address;
-
 public class JobDescriptionTest {
 
     @Test
@@ -31,7 +29,7 @@ public class JobDescriptionTest {
         assertFalse(JobDescription.isValidJobDescription(" "));
 
         // valid description
-            assertTrue(JobDescription.isValidJobDescription("Pay: $100")); // Special characters
+        assertTrue(JobDescription.isValidJobDescription("Pay: $100")); // Special characters
         assertTrue(JobDescription.isValidJobDescription("To contact John for position"));
         assertTrue(JobDescription.isValidJobDescription("First apply, then wait.")); // More special char
     }
