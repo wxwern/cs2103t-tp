@@ -70,7 +70,7 @@ public class JobApplication {
         }
 
         JobApplication otherApplication = (JobApplication) other;
-            return oid.equals(otherApplication.oid)
+        return oid.equals(otherApplication.oid)
                 && jobTitle.equals(otherApplication.jobTitle)
                 && jobDescription.equals(otherApplication.jobDescription)
                 && deadline.equals(otherApplication.deadline)
