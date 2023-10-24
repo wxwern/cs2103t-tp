@@ -36,6 +36,9 @@ public class OrganizationBuilder extends ContactBuilder {
      */
     public OrganizationBuilder(Organization organizationToCopy) {
         super(organizationToCopy);
+        position = organizationToCopy.getPosition().orElse(null);
+        status = organizationToCopy.getStatus().orElse(null);
+        rids = organizationToCopy.getRecruiterIds();
     }
 
     @Override
@@ -86,15 +89,15 @@ public class OrganizationBuilder extends ContactBuilder {
      * Sets the {@code Status} of the {@code Contact} that we are building.
      */
     public OrganizationBuilder withStatus(String status) {
-        this.status = new Status(status);
+        this.status = status == null ? null : new Status(status);
         return this;
     }
 
     /**
-     * Sets the {@code Status} of the {@code Contact} that we are building.
+     * Sets the {@code Position} of the {@code Contact} that we are building.
      */
     public OrganizationBuilder withPosition(String position) {
-        this.status = new Status(position);
+        this.position = position == null ? null : new Position(position);
         return this;
     }
 

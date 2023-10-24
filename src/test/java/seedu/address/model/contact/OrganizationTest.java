@@ -8,95 +8,116 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.ALICE;
 import static seedu.address.testutil.TypicalContacts.BOB;
+import static seedu.address.testutil.TypicalContacts.NUS;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.ContactBuilder;
+import seedu.address.testutil.OrganizationBuilder;
 
 public class OrganizationTest {
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Contact contact = new ContactBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> contact.getTags().remove(0));
+        Organization organization = new OrganizationBuilder().build();
+        assertThrows(UnsupportedOperationException.class, () -> organization.getTags().remove(0));
     }
 
     @Test
     public void isSameContact() {
         // same object -> returns true
-        assertTrue(ALICE.isSameContact(ALICE));
+        assertTrue(NUS.isSameContact(NUS));
 
         // null -> returns false
-        assertFalse(ALICE.isSameContact(null));
+        assertFalse(NUS.isSameContact(null));
 
         // same id, all other attributes different -> returns true
-        Contact editedAlice = new ContactBuilder(ALICE).withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameContact(editedAlice));
+        Organization editedNus = new OrganizationBuilder(NUS).withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withUrl(VALID_URL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withStatus(VALID_STATUS_BOB).withPosition(VALID_POSITION_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(NUS.isSameContact(editedNus));
 
         // different id, all other attributes same -> returns false
-        editedAlice = new ContactBuilder(ALICE).withId(VALID_ID_BOB).build();
-        assertFalse(ALICE.isSameContact(editedAlice));
+        editedNus = new OrganizationBuilder(NUS).withId(VALID_ID_BOB).build();
+        assertFalse(NUS.isSameContact(editedNus));
 
         // id differs in case, all other attributes same -> returns false
-        Contact editedBob = new ContactBuilder(BOB).withId(VALID_ID_BOB.toUpperCase()).build();
-        assertFalse(BOB.isSameContact(editedBob));
+        editedNus = new OrganizationBuilder(NUS)
+                .withId(NUS.getId().value.toUpperCase()).build();
+        assertFalse(NUS.isSameContact(editedNus));
     }
 
     @Test
     public void equals() {
         // same values -> returns true
-        Contact aliceCopy = new ContactBuilder(ALICE).build();
-        assertTrue(ALICE.equals(aliceCopy));
+        Organization nusCopy = new OrganizationBuilder(NUS).build();
+        assertTrue(NUS.equals(nusCopy));
 
         // same object -> returns true
-        assertTrue(ALICE.equals(ALICE));
+        assertTrue(NUS.equals(NUS));
 
         // null -> returns false
-        assertFalse(ALICE.equals(null));
+        assertFalse(NUS.equals(null));
 
         // different type -> returns false
-        assertFalse(ALICE.equals(5));
+        assertFalse(NUS.equals(5));
 
         // different contact -> returns false
-        assertFalse(ALICE.equals(BOB));
+        assertFalse(NUS.equals(BOB));
 
         // different name -> returns false
-        Contact editedAlice = new ContactBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        Organization editedNus = new OrganizationBuilder(NUS).withName(VALID_NAME_BOB).build();
+        assertFalse(NUS.equals(editedNus));
 
         // different phone -> returns false
-        editedAlice = new ContactBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedNus = new OrganizationBuilder(NUS).withPhone(VALID_PHONE_BOB).build();
+        assertFalse(NUS.equals(editedNus));
 
         // different email -> returns false
-        editedAlice = new ContactBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedNus = new OrganizationBuilder(NUS).withEmail(VALID_EMAIL_BOB).build();
+        assertFalse(NUS.equals(editedNus));
+
+        // different url -> returns false
+        editedNus = new OrganizationBuilder(NUS).withUrl(VALID_URL_BOB).build();
+        assertFalse(NUS.equals(editedNus));
 
         // different address -> returns false
-        editedAlice = new ContactBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedNus = new OrganizationBuilder(NUS).withAddress(VALID_ADDRESS_BOB).build();
+        assertFalse(NUS.equals(editedNus));
 
         // different tags -> returns false
-        editedAlice = new ContactBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedNus = new OrganizationBuilder(NUS).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(NUS.equals(editedNus));
+
+        // different status -> returns false
+        editedNus = new OrganizationBuilder(NUS).withStatus(VALID_STATUS_BOB).build();
+        assertFalse(NUS.equals(editedNus));
+
+        // different position -> returns false
+        editedNus = new OrganizationBuilder(NUS).withPosition(VALID_POSITION_BOB).build();
+        assertFalse(NUS.equals(editedNus));
     }
 
     @Test
     public void toStringMethod() {
-        String expected = Contact.class.getCanonicalName()
-                + "{name=" + ALICE.getName()
-                + ", type=" + ALICE.getType()
-                + ", id=" + ALICE.getId()
-                + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail()
-                + ", url=" + ALICE.getUrl()
-                + ", address=" + ALICE.getAddress()
-                + ", tags=" + ALICE.getTags() + "}";
-        assertEquals(expected, ALICE.toString());
+        String expected = Organization.class.getCanonicalName()
+                + "{name=" + NUS.getName()
+                + ", type=" + NUS.getType()
+                + ", id=" + NUS.getId()
+                + ", phone=" + NUS.getPhone()
+                + ", email=" + NUS.getEmail()
+                + ", url=" + NUS.getUrl()
+                + ", address=" + NUS.getAddress()
+                + ", tags=" + NUS.getTags()
+                + ", status=" + NUS.getStatus()
+                + ", position=" + NUS.getPosition() + "}";
+        assertEquals(expected, NUS.toString());
     }
 }
