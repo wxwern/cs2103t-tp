@@ -26,20 +26,20 @@ public class AutocompleteSupplierTest {
 
     @Test
     public void getAllPossibleFlags() {
-        var supplier = AutocompleteSupplier.fromUniqueFlags(Set.of(FLAG_A, FLAG_B));
+        var supplier = AutocompleteSupplier.fromUniqueFlags(FLAG_A, FLAG_B);
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getAllPossibleFlags());
 
-        supplier = AutocompleteSupplier.fromRepeatableFlags(Set.of(FLAG_A, FLAG_B));
+        supplier = AutocompleteSupplier.fromRepeatableFlags(FLAG_A, FLAG_B);
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getAllPossibleFlags());
 
-        supplier = AutocompleteSupplier.fromFlags(Set.of(FLAG_A, FLAG_B), Set.of(FLAG_C, FLAG_D));
+        supplier = AutocompleteSupplier.fromFlags(List.of(FLAG_A, FLAG_B), List.of(FLAG_C, FLAG_D));
         assertEquals(Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D), supplier.getAllPossibleFlags());
     }
 
     @Test
     public void getOtherPossibleFlagsAsideFromFlagsPresent() {
         // Unique flags only
-        var supplier = AutocompleteSupplier.fromUniqueFlags(Set.of(FLAG_A, FLAG_B));
+        var supplier = AutocompleteSupplier.fromUniqueFlags(FLAG_A, FLAG_B);
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getOtherPossibleFlagsAsideFromFlagsPresent(Set.of()));
         assertEquals(
                 Set.of(FLAG_A),
@@ -47,7 +47,7 @@ public class AutocompleteSupplierTest {
         );
 
         // Repeatable flags only
-        supplier = AutocompleteSupplier.fromRepeatableFlags(Set.of(FLAG_A, FLAG_B));
+        supplier = AutocompleteSupplier.fromRepeatableFlags(FLAG_A, FLAG_B);
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getOtherPossibleFlagsAsideFromFlagsPresent(Set.of()));
         assertEquals(
                 Set.of(FLAG_A, FLAG_B),
@@ -55,7 +55,7 @@ public class AutocompleteSupplierTest {
         );
 
         // Mixed flags
-        supplier = AutocompleteSupplier.fromFlags(Set.of(FLAG_A, FLAG_B), Set.of(FLAG_C, FLAG_D));
+        supplier = AutocompleteSupplier.fromFlags(List.of(FLAG_A, FLAG_B), List.of(FLAG_C, FLAG_D));
         assertEquals(
                 Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D),
                 supplier.getOtherPossibleFlagsAsideFromFlagsPresent(Set.of())
@@ -68,11 +68,11 @@ public class AutocompleteSupplierTest {
         // Mixed advanced combination.
         // If there are conflicts, the tightest bound is chosen.
         supplier = new AutocompleteSupplier(
-                Set.of(
+                List.of(
                         Set.of(FLAG_A, FLAG_B), // A & B cannot coexist
                         Set.of(FLAG_B, FLAG_C) // B & C cannot coexist
                 ),
-                Set.of(FLAG_C, FLAG_D) // C & D may have multiple occurrences.
+                List.of(FLAG_C, FLAG_D) // C & D may have multiple occurrences.
         );
         assertEquals(
                 Set.of(FLAG_C, FLAG_D), // A is present -> A, B cannot be present again
@@ -99,11 +99,11 @@ public class AutocompleteSupplierTest {
     @Test
     public void getValidValues() {
         var supplier = new AutocompleteSupplier(
-                Set.of(
+                List.of(
                         Set.of(FLAG_A, FLAG_B), // A & B cannot coexist
                         Set.of(FLAG_C) // C must only exist at most once
                 ),
-                Set.of(FLAG_D), // D may exist any number of times
+                List.of(FLAG_D), // D may exist any number of times
                 Map.of(
                         FLAG_A, m -> LIST_A,
                         FLAG_B, m -> LIST_B,

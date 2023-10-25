@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class AutocompleteEngineTest {
     @Test
     public void generateCompletions_usingGivenExpectedCommands_correctResult() {
         assertEquals(
-                Set.of(
+                List.of(
                         "ad free",
                         "add",
                         "add milk",
@@ -30,8 +31,9 @@ public class AutocompleteEngineTest {
                         "almond",
                         "ate cake",
                         "bake cake",
+                        "cadence",
                         "cupcake"
-                ).toArray(String[]::new))
+                ).toArray(String[]::new)).collect(Collectors.toList())
         );
     }
 
@@ -47,11 +49,11 @@ public class AutocompleteEngineTest {
         Flag flagC2 = new Flag("code");
 
         AutocompleteSupplier supplier = new AutocompleteSupplier(
-                Set.of(
+                List.of(
                     Set.of(flagA1, flagA2),
                     Set.of(flagA3)
                 ),
-                Set.of(flagB, flagC1, flagC2),
+                List.of(flagB, flagC1, flagC2),
                 Map.of(
                         flagA3, m -> List.of("apple", "banana", "car")
                 )
@@ -59,65 +61,73 @@ public class AutocompleteEngineTest {
 
         // autocomplete: -a
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd --aaa",
-                        "cmd --adg",
-                        "cmd --abc"
+                        "cmd --abc",
+                        "cmd --adg"
                 ),
                 AutocompleteEngine.generateCompletions("cmd -a", supplier, null)
+                        .collect(Collectors.toList())
         );
 
         // autocomplete: -b
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd --book",
                         "cmd --abc"
                 ),
                 AutocompleteEngine.generateCompletions("cmd -b", supplier, null)
+                        .collect(Collectors.toList())
         );
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd --aaa --book"
                         // --abc no longer suggested when --aaa is present
                 ),
                 AutocompleteEngine.generateCompletions("cmd --aaa -b", supplier, null)
+                        .collect(Collectors.toList())
         );
         assertEquals(
-                Set.of(), // leading space yields no results since it's suggesting the <value> part
+                List.of(), // leading space yields no results since it's suggesting the <value> part
                 AutocompleteEngine.generateCompletions("cmd --adg -b ", supplier, null)
+                        .collect(Collectors.toList())
         );
 
         // autocomplete: --adg <value>
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd -b --adg apple",
                         "cmd -b --adg banana",
                         "cmd -b --adg car"
                 ),
                 AutocompleteEngine.generateCompletions("cmd -b --adg ", supplier, null)
+                        .collect(Collectors.toList())
         );
         assertEquals(
-                Set.of("cmd -b --adg banana"),
+                List.of("cmd -b --adg banana"),
                 AutocompleteEngine.generateCompletions("cmd -b --adg anna", supplier, null)
+                        .collect(Collectors.toList())
         );
 
         // autocomplete: --cd
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd -a x y --cde",
                         "cmd -a x y --code"
                 ),
                 AutocompleteEngine.generateCompletions("cmd -a x y --cd", supplier, null)
+                        .collect(Collectors.toList())
         );
 
         // autocomplete: -o
         assertEquals(
-                Set.of(
+                List.of(
                         "cmd -a x y --code z --book",
                         "cmd -a x y --code z --code" // --code can be repeated
                         // --abc not suggested when -a (alias for --aaa) is present
                 ),
                 AutocompleteEngine.generateCompletions("cmd -a x y --code z -o", supplier, null)
+                        .collect(Collectors.toList())
         );
 
     }

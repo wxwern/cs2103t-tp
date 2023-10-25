@@ -2,7 +2,6 @@ package seedu.address.logic.autocomplete;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -26,6 +25,7 @@ public class AutocompleteEngine {
     /** A comparator used to order fuzzily matched flags where better matches against the input go first. */
     private static final Function<String, Comparator<Flag>> FLAG_FUZZY_MATCH_COMPARATOR = (input) -> (o1, o2)
             -> {
+
         // Get how well o1 is ahead of o2 in both metrics (note: higher is better).
         int scoreStd = StringUtil.getFuzzyMatchScore(input, o1.getFlagString())
                 - StringUtil.getFuzzyMatchScore(input, o2.getFlagString());
@@ -33,11 +33,13 @@ public class AutocompleteEngine {
         int scoreAlias = StringUtil.getFuzzyMatchScore(input, o1.getFlagAliasString())
                 - StringUtil.getFuzzyMatchScore(input, o2.getFlagAliasString());
 
-        // Use standard flag score first, then alias score.
+        // Use standard flag score first, then alias score
         if (scoreStd != 0) {
             return -scoreStd;
-        } else {
+        } else if (scoreAlias != 0) {
             return -scoreAlias;
+        } else {
+            return 0;
         }
     };
 
@@ -46,18 +48,23 @@ public class AutocompleteEngine {
      * Generates a set of possible command completions given the partial command and the expected full commands.
      * The set is guaranteed to have a consistent iteration order dependent on the expected full commands array.
      */
-    public static Set<String> generateCompletions(String partialCommand, String[] expectedFullCommands) {
+    public static Stream<String> generateCompletions(
+            String partialCommand, String[] expectedFullCommands
+    ) {
+
         return Arrays.stream(expectedFullCommands)
                 .filter(s -> s.startsWith(partialCommand))
-                .sorted()
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .distinct();
     }
 
     /**
      * Generates a set of possible command completions given the partial command, autocomplete supplier and model.
      * The set is guaranteed to have a consistent iteration order dependent on the supplier's results.
      */
-    public static Set<String> generateCompletions(String partialCommand, AutocompleteSupplier supplier, Model model) {
+    public static Stream<String> generateCompletions(
+            String partialCommand, AutocompleteSupplier supplier, Model model
+    ) {
+
         PartitionedCommand command = new PartitionedCommand(partialCommand);
         String trailingText = command.getTrailingText();
 
@@ -79,7 +86,7 @@ public class AutocompleteEngine {
 
         return possibleTerminalValues
                 .map(command::toStringWithNewTrailingTerm)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .distinct();
     }
 
 
