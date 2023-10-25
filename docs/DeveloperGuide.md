@@ -312,12 +312,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 
       Use case ends.
 
-* 2a. The contact file is corrupted.
-
-    * 2a1. Jobby shows an error message.
-
-      User case ends
-
 
 
 **Use case: Delete a contact**
