@@ -31,7 +31,9 @@ public class AutocompleteUtilTest {
                 "ad free",
                 "add",
                 "add milk",
-                "add coffee"
+                "add coffee",
+                "cadence",
+                "almond"
         );
 
         // Test all accepted types via polymorphism

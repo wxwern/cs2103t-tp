@@ -98,4 +98,63 @@ public class AppParserTest {
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
     }
+
+    @Test
+    public void parseCompletionGenerator_knownSubsequence_correctSuggestions() {
+        String userInput = "add -o";
+        assertEquals(
+                List.of(
+                        "add --org",
+                        "add --oid",
+                        "add --phone",
+                        "add --pos"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        userInput = "e";
+        assertEquals(
+                List.of(
+                        "edit",
+                        "exit",
+                        "delete",
+                        "help",
+                        "clear"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Test
+    public void parseCompletionGenerator_unknownSubsequence_noResults() {
+        String userInput = "add -asdf";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        userInput = "edit 1 -xxx";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+    }
 }

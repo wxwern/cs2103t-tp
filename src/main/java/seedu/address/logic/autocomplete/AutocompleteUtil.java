@@ -54,8 +54,8 @@ public class AutocompleteUtil {
         }
 
         return expectedFullCommands
-                .filter(s -> s.startsWith(partialCommand))
-                .distinct();
+                .filter(term -> StringUtil.isFuzzyMatch(partialCommand, term))
+                .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(partialCommand));
     }
 
     /**
