@@ -38,15 +38,13 @@ public class JobApplication {
                           Deadline deadline, JobStatus status, ApplicationStage applicationStage) {
         requireNonNull(oid);
         requireNonNull(jobTitle);
-        requireNonNull(deadline);
-        requireNonNull(status);
-        requireNonNull(applicationStage);
         this.oid = oid;
         this.jobTitle = jobTitle;
         this.jobDescription = Optional.ofNullable(jobDescription);
-        this.deadline = deadline;
-        this.status = status;
-        this.applicationStage = applicationStage;
+
+        this.deadline = deadline == null ? new Deadline() : deadline;
+        this.status = status == null ? JobStatus.DEFAULT_STATUS: status;
+        this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
     }
 
     /**
@@ -59,7 +57,7 @@ public class JobApplication {
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, ApplicationStage.RESUME);
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, ApplicationStage.DEFAULT_STAGE);
     }
 
     /**
@@ -73,7 +71,7 @@ public class JobApplication {
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, ApplicationStage applicationStage) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, applicationStage);
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, applicationStage);
     }
 
     @Override
