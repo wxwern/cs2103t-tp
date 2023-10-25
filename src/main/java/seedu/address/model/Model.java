@@ -93,8 +93,7 @@ public interface Model {
     /**
      * Guarantees a contact given an id or index.
      *
-     * @throws IllegalValueException if both are given, if both are not given, or if there are errors accessing
-     * contacts.
+     * @throws IllegalValueException if both are given or not given, or if model cannot access the contact.
      */
     Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
 

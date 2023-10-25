@@ -43,7 +43,7 @@ public class JobApplication {
         this.jobDescription = Optional.ofNullable(jobDescription);
 
         this.deadline = deadline == null ? new Deadline() : deadline;
-        this.status = status == null ? JobStatus.DEFAULT_STATUS: status;
+        this.status = status == null ? JobStatus.DEFAULT_STATUS : status;
         this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
     }
 

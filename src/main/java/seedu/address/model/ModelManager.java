@@ -17,7 +17,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
-import seedu.address.model.contact.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
