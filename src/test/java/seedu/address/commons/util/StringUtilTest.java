@@ -1,5 +1,6 @@
 package seedu.address.commons.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -138,6 +139,89 @@ public class StringUtilTest {
     @Test
     public void getDetails_nullGiven_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> StringUtil.getDetails(null));
+    }
+
+
+    //---------------- Tests for isFuzzyMatch --------------------------------------
+
+    /*
+     * Possible cases:
+     * - Subsequence near start
+     * - Subsequence near middle
+     * - Subsequence near end
+     * - No part of subsequence exists
+     */
+
+    @Test
+    public void isFuzzyMatch_isSubsequence_returnsTrue() {
+        // Centers
+        assertTrue(StringUtil.isFuzzyMatch("1", "abc123"));
+        assertTrue(StringUtil.isFuzzyMatch("b12", "abc123"));
+
+        // Boundaries
+        assertTrue(StringUtil.isFuzzyMatch("a", "abc123"));
+        assertTrue(StringUtil.isFuzzyMatch("3", "abc123"));
+
+        assertTrue(StringUtil.isFuzzyMatch("ab3", "abc123"));
+        assertTrue(StringUtil.isFuzzyMatch("c23", "abc123"));
+
+        // Null match
+        assertTrue(StringUtil.isFuzzyMatch(null, null));
+    }
+
+    @Test
+    public void isFuzzyMatch_notSubsequence_returnsFalse() {
+        // Doesn't exist
+        assertFalse(StringUtil.isFuzzyMatch("d", "abc123"));
+
+        // Reordered
+        assertFalse(StringUtil.isFuzzyMatch("1c", "abc123"));
+
+        // Boundaries
+        assertFalse(StringUtil.isFuzzyMatch("ab4", "abc123"));
+        assertFalse(StringUtil.isFuzzyMatch("zb2", "abc123"));
+        assertFalse(StringUtil.isFuzzyMatch("321", "abc123"));
+        assertFalse(StringUtil.isFuzzyMatch("cba", "abc123"));
+
+        // Null mismatch
+        assertFalse(StringUtil.isFuzzyMatch(null, "abc123"));
+        assertFalse(StringUtil.isFuzzyMatch(null, ""));
+        assertFalse(StringUtil.isFuzzyMatch("", null));
+    }
+
+    //---------------- Tests for getFuzzyMatchScore --------------------------------------
+
+    /*
+     * The score must be 0 if mismatched,
+     * or the length of the match subtracting the number of gaps in the match range starting from the prefix,
+     * capped at 0.
+     *
+     * e.g., BD fuzzy matches ABCDE by ?B?D, so the score is 2 - 2 = 0.
+     */
+
+    @Test
+    public void getFuzzyMatchScore_allInputs_correctResult() {
+        // Matches prefix
+        assertEquals(1, StringUtil.getFuzzyMatchScore("a", "abcabc"));
+        assertEquals(3, StringUtil.getFuzzyMatchScore("aaa", "aaabbb"));
+
+        // Matches, but has gaps
+        assertEquals(3 - 2, StringUtil.getFuzzyMatchScore("aaa", "ababab"));
+        assertEquals(3 - 2, StringUtil.getFuzzyMatchScore("abc", "ababcab"));
+        assertEquals(4 - 2, StringUtil.getFuzzyMatchScore("bcef", "abcdefg"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("aaa", "aa123a"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("aba", "ab12345aa"));
+
+        // Not a full match
+        assertEquals(0, StringUtil.getFuzzyMatchScore("aa", "ab"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("aa", "ba"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("ab", "a"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("ba", "a"));
+
+        // Null values
+        assertEquals(0, StringUtil.getFuzzyMatchScore(null, "a"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("b", null));
+        assertEquals(0, StringUtil.getFuzzyMatchScore(null, null));
     }
 
 }

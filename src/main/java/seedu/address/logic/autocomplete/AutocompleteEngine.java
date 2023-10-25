@@ -1,12 +1,15 @@
 package seedu.address.logic.autocomplete;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 
@@ -14,6 +17,30 @@ import seedu.address.model.Model;
  * Computes the available autocomplete results using a given supplier.
  */
 public class AutocompleteEngine {
+
+
+    /** A comparator used to order fuzzily matched strings where better matches against the input go first. */
+    private static final Function<String, Comparator<String>> TEXT_FUZZY_MATCH_COMPARATOR = (input) -> (s1, s2)
+            -> -(StringUtil.getFuzzyMatchScore(input, s1) - StringUtil.getFuzzyMatchScore(input, s2));
+
+    /** A comparator used to order fuzzily matched flags where better matches against the input go first. */
+    private static final Function<String, Comparator<Flag>> FLAG_FUZZY_MATCH_COMPARATOR = (input) -> (o1, o2)
+            -> {
+        // Get how well o1 is ahead of o2 in both metrics (note: higher is better).
+        int scoreStd = StringUtil.getFuzzyMatchScore(input, o1.getFlagString())
+                - StringUtil.getFuzzyMatchScore(input, o2.getFlagString());
+
+        int scoreAlias = StringUtil.getFuzzyMatchScore(input, o1.getFlagAliasString())
+                - StringUtil.getFuzzyMatchScore(input, o2.getFlagAliasString());
+
+        // Use standard flag score first, then alias score.
+        if (scoreStd != 0) {
+            return -scoreStd;
+        } else {
+            return -scoreAlias;
+        }
+    };
+
 
     /**
      * Generates a set of possible command completions given the partial command and the expected full commands.
@@ -32,18 +59,22 @@ public class AutocompleteEngine {
      */
     public static Set<String> generateCompletions(String partialCommand, AutocompleteSupplier supplier, Model model) {
         PartitionedCommand command = new PartitionedCommand(partialCommand);
+        String trailingText = command.getTrailingText();
 
         Stream<String> possibleTerminalValues;
         if (command.hasFlagSyntaxPrefixInTrailingText()) {
             // The trailing text is a flag-like term - try to autocomplete flags.
             possibleTerminalValues = getPossibleFlags(command, supplier)
-                    .filter(flag -> flag.getFlagString().startsWith(command.getTrailingText())
-                            || flag.getFlagAliasString().startsWith(command.getTrailingText()))
+                    .filter(flag -> StringUtil.isFuzzyMatch(trailingText, flag.getFlagString())
+                            || StringUtil.isFuzzyMatch(trailingText, flag.getFlagAliasString()))
+                    .sorted(FLAG_FUZZY_MATCH_COMPARATOR.apply(trailingText))
                     .map(Flag::getFlagString);
+
         } else {
             // The trailing text is a value - try to autocomplete values.
             possibleTerminalValues = getPossibleValues(command, supplier, model)
-                    .filter(term -> term.startsWith(command.getTrailingText()));
+                    .filter(term -> StringUtil.isFuzzyMatch(trailingText, term))
+                    .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(trailingText));
         }
 
         return possibleTerminalValues
