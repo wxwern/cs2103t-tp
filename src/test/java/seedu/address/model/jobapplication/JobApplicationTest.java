@@ -81,6 +81,9 @@ public class JobApplicationTest {
         assertNotEquals(ja1, ja5); // different description
         assertNotEquals(ja1, ja6); // different stage
         assertNotEquals(ja1, ja7); // different status
+
+        // not a job application -> false
+        assertNotEquals(ja1, null);
     }
 
     @Test

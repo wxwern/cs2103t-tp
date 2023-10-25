@@ -62,5 +62,8 @@ public class DeadlineTest {
 
         // different deadline -> false
         assertNotEquals(d1, d3);
+
+        // not a deadline -> false
+        assertNotEquals(d1, null);
     }
 }

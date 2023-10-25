@@ -50,6 +50,9 @@ public class JobDescriptionTest {
 
         // different description -> false
         assertNotEquals(jd1, jd3);
+
+        // not a description -> false
+        assertNotEquals(jd1, null);
     }
 
     @Test

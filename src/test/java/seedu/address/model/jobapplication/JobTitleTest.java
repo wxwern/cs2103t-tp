@@ -49,5 +49,8 @@ public class JobTitleTest {
 
         // different title -> false
         assertNotEquals(jt1, jt3);
+
+        // not a title -> false
+        assertNotEquals(jt1, null);
     }
 }

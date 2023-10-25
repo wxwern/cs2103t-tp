@@ -23,4 +23,10 @@ public class LastUpdatedTimeTest {
         LastUpdatedTime nextUpdatedTime = new LastUpdatedTime(secondDateTime);
         assertNotEquals(lastUpdatedTime, nextUpdatedTime);
     }
+
+    @Test
+    public void equals_notLastUpdatedTime_givesFalse() {
+        LocalDateTime firstDateTime = LocalDateTime.of(2023, 11, 11, 11, 11, 11);
+        assertNotEquals(firstDateTime, null);
+    }
 }
