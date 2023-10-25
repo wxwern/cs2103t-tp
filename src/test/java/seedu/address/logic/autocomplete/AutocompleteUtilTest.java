@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.Flag;
 
-public class AutocompleteEngineTest {
+public class AutocompleteUtilTest {
 
     @Test
     public void generateCompletions_usingGivenExpectedCommands_correctResult() {
@@ -38,17 +37,17 @@ public class AutocompleteEngineTest {
         // Test all accepted types via polymorphism
         assertEquals(
                 resultList,
-                AutocompleteEngine.generateCompletions("ad",
+                AutocompleteUtil.generateCompletions("ad",
                         sourceList).collect(Collectors.toList())
         );
         assertEquals(
                 resultList,
-                AutocompleteEngine.generateCompletions("ad",
+                AutocompleteUtil.generateCompletions("ad",
                         sourceList.toArray(String[]::new)).collect(Collectors.toList())
         );
         assertEquals(
                 resultList,
-                AutocompleteEngine.generateCompletions("ad",
+                AutocompleteUtil.generateCompletions("ad",
                         sourceList.stream()).collect(Collectors.toList())
         );
     }
@@ -82,7 +81,7 @@ public class AutocompleteEngineTest {
                         "cmd --abc",
                         "cmd --adg"
                 ),
-                AutocompleteEngine.generateCompletions("cmd -a", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -a", supplier, null)
                         .collect(Collectors.toList())
         );
 
@@ -92,7 +91,7 @@ public class AutocompleteEngineTest {
                         "cmd --book",
                         "cmd --abc"
                 ),
-                AutocompleteEngine.generateCompletions("cmd -b", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -b", supplier, null)
                         .collect(Collectors.toList())
         );
         assertEquals(
@@ -100,12 +99,12 @@ public class AutocompleteEngineTest {
                         "cmd --aaa --book"
                         // --abc no longer suggested when --aaa is present
                 ),
-                AutocompleteEngine.generateCompletions("cmd --aaa -b", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd --aaa -b", supplier, null)
                         .collect(Collectors.toList())
         );
         assertEquals(
                 List.of(), // leading space yields no results since it's suggesting the <value> part
-                AutocompleteEngine.generateCompletions("cmd --adg -b ", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd --adg -b ", supplier, null)
                         .collect(Collectors.toList())
         );
 
@@ -116,12 +115,12 @@ public class AutocompleteEngineTest {
                         "cmd -b --adg banana",
                         "cmd -b --adg car"
                 ),
-                AutocompleteEngine.generateCompletions("cmd -b --adg ", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -b --adg ", supplier, null)
                         .collect(Collectors.toList())
         );
         assertEquals(
                 List.of("cmd -b --adg banana"),
-                AutocompleteEngine.generateCompletions("cmd -b --adg anna", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -b --adg anna", supplier, null)
                         .collect(Collectors.toList())
         );
 
@@ -131,7 +130,7 @@ public class AutocompleteEngineTest {
                         "cmd -a x y --cde",
                         "cmd -a x y --code"
                 ),
-                AutocompleteEngine.generateCompletions("cmd -a x y --cd", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -a x y --cd", supplier, null)
                         .collect(Collectors.toList())
         );
 
@@ -142,7 +141,7 @@ public class AutocompleteEngineTest {
                         "cmd -a x y --code z --code" // --code can be repeated
                         // --abc not suggested when -a (alias for --aaa) is present
                 ),
-                AutocompleteEngine.generateCompletions("cmd -a x y --code z -o", supplier, null)
+                AutocompleteUtil.generateCompletions("cmd -a x y --code z -o", supplier, null)
                         .collect(Collectors.toList())
         );
 

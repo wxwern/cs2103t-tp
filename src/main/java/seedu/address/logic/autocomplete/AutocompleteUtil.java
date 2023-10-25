@@ -15,9 +15,9 @@ import seedu.address.model.Model;
 
 /**
  * Computes the available autocomplete results using a given supplier.
+ * This functions as a utility class which provides static methods for immediately generating completions.
  */
-public class AutocompleteEngine {
-
+public class AutocompleteUtil {
 
     /** A comparator used to order fuzzily matched strings where better matches against the input go first. */
     private static final Function<String, Comparator<String>> TEXT_FUZZY_MATCH_COMPARATOR = (input) -> (s1, s2)
@@ -49,6 +49,10 @@ public class AutocompleteEngine {
      * The returned stream is guaranteed to have a consistent iteration order dependent on the original stream.
      */
     public static Stream<String> generateCompletions(String partialCommand, Stream<String> expectedFullCommands) {
+        if (partialCommand == null) {
+            return Stream.empty();
+        }
+
         return expectedFullCommands
                 .filter(s -> s.startsWith(partialCommand))
                 .distinct();
@@ -82,8 +86,7 @@ public class AutocompleteEngine {
     public static Stream<String> generateCompletions(
             String partialCommand, AutocompleteSupplier supplier, Model model
     ) {
-
-        PartitionedCommand command = new PartitionedCommand(partialCommand);
+        PartitionedCommand command = new PartitionedCommand(partialCommand == null ? "" : partialCommand);
         String trailingText = command.getTrailingText();
 
         Stream<String> possibleTerminalValues;
@@ -135,7 +138,7 @@ public class AutocompleteEngine {
         return command.getLastConfirmedFlagString()
                 .flatMap(Flag::parseOptional)
                 .map(f -> supplier.getValidValues(f, model).stream())
-                .orElse(Stream.of());
+                .orElse(Stream.empty());
     }
 
 
