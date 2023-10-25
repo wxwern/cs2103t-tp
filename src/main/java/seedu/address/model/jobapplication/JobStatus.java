@@ -2,9 +2,6 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.contact.Type;
-import seedu.address.model.contact.exceptions.InvalidContactTypeStringException;
-
 /**
  * Information on the status of the job application: pending, rejected, offered, accepted, turned-down
  */
@@ -33,11 +30,10 @@ public enum JobStatus {
     }
 
     /**
-     * Returns a corresponding {@code ContactType} enum value matching the given string representation of it.
+     * Returns a corresponding {@code JobStatus} enum value matching the given string representation of it.
      *
-     * @param textRepresentation The text representation of the {@code ContactType}.
-     * @return The corresponding {@code ContactType}.
-     * @throws InvalidContactTypeStringException if the given input does not represent any known {@code ContactType}.
+     * @param textRepresentation The text representation of the {@code JobStatus}.
+     * @return The corresponding {@code JobStatus}.
      */
     public static JobStatus fromString(String textRepresentation) {
         for (JobStatus jobStatus : JobStatus.values()) {
@@ -46,8 +42,7 @@ public enum JobStatus {
             }
         }
         return UNKNOWN;
-        // TODO: We should throw an exception instead like the below. We are using UNKNOWN for now for compatibility.
-        // throw new InvalidContactTypeStringException(textRepresentation);
+        // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
     }
 
 }
