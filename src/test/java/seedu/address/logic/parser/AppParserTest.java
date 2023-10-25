@@ -100,7 +100,8 @@ public class AppParserTest {
     }
 
     @Test
-    public void parseCompletionGenerator_knownSubsequence_correctSuggestions() {
+    public void parseCompletionGenerator_knownSubsequence_canGenerateCorrectSuggestions() {
+        // Add example
         String userInput = "add -o";
         assertEquals(
                 List.of(
@@ -114,6 +115,7 @@ public class AppParserTest {
                         .collect(Collectors.toList())
         );
 
+        // Edit example
         userInput = "edit 1 --phone 12345678 --nm";
         assertEquals(
                 List.of(
@@ -124,6 +126,36 @@ public class AppParserTest {
                         .collect(Collectors.toList())
         );
 
+        // List example
+        userInput = "list -o";
+        assertEquals(
+                List.of("list --org"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Delete example
+        userInput = "delete 0 --re";
+        assertEquals(
+                List.of("delete 0 --recursive"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Extra middle contents example
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Command words example
         userInput = "e";
         assertEquals(
                 List.of(
@@ -140,7 +172,7 @@ public class AppParserTest {
     }
 
     @Test
-    public void parseCompletionGenerator_unknownSubsequence_noResults() {
+    public void parseCompletionGenerator_unknownSubsequence_willGenerateNoResults() {
         String userInput = "add -asdf";
         assertEquals(
                 List.of(),
