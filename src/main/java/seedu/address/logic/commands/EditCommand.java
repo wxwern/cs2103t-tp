@@ -59,8 +59,10 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book.";
 
-    private final Index index;
-    private final EditContactDescriptor editContactDescriptor;
+    private Index index;
+
+    private Id targetId = null;
+    private EditContactDescriptor editContactDescriptor;
 
     /**
      * @param index of the contact in the filtered contact list to edit
@@ -74,9 +76,23 @@ public class EditCommand extends Command {
         this.editContactDescriptor = new EditContactDescriptor(editContactDescriptor);
     }
 
+    /**
+     * @param targetId of the contact to be editted
+     */
+    public EditCommand(Id targetId, EditContactDescriptor editContactDescriptor) {
+        this.targetId = targetId;
+        this.editContactDescriptor = new EditContactDescriptor(editContactDescriptor);
+    }
+
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        if (this.targetId != null) {
+            Contact contactToEdit = model.getContactById(targetId);
+            return getCommandResult(model, contactToEdit);
+        }
+
         List<Contact> lastShownList = model.getFilteredContactList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -84,21 +100,28 @@ public class EditCommand extends Command {
         }
 
         Contact contactToEdit = lastShownList.get(index.getZeroBased());
-        Contact editedContact = createEditedContact(contactToEdit, editContactDescriptor);
+        return getCommandResult(model, contactToEdit);
+    }
 
+
+    public CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
+        Contact editedContact = createEditedContact(contactToEdit, editContactDescriptor);
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
-
         model.setContact(contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
     }
 
-    /**
-     * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
-     * edited with {@code editContactDescriptor}.
-     */
+
+
+
+
+        /**
+         * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
+         * edited with {@code editContactDescriptor}.
+         */
     private static Contact createEditedContact(Contact contactToEdit, EditContactDescriptor editContactDescriptor) {
         assert contactToEdit != null;
 
