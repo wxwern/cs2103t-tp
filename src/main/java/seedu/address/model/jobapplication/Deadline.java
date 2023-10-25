@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Formatter;
 
 /**
  * Represents the various job application deadlines.
@@ -13,9 +15,12 @@ import java.time.LocalDate;
 public class Deadline {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "";
+            "Deadlines should be in the format of DD-MM-YYYY";
 
-    public static final String VALIDATION_REGEX = "";
+    //TODO: To verify that this regex is actually correct
+    public static final String VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-(19|20)\\d\\d$";
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("d-M-y");
     public final LocalDate deadline;
 
     /**
@@ -25,7 +30,7 @@ public class Deadline {
     public Deadline(String deadline) {
         requireNonNull(deadline);
         checkArgument(isValidDeadline(deadline), MESSAGE_CONSTRAINTS);
-        this.deadline = LocalDate.parse(deadline);
+        this.deadline = LocalDate.parse(deadline, FORMATTER);
     }
 
     /**
