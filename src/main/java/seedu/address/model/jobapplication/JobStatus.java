@@ -13,6 +13,8 @@ public enum JobStatus {
     TURNED_DOWN("turned down"),
     UNKNOWN("unknown");
 
+    public static final JobStatus DEFAULT_STATUS = JobStatus.PENDING;
+
     private final String textRepresentation;
 
     JobStatus(String textRepresentation) {
