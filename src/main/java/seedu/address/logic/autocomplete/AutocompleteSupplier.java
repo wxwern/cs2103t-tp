@@ -107,27 +107,34 @@ public class AutocompleteSupplier {
 
     /**
      * Returns a set of other possible flags given the list of flags that are already present in the command.
+     * If there are conflicting constraints specified, this will use the tightest possible constraint.
      */
     public Set<Flag> getOtherPossibleFlagsAsideFromFlagsPresent(Set<Flag> flagsPresent) {
-        Set<Flag> result = new HashSet<>();
+        Set<Flag> exclusionSet = new HashSet<>();
 
-        // Add groups of flags from the unique flags,
-        // provided no flag in any group is already present in the command.
+        // Find all groups that already exist and add them to the exclusions.
         uniqueFlagSets.stream()
                 .filter(flagSet -> flagSet.stream().anyMatch(flagsPresent::contains))
-                .forEach(result::addAll);
+                .forEach(exclusionSet::addAll);
 
-        // Add all repeatable flags. They don't matter.
-        result.addAll(repeatableFlags);
+        // Get all flags, then subtract the exclusions to obtain all remaining possibilities.
+        Set<Flag> resultSet = getAllPossibleFlags();
+        resultSet.removeAll(exclusionSet);
 
-        return result;
+        return resultSet;
     }
 
     /**
      * Returns a list of possible values for a flag when computed against a given model.
      */
     public List<String> getValidValues(Flag flag, Model model) {
-        return this.values.getOrDefault(flag, m -> List.of()).apply(model);
+        try {
+            return this.values.getOrDefault(flag, m -> List.of()).apply(model);
+        } catch (NullPointerException e) {
+            // Guard against NPEs due to supplied lambdas not handling them.
+            // We simply assume no auto-completion values are available.
+            return List.of();
+        }
     }
 
 
