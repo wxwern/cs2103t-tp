@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,8 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -116,6 +121,34 @@ public class ModelManager implements Model {
     public Contact getContactById(Id id) {
         return addressBook.getContactById(id);
     }
+
+    @Override
+    public Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException {
+        Contact contact;
+        if (id == null && index == null) {
+            throw new IllegalValueException("No contact specified");
+        }
+        if (id != null && index != null) {
+            throw new IllegalValueException(
+                    Messages.MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS + "INDEX, ID");
+        }
+        if (id != null) {
+            contact = getContactById(id);
+        } else { // else index is not null instead
+
+            List<Contact> lastShownList = this.getFilteredContactList();
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new IllegalValueException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
+            }
+            contact = lastShownList.get(index.getZeroBased());
+        }
+
+        if (contact == null) {
+            throw new IllegalValueException(Messages.MESSAGE_NO_SUCH_CONTACT);
+        }
+        return contact;
+    }
+
 
     //=========== Filtered Contact List Accessors =============================================================
 

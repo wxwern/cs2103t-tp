@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Type;
@@ -87,6 +89,14 @@ public interface Model {
      * Given id must not be null.
      */
     Contact getContactById(Id id);
+
+    /**
+     * Guarantees a contact given an id or index.
+     *
+     * @throws IllegalValueException if both are given, if both are not given, or if there are errors accessing
+     * contacts.
+     */
+    Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
 
     /** Returns an unmodifiable view of the filtered contact list */
     ObservableList<Contact> getFilteredContactList();
