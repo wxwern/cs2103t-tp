@@ -23,7 +23,7 @@ class PartitionedCommand {
      * Initializes and prepares the given command as distinct partitions.
      */
     PartitionedCommand(String partialCommand) {
-        List<String> words = List.of(partialCommand.split(" "));
+        List<String> words = List.of(partialCommand.split(" ", -1)); // -1 stops stripping adjacent spaces.
 
         if (words.size() <= 1) {
             this.name = "";
