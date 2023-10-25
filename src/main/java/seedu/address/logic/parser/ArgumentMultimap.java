@@ -169,4 +169,18 @@ public class ArgumentMultimap {
             throw new ParseException(Messages.getErrorMessageForNonEmptyValuedFlags(flagsWithUsefulValues));
         }
     }
+
+    /**
+     * Throws a {@code ParseException} if there are more than one of the given {@code flags} simultanouesly
+     * put in this map, i.e., they cannot be used together.
+     */
+    public void verifyAtMostOneOfFlagsUsedOutOf(Flag... flags) throws ParseException {
+        Flag[] existingFlags = Stream.of(flags).distinct()
+                .filter(flag -> argMultimap.containsKey(flag) && argMultimap.get(flag).size() > 0)
+                .toArray(Flag[]::new);
+
+        if (existingFlags.length > 1) {
+            throw new ParseException(Messages.getErrorMessageForSimultaneousUseDisallowedFlags(existingFlags));
+        }
+    }
 }
