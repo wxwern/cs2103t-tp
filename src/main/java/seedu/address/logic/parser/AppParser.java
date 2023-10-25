@@ -3,11 +3,14 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.autocomplete.AutocompleteGenerator;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -81,6 +84,52 @@ public class AppParser {
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+
+    /**
+     * Parses user input into an evaluator that can be executed to obtain autocompletion results.
+     *
+     * @param userInput full user input string
+     * @return the command based on the user input
+     */
+    public AutocompleteGenerator parseCompletionGenerator(String userInput) {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            return AutocompleteGenerator.NO_RESULTS;
+        }
+        final String commandWord = matcher.group("commandWord");
+
+        logger.finest("Preparing autocomplete: " + userInput);
+
+        switch (commandWord) {
+        case AddCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(AddCommand.AUTOCOMPLETE_SUPPLIER);
+
+        case EditCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(EditCommand.AUTOCOMPLETE_SUPPLIER);
+
+        case DeleteCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(DeleteCommand.AUTOCOMPLETE_SUPPLIER);
+
+        case ListCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(ListCommand.AUTOCOMPLETE_SUPPLIER);
+
+        case ClearCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD:
+            return AutocompleteGenerator.NO_RESULTS;
+
+        default:
+            // Not a valid command. Return autocompletion results based on all the known command names.
+            return new AutocompleteGenerator(
+                    Command.getCommandWords(Stream.of(
+                            AddCommand.class, DeleteCommand.class, EditCommand.class, ListCommand.class,
+                            FindCommand.class, HelpCommand.class, ClearCommand.class, ExitCommand.class
+                    )).filter(Optional::isPresent).map(Optional::get)
+            );
+
         }
     }
 

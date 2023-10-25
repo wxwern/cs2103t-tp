@@ -152,14 +152,6 @@ class PartitionedCommand {
     }
 
     /**
-     * Returns true if the leading texts for this and the other command are equal, false otherwise.
-     */
-    public boolean equalsByLeadingText(PartitionedCommand otherCommand) {
-        return otherCommand != null
-                && Objects.equals(getLeadingText(), otherCommand.getLeadingText());
-    }
-
-    /**
      * Returns true if the command partitions for this and the other command are equal, false otherwise.
      */
     @Override

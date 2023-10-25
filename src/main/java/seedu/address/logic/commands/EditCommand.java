@@ -19,6 +19,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
@@ -36,6 +37,10 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER =
+            AddCommand.AUTOCOMPLETE_SUPPLIER; // Anything we can add should be editable.
+
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the contact identified "
             + "by the index number used in the displayed contact list. "

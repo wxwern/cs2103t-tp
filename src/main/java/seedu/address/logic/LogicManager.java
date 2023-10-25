@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -59,6 +60,13 @@ public class LogicManager implements Logic {
         }
 
         return commandResult;
+    }
+
+    @Override
+    public Stream<String> generateCompletions(String commandText) {
+        return appParser
+                .parseCompletionGenerator(commandText)
+                .generateCompletions(commandText, model);
     }
 
     @Override
