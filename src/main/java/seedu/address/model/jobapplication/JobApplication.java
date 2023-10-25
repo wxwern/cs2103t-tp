@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import seedu.address.model.contact.Id;
-import seedu.address.model.contact.Status;
 
 /**
  * Represents a Job Application in the address book.
@@ -22,7 +21,9 @@ public class JobApplication {
 
     private final Deadline deadline;
 
-    private final Status status;
+    private final JobStatus status;
+
+    private final ApplicationStage applicationStage;
 
     /**
      * Constructs a job application.
@@ -34,16 +35,31 @@ public class JobApplication {
      * @param status of the application
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
-                          Deadline deadline, Status status) {
+                          Deadline deadline, JobStatus status, ApplicationStage applicationStage) {
         requireNonNull(oid);
         requireNonNull(jobTitle);
         requireNonNull(deadline);
         requireNonNull(status);
+        requireNonNull(applicationStage);
         this.oid = oid;
         this.jobTitle = jobTitle;
         this.jobDescription = Optional.ofNullable(jobDescription);
         this.deadline = deadline;
         this.status = status;
+        this.applicationStage = applicationStage;
+    }
+
+    /**
+     * Constructs a job application with default status and application stage.
+     *
+     * @param oid of the organization applied to.
+     * @param jobTitle of the postion applied to.
+     * @param jobDescription of the positon applied to.
+     * @param deadline of the application or interview if relevant.
+     */
+    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
+                          Deadline deadline) {
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, ApplicationStage.RESUME);
     }
 
     /**
@@ -53,10 +69,11 @@ public class JobApplication {
      * @param jobTitle of the postion applied to.
      * @param jobDescription of the positon applied to.
      * @param deadline of the application or interview if relevant.
+     * @param applicationStage of the application.
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
-                          Deadline deadline) {
-        this(oid, jobTitle, jobDescription, deadline, new Status());
+                          Deadline deadline, ApplicationStage applicationStage) {
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, applicationStage);
     }
 
     @Override
@@ -75,7 +92,8 @@ public class JobApplication {
                 && jobDescription.equals(otherApplication.jobDescription)
                 && deadline.equals(otherApplication.deadline)
                 && lastUpdatedTime.equals(otherApplication.lastUpdatedTime)
-                && status.equals(otherApplication.status);
+                && status.equals(otherApplication.status)
+                && applicationStage.equals(otherApplication.applicationStage);
     }
 
     public Id getOrganizationId() {
@@ -98,8 +116,12 @@ public class JobApplication {
         return lastUpdatedTime;
     }
 
-    public Status getStatus() {
+    public JobStatus getStatus() {
         return status;
+    }
+
+    public ApplicationStage getApplicationStage() {
+        return applicationStage;
     }
 
     @Override
@@ -110,7 +132,8 @@ public class JobApplication {
                 jobDescription.map(JobDescription::toString).orElse("None"),
                 deadline.toString(),
                 lastUpdatedTime.toString(),
-                status.toString()
+                status.toString(),
+                applicationStage.toString()
         );
     }
 }
