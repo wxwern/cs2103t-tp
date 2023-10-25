@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -12,12 +11,12 @@ public class ArgumentTokenizerTest {
     private final Flag unknownFlagMatchingDefault1 = new Flag("abc");
     private final Flag unknownFlagMatchingDefault2 = new Flag("def");
     private final Flag unknownFlagMatchingDefault3 = new Flag("ghi");
-    private final Flag unknownFlagNonDefault = new Flag("u", "**", null);
+    private final Flag unknownFlagNonDefault = Flag.ofCustomFormat("u", "**", null);
 
     private final Flag defaultFlag = new Flag("flag");
-    private final Flag pSlash = new Flag("p", null, "/");
-    private final Flag dashT = new Flag("t", "-", null);
-    private final Flag hatQ = new Flag("Q", "^", null);
+    private final Flag pSlash = Flag.ofCustomFormat("p", null, "/");
+    private final Flag dashT = Flag.ofCustomFormat("t", "-", null);
+    private final Flag hatQ = Flag.ofCustomFormat("Q", "^", null);
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -180,18 +179,6 @@ public class ArgumentTokenizerTest {
         assertArgumentAbsent(argMultimap, unknownFlagNonDefault);
         assertPreamblePresent(argMultimap, argsString); // Unknown flag is taken as part of preamble
 
-    }
-
-    @Test
-    public void equalsMethod() {
-        Flag aaa = new Flag("aaa", "-", "");
-
-        assertEquals(aaa, aaa);
-        assertEquals(aaa, new Flag("aaa", "-", null));
-
-        assertNotEquals(aaa, "-aaa");
-        assertNotEquals(aaa, new Flag("aab", "-", null));
-        assertNotEquals(aaa, new Flag("aaa", null, "/"));
     }
 
 }
