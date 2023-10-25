@@ -26,7 +26,7 @@ public class JobApplicationTest {
                 validDeadline, validStatus, validApplicationStage));
         assertThrows(NullPointerException.class, () -> new JobApplication(id1, null, validJobDescription,
                 validDeadline, validStatus, validApplicationStage));
-        }
+    }
 
     @Test
     public void constructor_nullDescription_doesNotThrowNullPointerException() {
@@ -38,7 +38,6 @@ public class JobApplicationTest {
                 validDeadline, null, validApplicationStage));
         assertDoesNotThrow(() -> new JobApplication(id1, validTitle, validJobDescription,
                 validDeadline, validStatus, null));
-
     }
 
     @Test public void constructor_excludeStatus_createsDefaultStatus() {
