@@ -11,7 +11,7 @@ public enum ApplicationStage {
     INTERVIEW("interview"),
     UNKNOWN("unknown");
 
-    private static final ApplicationStage DEFAULT_STAGE = ApplicationStage.RESUME;
+    public static final ApplicationStage DEFAULT_STAGE = ApplicationStage.RESUME;
     private final String textRepresentation;
 
     ApplicationStage(String textRepresentation) {
