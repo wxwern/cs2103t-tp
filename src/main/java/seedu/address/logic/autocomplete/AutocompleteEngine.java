@@ -1,6 +1,7 @@
 package seedu.address.logic.autocomplete;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
@@ -43,18 +44,35 @@ public class AutocompleteEngine {
         }
     };
 
+    /**
+     * Generates a set of possible command completions given the partial command and the expected full commands.
+     * The returned stream is guaranteed to have a consistent iteration order dependent on the original stream.
+     */
+    public static Stream<String> generateCompletions(String partialCommand, Stream<String> expectedFullCommands) {
+        return expectedFullCommands
+                .filter(s -> s.startsWith(partialCommand))
+                .distinct();
+    }
 
     /**
      * Generates a set of possible command completions given the partial command and the expected full commands.
-     * The set is guaranteed to have a consistent iteration order dependent on the expected full commands array.
+     * The returned stream is guaranteed to have a consistent iteration order dependent on the original collection,
+     * provided it has a well-defined order.
+     *
+     * @see #generateCompletions(String, Stream)
      */
-    public static Stream<String> generateCompletions(
-            String partialCommand, String[] expectedFullCommands
-    ) {
+    public static Stream<String> generateCompletions(String partialCommand, Collection<String> expectedFullCommands) {
+        return generateCompletions(partialCommand, expectedFullCommands.stream());
+    }
 
-        return Arrays.stream(expectedFullCommands)
-                .filter(s -> s.startsWith(partialCommand))
-                .distinct();
+    /**
+     * Generates a set of possible command completions given the partial command and the expected full commands.
+     * The returned stream is guaranteed to have a consistent iteration order dependent on the original stream.
+     *
+     * @see #generateCompletions(String, Stream)
+     */
+    public static Stream<String> generateCompletions(String partialCommand, String[] expectedFullCommands) {
+        return generateCompletions(partialCommand, Arrays.stream(expectedFullCommands));
     }
 
     /**

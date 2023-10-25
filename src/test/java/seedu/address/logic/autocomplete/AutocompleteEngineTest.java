@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,25 +16,40 @@ public class AutocompleteEngineTest {
 
     @Test
     public void generateCompletions_usingGivenExpectedCommands_correctResult() {
+        List<String> sourceList = List.of(
+                "abacus",
+                "ad free",
+                "add",
+                "add milk",
+                "add coffee",
+                "almond",
+                "ate cake",
+                "bake cake",
+                "cadence",
+                "cupcake"
+        );
+        List<String> resultList = List.of(
+                "ad free",
+                "add",
+                "add milk",
+                "add coffee"
+        );
+
+        // Test all accepted types via polymorphism
         assertEquals(
-                List.of(
-                        "ad free",
-                        "add",
-                        "add milk",
-                        "add coffee"
-                ),
-                AutocompleteEngine.generateCompletions("ad", List.of(
-                        "abacus",
-                        "ad free",
-                        "add",
-                        "add milk",
-                        "add coffee",
-                        "almond",
-                        "ate cake",
-                        "bake cake",
-                        "cadence",
-                        "cupcake"
-                ).toArray(String[]::new)).collect(Collectors.toList())
+                resultList,
+                AutocompleteEngine.generateCompletions("ad",
+                        sourceList).collect(Collectors.toList())
+        );
+        assertEquals(
+                resultList,
+                AutocompleteEngine.generateCompletions("ad",
+                        sourceList.toArray(String[]::new)).collect(Collectors.toList())
+        );
+        assertEquals(
+                resultList,
+                AutocompleteEngine.generateCompletions("ad",
+                        sourceList.stream()).collect(Collectors.toList())
         );
     }
 
