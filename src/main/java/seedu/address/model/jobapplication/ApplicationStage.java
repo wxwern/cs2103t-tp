@@ -2,6 +2,9 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * The different stages of internship application.
+ */
 public enum ApplicationStage {
     RESUME("resume"),
     ONLINE_ASSESSMENT("online assessment"),
