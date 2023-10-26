@@ -29,9 +29,7 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
     public ApplyCommand parse(String args) throws ParseException {
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        FLAG_ID, FLAG_TITLE, FLAG_STAGE,
-                        FLAG_DEADLINE, FLAG_TITLE, FLAG_DESCRIPTION,
-                        FLAG_STATUS
+                        ApplyCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new)
                 );
 
         boolean hasIndex = !argumentMultimap.getPreamble().isEmpty();

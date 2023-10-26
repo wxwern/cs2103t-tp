@@ -110,6 +110,9 @@ public class AppParser {
         case AddCommand.COMMAND_WORD:
             return new AutocompleteGenerator(AddCommand.AUTOCOMPLETE_SUPPLIER);
 
+        case ApplyCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(ApplyCommand.AUTOCOMPLETE_SUPPLIER);
+
         case EditCommand.COMMAND_WORD:
             return new AutocompleteGenerator(EditCommand.AUTOCOMPLETE_SUPPLIER);
 
@@ -129,8 +132,9 @@ public class AppParser {
             // Not a valid command. Return autocompletion results based on all the known command names.
             return new AutocompleteGenerator(
                     Command.getCommandWords(Stream.of(
-                            AddCommand.class, DeleteCommand.class, EditCommand.class, ListCommand.class,
-                            FindCommand.class, HelpCommand.class, ClearCommand.class, ExitCommand.class
+                            AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
+                            ListCommand.class, FindCommand.class, HelpCommand.class,
+                            ClearCommand.class, ExitCommand.class
                     )).filter(Optional::isPresent).map(Optional::get)
             );
 

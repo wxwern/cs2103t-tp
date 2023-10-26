@@ -7,11 +7,14 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -30,6 +33,21 @@ import seedu.address.model.jobapplication.JobTitle;
  */
 public class ApplyCommand extends Command {
     public static final String COMMAND_WORD = "apply";
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.onceForEachOf(
+                    FLAG_TITLE, FLAG_DESCRIPTION,
+                    FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS,
+                    FLAG_ID
+            )
+    ).configureValueMap(m -> {
+        // Add value autocompletion data for:
+        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .map(o -> o.getId().value));
+        m.put(FLAG_STAGE, model -> Arrays.stream(ApplicationStage.values()).map(ApplicationStage::toString));
+        m.put(FLAG_STATUS, model -> Arrays.stream(JobStatus.values()).map(JobStatus::toString));
+    });
 
     public static final String MESSAGE_USAGE = "Adds a new job application.\n"
             + "Parameters: "
