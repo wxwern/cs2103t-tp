@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
@@ -111,7 +112,7 @@ class JsonAdaptedContact {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted contact.
      */
-    public Contact toModelType(AddressBook addressBook) throws IllegalValueException {
+    public Contact toModelType(ReadOnlyAddressBook reference) throws IllegalValueException {
         final List<Tag> contactTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             contactTags.add(tag.toModelType());
@@ -186,7 +187,7 @@ class JsonAdaptedContact {
             if (modelOid == null) {
                 modelOrg = null;
             } else {
-                Contact contact = addressBook.getContactById(modelOid);
+                Contact contact = reference.getContactById(modelOid);
                 if (contact == null || contact.getType() != Type.ORGANIZATION) {
                     throw new IllegalValueException(Recruiter.MESSAGE_INVALID_ORGANIZATION);
                 }

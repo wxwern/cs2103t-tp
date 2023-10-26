@@ -61,14 +61,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// contact-level operations
 
     /**
-     * Returns true if a contact with the same identity as {@code contact} exists in the address book.
-     */
-    public boolean hasContact(Contact contact) {
-        requireNonNull(contact);
-        return contacts.contains(contact);
-    }
-
-    /**
      * Adds a contact to the address book.
      * The contact must not already exist in the address book.
      */
@@ -95,20 +87,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         contacts.remove(key);
     }
 
-    /**
-     * Gives a contact which id matches the given id.
-     * Gives null if a contact with such id does not exist.
-     * Given id must not be null.
-     */
-    public Contact getContactById(Id id) {
-        requireNonNull(id);
-        for (Contact c: contacts) {
-            if (id.equals(c.getId())) {
-                return c;
-            }
-        }
-        return null;
-    }
 
     //// util methods
 
