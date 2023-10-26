@@ -20,7 +20,7 @@ import seedu.address.model.Model;
 public class AutocompleteGenerator {
 
     /** An autocompletion generator that generates no results. */
-    public static final AutocompleteGenerator NO_RESULTS = new AutocompleteGenerator(Stream.empty());
+    public static final AutocompleteGenerator NO_RESULTS = new AutocompleteGenerator(Stream::empty);
 
 
     /** A comparator used to order fuzzily matched strings where better matches against the input go first. */
