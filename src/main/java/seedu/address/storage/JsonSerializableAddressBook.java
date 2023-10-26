@@ -60,7 +60,7 @@ class JsonSerializableAddressBook {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedContact jsonAdaptedContact : persons) {
             Contact contact = jsonAdaptedContact.toModelType(addressBook);
-            if (addressBook.hasContact(contact)) {
+            if (addressBook.getContactById(contact.getId()) != null) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_CONTACT);
             }
             addressBook.addContact(contact);
