@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents an Organisation's status in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPosition(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidStatus(String)}
  */
 public class Status {
     public static final String MESSAGE_CONSTRAINTS =
@@ -54,12 +54,12 @@ public class Status {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Position)) {
+        if (!(other instanceof Status)) {
             return false;
         }
 
-        Position otherPosition = (Position) other;
-        return applicationStatus.equals(otherPosition.jobPosition);
+        Status otherStatus = (Status) other;
+        return applicationStatus.equals(otherStatus.applicationStatus);
     }
 
     @Override
