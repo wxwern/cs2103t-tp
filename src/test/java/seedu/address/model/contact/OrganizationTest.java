@@ -18,6 +18,7 @@ import static seedu.address.testutil.TypicalContacts.NUS;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.jobapplication.JobApplicationTest;
 import seedu.address.testutil.OrganizationBuilder;
 
 public class OrganizationTest {
@@ -52,6 +53,16 @@ public class OrganizationTest {
         editedNus = new OrganizationBuilder(NUS)
                 .withId(NUS.getId().value.toUpperCase()).build();
         assertFalse(NUS.isSameContact(editedNus));
+    }
+
+    @Test
+    public void getJobApplications_any_correctAmount() {
+        Organization newNus = new OrganizationBuilder(NUS)
+                .withId(NUS.getId().value.toUpperCase()).build();
+        assertEquals(0, newNus.getJobApplications().length);
+        newNus.addJobApplication(JobApplicationTest.SAMPLE_JOB_APPLICATION);
+        assertEquals(1, newNus.getJobApplications().length);
+        assertEquals(newNus.getJobApplications()[0], JobApplicationTest.SAMPLE_JOB_APPLICATION);
     }
 
     @Test

@@ -21,6 +21,15 @@ public class JobApplicationTest {
     private ApplicationStage validApplicationStage = ApplicationStage.RESUME;
     private Deadline validDeadline = new Deadline();
 
+    public static final JobApplication SAMPLE_JOB_APPLICATION = new JobApplication(
+            new Id(),
+            new JobTitle("SWE"),
+            new JobDescription("None"),
+            new Deadline(),
+            JobStatus.DEFAULT_STATUS,
+            ApplicationStage.DEFAULT_STAGE
+    );
+
     @Test
     public void constructor_nullExceptJobDescription_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new JobApplication(null, validTitle, validJobDescription,
