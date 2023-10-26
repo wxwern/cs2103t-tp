@@ -1,2 +1,4 @@
-package seedu.address.logic.commands;public class ApplyCommandTest {
+package seedu.address.logic.commands;
+
+public class ApplyCommandTest {
 }
