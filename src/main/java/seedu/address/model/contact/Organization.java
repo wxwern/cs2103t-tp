@@ -1,12 +1,15 @@
 package seedu.address.model.contact;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,6 +24,8 @@ public class Organization extends Contact {
     private final Optional<Position> position;
 
     private final Set<Id> rids = new HashSet<>();
+
+    private final List<JobApplication> jobApplications = new ArrayList<>();
 
 
     /**
@@ -53,12 +58,27 @@ public class Organization extends Contact {
     }
 
     /**
+     * Returns a list of {@code JobApplication} made to this organization.
+     */
+    public JobApplication[] getJobApplications() {
+        return this.jobApplications.toArray(new JobApplication[]{});
+    }
+
+    /**
+     * Adds a {@code JobApplication} to the list of applications.
+     */
+    public void addJobApplication(JobApplication jobApplication) {
+        this.jobApplications.add(jobApplication);
+    }
+
+    /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Id> getRecruiterIds() {
         return Collections.unmodifiableSet(rids);
     }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
