@@ -51,11 +51,13 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
         }
 
         if (!hasId && !hasIndex) {
-            throw new ParseException(Messages.MESSAGE_INVALID_COMMAND_FORMAT + ApplyCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    ApplyCommand.MESSAGE_USAGE));
         }
 
         if (title.isEmpty()) {
-            throw new ParseException(Messages.MESSAGE_INVALID_COMMAND_FORMAT + ApplyCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    ApplyCommand.MESSAGE_USAGE));
         }
         return new ApplyCommand(
                 hasId ? ParserUtil.parseId(id) : null,

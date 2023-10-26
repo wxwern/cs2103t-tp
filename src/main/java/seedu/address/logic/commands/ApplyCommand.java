@@ -53,11 +53,11 @@ public class ApplyCommand extends Command {
             + "Parameters: "
             + "INDEX (must be a positive integer) "
             + FLAG_ID + " ID "
-            + FLAG_TITLE + "TITLE" // Title
-            + FLAG_DESCRIPTION + "DESCRIPTION" // Description
-            + FLAG_DEADLINE + "DEADLINE: DD-MM-YYYY" // Deadline
-            + FLAG_STAGE + "APPLICATION STAGE: resume | online assessment | interview" // Application stage
-            + FLAG_STATUS + "STATUS: pending | offered | accepted | turned down"; // Status
+            + FLAG_TITLE + " TITLE " // Title
+            + FLAG_DESCRIPTION + " DESCRIPTION " // Description
+            + FLAG_DEADLINE + " DEADLINE: DD-MM-YYYY " // Deadline
+            + FLAG_STAGE + " APPLICATION STAGE: resume | online assessment | interview " // Application stage
+            + FLAG_STATUS + " STATUS: pending | offered | accepted | turned down "; // Status
 
     public static final String MESSAGE_APPLY_SUCCESS = "Added application: %1$s to %2$s";
     public static final String MESSAGE_ATTEMPT_TO_ADD_TO_NON_ORG = "Attempted to apply to a non-organization: %1$s";
