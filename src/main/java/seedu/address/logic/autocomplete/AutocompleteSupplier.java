@@ -124,12 +124,19 @@ public class AutocompleteSupplier {
         }
     }
 
-
+    /**
+     * Configures the set of flags within this autocomplete supplier using the given {@code operator}.
+     * This also returns {@code this} instance, which is useful for chaining.
+     */
     public AutocompleteSupplier configureFlagSet(Consumer<AutocompleteDataSet<Flag>> operator) {
         operator.accept(this.flags);
         return this;
     }
 
+    /**
+     * Configures the map of values within this autocomplete supplier using the given {@code operator}.
+     * This also returns {@code this} instance, which is useful for chaining.
+     */
     public AutocompleteSupplier configureValueMap(Consumer<Map<Flag, FlagValueSupplier>> operator) {
         operator.accept(this.values);
         return this;

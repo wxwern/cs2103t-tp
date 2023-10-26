@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
