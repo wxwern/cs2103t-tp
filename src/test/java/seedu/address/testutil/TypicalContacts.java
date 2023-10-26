@@ -87,13 +87,32 @@ public class TypicalContacts {
             .withRids("soc-rec_ryan")
             .build();
 
+    public static final Organization NTU = new OrganizationBuilder()
+            .withName("NTU SoC")
+            .withId("ntu-soc_sg")
+            .withPhone("67905786")
+            .withEmail("scse-undergrad@ntu.edu.sg")
+            .withAddress("Block N4 #02a-32, Nanyang Avenue")
+            .withStatus("Rejected")
+            .withPosition("Teaching Assistant")
+            .build();
+
     public static final Recruiter RYAN = new RecruiterBuilder()
             .withName("Ryan Lau")
             .withId("soc-rec_ryan")
             .withPhone("82930129")
             .withEmail("ryanlau@comp.nus.edu.sg")
             .withAddress("Computing 1, 13 Computing Drive")
-            .withOid("nus-soc_sg")
+            .withOrganization(NUS)
+            .build();
+
+    public static final Recruiter RACHEL = new RecruiterBuilder()
+            .withName("Rachel Lam")
+            .withId("soc-rec_rachel")
+            .withPhone("62834678")
+            .withEmail("rachelam@ntu.edu.sg")
+            .withAddress("Block N4 #02a-32, Nanyang Avenu")
+            .withOrganization(NTU)
             .build();
 
     // Manually added

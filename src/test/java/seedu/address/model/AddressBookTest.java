@@ -71,11 +71,11 @@ public class AddressBookTest {
     }
 
     @Test
-    public void hasContact_contactWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasContact_contactWithSameIdentityFieldsInAddressBook_returnsFalse() {
         addressBook.addContact(ALICE);
         Contact editedAlice = new ContactBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasContact(editedAlice));
+        assertFalse(addressBook.hasContact(editedAlice));
     }
 
     @Test

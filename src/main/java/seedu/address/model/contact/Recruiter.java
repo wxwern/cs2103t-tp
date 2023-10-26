@@ -35,6 +35,10 @@ public class Recruiter extends Contact {
         return organization.map(Contact::getId);
     }
 
+    public Optional<Organization> getOrganization() {
+        return organization;
+    }
+
     public boolean isLinkedToOrganization(Organization otherOrg) {
         return organization.map(org -> org.equals(otherOrg)).orElse(false);
     }
