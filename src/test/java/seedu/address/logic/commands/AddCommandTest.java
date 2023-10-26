@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalContacts.ALICE;
+import static seedu.address.testutil.TypicalContacts.NUS;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -30,8 +31,27 @@ import seedu.address.testutil.ContactBuilder;
 public class AddCommandTest {
 
     @Test
-    public void constructor_nullContact_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddCommand(null));
+    public void constructor_nullCompulsoryFields_throwsNullPointerException() {
+        // null name field
+        assertThrows(NullPointerException.class, () -> new AddCommand(
+                null,
+                ALICE.getId(), ALICE.getPhone().orElse(null),
+                ALICE.getEmail().orElse(null), ALICE.getUrl().orElse(null),
+                ALICE.getAddress().orElse(null), ALICE.getTags()));
+
+        // null id field
+        assertThrows(NullPointerException.class, () -> new AddCommand(
+                ALICE.getName(),
+                null, ALICE.getPhone().orElse(null),
+                ALICE.getEmail().orElse(null), ALICE.getUrl().orElse(null),
+                ALICE.getAddress().orElse(null), ALICE.getTags()));
+
+        // null tags fields
+        assertThrows(NullPointerException.class, () -> new AddCommand(
+                ALICE.getName(),
+                ALICE.getId(), ALICE.getPhone().orElse(null),
+                ALICE.getEmail().orElse(null), ALICE.getUrl().orElse(null),
+                ALICE.getAddress().orElse(null), null));
     }
 
     @Test
@@ -39,7 +59,17 @@ public class AddCommandTest {
         ModelStubAcceptingContactAdded modelStub = new ModelStubAcceptingContactAdded();
         Contact validContact = new ContactBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validContact).execute(modelStub);
+        AddCommand addCommand = new AddCommand(
+                validContact.getName(),
+                validContact.getId(),
+                validContact.getPhone().orElse(null),
+                validContact.getEmail().orElse(null),
+                validContact.getUrl().orElse(null),
+                validContact.getAddress().orElse(null),
+                validContact.getTags()
+        );
+
+        CommandResult commandResult = addCommand.execute(modelStub);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
                 commandResult.getFeedbackToUser());
@@ -47,9 +77,17 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_duplicatecontact_throwsCommandException() {
+    public void execute_duplicateContact_throwsCommandException() {
         Contact validContact = new ContactBuilder().build();
-        AddCommand addCommand = new AddCommand(validContact);
+        AddCommand addCommand = new AddCommand(
+                validContact.getName(),
+                validContact.getId(),
+                validContact.getPhone().orElse(null),
+                validContact.getEmail().orElse(null),
+                validContact.getUrl().orElse(null),
+                validContact.getAddress().orElse(null),
+                validContact.getTags()
+        );
         ModelStub modelStub = new ModelStubWithContact(validContact);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_CONTACT, () -> addCommand.execute(modelStub));
@@ -59,14 +97,38 @@ public class AddCommandTest {
     public void equals() {
         Contact alice = new ContactBuilder().withName("Alice").build();
         Contact bob = new ContactBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        AddCommand addAliceCommand = new AddCommand(
+                alice.getName(),
+                alice.getId(),
+                alice.getPhone().orElse(null),
+                alice.getEmail().orElse(null),
+                alice.getUrl().orElse(null),
+                alice.getAddress().orElse(null),
+                alice.getTags()
+        );
+        AddCommand addBobCommand = new AddCommand(
+                bob.getName(),
+                bob.getId(),
+                bob.getPhone().orElse(null),
+                bob.getEmail().orElse(null),
+                bob.getUrl().orElse(null),
+                bob.getAddress().orElse(null),
+                bob.getTags()
+        );
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        AddCommand addAliceCommandCopy = new AddCommand(
+                alice.getName(),
+                alice.getId(),
+                alice.getPhone().orElse(null),
+                alice.getEmail().orElse(null),
+                alice.getUrl().orElse(null),
+                alice.getAddress().orElse(null),
+                alice.getTags()
+        );
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -81,15 +143,30 @@ public class AddCommandTest {
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddCommand(ALICE);
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        AddCommand addCommand = new AddCommand(
+                ALICE.getName(),
+                ALICE.getId(),
+                ALICE.getPhone().orElse(null),
+                ALICE.getEmail().orElse(null),
+                ALICE.getUrl().orElse(null),
+                ALICE.getAddress().orElse(null),
+                ALICE.getTags()
+        );
+        String expected = AddCommand.class.getCanonicalName()
+                + "{name=" + ALICE.getName()
+                + ", id=" + ALICE.getId()
+                + ", phone=" + ALICE.getPhone().orElse(null)
+                + ", email=" + ALICE.getEmail().orElse(null)
+                + ", url=" + ALICE.getUrl().orElse(null)
+                + ", address=" + ALICE.getAddress().orElse(null)
+                + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, addCommand.toString());
     }
 
     /**
      * A default model stub that have all of the methods failing.
      */
-    private class ModelStub implements Model {
+    protected class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -152,7 +229,7 @@ public class AddCommandTest {
 
         @Override
         public Contact getContactById(Id id) {
-            throw new AssertionError("This method should not be called.");
+            return NUS;
         }
 
         @Override
@@ -174,7 +251,7 @@ public class AddCommandTest {
     /**
      * A Model stub that contains a single contact.
      */
-    private class ModelStubWithContact extends ModelStub {
+    protected class ModelStubWithContact extends ModelStub {
         private final Contact contact;
 
         ModelStubWithContact(Contact contact) {
@@ -192,7 +269,7 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the contact being added.
      */
-    private class ModelStubAcceptingContactAdded extends ModelStub {
+    protected class ModelStubAcceptingContactAdded extends ModelStub {
         final ArrayList<Contact> contactsAdded = new ArrayList<>();
 
         @Override

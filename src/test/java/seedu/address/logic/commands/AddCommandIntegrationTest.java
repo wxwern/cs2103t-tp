@@ -33,7 +33,17 @@ public class AddCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addContact(validContact);
 
-        assertCommandSuccess(new AddCommand(validContact), model,
+        AddCommand addCommand = new AddCommand(
+                validContact.getName(),
+                validContact.getId(),
+                validContact.getPhone().orElse(null),
+                validContact.getEmail().orElse(null),
+                validContact.getUrl().orElse(null),
+                validContact.getAddress().orElse(null),
+                validContact.getTags()
+        );
+
+        assertCommandSuccess(addCommand, model,
                 String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
                 expectedModel);
     }
@@ -41,8 +51,16 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicateContact_throwsCommandException() {
         Contact contactInList = model.getAddressBook().getContactList().get(0);
-        assertCommandFailure(new AddCommand(contactInList), model,
-                AddCommand.MESSAGE_DUPLICATE_CONTACT);
+        AddCommand addCommand = new AddCommand(
+                contactInList.getName(),
+                contactInList.getId(),
+                contactInList.getPhone().orElse(null),
+                contactInList.getEmail().orElse(null),
+                contactInList.getUrl().orElse(null),
+                contactInList.getAddress().orElse(null),
+                contactInList.getTags()
+        );
+        assertCommandFailure(addCommand, model, AddCommand.MESSAGE_DUPLICATE_CONTACT);
     }
 
 }

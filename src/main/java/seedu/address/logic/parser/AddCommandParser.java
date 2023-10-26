@@ -18,16 +18,15 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddOrganizationCommand;
+import seedu.address.logic.commands.AddRecruiterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.contact.Address;
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
-import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
 import seedu.address.model.contact.Position;
-import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
@@ -57,11 +56,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_URL, FLAG_ADDRESS);
 
         if (argMultimap.hasFlag(FLAG_ORGANIZATION)) {
-            Organization organization = parseAsOrganization(argMultimap);
-            return new AddCommand(organization);
+            return parseAsOrganization(argMultimap);
         } else if (argMultimap.hasFlag(FLAG_RECRUITER)) {
-            Recruiter recruiter = parseAsRecruiter(argMultimap);
-            return new AddCommand(recruiter);
+            return parseAsRecruiter(argMultimap);
         }
 
         // Deprecated contact format. Will be removed in future versions.
@@ -80,12 +77,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 argMultimap.getValue(FLAG_URL), ParserUtil::parseUrl);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
-        Contact contact = new Contact(name, id, phone, email, url, address, tagList);
-
-        return new AddCommand(contact);
+        return new AddCommand(name, id, phone, email, url, address, tagList);
     }
 
-    private Recruiter parseAsRecruiter(ArgumentMultimap argMultimap) throws ParseException {
+    private AddRecruiterCommand parseAsRecruiter(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_ORGANIZATION_ID);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
 
@@ -106,10 +101,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 argMultimap.getValue(FLAG_ORGANIZATION_ID), ParserUtil::parseId);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
-        return new Recruiter(name, id, phone, email, url, address, tagList, oid);
+        return new AddRecruiterCommand(name, id, phone, email, url, address, tagList, oid);
     }
 
-    private Organization parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
+    private AddOrganizationCommand parseAsOrganization(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_POSITION, FLAG_STATUS);
         Name name = ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get());
 
@@ -133,6 +128,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
         Set<Id> ridList = Set.of(); // TODO: This should be dynamically determined from oid in Recruiter.
 
-        return new Organization(name, id, phone, email, url, address, tagList, status, position, ridList);
+        return new AddOrganizationCommand(name, id, phone, email, url, address, tagList, status, position, ridList);
     }
 }

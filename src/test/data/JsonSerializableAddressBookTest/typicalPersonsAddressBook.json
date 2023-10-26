@@ -1,5 +1,5 @@
 {
-  "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
+  "_comment": "AddressBook save file which contains the same Contact values as in TypicalContacts#getTypicalAddressBook()",
   "persons" : [ {
     "name" : "Alice Pauline",
     "id" : "test_1-123",
@@ -17,44 +17,77 @@
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ]
   }, {
-    "name" : "Carl Kurz",
-    "id" : "test_3-123",
-    "phone" : "95352563",
-    "email" : "heinz@example.com",
-    "url": "www.google.com",
-    "address" : "wall street",
+    "name" : "NUS SoC",
+    "type": "organization",
+    "id" : "nus-soc_sg",
+    "phone" : "65162727",
+    "email" : "socug@comp.nus.edu.sg",
+    "url": "www.nus.edu.sg",
+    "address" : "Computing 1, 13 Computing Drive",
+    "status": "Applied",
+    "position": "Research Assistant",
+    "tags" : [ "computing", "worldClass" ]
+  }, {
+    "name" : "NTU SoC",
+    "type": "organization",
+    "id" : "ntu-soc_sg",
+    "phone" : "67905786",
+    "email" : "scse-undergrad@ntu.edu.sg",
+    "url": "www.ntu.edu.sg",
+    "address" : "Block N4 #02a-32, Nanyang Avenue",
+    "status": "Rejected",
+    "position": "Teaching Assistant",
+    "tags" : [ "computing", "researchOriented" ]
+  }, {
+    "name" : "SMU Info Sys",
+    "type": "organization",
+    "id" : "smu-is_sg",
+    "phone" : "68087960",
+    "email" : "scis_ugrad@smu.edu.sg",
+    "url": "www.smu.edu.sg",
+    "address" : "80 Stamford Rd",
+    "status": "Interested",
+    "position": "Web Developer",
     "tags" : [ ]
   }, {
-    "name" : "Daniel Meier",
-    "id" : "test_4-123",
-    "phone" : "87652533",
-    "email" : "cornelia@example.com",
-    "url": "www.google.com",
-    "address" : "10th street",
-    "tags" : [ "friends" ]
+    "name" : "Ryan Lau",
+    "type": "recruiter",
+    "id" : "soc-rec_ryan",
+    "phone" : "82930129",
+    "email" : "ryanlau@comp.nus.edu.sg",
+    "url": "www.ryan_is_cool.com",
+    "address" : "Computing 1, 13 Computing Drive",
+    "oid": "nus-soc_sg",
+    "tags" : [ "friendly" ]
   }, {
-    "name" : "Elle Meyer",
-    "id" : "test_5-123",
-    "phone" : "9482224",
-    "email" : "werner@example.com",
-    "url": "www.google.com",
-    "address" : "michegan ave",
-    "tags" : [ ]
+    "name" : "Rachel Lam",
+    "type": "recruiter",
+    "id" : "soc-rec_rachel",
+    "phone" : "62834678",
+    "email" : "rachelam@ntu.edu.sg",
+    "url": "www.rachel_cs_legend.com",
+    "address" : "Block N4 #02a-32, Nanyang Avenue",
+    "oid": "ntu-soc_sg",
+    "tags" : [ "strict", "helpful" ]
   }, {
-    "name" : "Fiona Kunz",
-    "id" : "test_6-123",
-    "phone" : "9482427",
-    "email" : "lydia@example.com",
-    "url": "www.google.com",
-    "address" : "little tokyo",
-    "tags" : [ ]
+    "name" : "Rex Lee",
+    "type": "recruiter",
+    "id" : "is-rec_rex",
+    "phone" : "83428451",
+    "email" : "rexlee@smu.edu.sg",
+    "url": "www.rex.com",
+    "address" : "80 Stamford Rd",
+    "oid": "smu-is_sg",
+    "tags" : [ "cool", "resourceful" ]
   }, {
-    "name" : "George Best",
-    "id" : "test_7-123",
-    "phone" : "9482442",
-    "email" : "anna@example.com",
-    "url": "www.google.com",
-    "address" : "4th street",
+    "name" : "Richard Lim",
+    "type": "recruiter",
+    "id" : "is-rec_richard",
+    "phone" : "83228311",
+    "email" : "richlee@smu.edu.sg",
+    "url": "www.richard_lion_heart.com",
+    "address" : "80 Stamford Rd",
+    "oid": "smu-is_sg",
     "tags" : [ ]
   } ]
 }
