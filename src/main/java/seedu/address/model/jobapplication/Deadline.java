@@ -61,4 +61,9 @@ public class Deadline implements Comparable<Deadline> {
     public int compareTo(Deadline d) {
         return deadline.compareTo(d.deadline);
     }
+
+    @Override
+    public String toString() {
+        return FORMATTER.format(deadline);
+    }
 }
