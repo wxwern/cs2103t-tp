@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
-import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class DeleteCommand extends Command {
         m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream().map(c -> c.getId().value));
 
         // Disable value autocompletion for:
-        m.put(FLAG_RECRUITER, null);
+        m.put(FLAG_RECURSIVE, null);
     });
 
 
