@@ -16,6 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Type;
 import seedu.address.model.jobapplication.ApplicationStage;
 import seedu.address.model.jobapplication.Deadline;
@@ -40,7 +41,7 @@ public class ApplyCommand extends Command {
             + FLAG_STAGE + "APPLICATION STAGE: resume | online assessment | interview" // Application stage
             + FLAG_STATUS + "STATUS: pending | offered | accepted | turned down"; // Status
 
-    public static final String MESSAGE_APPLY_SUCCESS = "Added application: %1$s";
+    public static final String MESSAGE_APPLY_SUCCESS = "Added application: %1$s to %2$s";
     public static final String MESSAGE_ATTEMPT_TO_ADD_TO_NON_ORG = "Attempted to apply to a non-organization: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(ApplyCommand.class);
@@ -75,13 +76,14 @@ public class ApplyCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        Contact org = getOrganization(index, oid, model);
+        Organization org = getOrganization(index, oid, model);
         Id id = oid == null ? org.getId() : oid;
         JobApplication ja = new JobApplication(id, title, description, deadline, status, applicationStage);
-        return null;
+        org.addJobApplication(ja);
+        return new CommandResult(String.format(MESSAGE_APPLY_SUCCESS, ja, org));
     }
 
-    private static Contact getOrganization(Index index, Id id, Model model) throws CommandException {
+    private static Organization getOrganization(Index index, Id id, Model model) throws CommandException {
         Contact org;
         try {
             org = model.getContactByIdXorIndex(id, index);
@@ -91,6 +93,6 @@ public class ApplyCommand extends Command {
         if (org.getType() != Type.ORGANIZATION) {
             throw new CommandException(String.format(MESSAGE_ATTEMPT_TO_ADD_TO_NON_ORG, org));
         }
-        return org;
+        return (Organization) org;
     }
 }
