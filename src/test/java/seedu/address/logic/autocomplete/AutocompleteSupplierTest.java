@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.parser.Flag;
 
 public class AutocompleteSupplierTest {
@@ -32,7 +34,10 @@ public class AutocompleteSupplierTest {
         supplier = AutocompleteSupplier.fromRepeatableFlags(FLAG_A, FLAG_B);
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getAllPossibleFlags());
 
-        supplier = AutocompleteSupplier.fromFlags(List.of(FLAG_A, FLAG_B), List.of(FLAG_C, FLAG_D));
+        supplier = AutocompleteSupplier.from(
+                AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
+                AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+        );
         assertEquals(Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D), supplier.getAllPossibleFlags());
     }
 
@@ -55,7 +60,10 @@ public class AutocompleteSupplierTest {
         );
 
         // Mixed flags
-        supplier = AutocompleteSupplier.fromFlags(List.of(FLAG_A, FLAG_B), List.of(FLAG_C, FLAG_D));
+        supplier = AutocompleteSupplier.from(
+                AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
+                AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+        );
         assertEquals(
                 Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D),
                 supplier.getOtherPossibleFlagsAsideFromFlagsPresent(Set.of())
@@ -66,14 +74,16 @@ public class AutocompleteSupplierTest {
         );
 
         // Mixed advanced combination.
-        // If there are conflicts, the tightest bound is chosen.
-        supplier = new AutocompleteSupplier(
-                List.of(
-                        Set.of(FLAG_A, FLAG_B), // A & B cannot coexist
-                        Set.of(FLAG_B, FLAG_C) // B & C cannot coexist
-                ),
-                List.of(FLAG_C, FLAG_D) // C & D may have multiple occurrences.
+        supplier = AutocompleteSupplier.from(
+                AutocompleteDataSet.concat(
+                        AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
+                        AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+                ).addConstraints(List.of(
+                        AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B), // A & B cannot coexist
+                        AutocompleteConstraint.oneAmongAllOf(FLAG_B, FLAG_C) // B & C cannot coexist
+                ))
         );
+
         assertEquals(
                 Set.of(FLAG_C, FLAG_D), // A is present -> A, B cannot be present again
                 supplier.getOtherPossibleFlagsAsideFromFlagsPresent(Set.of(FLAG_A))
@@ -99,11 +109,12 @@ public class AutocompleteSupplierTest {
     @Test
     public void getValidValues() {
         var supplier = new AutocompleteSupplier(
-                List.of(
-                        Set.of(FLAG_A, FLAG_B), // A & B cannot coexist
-                        Set.of(FLAG_C) // C must only exist at most once
+                AutocompleteDataSet.concat(
+                        AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B, FLAG_C),
+                        AutocompleteDataSet.anyNumberOf(FLAG_D)
+                ).addConstraint(
+                        AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B) // A & B cannot coexist
                 ),
-                List.of(FLAG_D), // D may exist any number of times
                 Map.of(
                         FLAG_A, m -> LIST_A,
                         FLAG_B, m -> LIST_B,

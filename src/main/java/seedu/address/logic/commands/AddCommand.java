@@ -15,13 +15,14 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -33,18 +34,25 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = new AutocompleteSupplier(
-            List.of(
-                    Set.of(FLAG_ORGANIZATION, FLAG_RECRUITER), // indicates --org and --rec should not be together
-                    Set.of(FLAG_NAME), Set.of(FLAG_ID),
-                    Set.of(FLAG_PHONE), Set.of(FLAG_EMAIL),
-                    Set.of(FLAG_ADDRESS), Set.of(FLAG_URL),
-                    Set.of(FLAG_STATUS), Set.of(FLAG_POSITION),
-                    Set.of(FLAG_ORGANIZATION, FLAG_ORGANIZATION_ID) // indicates --org and --oid should not be together
-            ), // flags that may be present ONLY once
-            List.of(
-                    FLAG_TAG
-            ) // flags that may be present more than once
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.oneAmongAllOf(
+                    FLAG_ORGANIZATION, FLAG_RECRUITER
+            ).addDependents(
+                    AutocompleteDataSet.concat(
+                            AutocompleteDataSet.onceForEachOf(
+                                    FLAG_NAME, FLAG_ID,
+                                    FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
+                                    FLAG_STATUS, FLAG_POSITION,
+                                    FLAG_ORGANIZATION_ID
+                            ),
+                            AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+                    ).addConstraints(List.of(
+                            AutocompleteConstraint.isPrerequisiteFor(FLAG_ORGANIZATION,
+                                    FLAG_STATUS, FLAG_POSITION),
+                            AutocompleteConstraint.isPrerequisiteFor(FLAG_RECRUITER,
+                                    FLAG_ORGANIZATION_ID)
+                    ))
+            )
     );
 
 

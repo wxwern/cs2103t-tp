@@ -102,13 +102,11 @@ public class AppParserTest {
     @Test
     public void parseCompletionGenerator_knownSubsequence_canGenerateCorrectSuggestions() {
         // Add example
-        String userInput = "add -o";
+        String userInput = "add --org -o";
         assertEquals(
                 List.of(
-                        "add --org",
-                        "add --oid",
-                        "add --phone",
-                        "add --pos"
+                        "add --org --phone",
+                        "add --org --pos"
                 ),
                 parser.parseCompletionGenerator(userInput)
                         .generateCompletions(userInput)

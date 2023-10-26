@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.parser.Flag;
 
 public class AutocompleteGeneratorTest {
@@ -56,11 +57,12 @@ public class AutocompleteGeneratorTest {
         Flag flagC2 = new Flag("code");
 
         AutocompleteSupplier supplier = new AutocompleteSupplier(
-                List.of(
-                    Set.of(flagA1, flagA2),
-                    Set.of(flagA3)
+                AutocompleteDataSet.concat(
+                        AutocompleteDataSet.onceForEachOf(flagA1, flagA2, flagA3),
+                        AutocompleteDataSet.anyNumberOf(flagB, flagC1, flagC2)
+                ).addConstraint(
+                        AutocompleteConstraint.oneAmongAllOf(flagA1, flagA2)
                 ),
-                List.of(flagB, flagC1, flagC2),
                 Map.of(
                         flagA3, m -> List.of("apple", "banana", "car")
                 )

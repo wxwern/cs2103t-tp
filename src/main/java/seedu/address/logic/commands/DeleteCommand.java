@@ -5,8 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 import seedu.address.commons.core.index.Index;
@@ -25,12 +23,8 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = new AutocompleteSupplier(
-            List.of(
-                Set.of(FLAG_ID), Set.of(FLAG_RECURSIVE)
-            ),
-            List.of(),
-            Map.of() // TODO: Autocomplete Ids
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
+            FLAG_ID, FLAG_RECURSIVE
     );
 
 
