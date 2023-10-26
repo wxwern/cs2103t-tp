@@ -13,14 +13,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.contact.Id;
 
 public class JobApplicationTest {
-    private Id id1 = new Id();
-    private Id id2 = new Id();
-    private JobTitle validTitle = new JobTitle("SWE");
-    private JobDescription validJobDescription = new JobDescription("Pay: $700/h");
-    private JobStatus validStatus = JobStatus.PENDING;
-    private ApplicationStage validApplicationStage = ApplicationStage.RESUME;
-    private Deadline validDeadline = new Deadline();
-
     public static final JobApplication SAMPLE_JOB_APPLICATION = new JobApplication(
             new Id(),
             new JobTitle("SWE"),
@@ -29,6 +21,14 @@ public class JobApplicationTest {
             JobStatus.DEFAULT_STATUS,
             ApplicationStage.DEFAULT_STAGE
     );
+    private Id id1 = new Id();
+    private Id id2 = new Id();
+    private JobTitle validTitle = new JobTitle("SWE");
+    private JobDescription validJobDescription = new JobDescription("Pay: $700/h");
+    private JobStatus validStatus = JobStatus.PENDING;
+    private ApplicationStage validApplicationStage = ApplicationStage.RESUME;
+    private Deadline validDeadline = new Deadline();
+
 
     @Test
     public void constructor_nullExceptJobDescription_throwsNullPointerException() {
