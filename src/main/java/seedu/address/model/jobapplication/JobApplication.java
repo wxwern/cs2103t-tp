@@ -2,6 +2,7 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,6 +12,16 @@ import seedu.address.model.contact.Id;
  * Represents a Job Application in the address book.
  */
 public class JobApplication {
+
+    public static final Comparator<JobApplication> STATUS_COMPARATOR =
+            (a, b) -> a.status.compareTo(b.status);
+
+    public static final Comparator<JobApplication> STAGE_COMPARATOR =
+            (a, b) -> a.applicationStage.compareTo(b.applicationStage);
+
+    public static final Comparator<JobApplication> DEADLINE_COMPARATOR =
+            (a, b) -> a.deadline.compareTo(b.deadline);
+
     private final Id oid;
 
     private final JobTitle jobTitle;
