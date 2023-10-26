@@ -10,6 +10,7 @@ import java.util.function.Function;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -21,6 +22,17 @@ import seedu.address.model.contact.Id;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
+            FLAG_ID, FLAG_RECURSIVE
+    ).configureValueMap(m -> {
+        // Add value autocompletion data for:
+        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream().map(c -> c.getId().value));
+
+        // Disable value autocompletion for:
+        m.put(FLAG_RECURSIVE, null);
+    });
+
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the contact identified by the index number used in the displayed contact list.\n"

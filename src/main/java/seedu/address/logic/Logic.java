@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -22,6 +23,13 @@ public interface Logic {
      * @throws ParseException If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    /**
+     * Parses the command and returns any autocompletion results.
+     * @param commandText The command as entered by the user.
+     * @return the result of the command execution.
+     */
+    Stream<String> generateCompletions(String commandText);
 
     /**
      * Returns the AddressBook.

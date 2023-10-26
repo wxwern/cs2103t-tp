@@ -18,7 +18,9 @@ public class ListCommandParser implements Parser<ListCommand> {
      * and returns a ListCommand object for execution.
      */
     public ListCommand parse(String args) {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, FLAG_ORGANIZATION, FLAG_RECRUITER);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args,
+                    ListCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
         if (argMultimap.hasAllOfFlags(FLAG_ORGANIZATION, FLAG_RECRUITER)) {
             return new ListCommand(PREDICATE_SHOW_ALL_CONTACTS);
