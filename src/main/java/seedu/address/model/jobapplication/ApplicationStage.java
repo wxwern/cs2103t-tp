@@ -43,4 +43,8 @@ public enum ApplicationStage {
         return UNKNOWN;
         // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
     }
+
+    public static boolean isValidApplicationStage(String textRepresentation) {
+        return !ApplicationStage.fromString(textRepresentation).equals(UNKNOWN);
+    }
 }
