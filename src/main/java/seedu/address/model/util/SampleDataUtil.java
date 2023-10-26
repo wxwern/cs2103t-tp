@@ -30,7 +30,7 @@ public class SampleDataUtil {
                 null, getTagSet("parttime"), new Status("interested"), null, Set.of());
 
         return new Contact[] {
-                alexYeohInc,
+            alexYeohInc,
             new Organization(new Name("Google"), new Id("google"), new Phone("65218000"), null,
                     new Url("careers.google.com"),
                     new Address("70 Pasir Panjang Road, #03-71, "

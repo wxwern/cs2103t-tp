@@ -13,12 +13,13 @@ import seedu.address.model.tag.Tag;
  * field values are immutable and if present, are validated.
  */
 public class Recruiter extends Contact {
-    private final Optional<Organization> organization;
 
     public static final String MESSAGE_INVALID_ORGANIZATION =
             "If a recruiter is linked to an organization, "
-            + "the linked organization should be present in the address book "
-            + "and have a valid id";
+                    + "the linked organization should be present in the address book "
+                    + "and have a valid id";
+
+    private final Optional<Organization> organization;
 
     /**
      * Name and id fields must be non-null.

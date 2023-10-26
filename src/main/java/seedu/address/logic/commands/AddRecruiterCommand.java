@@ -23,11 +23,11 @@ import seedu.address.model.tag.Tag;
  */
 public class AddRecruiterCommand extends AddCommand {
 
-    protected final Id oid;
-    private Organization organization;
-
     public static final String MESSAGE_INVALID_ORGANIZATION =
             "The organization id you supplied does not match any organization in the address book.";
+
+    protected final Id oid;
+    private Organization organization;
 
     /**
      * Creates an AddCommand to add a {@code Recruiter} to the address book with the given parameters.

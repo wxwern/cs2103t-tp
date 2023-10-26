@@ -21,11 +21,11 @@ public class AddOrganizationCommandTest extends AddCommandTest {
     public void constructor_nullCompulsoryFields_throwsNullPointerException() {
         // null name field
         assertThrows(NullPointerException.class, () -> new AddOrganizationCommand(
-                null, NUS.getId(), 
-                NUS.getPhone().orElse(null), NUS.getEmail().orElse(null), 
-                NUS.getUrl().orElse(null), NUS.getAddress().orElse(null), 
+                null, NUS.getId(),
+                NUS.getPhone().orElse(null), NUS.getEmail().orElse(null),
+                NUS.getUrl().orElse(null), NUS.getAddress().orElse(null),
                 NUS.getTags(),
-                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null), 
+                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null),
                 NUS.getRecruiterIds()));
 
         // null id field
@@ -67,9 +67,8 @@ public class AddOrganizationCommandTest extends AddCommandTest {
 
         CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertEquals(String.format(AddOrganizationCommand.MESSAGE_SUCCESS, Messages.format(validOrganization)), 
+        assertEquals(String.format(AddOrganizationCommand.MESSAGE_SUCCESS, Messages.format(validOrganization)),
                 commandResult.getFeedbackToUser());
-        
         assertEquals(Arrays.asList(validOrganization), modelStub.contactsAdded);
     }
 
@@ -90,7 +89,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
         );
         ModelStub modelStub = new ModelStubWithContact(validOrganization);
 
-        assertThrows(CommandException.class, 
+        assertThrows(CommandException.class,
                 AddOrganizationCommand.MESSAGE_DUPLICATE_CONTACT, () -> addCommand.execute(modelStub));
     }
 
