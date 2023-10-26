@@ -85,7 +85,7 @@ public class Contact {
     }
 
     /**
-     * Returns true if both contacts have the same name.
+     * Returns true if both contacts have the same id.
      * This defines a weaker notion of equality between two contacts.
      */
     public boolean isSameContact(Contact otherContact) {
@@ -94,7 +94,7 @@ public class Contact {
         }
 
         return otherContact != null
-                && otherContact.getName().equals(getName());
+                && otherContact.getId().equals(getId());
     }
 
     /**

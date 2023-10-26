@@ -28,7 +28,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newContact_success() {
-        Contact validContact = new ContactBuilder().build();
+        Contact validContact = new ContactBuilder().withId("valid-contact").build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addContact(validContact);
