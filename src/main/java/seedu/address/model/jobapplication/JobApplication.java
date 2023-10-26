@@ -2,15 +2,27 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.contact.Id;
 
 /**
  * Represents a Job Application in the address book.
  */
 public class JobApplication {
+
+    public static final Comparator<JobApplication> STATUS_COMPARATOR = (a, b) ->
+            a.status.compareTo(b.status);
+
+    public static final Comparator<JobApplication> STAGE_COMPARATOR = (a, b) ->
+            a.applicationStage.compareTo(b.applicationStage);
+
+    public static final Comparator<JobApplication> DEADLINE_COMPARATOR = (a, b) ->
+            a.deadline.compareTo(b.deadline);
+
     private final Id oid;
 
     private final JobTitle jobTitle;
@@ -38,15 +50,13 @@ public class JobApplication {
                           Deadline deadline, JobStatus status, ApplicationStage applicationStage) {
         requireNonNull(oid);
         requireNonNull(jobTitle);
-        requireNonNull(deadline);
-        requireNonNull(status);
-        requireNonNull(applicationStage);
         this.oid = oid;
         this.jobTitle = jobTitle;
         this.jobDescription = Optional.ofNullable(jobDescription);
-        this.deadline = deadline;
-        this.status = status;
-        this.applicationStage = applicationStage;
+
+        this.deadline = deadline == null ? new Deadline() : deadline;
+        this.status = status == null ? JobStatus.DEFAULT_STATUS : status;
+        this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
     }
 
     /**
@@ -59,7 +69,7 @@ public class JobApplication {
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, ApplicationStage.RESUME);
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, ApplicationStage.DEFAULT_STAGE);
     }
 
     /**
@@ -73,7 +83,7 @@ public class JobApplication {
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, ApplicationStage applicationStage) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.PENDING, applicationStage);
+        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, applicationStage);
     }
 
     @Override
@@ -135,5 +145,23 @@ public class JobApplication {
                 status.toString(),
                 applicationStage.toString()
         );
+    }
+
+    /**
+     * Returns a builder for the {@link #toString} method of this class
+     * @return an instance if {@code ToStringBuilder}
+     */
+    protected ToStringBuilder toStringBuilder() {
+        return new ToStringBuilder("")
+                .add("title", jobTitle)
+                .add("\nstage", applicationStage)
+                .add("\nstatus", status)
+                .add("\ndeadline", deadline)
+                .add("\ndescription", jobDescription.map(JobDescription::toString).orElse("None"));
+    }
+
+    @Override
+    public String toString() {
+        return toStringBuilder().toString();
     }
 }

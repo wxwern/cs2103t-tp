@@ -1,7 +1,9 @@
 package seedu.address.model;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -11,10 +13,15 @@ import static seedu.address.testutil.TypicalContacts.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
 import seedu.address.model.contact.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
 
@@ -91,6 +98,60 @@ public class ModelManagerTest {
     @Test
     public void getFilteredContactList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredContactList().remove(0));
+    }
+
+    @Test
+    public void getContactById_getValidId_givesContact() {
+        modelManager.addContact(ALICE);
+        assertEquals(modelManager.getContactById(new Id("test_1-123")), ALICE);
+    }
+
+    @Test
+    public void getContactById_getInvalidId_givesNull() {
+        assertNull(modelManager.getContactById(new Id()));
+    }
+
+    @Test
+    public void getContactByIdXorIndex_nonNullIdAndIndex_throwsException() {
+        assertThrows(IllegalValueException.class, () -> modelManager.getContactByIdXorIndex(new Id(),
+                Index.fromOneBased(1)));
+    }
+
+    @Test
+    public void getContactByIdXorIndex_nullIdAndIndex_throwsException() {
+        assertThrows(IllegalValueException.class, () -> modelManager.getContactByIdXorIndex(null, null));
+    }
+
+    @Test
+    public void getContactByIdXorIndex_invalidIndex_throwsException() {
+        assertThrows(IllegalValueException.class, () -> modelManager.getContactByIdXorIndex(null,
+                Index.fromOneBased(1)));
+    }
+
+    @Test
+    public void getContactByIdXorIndex_invalidId_throwsException() {
+        assertThrows(IllegalValueException.class, () -> modelManager.getContactByIdXorIndex(new Id(), null));
+    }
+
+    @Test
+    public void getContactByIdXorIndex_validIndex_givesContact() {
+        modelManager.addContact(ALICE);
+        AtomicReference<Contact> c = new AtomicReference<>();
+        assertDoesNotThrow(() -> {
+            c.set(modelManager.getContactByIdXorIndex(null, Index.fromOneBased(1)));
+        });
+        assertEquals(c.get(), ALICE);
+
+    }
+
+    @Test
+    public void getContactByIdXorIndex_validId_givesContact() {
+        modelManager.addContact(ALICE);
+        AtomicReference<Contact> c = new AtomicReference<>();
+        assertDoesNotThrow(() -> {
+            c.set(modelManager.getContactByIdXorIndex(new Id("test_1-123"), null));
+        });
+        assertEquals(c.get(), ALICE);
     }
 
     @Test
