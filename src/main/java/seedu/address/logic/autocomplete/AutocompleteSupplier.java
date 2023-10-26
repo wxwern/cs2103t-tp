@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
@@ -111,7 +112,10 @@ public class AutocompleteSupplier {
      */
     public Optional<Stream<String>> getValidValues(Flag flag, Model model) {
         try {
-            return Optional.ofNullable(this.values.getOrDefault(flag, m -> Stream.of()).apply(model));
+            return Optional.ofNullable(
+                    this.values.getOrDefault(flag, m -> Stream.of())
+            ).map(x -> x.apply(model));
+
         } catch (RuntimeException e) {
             // Guard against errors like NPEs due to supplied lambdas not handling them.
             e.printStackTrace();
@@ -120,5 +124,15 @@ public class AutocompleteSupplier {
         }
     }
 
+
+    public AutocompleteSupplier configureFlagSet(Consumer<AutocompleteDataSet<Flag>> operator) {
+        operator.accept(this.flags);
+        return this;
+    }
+
+    public AutocompleteSupplier configureValueMap(Consumer<Map<Flag, FlagValueSupplier>> operator) {
+        operator.accept(this.values);
+        return this;
+    }
 
 }

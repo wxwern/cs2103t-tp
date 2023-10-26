@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
@@ -25,7 +27,13 @@ public class DeleteCommand extends Command {
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
             FLAG_ID, FLAG_RECURSIVE
-    );
+    ).configureValueMap(m -> {
+        // Add value autocompletion data for:
+        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream().map(c -> c.getId().value));
+
+        // Disable value autocompletion for:
+        m.put(FLAG_RECRUITER, null);
+    });
 
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

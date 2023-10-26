@@ -74,9 +74,7 @@ public class AutocompleteTextField extends TextField {
         setText(result + " ");
         requestFocus();
         end();
-
-        autocompletePopup.getItems().clear();
-        autocompletePopup.hide();
+        updatePopupState();
 
         return true;
     }
@@ -85,23 +83,24 @@ public class AutocompleteTextField extends TextField {
      * Updates the state of the popup indicating the autocompletion entries.
      */
     protected void updatePopupState() {
-        if (getText().isEmpty()) {
+        String text = getText();
+        if (text.isEmpty() || !isFocused()) {
             autocompletePopup.hide();
             return;
         }
 
         List<CustomMenuItem> menuItems = new LinkedList<>();
 
-        completionGenerator.apply(getText())
+        completionGenerator.apply(text)
                 .limit(popupLimit)
                 .forEachOrdered(autocompletedString -> {
                     Label entryLabel = new Label(autocompletedString);
-                    CustomMenuItem item = new CustomMenuItem(entryLabel, true);
+                    CustomMenuItem item = new CustomMenuItem(entryLabel, false);
                     item.setOnAction(e -> {
                         setText(autocompletedString + " ");
                         requestFocus();
                         end();
-                        autocompletePopup.hide();
+                        updatePopupState();
                     });
                     menuItems.add(item);
                 });

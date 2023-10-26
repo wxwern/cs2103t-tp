@@ -51,7 +51,12 @@ public class AddCommand extends Command {
                     AutocompleteConstraint.where(FLAG_RECRUITER)
                             .isPrerequisiteFor(FLAG_ORGANIZATION_ID)
             ))
-    );
+    ).configureValueMap(m -> {
+        // Disable value autocompletion for:
+        m.put(null /* preamble */, null);
+        m.put(FLAG_ORGANIZATION, null);
+        m.put(FLAG_RECRUITER, null);
+    });
 
 
     public static final String MESSAGE_ORGANIZATION_USAGE = "Adds an organization. "
