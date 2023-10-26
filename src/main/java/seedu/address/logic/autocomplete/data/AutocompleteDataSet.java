@@ -135,15 +135,15 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
         @SuppressWarnings("unchecked")
         T[] dependencyArray = mergedDependencies.toArray((T[]) new Object[mergedDependencies.size()]);
 
-        // Add all elements and constraints into current set
-        this.addElements(mergedDependencies.getElements());
-        this.addConstraints(mergedDependencies.getConstraints());
-
-        // Add the constraints to enforce dependent relationship
+        // Add the constraints to enforce dependency relationship
         this.addConstraint(AutocompleteConstraint.anyOf(this.stream()
                 .map(item -> AutocompleteConstraint.where(item).isPrerequisiteFor(dependencyArray))
                 .collect(Collectors.toList())
         ));
+
+        // Once done, add all elements and constraints, ordered after existing elements in the set.
+        this.addElements(mergedDependencies.getElements());
+        this.addConstraints(mergedDependencies.getConstraints());
 
         return this;
     }
