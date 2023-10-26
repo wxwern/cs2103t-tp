@@ -18,6 +18,11 @@ import seedu.address.model.contact.Phone;
 import seedu.address.model.contact.Position;
 import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Url;
+import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.Deadline;
+import seedu.address.model.jobapplication.JobDescription;
+import seedu.address.model.jobapplication.JobStatus;
+import seedu.address.model.jobapplication.JobTitle;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -200,6 +205,66 @@ public class ParserUtil {
         return idSet;
     }
 
+
+    /**
+     * Parses {@code String deadline} into a {@code Deadline}.
+     */
+    public static Deadline parseDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmedDeadline)) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+        }
+        return new Deadline(trimmedDeadline);
+    }
+
+    /**
+     * Parses {@code String jobTitle} into a {@code JobTitle}.
+     */
+    public static JobTitle parseJobTitle(String jobtitle) throws ParseException {
+        requireNonNull(jobtitle);
+        String trimmedTitle = jobtitle.trim();
+        if (!JobTitle.isValidJobTitle(trimmedTitle)) {
+            throw new ParseException(JobTitle.MESSAGE_CONSTRAINTS);
+        }
+        return new JobTitle(trimmedTitle);
+    }
+
+    /**
+     * Parses {@code String jobStatus} into a {@code JobStatus}.
+     */
+    public static JobStatus parseJobStatus(String status) throws ParseException {
+        requireNonNull(status);
+        String trimmedStatus = status.trim();
+        if (!JobStatus.isValidJobStatus(trimmedStatus)) {
+            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+        }
+        return JobStatus.fromString(trimmedStatus);
+    }
+
+    /**
+     * Parses {@code String applicationStage} into a {@code ApplicationStage}.
+     */
+    public static ApplicationStage parseApplicationStage(String applicationStage) throws ParseException {
+        requireNonNull(applicationStage);
+        String trimmedDeadline = applicationStage.trim();
+        if (!ApplicationStage.isValidApplicationStage(trimmedDeadline)) {
+            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+        }
+        return ApplicationStage.fromString(trimmedDeadline);
+    }
+
+    /**
+     * Parses {@code String jobDescription} into a {@code JobDescription}
+     */
+    public static JobDescription parseJobDescription(String jobDescription) throws ParseException{
+        requireNonNull(jobDescription);
+        String trimmedDescription = jobDescription.trim();
+        if (!JobDescription.isValidJobDescription(trimmedDescription)) {
+            throw new ParseException(JobDescription.MESSAGE_CONSTRAINTS);
+        }
+        return new JobDescription(trimmedDescription);
+    }
 
     /**
      * References a function that parses a string into an expected output within the {@link ParserUtil} utility class.
