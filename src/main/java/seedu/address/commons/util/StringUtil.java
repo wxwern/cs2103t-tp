@@ -129,11 +129,8 @@ public class StringUtil {
 
     /**
      * Returns a score representing how close it is to matching characters at the beginning of the target.
-     * The higher the value, the better it is.
-     *
-     * <p>
-     * A full prefix match will have the score be the length of the input string, while every gap in the match will
-     * subtract 1 from the score.
+     * The higher the value, the better it is. A failed match will have {@code -targetString.length()}, while
+     * a complete match will have {@code inputString.length()}.
      * </p>
      */
     public static int getFuzzyMatchScore(String inputString, String targetString) {
@@ -158,9 +155,9 @@ public class StringUtil {
         }
 
         if (inputI < inputString.length()) {
-            return 0;
+            return -targetString.length();
         }
 
-        return Math.max(0, inputI - errorCount);
+        return inputI - errorCount;
     }
 }

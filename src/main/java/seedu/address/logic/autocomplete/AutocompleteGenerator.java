@@ -24,28 +24,25 @@ public class AutocompleteGenerator {
 
 
     /** A comparator used to order fuzzily matched strings where better matches against the input go first. */
-    private static final Function<String, Comparator<String>> TEXT_FUZZY_MATCH_COMPARATOR = (input) -> (s1, s2)
-            -> -(StringUtil.getFuzzyMatchScore(input, s1) - StringUtil.getFuzzyMatchScore(input, s2));
+    private static final Function<String, Comparator<String>> TEXT_FUZZY_MATCH_COMPARATOR = (input) -> (s1, s2) -> {
+        // Get how well s1 is ahead of s2 (note: higher is better).
+        int score = StringUtil.getFuzzyMatchScore(input, s1) - StringUtil.getFuzzyMatchScore(input, s2);
+
+        return -score; // -ve implies s1 < s2
+    };
 
     /** A comparator used to order fuzzily matched flags where better matches against the input go first. */
-    private static final Function<String, Comparator<Flag>> FLAG_FUZZY_MATCH_COMPARATOR = (input) -> (o1, o2)
-            -> {
+    private static final Function<String, Comparator<Flag>> FLAG_FUZZY_MATCH_COMPARATOR = (input) -> (f1, f2) -> {
+        // Get how well f1 is ahead of f2 in both metrics (note: higher is better).
+        int score = Math.max(
+                StringUtil.getFuzzyMatchScore(input, f1.getFlagString()),
+                StringUtil.getFuzzyMatchScore(input, f1.getFlagAliasString())
+        ) - Math.max(
+                StringUtil.getFuzzyMatchScore(input, f2.getFlagString()),
+                StringUtil.getFuzzyMatchScore(input, f2.getFlagAliasString())
+        );
 
-        // Get how well o1 is ahead of o2 in both metrics (note: higher is better).
-        int scoreStd = StringUtil.getFuzzyMatchScore(input, o1.getFlagString())
-                - StringUtil.getFuzzyMatchScore(input, o2.getFlagString());
-
-        int scoreAlias = StringUtil.getFuzzyMatchScore(input, o1.getFlagAliasString())
-                - StringUtil.getFuzzyMatchScore(input, o2.getFlagAliasString());
-
-        // Use standard flag score first, then alias score
-        if (scoreStd != 0) {
-            return -scoreStd;
-        } else if (scoreAlias != 0) {
-            return -scoreAlias;
-        } else {
-            return 0;
-        }
+        return -score; // -ve implies f1 < f2
     };
 
 

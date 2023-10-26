@@ -209,14 +209,14 @@ public class StringUtilTest {
         assertEquals(3 - 2, StringUtil.getFuzzyMatchScore("aaa", "ababab"));
         assertEquals(3 - 2, StringUtil.getFuzzyMatchScore("abc", "ababcab"));
         assertEquals(4 - 2, StringUtil.getFuzzyMatchScore("bcef", "abcdefg"));
-        assertEquals(0, StringUtil.getFuzzyMatchScore("aaa", "aa123a"));
-        assertEquals(0, StringUtil.getFuzzyMatchScore("aba", "ab12345aa"));
+        assertEquals(3 - 4, StringUtil.getFuzzyMatchScore("aaa", "aa1234a"));
+        assertEquals(3 - 5, StringUtil.getFuzzyMatchScore("aba", "ab12345aa"));
 
         // Not a full match
-        assertEquals(0, StringUtil.getFuzzyMatchScore("aa", "ab"));
-        assertEquals(0, StringUtil.getFuzzyMatchScore("aa", "ba"));
-        assertEquals(0, StringUtil.getFuzzyMatchScore("ab", "a"));
-        assertEquals(0, StringUtil.getFuzzyMatchScore("ba", "a"));
+        assertEquals(-2, StringUtil.getFuzzyMatchScore("aa", "ab"));
+        assertEquals(0, StringUtil.getFuzzyMatchScore("a", "ba"));
+        assertEquals(-1, StringUtil.getFuzzyMatchScore("ab", "a"));
+        assertEquals(-1, StringUtil.getFuzzyMatchScore("cba", "a"));
 
         // Null values
         assertEquals(0, StringUtil.getFuzzyMatchScore(null, "a"));
