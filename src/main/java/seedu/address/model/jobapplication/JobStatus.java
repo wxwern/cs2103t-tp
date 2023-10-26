@@ -46,4 +46,8 @@ public enum JobStatus {
         return UNKNOWN;
         // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
     }
+
+    public static boolean isValidJobStatus(String status) {
+        return !JobStatus.fromString(status).equals(UNKNOWN);
+    }
 }
