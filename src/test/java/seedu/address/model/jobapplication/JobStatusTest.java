@@ -1,6 +1,8 @@
 package seedu.address.model.jobapplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +30,15 @@ public class JobStatusTest {
     @Test
     public void equals() {
         assertEquals(JobStatus.REJECTED, JobStatus.REJECTED);
+    }
+
+    @Test
+    public void isValidJobStatus() {
+        assertTrue(JobStatus.isValidJobStatus("pending"));
+        assertTrue(JobStatus.isValidJobStatus("offered"));
+
+        assertFalse(JobStatus.isValidJobStatus(""));
+        assertFalse(JobStatus.isValidJobStatus("  "));
+        assertFalse(JobStatus.isValidJobStatus("test"));
     }
 }
