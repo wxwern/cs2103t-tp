@@ -38,21 +38,19 @@ public class AddCommand extends Command {
             AutocompleteDataSet.oneAmongAllOf(
                     FLAG_ORGANIZATION, FLAG_RECRUITER
             ).addDependents(
-                    AutocompleteDataSet.concat(
-                            AutocompleteDataSet.onceForEachOf(
-                                    FLAG_NAME, FLAG_ID,
-                                    FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
-                                    FLAG_STATUS, FLAG_POSITION,
-                                    FLAG_ORGANIZATION_ID
-                            ),
-                            AutocompleteDataSet.anyNumberOf(FLAG_TAG)
-                    ).addConstraints(List.of(
-                            AutocompleteConstraint.isPrerequisiteFor(FLAG_ORGANIZATION,
-                                    FLAG_STATUS, FLAG_POSITION),
-                            AutocompleteConstraint.isPrerequisiteFor(FLAG_RECRUITER,
-                                    FLAG_ORGANIZATION_ID)
-                    ))
-            )
+                    AutocompleteDataSet.onceForEachOf(
+                            FLAG_NAME, FLAG_ID,
+                            FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
+                            FLAG_STATUS, FLAG_POSITION,
+                            FLAG_ORGANIZATION_ID
+                    ),
+                    AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+            ).addConstraints(List.of(
+                    AutocompleteConstraint.where(FLAG_ORGANIZATION)
+                            .isPrerequisiteFor(FLAG_STATUS, FLAG_POSITION),
+                    AutocompleteConstraint.where(FLAG_RECRUITER)
+                            .isPrerequisiteFor(FLAG_ORGANIZATION_ID)
+            ))
     );
 
 

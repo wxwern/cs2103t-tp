@@ -125,19 +125,23 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * "some element in {@code this} current set exists" is a prerequisite for
      * elements in {@code dependencies} to exist in a command.
      */
-    public AutocompleteDataSet<T> addDependents(AutocompleteDataSet<T> dependencies) {
+    @SafeVarargs
+    public final AutocompleteDataSet<T> addDependents(AutocompleteDataSet<T>... dependencies) {
+
+        AutocompleteDataSet<T> mergedDependencies = AutocompleteDataSet.concat(dependencies);
+
         // Create a dependency array
         // - The unchecked cast is required for generics since generic arrays cannot be made.
         @SuppressWarnings("unchecked")
-        T[] dependencyArray = dependencies.toArray((T[]) new Object[dependencies.size()]);
+        T[] dependencyArray = mergedDependencies.toArray((T[]) new Object[mergedDependencies.size()]);
 
         // Add all elements and constraints into current set
-        this.addAll(dependencies);
-        this.addConstraints(dependencies.getConstraints());
+        this.addElements(mergedDependencies.getElements());
+        this.addConstraints(mergedDependencies.getConstraints());
 
         // Add the constraints to enforce dependent relationship
         this.addConstraint(AutocompleteConstraint.anyOf(this.stream()
-                .map(item -> AutocompleteConstraint.isPrerequisiteFor(item, dependencyArray))
+                .map(item -> AutocompleteConstraint.where(item).isPrerequisiteFor(dependencyArray))
                 .collect(Collectors.toList())
         ));
 

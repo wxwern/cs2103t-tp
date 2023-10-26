@@ -13,6 +13,8 @@ public interface AutocompleteConstraint<T> {
 
     boolean isAllowed(T input, Set<? extends T> existingElements);
 
+    // Constraint operators
+
     /**
      * Creates a constraint that returns true as long as any given constraints return true.
      */
@@ -40,6 +42,8 @@ public interface AutocompleteConstraint<T> {
             return true;
         };
     }
+
+    // Simple constraint templates
 
     /**
      * Creates a constraint that enforces all provided {@code items} <i>each</i> may exist at most once.
@@ -81,20 +85,49 @@ public interface AutocompleteConstraint<T> {
         };
     }
 
-    /**
-     * Creates a constraint that enforces that {@code prerequisite} must be present before any of
-     * {@code dependents} may exist.
-     */
-    @SafeVarargs
-    static <T> AutocompleteConstraint<T> isPrerequisiteFor(T prerequisite, T... dependents) {
-        Set<T> dependentsSet = Set.of(dependents);
+    // Advanced relational constraint templates
 
-        return (input, existingElements) -> {
-            if (!dependentsSet.contains(input)) {
-                // Not part of dependents. True by default.
-                return true;
-            }
-            return existingElements.contains(prerequisite); // Prerequisite exists <--> dependents can exist.
-        };
+    /**
+     * Represents an item that will be part of the constraint.
+     * This exists to improve readability of relational factory methods,
+     * along the lines of {@code .where(x).isSomethingTo(y...)}
+     */
+    class Item<T> {
+
+        final T item;
+
+        private Item(T item) {
+            this.item = item;
+        }
+
+        /**
+         * Creates a constraint that enforces that {@code prerequisite}, i.e. this item,
+         * must be present before any of {@code dependents} may exist.
+         */
+        @SafeVarargs
+        public final AutocompleteConstraint<T> isPrerequisiteFor(T... dependents) {
+            T prerequisite = this.item;
+
+            Set<T> dependentsSet = Set.of(dependents);
+
+            return (input, existingElements) -> {
+                if (!dependentsSet.contains(input)) {
+                    // Not part of dependents. True by default.
+                    return true;
+                }
+                return existingElements.contains(prerequisite); // Prerequisite exists <--> dependents can exist.
+            };
+        }
     }
+
+    /**
+     * Represents an item that is a part of a constraint relationship.
+     * This should be immediately followed by the relevant constraint methods,
+     * along the lines of {@code .where(x).isSomethingTo(y...)}
+     */
+    static <T> Item<T> where(T item) {
+        return new Item<T>(item);
+    }
+
+
 }

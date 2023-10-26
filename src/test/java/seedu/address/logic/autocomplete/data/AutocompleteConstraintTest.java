@@ -61,40 +61,40 @@ public class AutocompleteConstraintTest {
     @Test
     public void isPrerequisiteFor() {
         // Prerequisite is always allowed
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(1, Set.of()));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(1, Set.of(0)));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(1, Set.of(0, 1)));
 
         // Dependents are conditionally allowed
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(2, Set.of(1)));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(2, Set.of(1, 2, 3)));
 
-        assertFalse(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertFalse(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(2, Set.of(3)));
 
         // Existing dependents don't impact prerequisites
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(1, Set.of(2, 3)));
 
         // Unspecified elements are not impacted and allowed
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(0, Set.of()));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(0, Set.of(0)));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(0, Set.of(1)));
 
-        assertTrue(AutocompleteConstraint.isPrerequisiteFor(1, 2, 3)
+        assertTrue(AutocompleteConstraint.where(1).isPrerequisiteFor(2, 3)
                 .isAllowed(0, Set.of(2, 3)));
     }
 
