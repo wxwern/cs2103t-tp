@@ -81,7 +81,9 @@ public class TypicalContacts {
             .withId("nus-soc_sg")
             .withPhone("65162727")
             .withEmail("socug@comp.nus.edu.sg")
+            .withUrl("www.nus.edu.sg")
             .withAddress("Computing 1, 13 Computing Drive")
+            .withTags("computing", "worldClass")
             .withStatus("Applied")
             .withPosition("Research Assistant")
             .withRids("soc-rec_ryan")
@@ -92,9 +94,22 @@ public class TypicalContacts {
             .withId("ntu-soc_sg")
             .withPhone("67905786")
             .withEmail("scse-undergrad@ntu.edu.sg")
+            .withUrl("www.ntu.edu.sg")
             .withAddress("Block N4 #02a-32, Nanyang Avenue")
+            .withTags("computing", "researchOriented")
             .withStatus("Rejected")
             .withPosition("Teaching Assistant")
+            .build();
+
+    public static final Organization SMU = new OrganizationBuilder()
+            .withName("SMU Info Sys")
+            .withId("smu-is_sg")
+            .withPhone("68087960")
+            .withEmail("scis_ugrad@smu.edu.sg")
+            .withUrl("www.smu.edu.sg")
+            .withAddress("80 Stamford Rd")
+            .withStatus("Interested")
+            .withPosition("Web Developer")
             .build();
 
     public static final Recruiter RYAN = new RecruiterBuilder()
@@ -102,7 +117,9 @@ public class TypicalContacts {
             .withId("soc-rec_ryan")
             .withPhone("82930129")
             .withEmail("ryanlau@comp.nus.edu.sg")
+            .withUrl("www.ryan_is_cool.com")
             .withAddress("Computing 1, 13 Computing Drive")
+            .withTags("friendly")
             .withOrganization(NUS)
             .build();
 
@@ -111,8 +128,31 @@ public class TypicalContacts {
             .withId("soc-rec_rachel")
             .withPhone("62834678")
             .withEmail("rachelam@ntu.edu.sg")
-            .withAddress("Block N4 #02a-32, Nanyang Avenu")
+            .withUrl("www.rachel_cs_legend.com")
+            .withAddress("Block N4 #02a-32, Nanyang Avenue")
+            .withTags("strict", "helpful")
             .withOrganization(NTU)
+            .build();
+
+    public static final Recruiter REX = new RecruiterBuilder()
+            .withName("Rex Lee")
+            .withId("is-rec_rex")
+            .withPhone("83428451")
+            .withEmail("rexlee@smu.edu.sg")
+            .withUrl("www.rex.com")
+            .withAddress("80 Stamford Rd")
+            .withTags("cool", "resourceful")
+            .withOrganization(SMU)
+            .build();
+
+    public static final Recruiter RICHARD = new RecruiterBuilder()
+            .withName("Richard Lim")
+            .withId("is-rec_richard")
+            .withPhone("83228311")
+            .withEmail("richlee@smu.edu.sg")
+            .withUrl("www.richard_lion_heart.com")
+            .withAddress("80 Stamford Rd")
+            .withOrganization(SMU)
             .build();
 
     // Manually added
@@ -160,6 +200,6 @@ public class TypicalContacts {
     }
 
     public static List<Contact> getTypicalContacts() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, NUS, NTU, SMU, RYAN, RACHEL, REX, RICHARD));
     }
 }
