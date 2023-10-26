@@ -257,7 +257,7 @@ public class ParserUtil {
     /**
      * Parses {@code String jobDescription} into a {@code JobDescription}
      */
-    public static JobDescription parseJobDescription(String jobDescription) throws ParseException{
+    public static JobDescription parseJobDescription(String jobDescription) throws ParseException {
         requireNonNull(jobDescription);
         String trimmedDescription = jobDescription.trim();
         if (!JobDescription.isValidJobDescription(trimmedDescription)) {
