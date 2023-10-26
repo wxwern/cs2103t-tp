@@ -24,10 +24,13 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
     public static Contact[] getSampleContacts() {
+        Organization alexYeohInc = new Organization(new Name("Alex Yeoh Inc"),
+                new Id("alex_yeoh_inc"), new Phone("87438807"),
+                new Email("contact@alexyeoh.example.com"), new Url("alexyeoh.example.com"),
+                null, getTagSet("parttime"), new Status("interested"), null, Set.of());
+
         return new Contact[] {
-            new Organization(new Name("Alex Yeoh Inc"), new Id("alex_yeoh_inc"), new Phone("87438807"),
-                    new Email("contact@alexyeoh.example.com"), new Url("alexyeoh.example.com"),
-                    null, getTagSet("parttime"), new Status("interested"), null, Set.of()),
+                alexYeohInc,
             new Organization(new Name("Google"), new Id("google"), new Phone("65218000"), null,
                     new Url("careers.google.com"),
                     new Address("70 Pasir Panjang Road, #03-71, "
@@ -42,7 +45,7 @@ public class SampleDataUtil {
             new Recruiter(new Name("David Li"), new Id("david_li"), new Phone("91031282"),
                     new Email("davidli@alexyeoh.example.com"), null,
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("direct", "network"), new Id("alex_yeoh_inc")),
+                    getTagSet("direct", "network"), alexYeohInc),
             new Recruiter(new Name("Roy Balakrishnan"), new Id("roy_balakrishnan"), new Phone("92624417"),
                     new Email("royb@example.com"), new Url("www.nus.edu.sg"),
                     null, getTagSet("friendly"), null)

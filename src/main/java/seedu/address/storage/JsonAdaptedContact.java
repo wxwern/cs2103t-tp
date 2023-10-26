@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
@@ -110,7 +111,7 @@ class JsonAdaptedContact {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted contact.
      */
-    public Contact toModelType() throws IllegalValueException {
+    public Contact toModelType(AddressBook addressBook) throws IllegalValueException {
         final List<Tag> contactTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             contactTags.add(tag.toModelType());
@@ -181,10 +182,21 @@ class JsonAdaptedContact {
                 throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
             }
             final Id modelOid = oid == null ? null : new Id(oid);
+            final Organization modelOrg;
+            if (modelOid == null) {
+                modelOrg = null;
+            } else {
+                Contact contact = addressBook.getContactById(modelOid);
+                if (contact == null || contact.getType() != Type.ORGANIZATION) {
+                    throw new IllegalValueException(Recruiter.MESSAGE_INVALID_ORGANIZATION);
+                }
+                modelOrg = (Organization) contact;
+                assert modelOrg.getId().equals(modelOid);
+            }
 
             return new Recruiter(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelOid
+                    modelTags, modelOrg
             );
         }
         default:

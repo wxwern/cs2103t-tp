@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Type;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -37,7 +38,17 @@ class JsonSerializableAddressBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getContactList().stream().map(JsonAdaptedContact::new).collect(Collectors.toList()));
+        persons.addAll(
+                source.getContactList().stream()
+                        .sorted((c1, c2) -> {
+                            if (c1.getType() == Type.RECRUITER && c2.getType() == Type.ORGANIZATION) {
+                                return 1;
+                            } else if (c1.getType() == Type.ORGANIZATION && c2.getType() == Type.RECRUITER) {
+                                return -1;
+                            }
+                            return 0;
+                        })
+                .map(JsonAdaptedContact::new).collect(Collectors.toList()));
     }
 
     /**
@@ -48,7 +59,7 @@ class JsonSerializableAddressBook {
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedContact jsonAdaptedContact : persons) {
-            Contact contact = jsonAdaptedContact.toModelType();
+            Contact contact = jsonAdaptedContact.toModelType(addressBook);
             if (addressBook.hasContact(contact)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_CONTACT);
             }
