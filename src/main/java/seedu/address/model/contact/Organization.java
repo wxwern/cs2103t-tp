@@ -37,7 +37,7 @@ public class Organization extends Contact {
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
         // Todo: Likely to deprecate rids completely
-//        this.rids.addAll(rids);
+        // this.rids.addAll(rids);
     }
 
     @Override
