@@ -46,11 +46,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
-                        FLAG_ADDRESS, FLAG_TAG, FLAG_URL,
-                        FLAG_ID, FLAG_STATUS, FLAG_POSITION,
-                        FLAG_ORGANIZATION_ID,
-                        FLAG_ORGANIZATION, FLAG_RECRUITER
+                        AddCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new)
                 );
 
         if (!argMultimap.hasAllOfFlags(FLAG_NAME)
