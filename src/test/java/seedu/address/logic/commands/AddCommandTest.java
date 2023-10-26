@@ -164,7 +164,7 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    private class ModelStub implements Model {
+    protected class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -244,7 +244,7 @@ public class AddCommandTest {
     /**
      * A Model stub that contains a single contact.
      */
-    private class ModelStubWithContact extends ModelStub {
+    protected class ModelStubWithContact extends ModelStub {
         private final Contact contact;
 
         ModelStubWithContact(Contact contact) {
@@ -262,7 +262,7 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the contact being added.
      */
-    private class ModelStubAcceptingContactAdded extends ModelStub {
+    protected class ModelStubAcceptingContactAdded extends ModelStub {
         final ArrayList<Contact> contactsAdded = new ArrayList<>();
 
         @Override
