@@ -59,6 +59,7 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     ApplyCommand.MESSAGE_USAGE));
         }
+        // TODO: Tech debt - Use Parserutil.parseOptionally
         return new ApplyCommand(
                 hasId ? ParserUtil.parseId(id) : null,
                 hasIndex ? ParserUtil.parseIndex(index) : null,
