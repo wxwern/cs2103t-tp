@@ -133,4 +133,16 @@ public class JobApplicationTest {
         assertEquals(ja1.getOrganizationId(), id1);
         assertEquals(ja1.getApplicationStage(), validApplicationStage);
     }
+
+    @Test
+    public void toString_any_givesRelevantInfo() {
+        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus,
+                validApplicationStage);
+        String testString = ja1.toString();
+        assertTrue(testString.contains("title"));
+        assertTrue(testString.contains("stage"));
+        assertTrue(testString.contains("status"));
+        assertTrue(testString.contains("deadline"));
+        assertTrue(testString.contains("description"));
+    }
 }
