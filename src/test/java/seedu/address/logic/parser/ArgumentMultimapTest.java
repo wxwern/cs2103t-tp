@@ -34,6 +34,12 @@ public class ArgumentMultimapTest {
         multimap.put(FLAG_A, "3 value");
         assertTrue(multimap.hasFlag(FLAG_A));
 
+        // Null flags work
+        multimap.put(FLAG_B, "");
+        multimap.put(FLAG_C, null);
+        assertTrue(multimap.hasFlag(FLAG_B));
+        assertTrue(multimap.hasFlag(FLAG_C));
+
         // Some test cases with more flags
         multimap = new ArgumentMultimap();
         multimap.put(FLAG_A, "blah");
@@ -68,7 +74,8 @@ public class ArgumentMultimapTest {
         multimap.put(FLAG_A, "aaa");
         multimap.put(FLAG_B, "bbb1");
         multimap.put(FLAG_B, "bbb2");
-        multimap.put(FLAG_C, "ccc");
+        multimap.put(FLAG_C, "");
+        multimap.put(FLAG_D, null);
 
         assertTrue(multimap.hasAllOfFlags()); // Trivially, any map will contain every element in an empty list [].
 
@@ -82,6 +89,8 @@ public class ArgumentMultimapTest {
 
         assertTrue(multimap.hasAllOfFlags(FLAG_A, FLAG_B, FLAG_C));
 
+        assertTrue(multimap.hasAllOfFlags(FLAG_D, FLAG_C));
+
         // Empty map
         multimap = new ArgumentMultimap();
         assertTrue(multimap.hasAllOfFlags()); // Similar to above, it has all elements in [].
@@ -94,6 +103,7 @@ public class ArgumentMultimapTest {
         multimap.put(FLAG_A, "A");
         multimap.put(FLAG_B, "B");
         multimap.put(FLAG_B, "B");
+        multimap.put(FLAG_D, "");
 
         assertFalse(multimap.hasAllOfFlags(FLAG_C));
 
@@ -101,6 +111,8 @@ public class ArgumentMultimapTest {
         assertFalse(multimap.hasAllOfFlags(FLAG_B, FLAG_C));
 
         assertFalse(multimap.hasAllOfFlags(FLAG_A, FLAG_B, FLAG_C));
+
+        assertFalse(multimap.hasAllOfFlags(FLAG_D, FLAG_C));
 
         // Empty map
         multimap = new ArgumentMultimap();
@@ -116,6 +128,7 @@ public class ArgumentMultimapTest {
         multimap.put(FLAG_A, "123");
         multimap.put(FLAG_B, "456");
         multimap.put(FLAG_B, "789");
+        multimap.put(FLAG_D, "");
 
         assertTrue(multimap.hasAnyOfFlags(FLAG_A));
         assertTrue(multimap.hasAnyOfFlags(FLAG_B));
@@ -125,6 +138,9 @@ public class ArgumentMultimapTest {
         assertTrue(multimap.hasAnyOfFlags(FLAG_B, FLAG_C));
 
         assertTrue(multimap.hasAnyOfFlags(FLAG_A, FLAG_B, FLAG_C));
+
+        assertTrue(multimap.hasAnyOfFlags(FLAG_D, FLAG_C));
+        assertTrue(multimap.hasAnyOfFlags(FLAG_C, FLAG_D));
 
         // Empty map
         // - An empty map will never have a partial or complete match.
@@ -298,6 +314,7 @@ public class ArgumentMultimapTest {
         assertTrue(multimap.getPreamble().isEmpty());
         assertEquals("", multimap.getPreamble());
     }
+
     @Test
     public void getPreamble_preambleSet_returnsPreamble() {
         // Setting a preamble will give you that one.
@@ -314,7 +331,6 @@ public class ArgumentMultimapTest {
         multimap.putPreamble("who's this");
         assertEquals("who's this", multimap.getPreamble());
     }
-
 
     @Test
     public void verifyNoDuplicateFlagsFor_noDuplicates_exceptionNotThrown() {
@@ -342,7 +358,6 @@ public class ArgumentMultimapTest {
         assertThrows(ParseException.class, () -> multimap.verifyNoDuplicateFlagsFor(FLAG_B, FLAG_C));
         assertThrows(ParseException.class, () -> multimap.verifyNoDuplicateFlagsFor(FLAG_A, FLAG_B, FLAG_C));
     }
-
 
     @Test
     public void verifyNoExtraneousFlagsOnTopOf_noExtras_exceptionNotThrown() {
@@ -405,6 +420,42 @@ public class ArgumentMultimapTest {
         assertThrows(ParseException.class, () -> multimap.verifyAllEmptyValuesAssignedFor(FLAG_A, FLAG_C));
         assertThrows(ParseException.class, () -> multimap.verifyAllEmptyValuesAssignedFor(FLAG_D, FLAG_C, FLAG_B));
         assertThrows(ParseException.class, () -> multimap.verifyAllEmptyValuesAssignedFor(FLAG_C, FLAG_B, FLAG_A));
+    }
+
+    @Test
+    public void verifyAtMostOneOfFlagsUsedOutOf_onlyOne_exceptionNotThrown() {
+        final ArgumentMultimap multimap = new ArgumentMultimap();
+        multimap.put(FLAG_A, null);
+        multimap.put(FLAG_B, "bbb");
+        multimap.put(FLAG_B, "bbb2");
+        multimap.put(FLAG_C, "");
+
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_A, FLAG_D));
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_B, FLAG_D));
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_C, FLAG_D));
+
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_B));
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_C));
+        assertDoesNotThrow(() -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_D));
+
+        final ArgumentMultimap multimap2 = new ArgumentMultimap();
+        multimap2.put(FLAG_A, "a");
+        assertDoesNotThrow(() -> multimap2.verifyAtMostOneOfFlagsUsedOutOf(FLAG_C, FLAG_B, FLAG_A));
+    }
+
+    @Test
+    public void verifyAtMostOneOfFlagsUsedOutOf_moreThanOneSimultaneousUse_exceptionThrown() {
+        ArgumentMultimap multimap = new ArgumentMultimap();
+        multimap.put(FLAG_A, "");
+        multimap.put(FLAG_A, "A");
+        multimap.put(FLAG_A, "  ");
+        multimap.put(FLAG_B, "B");
+        multimap.put(FLAG_C, null);
+
+        assertThrows(ParseException.class, () -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_A, FLAG_B));
+        assertThrows(ParseException.class, () -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_B, FLAG_C));
+
+        assertThrows(ParseException.class, () -> multimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_A, FLAG_B, FLAG_C));
     }
 
 
