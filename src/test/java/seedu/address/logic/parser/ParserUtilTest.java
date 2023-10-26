@@ -250,7 +250,8 @@ public class ParserUtilTest {
 
     @Test
     public void parseApplicationStage_validStage_returnsCorrectStage() throws Exception {
-        assertEquals(ApplicationStage.fromString(VALID_APPLICATION_STAGE), parseApplicationStage(VALID_APPLICATION_STAGE));
+        assertEquals(ApplicationStage.fromString(VALID_APPLICATION_STAGE),
+                parseApplicationStage(VALID_APPLICATION_STAGE));
     }
 
     @Test
