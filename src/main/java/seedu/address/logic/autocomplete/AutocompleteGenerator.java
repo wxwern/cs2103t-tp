@@ -1,33 +1,109 @@
 package seedu.address.logic.autocomplete;
 
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 
 /**
  * Creates a generator based on the given supplier or reference commands, so as it can generate
- * auto-completions only when requested.
+ * auto-completions when requested.
  */
 public class AutocompleteGenerator {
 
     /** An autocompletion generator that generates no results. */
     public static final AutocompleteGenerator NO_RESULTS = new AutocompleteGenerator(Stream.empty());
 
+
+    /** A comparator used to order fuzzily matched strings where better matches against the input go first. */
+    private static final Function<String, Comparator<String>> TEXT_FUZZY_MATCH_COMPARATOR = (input) -> (s1, s2)
+            -> -(StringUtil.getFuzzyMatchScore(input, s1) - StringUtil.getFuzzyMatchScore(input, s2));
+
+    /** A comparator used to order fuzzily matched flags where better matches against the input go first. */
+    private static final Function<String, Comparator<Flag>> FLAG_FUZZY_MATCH_COMPARATOR = (input) -> (o1, o2)
+            -> {
+
+        // Get how well o1 is ahead of o2 in both metrics (note: higher is better).
+        int scoreStd = StringUtil.getFuzzyMatchScore(input, o1.getFlagString())
+                - StringUtil.getFuzzyMatchScore(input, o2.getFlagString());
+
+        int scoreAlias = StringUtil.getFuzzyMatchScore(input, o1.getFlagAliasString())
+                - StringUtil.getFuzzyMatchScore(input, o2.getFlagAliasString());
+
+        // Use standard flag score first, then alias score
+        if (scoreStd != 0) {
+            return -scoreStd;
+        } else if (scoreAlias != 0) {
+            return -scoreAlias;
+        } else {
+            return 0;
+        }
+    };
+
+
+
+    /** The cached instance of the result evaluation function. */
     private final BiFunction<String, Model, Stream<String>> resultEvaluationFunction;
 
     /**
      * Constructs an autocomplete generator based on the given set of reference full command strings.
      */
     public AutocompleteGenerator(Stream<String> referenceCommands) {
-        resultEvaluationFunction = (c, m) -> AutocompleteUtil.generateCompletions(c, referenceCommands);
+        this(() -> referenceCommands);
     }
 
     /**
-     * Constructs an autocomplete generator based on the given supplier.
+     * Constructs an autocomplete generator based on the given supplier of full command strings.
+     */
+    public AutocompleteGenerator(Supplier<Stream<String>> referenceCommandsSupplier) {
+        resultEvaluationFunction = (partialCommand, model) -> {
+            if (partialCommand == null) {
+                return Stream.empty();
+            }
+
+            return referenceCommandsSupplier.get()
+                    .filter(term -> StringUtil.isFuzzyMatch(partialCommand, term))
+                    .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(partialCommand));
+        };
+    }
+
+    /**
+     * Constructs an autocomplete generator based on the given {@link AutocompleteSupplier}.
      */
     public AutocompleteGenerator(AutocompleteSupplier supplier) {
-        resultEvaluationFunction = (c, m) -> AutocompleteUtil.generateCompletions(c, supplier, m);
+        resultEvaluationFunction = (partialCommand, model) -> {
+
+            PartitionedCommand command = new PartitionedCommand(partialCommand == null ? "" : partialCommand);
+            String trailingText = command.getTrailingText();
+
+            Stream<String> possibleTerminalValues;
+            if (command.hasFlagSyntaxPrefixInTrailingText()) {
+                // The trailing text is a flag-like term - try to autocomplete flags.
+                possibleTerminalValues = getPossibleFlags(command, supplier)
+                        .filter(flag -> StringUtil.isFuzzyMatch(trailingText, flag.getFlagString())
+                                || StringUtil.isFuzzyMatch(trailingText, flag.getFlagAliasString()))
+                        .sorted(FLAG_FUZZY_MATCH_COMPARATOR.apply(trailingText))
+                        .map(Flag::getFlagString);
+
+            } else {
+                // The trailing text is a value - try to autocomplete values.
+                possibleTerminalValues = getPossibleValues(command, supplier, model)
+                        .filter(term -> StringUtil.isFuzzyMatch(trailingText, term))
+                        .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(trailingText));
+            }
+
+            return possibleTerminalValues
+                    .map(command::toStringWithNewTrailingTerm)
+                    .distinct();
+        };
     }
 
     /**
@@ -44,4 +120,42 @@ public class AutocompleteGenerator {
     public Stream<String> generateCompletions(String command, Model model) {
         return resultEvaluationFunction.apply(command, model);
     }
+
+
+
+
+    /**
+     * Obtains the set of possible flags based on the partitioned command and supplier.
+     */
+    private static Stream<Flag> getPossibleFlags(
+            PartitionedCommand command,
+            AutocompleteSupplier supplier
+    ) {
+        Flag[] allPossibleFlags = supplier.getAllPossibleFlags().toArray(Flag[]::new);
+
+        Set<Flag> existingCommandFlags = command.getConfirmedFlagStrings()
+                .stream()
+                .map(flagStr -> Flag.findMatch(flagStr, allPossibleFlags))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+
+
+        return supplier.getOtherPossibleFlagsAsideFromFlagsPresent(existingCommandFlags).stream();
+    }
+
+    /**
+     * Obtains the set of possible values based on the partitioned command, supplier, and model.
+     */
+    private static Stream<String> getPossibleValues(
+            PartitionedCommand command,
+            AutocompleteSupplier supplier,
+            Model model
+    ) {
+        return command.getLastConfirmedFlagString()
+                .flatMap(Flag::parseOptional)
+                .map(f -> supplier.getValidValues(f, model).stream())
+                .orElse(Stream.empty());
+    }
+
 }
