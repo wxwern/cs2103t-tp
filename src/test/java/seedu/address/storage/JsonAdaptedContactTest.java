@@ -42,7 +42,7 @@ public class JsonAdaptedContactTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_STATUS = "";
     private static final String VALID_POSITION = "";
-    private static final String VALID_ID = "78a36caf-6d42-4fd2-a017-7f6a92fa3155";
+    private static final String VALID_ID = "f8a36caf-6d42-4fd2-a017-7f6a92fa3155";
     private static final String VALID_PHONE = BENSON.getPhone().get().value;
     private static final String VALID_EMAIL = BENSON.getEmail().get().value;
     private static final String VALID_URL = BENSON.getUrl().get().value;
