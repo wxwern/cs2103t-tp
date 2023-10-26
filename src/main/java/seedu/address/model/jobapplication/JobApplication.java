@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.contact.Id;
 
 /**
@@ -144,5 +145,23 @@ public class JobApplication {
                 status.toString(),
                 applicationStage.toString()
         );
+    }
+
+    /**
+     * Returns a builder for the {@link #toString} method of this class
+     * @return an instance if {@code ToStringBuilder}
+     */
+    protected ToStringBuilder toStringBuilder() {
+        return new ToStringBuilder("")
+                .add("title", jobTitle)
+                .add("\nstage", applicationStage)
+                .add("\nstatus", status)
+                .add("\ndeadline", deadline)
+                .add("\ndescription", jobDescription.map(JobDescription::toString).orElse("None"));
+    }
+
+    @Override
+    public String toString() {
+        return toStringBuilder().toString();
     }
 }
