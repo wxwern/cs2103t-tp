@@ -1,6 +1,8 @@
 package seedu.address.model.jobapplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,5 +27,15 @@ public class ApplicationStageTest {
         assertEquals(ApplicationStage.UNKNOWN, ApplicationStage.fromString(""));
         assertEquals(ApplicationStage.UNKNOWN, ApplicationStage.fromString("    "));
         assertEquals(ApplicationStage.UNKNOWN, ApplicationStage.fromString("resumee"));
+    }
+
+    @Test
+    public void isValidApplicationStage() {
+        assertTrue(ApplicationStage.isValidApplicationStage("resume"));
+        assertTrue(ApplicationStage.isValidApplicationStage("online assessment"));
+
+        assertFalse(ApplicationStage.isValidApplicationStage(""));
+        assertFalse(ApplicationStage.isValidApplicationStage("    "));
+        assertFalse(ApplicationStage.isValidApplicationStage("resumes"));
     }
 }
