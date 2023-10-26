@@ -22,7 +22,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        FLAG_ID, FLAG_RECURSIVE);
+                        DeleteCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
         boolean hasIndex = !argumentMultimap.getPreamble().isEmpty();
         boolean hasId = argumentMultimap.getValue(FLAG_ID).isPresent();

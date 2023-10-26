@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -119,7 +120,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        CommandBox commandBox = new CommandBox(this::executeCommand, this::generateCompletions);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -192,5 +193,14 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Obtains a list of auto-completed commands based on the current partial text.
+     *
+     * @see seedu.address.logic.Logic#generateCompletions(String)
+     */
+    private Stream<String> generateCompletions(String commandText) {
+        return logic.generateCompletions(commandText);
     }
 }

@@ -16,6 +16,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -23,6 +24,9 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
@@ -31,6 +35,7 @@ import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Phone;
+import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
@@ -40,6 +45,38 @@ import seedu.address.model.tag.Tag;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.oneAmongAllOf(
+                    FLAG_ORGANIZATION, FLAG_RECRUITER
+            ).addDependents(
+                    AutocompleteDataSet.onceForEachOf(
+                            FLAG_NAME, FLAG_ID,
+                            FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
+                            FLAG_STATUS, FLAG_POSITION,
+                            FLAG_ORGANIZATION_ID
+                    ),
+                    AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+            ).addConstraints(List.of(
+                    AutocompleteConstraint.where(FLAG_ORGANIZATION)
+                            .isPrerequisiteFor(FLAG_STATUS, FLAG_POSITION),
+                    AutocompleteConstraint.where(FLAG_RECRUITER)
+                            .isPrerequisiteFor(FLAG_ORGANIZATION_ID)
+            ))
+    ).configureValueMap(m -> {
+        // Add value autocompletion for:
+        m.put(FLAG_ORGANIZATION_ID,
+                model -> model.getAddressBook().getContactList().stream()
+                        .filter(c -> c.getType() == Type.ORGANIZATION)
+                        .map(o -> o.getId().value)
+        );
+
+        // Disable value autocompletion for:
+        m.put(null /* preamble */, null);
+        m.put(FLAG_ORGANIZATION, null);
+        m.put(FLAG_RECRUITER, null);
+    });
+
 
     public static final String MESSAGE_ORGANIZATION_USAGE = "Adds an organization. "
             + "Parameters: "

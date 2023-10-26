@@ -15,6 +15,8 @@ import static seedu.address.testutil.TypicalContacts.AMY;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -82,6 +84,22 @@ public class LogicManagerTest {
     public void execute_storageThrowsAdException_throwsCommandException() {
         assertCommandFailureForExceptionFromStorage(DUMMY_AD_EXCEPTION, String.format(
                 LogicManager.FILE_OPS_PERMISSION_ERROR_FORMAT, DUMMY_AD_EXCEPTION.getMessage()));
+    }
+
+    @Test
+    public void generateCompletions_knownSubsequence_successWithResults() throws Exception {
+        assertEquals(
+                List.of("edit abc --name"),
+                logic.generateCompletions("edit abc -nm").collect(Collectors.toList())
+        );
+    }
+
+    @Test
+    public void generateCompletions_unknownSubsequence_failWithEmptyOutput() throws Exception {
+        assertEquals(
+                List.of(),
+                logic.generateCompletions("edit abc -xxx").collect(Collectors.toList())
+        );
     }
 
     @Test

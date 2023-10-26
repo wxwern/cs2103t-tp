@@ -29,9 +29,9 @@ import seedu.address.testutil.ContactBuilder;
 import seedu.address.testutil.ContactUtil;
 import seedu.address.testutil.EditContactDescriptorBuilder;
 
-public class AddressBookParserTest {
+public class AppParserTest {
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final AppParser parser = new AppParser();
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -106,5 +106,94 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+    }
+
+    @Test
+    public void parseCompletionGenerator_knownSubsequence_canGenerateCorrectSuggestions() {
+        // Add example
+        String userInput = "add --org -o";
+        assertEquals(
+                List.of(
+                        "add --org --pos",
+                        "add --org --phone"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Edit example
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // List example
+        userInput = "list -o";
+        assertEquals(
+                List.of("list --org"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Delete example
+        userInput = "delete 0 --re";
+        assertEquals(
+                List.of("delete 0 --recursive"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Extra middle contents example
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Command words example
+        userInput = "e";
+        assertEquals(
+                List.of(
+                        "edit",
+                        "exit",
+                        "delete",
+                        "help",
+                        "clear"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Test
+    public void parseCompletionGenerator_unknownSubsequence_willGenerateNoResults() {
+        String userInput = "add -asdf";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        userInput = "edit 1 -xxx";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
     }
 }
