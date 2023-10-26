@@ -71,7 +71,9 @@ public class AutocompleteTextField extends TextField {
         }
 
         String result = results.get(0);
-        setText(result);
+        setText(result + " ");
+        requestFocus();
+        end();
 
         autocompletePopup.getItems().clear();
         autocompletePopup.hide();
@@ -96,7 +98,9 @@ public class AutocompleteTextField extends TextField {
                     Label entryLabel = new Label(autocompletedString);
                     CustomMenuItem item = new CustomMenuItem(entryLabel, true);
                     item.setOnAction(e -> {
-                        setText(autocompletedString);
+                        setText(autocompletedString + " ");
+                        requestFocus();
+                        end();
                         autocompletePopup.hide();
                     });
                     menuItems.add(item);
