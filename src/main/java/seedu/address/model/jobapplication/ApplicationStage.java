@@ -11,6 +11,7 @@ public enum ApplicationStage {
     INTERVIEW("interview"),
     UNKNOWN("unknown");
 
+    public static final ApplicationStage DEFAULT_STAGE = ApplicationStage.RESUME;
     private final String textRepresentation;
 
     ApplicationStage(String textRepresentation) {
@@ -41,5 +42,9 @@ public enum ApplicationStage {
         }
         return UNKNOWN;
         // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
+    }
+
+    public static boolean isValidApplicationStage(String textRepresentation) {
+        return !ApplicationStage.fromString(textRepresentation).equals(UNKNOWN);
     }
 }

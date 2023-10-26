@@ -7,12 +7,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_OID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalContacts.AMY;
+import static seedu.address.testutil.TypicalContacts.NTU;
 import static seedu.address.testutil.TypicalContacts.RYAN;
 
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class RecruiterTest {
         Recruiter editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withUrl(VALID_URL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).withOid(VALID_OID_AMY).build();
+                .withTags(VALID_TAG_FRIEND).withOrganization(NTU).build();
         assertTrue(RYAN.isSameContact(editedRyan));
 
         // different id, all other attributes same -> returns false
@@ -93,7 +93,7 @@ class RecruiterTest {
         assertFalse(RYAN.equals(editedRyan));
 
         // different oid -> returns false
-        editedRyan = new RecruiterBuilder(RYAN).withOid(VALID_OID_AMY).build();
+        editedRyan = new RecruiterBuilder(RYAN).withOrganization(NTU).build();
         assertFalse(RYAN.equals(editedRyan));
     }
 
@@ -108,7 +108,7 @@ class RecruiterTest {
                 + ", url=" + RYAN.getUrl()
                 + ", address=" + RYAN.getAddress()
                 + ", tags=" + RYAN.getTags()
-                + ", oid=" + RYAN.getOrganizationId() + "}";
+                + ", organization=" + RYAN.getOrganization() + "}";
         assertEquals(expected, RYAN.toString());
     }
 }

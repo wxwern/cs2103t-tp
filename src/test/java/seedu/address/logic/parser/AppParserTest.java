@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ApplyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -29,15 +30,24 @@ import seedu.address.testutil.ContactBuilder;
 import seedu.address.testutil.ContactUtil;
 import seedu.address.testutil.EditContactDescriptorBuilder;
 
-public class AddressBookParserTest {
+public class AppParserTest {
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final AppParser parser = new AppParser();
 
     @Test
     public void parseCommand_add() throws Exception {
         Contact contact = new ContactBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
-        assertEquals(new AddCommand(contact), command);
+        AddCommand parsedAddCommand = (AddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
+        AddCommand addCommand = new AddCommand(
+                contact.getName(),
+                contact.getId(),
+                contact.getPhone().orElse(null),
+                contact.getEmail().orElse(null),
+                contact.getUrl().orElse(null),
+                contact.getAddress().orElse(null),
+                contact.getTags()
+        );
+        assertEquals(addCommand, parsedAddCommand);
     }
 
     @Test
@@ -89,6 +99,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_apply() throws Exception {
+        assertTrue(parser.parseCommand(ApplyCommand.COMMAND_WORD + " --id id_1 --title SWE") instanceof ApplyCommand);
+        assertTrue(parser.parseCommand(ApplyCommand.COMMAND_WORD + " 3 --title SWE") instanceof ApplyCommand);
+    }
+
+    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
             -> parser.parseCommand(""));
@@ -97,5 +113,94 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+    }
+
+    @Test
+    public void parseCompletionGenerator_knownSubsequence_canGenerateCorrectSuggestions() {
+        // Add example
+        String userInput = "add --org -o";
+        assertEquals(
+                List.of(
+                        "add --org --pos",
+                        "add --org --phone"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Edit example
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // List example
+        userInput = "list -o";
+        assertEquals(
+                List.of("list --org"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Delete example
+        userInput = "delete 0 --re";
+        assertEquals(
+                List.of("delete 0 --recursive"),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Extra middle contents example
+        userInput = "edit 1 --phone 12345678 --nm";
+        assertEquals(
+                List.of(
+                        "edit 1 --phone 12345678 --name"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        // Command words example
+        userInput = "e";
+        assertEquals(
+                List.of(
+                        "edit",
+                        "exit",
+                        "delete",
+                        "help",
+                        "clear"
+                ),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Test
+    public void parseCompletionGenerator_unknownSubsequence_willGenerateNoResults() {
+        String userInput = "add -asdf";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
+
+        userInput = "edit 1 -xxx";
+        assertEquals(
+                List.of(),
+                parser.parseCompletionGenerator(userInput)
+                        .generateCompletions(userInput)
+                        .collect(Collectors.toList())
+        );
     }
 }

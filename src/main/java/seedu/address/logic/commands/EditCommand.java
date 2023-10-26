@@ -3,9 +3,14 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.Collections;
@@ -19,6 +24,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
@@ -42,6 +49,16 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.onceForEachOf(
+                    FLAG_NAME, FLAG_ID,
+                    FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
+                    FLAG_STATUS, FLAG_POSITION,
+                    FLAG_ORGANIZATION_ID
+            ),
+            AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+    );
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the contact identified "
             + "by the index number used in the displayed contact list. "
             + "Existing values will be overwritten by the input values.\n"
@@ -58,6 +75,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited Contact: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book.";
+    public static final String MESSAGE_INVALID_ORGANIZATION =
+            "The organization id you supplied does not match any organization in the address book.";
 
     private Index index;
 
@@ -105,7 +124,7 @@ public class EditCommand extends Command {
 
 
     public CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
-        Contact editedContact = createEditedContact(contactToEdit, editContactDescriptor);
+        Contact editedContact = createEditedContact(model, contactToEdit, editContactDescriptor);
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
@@ -122,7 +141,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
      * edited with {@code editContactDescriptor}.
      */
-    private static Contact createEditedContact(Contact contactToEdit, EditContactDescriptor editContactDescriptor) {
+    private static Contact createEditedContact(Model model, Contact contactToEdit,
+                                               EditContactDescriptor editContactDescriptor) throws CommandException {
         assert contactToEdit != null;
 
         Name updatedName = editContactDescriptor.getName()
@@ -150,10 +170,20 @@ public class EditCommand extends Command {
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
                     updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
         } else if (contactToEdit.getType() == Type.RECRUITER) {
-            Id updatedOid = editContactDescriptor.getOrganizationId()
-                    .orElse(((Recruiter) contactToEdit).getOrganizationId().orElse(null));
+            Optional<Id> updatedOid = editContactDescriptor
+                    .getOrganizationId()
+                    .or(() -> ((Recruiter) contactToEdit).getOrganizationId());
+
+            Organization updatedOrganization = (Organization) updatedOid.map(model::getContactById)
+                    .filter(c -> c.getType() == Type.ORGANIZATION)
+                    .orElse(null);
+
+            if (updatedOid.isPresent() && updatedOrganization == null) {
+                throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
+            }
+
             return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
-                    updatedAddress, updatedTags, updatedOid);
+                    updatedAddress, updatedTags, updatedOrganization);
         }
 
         return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
