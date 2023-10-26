@@ -13,6 +13,10 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.ApplyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+
+/**
+ * Parses input arguments and creates a new ApplyCommand object
+ */
 public class ApplyCommandParser implements Parser<ApplyCommand> {
 
     /**
