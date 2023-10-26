@@ -20,6 +20,10 @@ public class CliSyntax {
     public static final Flag FLAG_RECURSIVE = new Flag("recursive");
     public static final Flag FLAG_ORGANIZATION_ID = new Flag("oid");
     public static final Flag FLAG_RECRUITER_ID = new Flag("rid");
+    public static final Flag FLAG_TITLE = new Flag("title");
+    public static final Flag FLAG_DEADLINE = new Flag("by");
+    public static final Flag FLAG_STAGE = new Flag("stage");
+    public static final Flag FLAG_DESCRIPTION = new Flag("desc");
 
 
 }

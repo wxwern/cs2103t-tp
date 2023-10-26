@@ -7,5 +7,9 @@ coverage:
       default:
         target: 70%
         threshold: 1%
+    patch:
+      target: 50%
+      threshold: 10%
+
 ignore:
   - "**/java/seedu/address/ui/**" # ignore test coverage on UI

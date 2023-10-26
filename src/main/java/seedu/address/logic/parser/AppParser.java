@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.autocomplete.AutocompleteGenerator;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ApplyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -81,6 +82,9 @@ public class AppParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case ApplyCommand.COMMAND_WORD:
+            return new ApplyCommandParser().parse(arguments);
+
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -106,6 +110,9 @@ public class AppParser {
         case AddCommand.COMMAND_WORD:
             return new AutocompleteGenerator(AddCommand.AUTOCOMPLETE_SUPPLIER);
 
+        case ApplyCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(ApplyCommand.AUTOCOMPLETE_SUPPLIER);
+
         case EditCommand.COMMAND_WORD:
             return new AutocompleteGenerator(EditCommand.AUTOCOMPLETE_SUPPLIER);
 
@@ -125,8 +132,9 @@ public class AppParser {
             // Not a valid command. Return autocompletion results based on all the known command names.
             return new AutocompleteGenerator(
                     Command.getCommandWords(Stream.of(
-                            AddCommand.class, DeleteCommand.class, EditCommand.class, ListCommand.class,
-                            FindCommand.class, HelpCommand.class, ClearCommand.class, ExitCommand.class
+                            AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
+                            ListCommand.class, FindCommand.class, HelpCommand.class,
+                            ClearCommand.class, ExitCommand.class
                     )).filter(Optional::isPresent).map(Optional::get)
             );
 
