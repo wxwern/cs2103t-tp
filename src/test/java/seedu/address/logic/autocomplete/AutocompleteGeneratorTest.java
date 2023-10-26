@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +65,7 @@ public class AutocompleteGeneratorTest {
                         AutocompleteConstraint.oneAmongAllOf(flagA1, flagA2)
                 ),
                 Map.of(
-                        flagA3, m -> List.of("apple", "banana", "car")
+                        flagA3, m -> Stream.of("apple", "banana", "car")
                 )
         );
 

@@ -71,7 +71,8 @@ public class AutocompleteGenerator {
 
             return referenceCommandsSupplier.get()
                     .filter(term -> StringUtil.isFuzzyMatch(partialCommand, term))
-                    .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(partialCommand));
+                    .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(partialCommand))
+                    .distinct();
         };
     }
 
@@ -84,22 +85,27 @@ public class AutocompleteGenerator {
             PartitionedCommand command = new PartitionedCommand(partialCommand == null ? "" : partialCommand);
             String trailingText = command.getTrailingText();
 
+            // Compute the possible flags and flag-values.
+            Stream<String> possibleFlags = getPossibleFlags(command, supplier)
+                    .filter(flag -> StringUtil.isFuzzyMatch(trailingText, flag.getFlagString())
+                            || StringUtil.isFuzzyMatch(trailingText, flag.getFlagAliasString()))
+                    .sorted(FLAG_FUZZY_MATCH_COMPARATOR.apply(trailingText))
+                    .map(Flag::getFlagString);
+
+            Stream<String> possibleValues = getPossibleValues(command, supplier, model)
+                    .map(s -> s.filter(term -> StringUtil.isFuzzyMatch(trailingText, term))
+                            .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(trailingText)))
+                    .orElse(possibleFlags);
+
+            // Decide which stream to use based on whether it's of a flag syntax or not.
             Stream<String> possibleTerminalValues;
             if (command.hasFlagSyntaxPrefixInTrailingText()) {
-                // The trailing text is a flag-like term - try to autocomplete flags.
-                possibleTerminalValues = getPossibleFlags(command, supplier)
-                        .filter(flag -> StringUtil.isFuzzyMatch(trailingText, flag.getFlagString())
-                                || StringUtil.isFuzzyMatch(trailingText, flag.getFlagAliasString()))
-                        .sorted(FLAG_FUZZY_MATCH_COMPARATOR.apply(trailingText))
-                        .map(Flag::getFlagString);
-
+                possibleTerminalValues = possibleFlags;
             } else {
-                // The trailing text is a value - try to autocomplete values.
-                possibleTerminalValues = getPossibleValues(command, supplier, model)
-                        .filter(term -> StringUtil.isFuzzyMatch(trailingText, term))
-                        .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(trailingText));
+                possibleTerminalValues = possibleValues;
             }
 
+            // Return the results as a full completion string, distinct.
             return possibleTerminalValues
                     .map(command::toStringWithNewTrailingTerm)
                     .distinct();
@@ -145,17 +151,20 @@ public class AutocompleteGenerator {
     }
 
     /**
-     * Obtains the set of possible values based on the partitioned command, supplier, and model.
+     * Obtains the optional set of possible values based on the partitioned command, supplier, and model.
+     * If this optional is empty, that means it is explicitly specified that the flag cannot accept values.
      */
-    private static Stream<String> getPossibleValues(
+    private static Optional<Stream<String>> getPossibleValues(
             PartitionedCommand command,
             AutocompleteSupplier supplier,
             Model model
     ) {
-        return command.getLastConfirmedFlagString()
-                .flatMap(Flag::parseOptional)
-                .map(f -> supplier.getValidValues(f, model).stream())
-                .orElse(Stream.empty());
+        return supplier.getValidValues(
+                Flag.parseOptional(
+                        command.getLastConfirmedFlagString().orElse(null)
+                ).orElse(null),
+                model
+        );
     }
 
 }

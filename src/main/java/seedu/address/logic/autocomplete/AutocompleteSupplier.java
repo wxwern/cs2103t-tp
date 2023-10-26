@@ -1,10 +1,10 @@
 package seedu.address.logic.autocomplete;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.stream.Stream;
 
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.parser.Flag;
@@ -16,7 +16,7 @@ import seedu.address.model.Model;
 public class AutocompleteSupplier {
 
     private final AutocompleteDataSet<Flag> flags;
-    private final Map<Flag, Function<Model, List<String>>> values;
+    private final Map<Flag, FlagValueSupplier> values;
 
     /**
      * Constructs an autocomplete supplier that is capable of supplying useful details for autocompleting some command.
@@ -27,7 +27,7 @@ public class AutocompleteSupplier {
      */
     public AutocompleteSupplier(
             AutocompleteDataSet<Flag> flags,
-            Map<Flag, Function<Model, List<String>>> values
+            Map<Flag, FlagValueSupplier> values
     ) {
         // Create new copies to prevent external modification.
         this.flags = flags.copy();
@@ -101,15 +101,22 @@ public class AutocompleteSupplier {
     }
 
     /**
-     * Returns a list of possible values for a flag when computed against a given model.
+     * Returns an optional stream of possible values for a flag when computed against a given model.
+     * If this optional is empty, then this flag is explicitly specified to not have any values,
+     * and not just the lack of completion suggestions.
+     *
+     * @param flag The flag to check against. This may be null to represent the preamble.
+     * @param model The model to be supplied for generation. This may be null if model-data is not essential
+     *              for any purpose.
      */
-    public List<String> getValidValues(Flag flag, Model model) {
+    public Optional<Stream<String>> getValidValues(Flag flag, Model model) {
         try {
-            return this.values.getOrDefault(flag, m -> List.of()).apply(model);
-        } catch (NullPointerException e) {
-            // Guard against NPEs due to supplied lambdas not handling them.
-            // We simply assume no auto-completion values are available.
-            return List.of();
+            return Optional.ofNullable(this.values.getOrDefault(flag, m -> Stream.of()).apply(model));
+        } catch (RuntimeException e) {
+            // Guard against errors like NPEs due to supplied lambdas not handling them.
+            e.printStackTrace();
+            // We simply return that we don't know what to auto-complete by.
+            return Optional.of(Stream.of());
         }
     }
 

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -116,23 +118,23 @@ public class AutocompleteSupplierTest {
                         AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B) // A & B cannot coexist
                 ),
                 Map.of(
-                        FLAG_A, m -> LIST_A,
-                        FLAG_B, m -> LIST_B,
-                        FLAG_C, m -> LIST_C,
-                        FLAG_D, m -> LIST_EMPTY,
-                        FLAG_F, m -> List.of(m.toString())
+                        FLAG_A, m -> LIST_A.stream(),
+                        FLAG_B, m -> LIST_B.stream(),
+                        FLAG_C, m -> LIST_C.stream(),
+                        FLAG_D, m -> LIST_EMPTY.stream(),
+                        FLAG_F, m -> Stream.of(m.toString())
                 )
         );
 
         // Should use the lambda's values
-        assertEquals(LIST_A, supplier.getValidValues(FLAG_A, null));
-        assertEquals(LIST_B, supplier.getValidValues(FLAG_B, null));
-        assertEquals(LIST_C, supplier.getValidValues(FLAG_C, null));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_D, null));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_E, null));
+        assertEquals(LIST_A, supplier.getValidValues(FLAG_A, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_B, supplier.getValidValues(FLAG_B, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_C, supplier.getValidValues(FLAG_C, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_D, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_E, null).get().collect(Collectors.toList()));
 
         // NPEs should be caught if the lambda does not handle it
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_F, null));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_F, null).get().collect(Collectors.toList()));
     }
 
 }
