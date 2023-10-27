@@ -33,6 +33,11 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
                         ApplyCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new)
                 );
 
+        if (argumentMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    ApplyCommand.MESSAGE_USAGE));
+        }
+
         Object indexXorId = ParserUtil.parseIndexXorId(argumentMultimap.getPreamble());
 
         Optional<String> title = argumentMultimap.getValue(FLAG_TITLE);
@@ -45,6 +50,7 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     ApplyCommand.MESSAGE_USAGE));
         }
+
         // TODO: Tech debt - Use Parserutil.parseOptionally
         return new ApplyCommand(
                 indexXorId instanceof Id ? (Id) indexXorId : null,
