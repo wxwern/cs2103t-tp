@@ -1,9 +1,23 @@
 package seedu.address.storage;
 
+import java.util.Optional;
+
+import org.junit.Test;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
+import seedu.address.model.contact.Id;
+import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.Deadline;
 import seedu.address.model.jobapplication.JobApplication;
+import seedu.address.model.jobapplication.JobDescription;
+import seedu.address.model.jobapplication.JobStatus;
+import seedu.address.model.jobapplication.JobTitle;
+import seedu.address.model.jobapplication.LastUpdatedTime;
+
 
 /**
  * Jackson-friendly version of {@link JobApplication}.
@@ -37,5 +51,66 @@ public class JsonAdaptedApplication {
         this.deadline = deadline;
         this.status = status;
         this.stage = stage;
+    }
+
+    /**
+     * Converts a given {@code JobApplication} into this class for Jackson use.
+     */
+    public JsonAdaptedApplication(JobApplication source) {
+        this.oid = source
+                .getOrganizationId()
+                .toString();
+        this.title = source
+                .getJobTitle()
+                .toString();
+        this.description = source
+                .getJobDescription()
+                .map(JobDescription::toString)
+                .orElse(null);
+        this.lastUpdatedTime = source
+                .getLastUpdatedTime()
+                .toString();
+        this.deadline = source
+                .getDeadline()
+                .toString();
+        this.status = source
+                .getStatus()
+                .toString();
+        this.stage = source
+                .getApplicationStage()
+                .toString();
+    }
+
+    /**
+     * Converts this Jackson-friendly adapted application object into the model's {@code JobApplication} object.
+     *
+     * @throws IllegalValueException if there are any data constraints violated in the adapted application.
+     */
+    public JobApplication toModelType() throws IllegalValueException {
+        final Id oid;
+        final JobTitle title;
+        final Optional<JobDescription> description;
+        final Deadline deadline;
+        final LastUpdatedTime lastUpdatedTime;
+        final JobStatus status;
+        final ApplicationStage stage;
+
+        if (this.oid == null || !Id.isValidId(this.oid)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
+        }
+        oid = new Id(this.oid);
+        if (this.title == null || !JobTitle.isValidJobTitle(this.title)) {
+            throw new IllegalValueException(JobTitle.MESSAGE_CONSTRAINTS);
+        }
+        title = new JobTitle(this.title);
+        if (this.description != null && !JobDescription.isValidJobDescription(this.description)) {
+            throw new IllegalValueException(JobDescription.MESSAGE_CONSTRAINTS);
+        }
+        description = Optional.<String>ofNullable(this.description).map(JobDescription::new);
+        if (this.deadline == null || !Deadline.isValidDeadline(this.deadline)) {
+            throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
+        }
+        deadline = new Deadline(this.deadline);
+        return null;
     }
 }
