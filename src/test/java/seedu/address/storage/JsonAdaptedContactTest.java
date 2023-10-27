@@ -79,7 +79,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, INVALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
@@ -90,7 +90,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, null, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
@@ -101,7 +101,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 INVALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
@@ -112,7 +112,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 null, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         assertDoesNotThrow(() -> contact.toModelType(addressBook));
     }
@@ -122,7 +122,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, INVALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
@@ -133,7 +133,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, null, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         assertDoesNotThrow(() -> contact.toModelType(addressBook));
     }
@@ -143,7 +143,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, INVALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
@@ -154,7 +154,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, null, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS
+                VALID_OID, VALID_TAGS, null
         );
         assertDoesNotThrow(() -> contact.toModelType(addressBook));
     }
@@ -166,7 +166,7 @@ public class JsonAdaptedContactTest {
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, invalidTags
+                VALID_OID, invalidTags, null
         );
         assertThrows(IllegalValueException.class, () -> contact.toModelType(addressBook));
     }
@@ -176,7 +176,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_REC, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                null, VALID_TAGS
+                null, VALID_TAGS, null
         );
         assertDoesNotThrow(() -> contact.toModelType(addressBook));
     }
@@ -187,7 +187,7 @@ public class JsonAdaptedContactTest {
         addressBook.addContact(TEST_ORGANIZATION);
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_REC, VALID_NAME, VALID_ID,
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                INVALID_OID, VALID_TAGS
+                INVALID_OID, VALID_TAGS, null
         );
         assertThrows(IllegalValueException.class, () -> contact.toModelType(addressBook));
     }

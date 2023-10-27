@@ -79,17 +79,6 @@ class JsonAdaptedContact {
     }
 
     /**
-     * Constructs a {@code JsonAdaptedContact} with the given contact details.
-     */
-    public JsonAdaptedContact(@JsonProperty("type") String type,
-                              @JsonProperty("name") String name, @JsonProperty("id") String id,
-                              @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-                              @JsonProperty("url") String url, @JsonProperty("address") String address,
-                              @JsonProperty("status") String status, @JsonProperty("position") String position,
-                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this(type, name, id, phone, email, url, address, status, position, oid, tags, null);
-    }
-    /**
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
