@@ -7,11 +7,24 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <flag> value <flag> value ...}<br>
- *     e.g. {@code some preamble text t/ 11.00 t/ 12.00 k/ m/ July}  where flag are {@code t/ k/ m/}.<br>
- * 1. An argument's value can be an empty string e.g. the value of {@code k/} in the above example.<br>
- * 2. Leading and trailing whitespaces of an argument value will be discarded.<br>
- * 3. An argument may be repeated and all its values will be accumulated e.g. the value of {@code t/}
- *    in the above example.<br>
+ *     e.g. {@code some preamble text -t 11.00 -t 12.00 -k -m July} where flags are {@code -t -k -m}.<br>
+ *
+ * <ol>
+ *     <li>
+ *         An argument's (flag's) value can be an empty string, e.g., the value of {@code -k}
+ *         in the above example.
+ *     </li>
+ *     <li>
+ *         Leading and trailing whitespaces of an argument value will be discarded.
+ *     </li>
+ *     <li>
+ *         Flags must be surrounded by whitespace on both sides to be tokenized as flags.
+ *     </li>
+ *     <li>
+ *         An argument may be repeated and all its values will be accumulated e.g. the value of {@code t/}
+ *         in the above example.
+ *     </li>
+ * </ol>
  */
 public class ArgumentTokenizer {
 
@@ -25,6 +38,12 @@ public class ArgumentTokenizer {
      * Unlike {@link #autoTokenize(String, Flag...)}, this <b>will throw an error</b> when unspecified flags
      * are found. This means you must provide all the necessary flags you intend to us via the {@code flags}
      * parameter.
+     * </p>
+     *
+     * <p>
+     * Calling this method is equivalent to using the results from
+     * {@link ArgumentTokenizer#autoTokenize(String, Flag...)} and verifying there exists no extraneous flags with
+     * {@link ArgumentMultimap#verifyNoExtraneousFlagsOnTopOf(Flag...)}.
      * </p>
      *
      * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
@@ -55,7 +74,7 @@ public class ArgumentTokenizer {
      * @param mainFlags  Optional set of primary flags to prioritize tokenizing the arguments string with
      * @return           ArgumentMultimap object that maps flag to their arguments
      *
-     * @see #tokenize(String, Flag...) 
+     * @see #tokenize(String, Flag...)
      */
     public static ArgumentMultimap autoTokenize(String argsString, Flag... mainFlags) {
         String[] words = splitByWords(argsString);
