@@ -111,6 +111,23 @@ public class JsonAdaptedApplication {
             throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
         }
         deadline = new Deadline(this.deadline);
-        return null;
+        lastUpdatedTime = LastUpdatedTime.generateLastUpdatedTime(this.lastUpdatedTime);
+        if (this.status == null || !JobStatus.isValidJobStatus(this.status)) {
+            throw new IllegalValueException(JobStatus.MESSAGE_CONSTRAINTS);
+        }
+        status = JobStatus.fromString(this.status);
+        if (this.stage == null || !ApplicationStage.isValidApplicationStage(this.stage)) {
+            throw new IllegalValueException(ApplicationStage.MESSAGE_CONSTRAINTS);
+        }
+        stage = ApplicationStage.fromString(this.stage);
+        return new JobApplication(
+                oid,
+                title,
+                description.orElse(null),
+                deadline,
+                status,
+                stage,
+                lastUpdatedTime
+        );
     }
 }
