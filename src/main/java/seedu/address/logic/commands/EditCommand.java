@@ -59,18 +59,42 @@ public class EditCommand extends Command {
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
     );
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the contact identified "
-            + "by the index number used in the displayed contact list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_ORGANIZATION_USAGE = "Edits an organization.\n"
+            + "Parameters: INDEX/ID "
             + "[" + FLAG_NAME + " NAME] "
+            + "[" + FLAG_ID + " ID] "
             + "[" + FLAG_PHONE + " PHONE] "
             + "[" + FLAG_EMAIL + " EMAIL] "
+            + "[" + FLAG_URL + " URL] "
             + "[" + FLAG_ADDRESS + " ADDRESS] "
+            + "[" + FLAG_STATUS + " STATUS] "
+            + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + FLAG_PHONE + " 91234567 "
-            + FLAG_EMAIL + " johndoe@example.com";
+            + FLAG_STATUS + " Applied";
+
+    public static final String MESSAGE_RECRUITER_USAGE = "Edits a recruiter.\n"
+            + "Parameters: INDEX/ID "
+            + "[" + FLAG_NAME + " NAME] "
+            + "[" + FLAG_ID + " ID] "
+            + "[" + FLAG_PHONE + " PHONE] "
+            + "[" + FLAG_EMAIL + " EMAIL] "
+            + "[" + FLAG_URL + " URL] "
+            + "[" + FLAG_ADDRESS + " ADDRESS] "
+            + "[" + FLAG_ORGANIZATION_ID + " OID] "
+            + "[" + FLAG_TAG + " TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + FLAG_PHONE + " 91234567 "
+            + FLAG_EMAIL + " rexrecruiter@example.com";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Edits the details of the contact of the class type Organization or Recruiter,"
+            + " identified by its index in the displayed contact list or its id."
+            + " Note that existing values will be overwritten by the input values."
+            + " The input format varies depending on the class:\n\n"
+            + MESSAGE_ORGANIZATION_USAGE + "\n\n"
+            + MESSAGE_RECRUITER_USAGE;
 
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited Contact: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
