@@ -249,7 +249,7 @@ public class ParserUtil {
         requireNonNull(applicationStage);
         String trimmedDeadline = applicationStage.trim();
         if (!ApplicationStage.isValidApplicationStage(trimmedDeadline)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+            throw new ParseException(ApplicationStage.MESSAGE_CONSTRAINTS);
         }
         return ApplicationStage.fromString(trimmedDeadline);
     }
