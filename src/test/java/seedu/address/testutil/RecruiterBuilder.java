@@ -1,7 +1,9 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TypicalContacts.NUS;
+
 import seedu.address.model.contact.Contact;
-import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 
 /**
@@ -9,16 +11,16 @@ import seedu.address.model.contact.Recruiter;
  */
 public class RecruiterBuilder extends ContactBuilder {
 
-    public static final String DEFAULT_OID = "111111";
+    public static final Organization DEFAULT_ORGANIZATION = NUS;
 
-    private Id oid;
+    private Organization organization;
 
     /**
      * Creates a {@code RecruiterBuilder} with the default details.
      */
     public RecruiterBuilder() {
         super();
-        this.oid = new Id(DEFAULT_OID);
+        this.organization = DEFAULT_ORGANIZATION;
     }
 
     /**
@@ -26,7 +28,7 @@ public class RecruiterBuilder extends ContactBuilder {
      */
     public RecruiterBuilder(Recruiter recruiterToCopy) {
         super(recruiterToCopy);
-        this.oid = recruiterToCopy.getOrganizationId().orElse(null);
+        this.organization = recruiterToCopy.getOrganization().orElse(null);
     }
 
     @Override
@@ -65,10 +67,10 @@ public class RecruiterBuilder extends ContactBuilder {
     }
 
     /**
-     * Sets the organization {@code Id} of the {@code Recruiter} that we are building.
+     * Sets the {@code organization} of the {@code Recruiter} that we are building.
      */
-    public RecruiterBuilder withOid(String oid) {
-        this.oid = oid == null ? null : new Id(oid);
+    public RecruiterBuilder withOrganization(Organization organization) {
+        this.organization = organization;
         return this;
     }
 
@@ -83,7 +85,7 @@ public class RecruiterBuilder extends ContactBuilder {
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
                 contact.getTags(),
-                oid
+                organization
         );
     }
 }

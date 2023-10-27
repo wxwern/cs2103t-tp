@@ -4,9 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +22,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditContactDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.contact.Id;
 import seedu.address.model.tag.Tag;
+
+
+
+
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -36,14 +46,23 @@ public class EditCommandParser implements Parser<EditCommand> {
                         EditCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
         Index index;
+        Id targetId;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            String preambleStr = argMultimap.getPreamble();
+            if (preambleStr.matches("^[A-Za-z].*")) {
+                targetId = ParserUtil.parseId(preambleStr);
+                index = null;
+            } else {
+                index = ParserUtil.parseIndex(preambleStr);
+                targetId = null;
+            }
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS);
+        argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
+                FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_STATUS, FLAG_POSITION, FLAG_ORGANIZATION_ID);
 
         EditContactDescriptor editContactDescriptor = new EditContactDescriptor();
 
@@ -59,14 +78,38 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(FLAG_ADDRESS).isPresent()) {
             editContactDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(FLAG_ADDRESS).get()));
         }
+        if (argMultimap.getValue(FLAG_URL).isPresent()) {
+            editContactDescriptor.setUrl(ParserUtil.parseUrl(argMultimap.getValue(FLAG_URL).get()));
+        }
+        if (argMultimap.getValue(FLAG_ID).isPresent()) {
+            editContactDescriptor.setId(ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get()));
+        }
+        if (argMultimap.getValue(FLAG_STATUS).isPresent()) {
+            editContactDescriptor.setStatus(ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get()));
+        }
+        if (argMultimap.getValue(FLAG_POSITION).isPresent()) {
+            editContactDescriptor.setPosition(ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get()));
+        }
+        if (argMultimap.getValue(FLAG_ORGANIZATION_ID).isPresent()) {
+            editContactDescriptor.setOid(ParserUtil.parseId(argMultimap.getValue(FLAG_ORGANIZATION_ID).get()));
+        }
         parseTagsForEdit(argMultimap.getAllValues(FLAG_TAG)).ifPresent(editContactDescriptor::setTags);
 
         if (!editContactDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editContactDescriptor);
+        if (targetId == null) {
+            return new EditCommand(index, editContactDescriptor);
+
+        } else {
+            return new EditCommand(targetId, editContactDescriptor);
+
+        }
+
     }
+
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
