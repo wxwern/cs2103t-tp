@@ -29,7 +29,7 @@ public class JobApplication {
 
     private final Optional<JobDescription> jobDescription;
 
-    private final LastUpdatedTime lastUpdatedTime = new LastUpdatedTime();
+    private final LastUpdatedTime lastUpdatedTime;
 
     private final Deadline deadline;
 
@@ -48,15 +48,7 @@ public class JobApplication {
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, JobStatus status, ApplicationStage applicationStage) {
-        requireNonNull(oid);
-        requireNonNull(jobTitle);
-        this.oid = oid;
-        this.jobTitle = jobTitle;
-        this.jobDescription = Optional.ofNullable(jobDescription);
-
-        this.deadline = deadline == null ? new Deadline() : deadline;
-        this.status = status == null ? JobStatus.DEFAULT_STATUS : status;
-        this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
+        this(oid, jobTitle, jobDescription, deadline, status, applicationStage, new LastUpdatedTime());
     }
 
     /**
@@ -84,6 +76,30 @@ public class JobApplication {
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, ApplicationStage applicationStage) {
         this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, applicationStage);
+    }
+
+    /**
+     * Constructs a job application (should be directly used by Jackson only)
+     *
+     * @param oid of the organization applied to.
+     * @param jobTitle of the postion applied to.
+     * @param jobDescription of the positon applied to.
+     * @param deadline of the application or interview if relevant.
+     * @param status of the application
+     * @param lastUpdatedTime of the application
+     */
+    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
+                          Deadline deadline, JobStatus status, ApplicationStage applicationStage, LastUpdatedTime lastUpdatedTime) {
+        requireNonNull(oid);
+        requireNonNull(jobTitle);
+        this.oid = oid;
+        this.jobTitle = jobTitle;
+        this.jobDescription = Optional.ofNullable(jobDescription);
+
+        this.deadline = deadline == null ? new Deadline() : deadline;
+        this.status = status == null ? JobStatus.DEFAULT_STATUS : status;
+        this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
+        this.lastUpdatedTime = lastUpdatedTime;
     }
 
     @Override
