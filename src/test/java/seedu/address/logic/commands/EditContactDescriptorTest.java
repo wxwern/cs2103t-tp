@@ -65,7 +65,11 @@ public class EditContactDescriptorTest {
                 + editContactDescriptor.getPhone().orElse(null) + ", email="
                 + editContactDescriptor.getEmail().orElse(null) + ", address="
                 + editContactDescriptor.getAddress().orElse(null) + ", tags="
-                + editContactDescriptor.getTags().orElse(null) + "}";
+                + editContactDescriptor.getTags().orElse(null) + ", url="
+                + editContactDescriptor.getUrl().orElse(null) + ", status="
+                + editContactDescriptor.getStatus().orElse(null) + ", position="
+                + editContactDescriptor.getPosition().orElse(null) + "}";
         assertEquals(expected, editContactDescriptor.toString());
+
     }
 }
