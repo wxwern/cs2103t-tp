@@ -112,7 +112,7 @@ public class JsonAdaptedContactTest {
         AddressBook addressBook = new AddressBook();
         JsonAdaptedContact contact = new JsonAdaptedContact(VALID_TYPE_ORG, VALID_NAME, VALID_ID,
                 null, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_STATUS, VALID_POSITION,
-                VALID_OID, VALID_TAGS, null
+                VALID_OID, VALID_TAGS, new ArrayList<>()
         );
         assertDoesNotThrow(() -> contact.toModelType(addressBook));
     }
