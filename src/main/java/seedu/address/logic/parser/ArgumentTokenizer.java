@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * Tokenizes arguments string of the form: {@code preamble <flag> value <flag> value ...}<br>
  *     e.g. {@code some preamble text t/ 11.00 t/ 12.00 k/ m/ July}  where flag are {@code t/ k/ m/}.<br>
@@ -15,17 +17,50 @@ public class ArgumentTokenizer {
 
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps flag to their
-     * respective argument values. Only the given flag will be recognized in the arguments string.
+     * respective argument values. Only the given flags will be tokenized and added to the multimap, while
+     * extraneous flags found that match the expected syntax (see: {@link Flag#isFlagSyntax}}
+     * will throw an exception.
+     *
+     * <p>
+     * Unlike {@link #autoTokenize(String, Flag...)}, this <b>will throw an error</b> when unspecified flags
+     * are found. This means you must provide all the necessary flags you intend to us via the {@code flags}
+     * parameter.
+     * </p>
      *
      * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
-     * @param flags      Flags to prioritize tokenizing the arguments string with
+     * @param flags      Flags to tokenize the arguments string with
      * @return           ArgumentMultimap object that maps flag to their arguments
+     * @throws ParseException if there are extraneous flags detected on top of the provided flags.
+     *
+     * @see #autoTokenize tokenize(String, Flag...)
      */
-    public static ArgumentMultimap tokenize(String argsString, Flag... flags) {
-        String[] words = splitByWords(argsString);
-        return extractArguments(words, flags);
+    public static ArgumentMultimap tokenize(String argsString, Flag... flags) throws ParseException {
+        ArgumentMultimap multimap = autoTokenize(argsString, flags);
+        multimap.verifyNoExtraneousFlagsOnTopOf(flags);
+        return multimap;
     }
 
+    /**
+     * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps flag to their
+     * respective argument. All flags provided via the {@code flags} parameter, and all unknown flags
+     * successfully obtained via {@link Flag#parse}, will in both cases be added to the multimap.
+     *
+     * <p>
+     * Unlike {@link #tokenize(String, Flag...)}, this will not throw an error when unspecified flags are
+     * found. In other words, an unknown flag not present in {@code mainFlags} is always accepted, albeit with
+     * no information about name-alias mapping and so on, so it may be hard to match against flags you expect.
+     * </p>
+     *
+     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
+     * @param mainFlags  Optional set of primary flags to prioritize tokenizing the arguments string with
+     * @return           ArgumentMultimap object that maps flag to their arguments
+     *
+     * @see #tokenize(String, Flag...) 
+     */
+    public static ArgumentMultimap autoTokenize(String argsString, Flag... mainFlags) {
+        String[] words = splitByWords(argsString);
+        return extractArguments(words, mainFlags);
+    }
 
     /**
      * Splits an arguments string into individual words, separated by space.
