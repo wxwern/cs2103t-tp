@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,7 +86,7 @@ class JsonAdaptedContact {
                               @JsonProperty("url") String url, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
                               @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this(type, name, id, phone, email, url, address, status,position, oid, tags, null);
+        this(type, name, id, phone, email, url, address, status, position, oid, tags, null);
     }
     /**
      * Converts a given {@code Contact} into this class for Jackson use.
