@@ -89,7 +89,8 @@ public class JobApplication {
      * @param lastUpdatedTime of the application
      */
     public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
-                          Deadline deadline, JobStatus status, ApplicationStage applicationStage, LastUpdatedTime lastUpdatedTime) {
+                          Deadline deadline, JobStatus status, ApplicationStage applicationStage,
+                          LastUpdatedTime lastUpdatedTime) {
         requireNonNull(oid);
         requireNonNull(jobTitle);
         this.oid = oid;
