@@ -14,20 +14,38 @@ import seedu.address.model.tag.Tag;
  */
 public class Recruiter extends Contact {
 
-    private final Optional<Id> oid;
+    public static final String MESSAGE_INVALID_ORGANIZATION =
+            "If a recruiter is linked to an organization, "
+                    + "the linked organization should be present in the address book "
+                    + "and have a valid id";
+
+    private final Optional<Organization> organization;
 
     /**
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
      * The other fields can be null.
      */
-    public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags, Id oid) {
+    public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags,
+                     Organization organization) {
         super(name, id, phone, email, url, address, tags);
-        this.oid = Optional.ofNullable(oid);
+        this.organization = Optional.ofNullable(organization);
     }
 
     public Optional<Id> getOrganizationId() {
-        return oid;
+        return organization.map(Contact::getId);
+    }
+
+    public Optional<Organization> getOrganization() {
+        return organization;
+    }
+
+    public boolean isLinkedToOrganization(Organization otherOrg) {
+        return organization.map(org -> org.equals(otherOrg)).orElse(false);
+    }
+
+    public boolean isLinkedToOrganization(Id organizationId) {
+        return organization.map(org -> org.getId().equals(organizationId)).orElse(false);
     }
 
     @Override
@@ -55,19 +73,19 @@ public class Recruiter extends Contact {
                 && getAddress().equals(otherContact.getAddress())
                 && getUrl().equals(otherContact.getUrl())
                 && getTags().equals(otherContact.getTags())
-                && oid.equals(otherContact.oid);
+                && organization.equals(otherContact.organization);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), oid
+                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), organization
         );
     }
 
     @Override
     public ToStringBuilder toStringBuilder() {
         return super.toStringBuilder()
-                .add("oid", oid);
+                .add("organization", organization);
     }
 }

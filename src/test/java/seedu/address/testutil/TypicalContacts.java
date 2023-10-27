@@ -22,6 +22,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Recruiter;
 
 /**
  * A utility class containing a list of {@code Contact} objects to be used in tests.
@@ -75,20 +76,100 @@ public class TypicalContacts {
             .withEmail("anna@example.com")
             .withAddress("4th street").build();
 
-    public static final Organization JESUS = new OrganizationBuilder()
-            .withName("Jesus Christ")
-            .withId("test_7-123")
-            .withPhone("9482442")
-            .withEmail("anna@example.com")
-            .withAddress("4th street")
-            .withRids("cat")
+    public static final Organization NUS = new OrganizationBuilder()
+            .withName("NUS SoC")
+            .withId("nus-soc_sg")
+            .withPhone("65162727")
+            .withEmail("socug@comp.nus.edu.sg")
+            .withUrl("www.nus.edu.sg")
+            .withAddress("Computing 1, 13 Computing Drive")
+            .withTags("computing", "worldClass")
+            .withStatus("Applied")
+            .withPosition("Research Assistant")
+            .withRids("soc-rec_ryan")
+            .build();
+
+    public static final Organization NTU = new OrganizationBuilder()
+            .withName("NTU SoC")
+            .withId("ntu-soc_sg")
+            .withPhone("67905786")
+            .withEmail("scse-undergrad@ntu.edu.sg")
+            .withUrl("www.ntu.edu.sg")
+            .withAddress("Block N4 #02a-32, Nanyang Avenue")
+            .withTags("computing", "researchOriented")
+            .withStatus("Rejected")
+            .withPosition("Teaching Assistant")
+            .build();
+
+    public static final Organization SMU = new OrganizationBuilder()
+            .withName("SMU Info Sys")
+            .withId("smu-is_sg")
+            .withPhone("68087960")
+            .withEmail("scis_ugrad@smu.edu.sg")
+            .withUrl("www.smu.edu.sg")
+            .withAddress("80 Stamford Rd")
+            .withStatus("Interested")
+            .withPosition("Web Developer")
+            .build();
+
+    public static final Recruiter RYAN = new RecruiterBuilder()
+            .withName("Ryan Lau")
+            .withId("soc-rec_ryan")
+            .withPhone("82930129")
+            .withEmail("ryanlau@comp.nus.edu.sg")
+            .withUrl("www.ryan_is_cool.com")
+            .withAddress("Computing 1, 13 Computing Drive")
+            .withTags("friendly")
+            .withOrganization(NUS)
+            .build();
+
+    public static final Recruiter RACHEL = new RecruiterBuilder()
+            .withName("Rachel Lam")
+            .withId("soc-rec_rachel")
+            .withPhone("62834678")
+            .withEmail("rachelam@ntu.edu.sg")
+            .withUrl("www.rachel_cs_legend.com")
+            .withAddress("Block N4 #02a-32, Nanyang Avenue")
+            .withTags("strict", "helpful")
+            .withOrganization(NTU)
+            .build();
+
+    public static final Recruiter REX = new RecruiterBuilder()
+            .withName("Rex Lee")
+            .withId("is-rec_rex")
+            .withPhone("83428451")
+            .withEmail("rexlee@smu.edu.sg")
+            .withUrl("www.rex.com")
+            .withAddress("80 Stamford Rd")
+            .withTags("cool", "resourceful")
+            .withOrganization(SMU)
+            .build();
+
+    public static final Recruiter RICHARD = new RecruiterBuilder()
+            .withName("Richard Lim")
+            .withId("is-rec_richard")
+            .withPhone("83228311")
+            .withEmail("richlee@smu.edu.sg")
+            .withUrl("www.richard_lion_heart.com")
+            .withAddress("80 Stamford Rd")
+            .withOrganization(SMU)
             .build();
 
     // Manually added
-    public static final Contact HOON = new ContactBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Contact IDA = new ContactBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Contact HOON = new ContactBuilder()
+            .withName("Hoon Meier")
+            .withId("test_8-123")
+            .withPhone("8482424")
+            .withEmail("stefan@example.com")
+            .withAddress("little india")
+            .build();
+    public static final Contact IDA = new ContactBuilder()
+            .withName("Ida Mueller")
+            .withId("test_9-123")
+            .withPhone("8482131")
+            .withEmail("hans@example.com")
+            .withAddress("chicago ave")
+            .build();
 
     // Manually added - Contact's details found in {@code CommandTestUtil}
     public static final Contact AMY = new ContactBuilder()
@@ -119,6 +200,6 @@ public class TypicalContacts {
     }
 
     public static List<Contact> getTypicalContacts() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, NUS, NTU, SMU, RYAN, RACHEL, REX, RICHARD));
     }
 }

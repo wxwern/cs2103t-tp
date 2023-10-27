@@ -23,6 +23,8 @@ public class Messages {
             "Extra irrelevant options found in the command: ";
     public static final String MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS =
             "The following options may not have any value: ";
+    public static final String MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS =
+            "The following options conflict and cannot be set together: ";
 
     public static final String MESSAGE_INVALID_FIELD =
             "The term '%s' is not a valid option!";
@@ -36,7 +38,7 @@ public class Messages {
         Set<String> duplicateFields =
                 Stream.of(duplicateFlags).map(Flag::toString).collect(Collectors.toSet());
 
-        return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+        return MESSAGE_DUPLICATE_FIELDS + String.join(", ", duplicateFields);
     }
 
     /**
@@ -48,17 +50,31 @@ public class Messages {
         Set<String> extraneousFields =
                 Stream.of(extraneousFlags).map(Flag::toString).collect(Collectors.toSet());
 
-        return MESSAGE_EXTRA_FIELDS + String.join(" ", extraneousFields);
+        return MESSAGE_EXTRA_FIELDS + String.join(", ", extraneousFields);
     }
 
+    /**
+     * Returns an error message indicating the flags have unexpected values.
+     */
     public static String getErrorMessageForNonEmptyValuedFlags(Flag... nonEmptyValuedFlags) {
         assert nonEmptyValuedFlags.length > 0;
 
         Set<String> nonEmptyValuedFields =
                 Stream.of(nonEmptyValuedFlags).map(Flag::toString).collect(Collectors.toSet());
 
-        return MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS + String.join(" ", nonEmptyValuedFields);
+        return MESSAGE_UNEXPECTED_NON_EMPTY_FIELDS + String.join(", ", nonEmptyValuedFields);
+    }
 
+    /**
+     * Returns an error message indicating the flags should not exist in the same command together.
+     */
+    public static String getErrorMessageForSimultaneousUseDisallowedFlags(Flag... conflictingFlags) {
+        assert conflictingFlags.length > 1;
+
+        Set<String> conflictingFields =
+                Stream.of(conflictingFlags).map(Flag::toString).collect(Collectors.toSet());
+
+        return MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS + String.join(", ", conflictingFields);
     }
 
     /**

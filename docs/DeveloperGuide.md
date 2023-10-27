@@ -279,11 +279,11 @@ Allows for comprehensive tracking of job applications and the information of com
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a(n) ...              | I want to ...                                                | So that I can ...                                                          |
-| -------- | ------------------------ | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| -------- | ------------------------ |--------------------------------------------------------------| -------------------------------------------------------------------------- |
 | `* * *`  | new user                 | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
 | `* * *`  | user                     | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
 | `* * *`  | user                     | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user                     | edit my contacts                                             | be up to date with changes in organization and recruiter details           |
+| `* *`    | user                     | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
 | `* *`    | user                     | find contacts by saved details                               | locate a contact without going through the entire list                     |
 | `* *`    | user                     | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
 | `* *`    | user                     | tag contacts                                                 | organize my contact list for more efficient access of different categories |
@@ -293,6 +293,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Use cases
 
 (For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
+
+
+
+**Use case: Edit a contact**
+
+**MSS**
+
+1.  User requests to edit a contact
+2.  Jobby edits the contact
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given request does not match with any contact.
+    * 1a1. Jobby shows an error message.
+    * 
+      Use case ends.
+
+
 
 **Use case: Delete a contact**
 

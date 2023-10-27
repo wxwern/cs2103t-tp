@@ -1,7 +1,9 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TypicalContacts.NUS;
+
 import seedu.address.model.contact.Contact;
-import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 
 /**
@@ -9,16 +11,16 @@ import seedu.address.model.contact.Recruiter;
  */
 public class RecruiterBuilder extends ContactBuilder {
 
-    public static final String DEFAULT_OID = "111111";
+    public static final Organization DEFAULT_ORGANIZATION = NUS;
 
-    private Id oid;
+    private Organization organization;
 
     /**
      * Creates a {@code RecruiterBuilder} with the default details.
      */
     public RecruiterBuilder() {
         super();
-        this.oid = new Id(DEFAULT_OID);
+        this.organization = DEFAULT_ORGANIZATION;
     }
 
     /**
@@ -26,13 +28,49 @@ public class RecruiterBuilder extends ContactBuilder {
      */
     public RecruiterBuilder(Recruiter recruiterToCopy) {
         super(recruiterToCopy);
+        this.organization = recruiterToCopy.getOrganization().orElse(null);
+    }
+
+    @Override
+    public RecruiterBuilder withName(String name) {
+        return (RecruiterBuilder) super.withName(name);
+    }
+
+    @Override
+    public RecruiterBuilder withId(String id) {
+        return (RecruiterBuilder) super.withId(id);
+    }
+
+    @Override
+    public RecruiterBuilder withPhone(String phone) {
+        return (RecruiterBuilder) super.withPhone(phone);
+    }
+
+    @Override
+    public RecruiterBuilder withEmail(String email) {
+        return (RecruiterBuilder) super.withEmail(email);
+    }
+
+    @Override
+    public RecruiterBuilder withUrl(String url) {
+        return (RecruiterBuilder) super.withUrl(url);
+    }
+
+    @Override
+    public RecruiterBuilder withAddress(String address) {
+        return (RecruiterBuilder) super.withAddress(address);
+    }
+
+    @Override
+    public RecruiterBuilder withTags(String... tags) {
+        return (RecruiterBuilder) super.withTags(tags);
     }
 
     /**
-     * Sets the organization {@code Id} of the {@code Recruiter} that we are building.
+     * Sets the {@code organization} of the {@code Recruiter} that we are building.
      */
-    public RecruiterBuilder withOid(String oid) {
-        this.oid = new Id(oid);
+    public RecruiterBuilder withOrganization(Organization organization) {
+        this.organization = organization;
         return this;
     }
 
@@ -40,15 +78,14 @@ public class RecruiterBuilder extends ContactBuilder {
     public Recruiter build() {
         Contact contact = super.build();
         return new Recruiter(
-            contact.getName(),
-            contact.getId(),
-            contact.getPhone().orElse(null),
-            contact.getEmail().orElse(null),
-            contact.getUrl().orElse(null),
-            contact.getAddress().orElse(null),
-            contact.getTags(),
-            oid
+                contact.getName(),
+                contact.getId(),
+                contact.getPhone().orElse(null),
+                contact.getEmail().orElse(null),
+                contact.getUrl().orElse(null),
+                contact.getAddress().orElse(null),
+                contact.getTags(),
+                organization
         );
     }
-
 }

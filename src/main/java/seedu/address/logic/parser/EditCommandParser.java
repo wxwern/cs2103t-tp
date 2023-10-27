@@ -42,8 +42,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, FLAG_NAME, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_TAG,
-                        FLAG_URL);
+                ArgumentTokenizer.tokenize(args,
+                        EditCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
         Index index;
         Id targetId;
@@ -57,10 +57,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                 index = ParserUtil.parseIndex(preambleStr);
                 targetId = null;
             }
-
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
-
         }
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,

@@ -1,11 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_ORGANIZATIONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 
 import java.util.function.Predicate;
 
+import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 
@@ -15,6 +18,10 @@ import seedu.address.model.contact.Contact;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
+            FLAG_ORGANIZATION, FLAG_RECRUITER
+    );
 
     public static final String MESSAGE_SUCCESS_ALL_CONTACTS = "Listed all contacts";
     public static final String MESSAGE_SUCCESS_ORGANIZATIONS = "Listed all organizations";
