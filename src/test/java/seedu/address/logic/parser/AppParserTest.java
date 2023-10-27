@@ -100,7 +100,7 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_apply() throws Exception {
-        assertTrue(parser.parseCommand(ApplyCommand.COMMAND_WORD + " --id id_1 --title SWE") instanceof ApplyCommand);
+        assertTrue(parser.parseCommand(ApplyCommand.COMMAND_WORD + " id_1 --title SWE") instanceof ApplyCommand);
         assertTrue(parser.parseCommand(ApplyCommand.COMMAND_WORD + " 3 --title SWE") instanceof ApplyCommand);
     }
 

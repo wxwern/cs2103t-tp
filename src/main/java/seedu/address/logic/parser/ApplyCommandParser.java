@@ -2,16 +2,17 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 
 import java.util.Optional;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.ApplyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.contact.Id;
 
 
 /**
@@ -32,28 +33,13 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
                         ApplyCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new)
                 );
 
-        boolean hasIndex = !argumentMultimap.getPreamble().isEmpty();
-        boolean hasId = argumentMultimap.getValue(FLAG_ID).isPresent();
+        Object indexXorId = ParserUtil.parseIndexXorId(argumentMultimap.getPreamble());
 
-        String id = argumentMultimap.getValue(FLAG_ID).orElse(null);
-        String index = hasIndex ? argumentMultimap.getPreamble() : null;
         Optional<String> title = argumentMultimap.getValue(FLAG_TITLE);
         Optional<String> description = argumentMultimap.getValue(FLAG_DESCRIPTION);
         Optional<String> stage = argumentMultimap.getValue(FLAG_STAGE);
         Optional<String> status = argumentMultimap.getValue(FLAG_STATUS);
         Optional<String> deadline = argumentMultimap.getValue(FLAG_DEADLINE);
-
-
-        if (hasId && hasIndex) {
-            throw new ParseException(
-                    String.format(Messages.MESSAGE_SIMULTANEOUS_USE_DISALLOWED_FIELDS + "Index, Id")
-            );
-        }
-
-        if (!hasId && !hasIndex) {
-            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    ApplyCommand.MESSAGE_USAGE));
-        }
 
         if (title.isEmpty()) {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
@@ -61,8 +47,8 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
         }
         // TODO: Tech debt - Use Parserutil.parseOptionally
         return new ApplyCommand(
-                hasId ? ParserUtil.parseId(id) : null,
-                hasIndex ? ParserUtil.parseIndex(index) : null,
+                indexXorId instanceof Id ? (Id) indexXorId : null,
+                indexXorId instanceof Index ? (Index) indexXorId : null,
                 ParserUtil.parseJobTitle(title.get()),
                 description.isPresent() ? ParserUtil.parseJobDescription(description.get()) : null,
                 deadline.isPresent() ? ParserUtil.parseDeadline(deadline.get()) : null,
