@@ -118,10 +118,10 @@ public class EditCommand extends Command {
 
 
 
-        /**
-         * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
-         * edited with {@code editContactDescriptor}.
-         */
+    /**
+     * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
+     * edited with {@code editContactDescriptor}.
+     */
     private static Contact createEditedContact(Contact contactToEdit, EditContactDescriptor editContactDescriptor) {
         assert contactToEdit != null;
 
@@ -143,15 +143,15 @@ public class EditCommand extends Command {
 
         if (contactToEdit.getType() == Type.ORGANIZATION) {
             Status updatedStatus = editContactDescriptor.getStatus()
-                    .orElse(((Organization)contactToEdit).getStatus().orElse(null));
+                    .orElse(((Organization) contactToEdit).getStatus().orElse(null));
 
             Position updatedPosition = editContactDescriptor.getPosition()
-                    .orElse(((Organization)contactToEdit).getPosition().orElse(null));
+                    .orElse(((Organization) contactToEdit).getPosition().orElse(null));
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
                     updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Id updatedOid = editContactDescriptor.getOrganizationId()
-                    .orElse(((Recruiter)contactToEdit).getOrganizationId().orElse(null));
+                    .orElse(((Recruiter) contactToEdit).getOrganizationId().orElse(null));
             return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
                     updatedAddress, updatedTags, updatedOid);
         }
@@ -282,13 +282,17 @@ public class EditCommand extends Command {
             this.status = status;
         }
 
-        public void setPosition(Position position) { this.position = position; }
+        public void setPosition(Position position) {
+            this.position = position;
+        }
 
         public Optional<Status> getStatus() {
             return Optional.ofNullable(status);
         }
 
-        public Optional<Position> getPosition() { return Optional.ofNullable(position); }
+        public Optional<Position> getPosition() {
+            return Optional.ofNullable(position);
+        }
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);

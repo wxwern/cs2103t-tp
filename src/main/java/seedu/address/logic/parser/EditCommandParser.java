@@ -19,15 +19,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditContactDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.contact.Id;
 import seedu.address.model.tag.Tag;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 
 
@@ -66,8 +63,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
-                FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_STATUS, FLAG_POSITION, FLAG_ORGANIZATION_ID
-                );
+                FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_STATUS, FLAG_POSITION, FLAG_ORGANIZATION_ID);
 
         EditContactDescriptor editContactDescriptor = new EditContactDescriptor();
 

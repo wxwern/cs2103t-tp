@@ -2,8 +2,9 @@ package seedu.address.model.contact;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
@@ -19,7 +20,23 @@ public class NameContainsKeywordsPredicate implements Predicate<Contact> {
     @Override
     public boolean test(Contact contact) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(contact.getName().fullName, keyword));
+                .anyMatch(keyword -> {
+                    String pattern = "(?i)" + keyword;
+                    String contactName = contact.getName().fullName;
+                    Pattern regexPattern = Pattern.compile(pattern);
+                    Matcher matcher = regexPattern.matcher(contactName);
+                    if (matcher.find()) {
+                        return true;
+                    }
+                    String contactId = contact.getId().value;
+                    matcher = regexPattern.matcher(contactId);
+                    if (matcher.find()) {
+                        return true;
+                    }
+                    return false;
+
+                });
+
     }
 
     @Override
