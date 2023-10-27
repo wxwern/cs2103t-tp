@@ -12,6 +12,8 @@ public enum ApplicationStage {
     UNKNOWN("unknown");
 
     public static final ApplicationStage DEFAULT_STAGE = ApplicationStage.RESUME;
+    public static final String MESSAGE_CONSTRAINTS = "Applications accept one of these values: resume | online "
+            + "assessment | interview";
     private final String textRepresentation;
 
     ApplicationStage(String textRepresentation) {
