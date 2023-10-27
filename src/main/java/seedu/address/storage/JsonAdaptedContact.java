@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +24,7 @@ import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.tag.Tag;
 
 
@@ -43,6 +46,7 @@ class JsonAdaptedContact {
     private final String url;
     private String oid;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedApplication> applications = new ArrayList<>();
 
 
     /**
@@ -54,7 +58,8 @@ class JsonAdaptedContact {
                               @JsonProperty("phone") String phone, @JsonProperty("email") String email,
                               @JsonProperty("url") String url, @JsonProperty("address") String address,
                               @JsonProperty("status") String status, @JsonProperty("position") String position,
-                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                              @JsonProperty("applications") List<JsonAdaptedApplication> applications) {
         this.type = type;
         this.name = name;
         this.id = id;
@@ -68,8 +73,22 @@ class JsonAdaptedContact {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        if (applications != null) {
+            this.applications.addAll(applications);
+        }
     }
 
+    /**
+     * Constructs a {@code JsonAdaptedContact} with the given contact details.
+     */
+    public JsonAdaptedContact(@JsonProperty("type") String type,
+                              @JsonProperty("name") String name, @JsonProperty("id") String id,
+                              @JsonProperty("phone") String phone, @JsonProperty("email") String email,
+                              @JsonProperty("url") String url, @JsonProperty("address") String address,
+                              @JsonProperty("status") String status, @JsonProperty("position") String position,
+                              @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this(type, name, id, phone, email, url, address, status,position, oid, tags, null);
+    }
     /**
      * Converts a given {@code Contact} into this class for Jackson use.
      */
@@ -102,6 +121,13 @@ class JsonAdaptedContact {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        if (source.getType() == Type.ORGANIZATION) {
+            Organization org = (Organization) source;
+            List<JobApplication> applicationList = Arrays.asList(org.getJobApplications());
+            applications.addAll(applicationList.stream()
+                    .map(JsonAdaptedApplication::new)
+                    .collect(Collectors.toList()));
+        }
     }
 
 
