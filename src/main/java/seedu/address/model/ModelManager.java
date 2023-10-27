@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -27,6 +29,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Contact> filteredContacts;
+    private SortedList<Contact> sortedContacts;
+    private Boolean displaySorted = false;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -39,6 +43,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredContacts = new FilteredList<>(this.addressBook.getContactList());
+        sortedContacts = this.addressBook.getContactList().sorted(COMPARATOR_ADDRESS);
     }
 
     public ModelManager() {
@@ -161,9 +166,32 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Contact> getSortedContactList() {
+        return sortedContacts;
+    }
+
+    @Override
     public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
+        this.displaySorted = false;
         filteredContacts.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateSortedContactList(Comparator<Contact> comparator) {
+        requireNonNull(comparator);
+        this.displaySorted = true;
+        this.sortedContacts = this.addressBook.getContactList().sorted(comparator);
+    }
+
+    @Override
+    public void setDisplaySorted(Boolean bool) {
+        this.displaySorted = bool;
+    }
+
+    @Override
+    public Boolean getDisplaySorted() {
+        return this.displaySorted;
     }
 
     @Override

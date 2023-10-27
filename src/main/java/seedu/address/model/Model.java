@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -20,6 +21,22 @@ public interface Model {
     Predicate<Contact> PREDICATE_SHOW_ONLY_ORGANIZATIONS = contact -> contact.getType() == Type.ORGANIZATION;
     Predicate<Contact> PREDICATE_SHOW_ONLY_RECRUITERS = contact -> contact.getType() == Type.RECRUITER;
 
+    Comparator<Contact> COMPARATOR_ADDRESS = Comparator.comparing(contact ->
+                    contact.getAddress().map(address -> address.value).orElse(null),
+            Comparator.nullsLast(Comparator.naturalOrder()));
+    Comparator<Contact> COMPARATOR_EMAIL = Comparator.comparing(contact ->
+                    contact.getEmail().map(email -> email.value).orElse(null),
+            Comparator.nullsLast(Comparator.naturalOrder()));
+    Comparator<Contact> COMPARATOR_ID = Comparator.comparing(contact ->
+            contact.getId().value);
+    Comparator<Contact> COMPARATOR_NAME = Comparator.comparing(contact ->
+                    contact.getName().fullName);
+    Comparator<Contact> COMPARATOR_PHONE = Comparator.comparing(contact ->
+                    contact.getPhone().map(phone -> phone.value).orElse(null),
+            Comparator.nullsLast(Comparator.naturalOrder()));
+    Comparator<Contact> COMPARATOR_URL = Comparator.comparing(contact ->
+                    contact.getUrl().map(url -> url.value).orElse(null),
+            Comparator.nullsLast(Comparator.naturalOrder()));
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -100,9 +117,18 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered contact list */
     ObservableList<Contact> getFilteredContactList();
 
+    /** Returns a sorted contact list, which does not modify the underlying list */
+    ObservableList<Contact> getSortedContactList();
+
     /**
      * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredContactList(Predicate<Contact> predicate);
+
+    void updateSortedContactList(Comparator<Contact> comparator);
+
+    void setDisplaySorted(Boolean bool);
+
+    Boolean getDisplaySorted();
 }
