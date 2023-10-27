@@ -2,8 +2,6 @@ package seedu.address.storage;
 
 import java.util.Optional;
 
-import org.junit.Test;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
