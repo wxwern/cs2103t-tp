@@ -40,13 +40,22 @@ public class ApplyCommand extends Command {
                     FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS,
                     FLAG_ID
             )
-    ).configureValueMap(m -> {
+    ).configureValueMap(map -> {
         // Add value autocompletion data for:
-        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream()
+        map.put(FLAG_ID, (command, model)
+                -> model.getAddressBook()
+                .getContactList()
+                .stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .map(o -> o.getId().value));
-        m.put(FLAG_STAGE, model -> Arrays.stream(ApplicationStage.values()).map(ApplicationStage::toString));
-        m.put(FLAG_STATUS, model -> Arrays.stream(JobStatus.values()).map(JobStatus::toString));
+
+        map.put(FLAG_STAGE, (command, model)
+                -> Arrays.stream(ApplicationStage.values())
+                .map(ApplicationStage::toString));
+
+        map.put(FLAG_STATUS, (command, model)
+                -> Arrays.stream(JobStatus.values())
+                .map(JobStatus::toString));
     });
 
     public static final String MESSAGE_USAGE = "Adds a new job application.\n"

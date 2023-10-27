@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Type;
 
 /**
  * Deletes a contact identified using its displayed index or its contact id from the address book.
@@ -25,12 +26,17 @@ public class DeleteCommand extends Command {
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
             FLAG_ID, FLAG_RECURSIVE
-    ).configureValueMap(m -> {
+    ).configureValueMap(map -> {
         // Add value autocompletion data for:
-        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream().map(c -> c.getId().value));
+        map.put(FLAG_ID, (command, model) -> model.getAddressBook()
+                .getContactList()
+                .stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .map(o -> o.getId().value)
+        );
 
         // Disable value autocompletion for:
-        m.put(FLAG_RECURSIVE, null);
+        map.put(FLAG_RECURSIVE, null);
     });
 
 
