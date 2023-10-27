@@ -122,7 +122,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
      * edited with {@code editContactDescriptor}.
      */
-    private static Contact createEditedContact(Contact contactToEdit, EditContactDescriptor editContactDescriptor) {
+    private static Contact createEditedContact(Model model, Contact contactToEdit,
+                                               EditContactDescriptor editContactDescriptor) throws CommandException {
         assert contactToEdit != null;
 
         Name updatedName = editContactDescriptor.getName()
@@ -150,8 +151,17 @@ public class EditCommand extends Command {
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
                     updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
         } else if (contactToEdit.getType() == Type.RECRUITER) {
-            Id updatedOid = editContactDescriptor.getOrganizationId()
-                    .orElse(((Recruiter) contactToEdit).getOrganizationId().orElse(null));
+            Optional<Id> updatedOid = editContactDescriptor
+                    .getOrganizationId()
+                    .or(() -> ((Recruiter) contactToEdit).getOrganizationId());
+
+            Organization updatedOrganization = (Organization) updatedOid.map(model::getContactById)
+                    .filter(c -> c.getType() == Type.ORGANIZATION)
+                    .orElse(null);
+
+            if (updatedOid.isPresent() && updatedOrganization == null) {
+                throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
+            }
             return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
                     updatedAddress, updatedTags, updatedOid);
         }
