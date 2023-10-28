@@ -4,10 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -17,6 +21,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Type;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -158,6 +165,14 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Contact> getFilteredContactList() {
         return filteredContacts;
+    }
+
+    @Override
+    public ObservableList<JobApplication> getFilteredApplicationList() {
+        return filteredContacts.stream().
+                filter(c -> c.getType() == Type.ORGANIZATION).
+                flatMap(c -> Arrays.stream(((Organization) c).getJobApplications())).
+                collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     @Override

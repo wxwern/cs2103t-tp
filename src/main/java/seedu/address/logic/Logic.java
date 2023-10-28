@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * API of the Logic component
@@ -40,6 +41,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of contacts */
     ObservableList<Contact> getFilteredContactList();
+
+    /** Returns an unmodifiable view of the filtered list of applications. */
+    ObservableList<JobApplication> getFilteredApplicationList();
 
     /**
      * Returns the user prefs' address book file path.

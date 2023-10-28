@@ -26,6 +26,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.testutil.ContactBuilder;
 
 public class AddCommandTest {
@@ -239,6 +240,11 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Contact> getFilteredContactList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<JobApplication> getFilteredApplicationList() {
             throw new AssertionError("This method should not be called.");
         }
 

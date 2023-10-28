@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Type;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * The API of the Model component.
@@ -99,6 +100,9 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered contact list */
     ObservableList<Contact> getFilteredContactList();
+
+    /** Returns an unmodifiable view of the filtered application list */
+    ObservableList<JobApplication> getFilteredApplicationList();
 
     /**
      * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
