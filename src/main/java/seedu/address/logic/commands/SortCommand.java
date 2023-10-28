@@ -12,14 +12,16 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 import java.util.Comparator;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
-            FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER =
+            AutocompleteSupplier.from(AutocompleteDataSet.oneAmongAllOf(
+            FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL)
     );
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
