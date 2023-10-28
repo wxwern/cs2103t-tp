@@ -65,7 +65,7 @@ public class DeleteCommand extends Command {
 
     private final Function<Model, Contact> contactFunction;
 
-    private final CommandException commandException;
+    protected final CommandException commandException;
 
     /**
      * @param targetIndex of the contact to be deleted

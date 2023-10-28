@@ -36,6 +36,9 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Contact contactToDelete = super.getContact(model);
+        if (contactToDelete == null) {
+            throw commandException;
+        }
         List<Contact> childrenContacts = contactToDelete.getChildren(model);
         super.execute(model);
         return new CommandResult(String.format(
