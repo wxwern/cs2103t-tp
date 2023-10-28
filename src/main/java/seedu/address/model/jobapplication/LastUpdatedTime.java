@@ -1,12 +1,18 @@
 package seedu.address.model.jobapplication;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * The latest time that the job application was updated.
  * Completely immutable, users are not able to specify the updated time.
  */
 public class LastUpdatedTime {
+
+    private static final String INVALID_FORMAT_MESSAGE = "The given last modified datetime is invalid: %s\n Delete "
+            + "the last updated time section to reset the last updated time.";
 
     public final LocalDateTime lastUpdatedTime;
 
@@ -23,6 +29,19 @@ public class LastUpdatedTime {
      */
     public LastUpdatedTime(LocalDateTime dateTime) {
         this.lastUpdatedTime = dateTime;
+    }
+
+    /**
+     * Generates a {@code LastUpdatedTime} for the purpose of storage.
+     */
+    public static LastUpdatedTime generateLastUpdatedTime(String test) throws IllegalValueException {
+        try {
+            return new LastUpdatedTime(
+                    LocalDateTime.parse(test)
+            );
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(String.format(INVALID_FORMAT_MESSAGE, test));
+        }
     }
 
     @Override
