@@ -118,23 +118,31 @@ public class AutocompleteSupplierTest {
                         AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B) // A & B cannot coexist
                 ),
                 Map.of(
-                        FLAG_A, m -> LIST_A.stream(),
-                        FLAG_B, m -> LIST_B.stream(),
-                        FLAG_C, m -> LIST_C.stream(),
-                        FLAG_D, m -> LIST_EMPTY.stream(),
-                        FLAG_F, m -> Stream.of(m.toString())
+                        FLAG_A, (c, m) -> LIST_A.stream(),
+                        FLAG_B, (c, m) -> LIST_B.stream(),
+                        FLAG_C, (c, m) -> LIST_C.stream(),
+                        FLAG_D, (c, m) -> LIST_EMPTY.stream(),
+                        FLAG_F, (c, m) -> Stream.of(m.toString())
                 )
         );
 
+        var emptyCommand = new PartitionedCommand("");
+
         // Should use the lambda's values
-        assertEquals(LIST_A, supplier.getValidValues(FLAG_A, null).get().collect(Collectors.toList()));
-        assertEquals(LIST_B, supplier.getValidValues(FLAG_B, null).get().collect(Collectors.toList()));
-        assertEquals(LIST_C, supplier.getValidValues(FLAG_C, null).get().collect(Collectors.toList()));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_D, null).get().collect(Collectors.toList()));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_E, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_A, supplier.getValidValues(FLAG_A, emptyCommand, null)
+                .get().collect(Collectors.toList()));
+        assertEquals(LIST_B, supplier.getValidValues(FLAG_B, emptyCommand, null)
+                .get().collect(Collectors.toList()));
+        assertEquals(LIST_C, supplier.getValidValues(FLAG_C, emptyCommand, null)
+                .get().collect(Collectors.toList()));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_D, emptyCommand, null)
+                .get().collect(Collectors.toList()));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_E, emptyCommand, null)
+                .get().collect(Collectors.toList()));
 
         // NPEs should be caught if the lambda does not handle it
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_F, null).get().collect(Collectors.toList()));
+        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_F, emptyCommand, null)
+                .get().collect(Collectors.toList()));
     }
 
 }
