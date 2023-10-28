@@ -235,7 +235,8 @@ public class EditCommand extends Command {
                     updatedAddress, updatedTags, updatedOrganization);
         }
 
-        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
+        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
+                updatedTags, null);
     }
 
     @Override

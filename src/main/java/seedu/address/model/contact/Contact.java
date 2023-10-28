@@ -31,12 +31,15 @@ public class Contact {
     private final Optional<Address> address;
     private final Set<Tag> tags = new HashSet<>();
 
+    private Optional<Contact> parent;
+
     /**
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
      * The other fields can be null.
      */
-    public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
+    public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags,
+                   Contact parent) {
         requireAllNonNull(name, id, tags);
         this.name = name;
         this.id = id;
@@ -45,6 +48,7 @@ public class Contact {
         this.url = Optional.ofNullable(url);
         this.address = Optional.ofNullable(address);
         this.tags.addAll(tags);
+        this.parent = Optional.ofNullable(parent);
     }
 
     public Type getType() {
@@ -95,6 +99,13 @@ public class Contact {
 
         return otherContact != null
                 && otherContact.getId().equals(getId());
+    }
+
+    /**
+     * Gives the parent of this contact.
+     */
+    public Optional<Contact> getParent() {
+        return parent;
     }
 
     /**
