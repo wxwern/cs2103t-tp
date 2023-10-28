@@ -4,12 +4,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import seedu.address.commons.exceptions.IllegalOperationException;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -17,8 +19,6 @@ import seedu.address.model.tag.Tag;
  * Guarantees: name and id are present and not null, field values are immutable and if present, are validated.
  */
 public class Contact {
-
-    private static final String ILLEGAL_OPERATION_MESSAGE = "Contact cannot have child contacts";
 
     // Identity fields
     private final Name name;
@@ -31,7 +31,7 @@ public class Contact {
     private final Optional<Address> address;
     private final Set<Tag> tags = new HashSet<>();
 
-    private Optional<Contact> parent;
+    private final Optional<Contact> parent;
 
     /**
      * Name and id fields must be non-null.
@@ -111,20 +111,15 @@ public class Contact {
     /**
      * Gives the array of contacts that are linked under this contact.
      */
-    public Contact[] getChildren() {
-        // default return value
+    public List<Contact> getChildren(Model model) {
         // TODO add to DG
-        return new Contact[]{};
-    }
-
-    /**
-     * Adds a child contact under this contact.
-     * @throws IllegalOperationException if this contact cannot accept child contacts
-     */
-    public void addChild(Contact childContact) throws IllegalOperationException {
-        // Should throw exception if the type of contact cannot have child contacts.
-        // TODO add to DG, do JavaDocs
-        throw new IllegalOperationException(ILLEGAL_OPERATION_MESSAGE);
+        return model.getAddressBook().getContactList().stream()
+                .filter(contact -> contact.getParent()
+                        .map(parent -> {
+                            return parent.equals(this);
+                        })
+                        .orElse(false))
+                .collect(Collectors.toList());
     }
 
     /**
