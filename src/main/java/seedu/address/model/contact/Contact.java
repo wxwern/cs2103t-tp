@@ -115,9 +115,7 @@ public class Contact {
         // TODO add to DG
         return model.getAddressBook().getContactList().stream()
                 .filter(contact -> contact.getParent()
-                        .map(parent -> {
-                            return parent.equals(this);
-                        })
+                        .map(parent -> parent.equals(this))
                         .orElse(false))
                 .collect(Collectors.toList());
     }

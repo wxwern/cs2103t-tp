@@ -37,14 +37,6 @@ public class Recruiter extends Contact {
         return super.getParent().map(contact -> (Organization) contact);
     }
 
-    public boolean isLinkedToOrganization(Organization otherOrg) {
-        return getOrganization().map(org -> org.equals(otherOrg)).orElse(false);
-    }
-
-    public boolean isLinkedToOrganization(Id organizationId) {
-        return getOrganization().map(org -> org.getId().equals(organizationId)).orElse(false);
-    }
-
     @Override
     public Type getType() {
         return Type.RECRUITER;
