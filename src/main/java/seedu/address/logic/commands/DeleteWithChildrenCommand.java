@@ -36,15 +36,12 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Contact contactToDelete = super.getContact(model);
-        List<Contact> childContacts = contactToDelete.getChildren(model);
+        List<Contact> childrenContacts = contactToDelete.getChildren(model);
         super.execute(model);
         return new CommandResult(String.format(
                 MESSAGE_DELETE_CONTACT_SUCCESS,
                 Messages.format(contactToDelete),
-                childContacts.stream()
-                        .map(c -> Messages.format(c) + "\n")
-                        .reduce((c1, c2) -> c1 + c2)
-                        .orElse("No other contacts found") // I can't find a better method.
+                Messages.formatChildren(childrenContacts)
         ));
     }
 
@@ -53,7 +50,7 @@ public class DeleteWithChildrenCommand extends DeleteCommand {
         // At this point if the contact is null, the superclass would have thrown exception.
         // Superclass would have also deleted the contact from the list.
         assert contactToDelete != null;
-        List<Contact> childContacts = contactToDelete.getChildren(model);
-        childContacts.forEach(model::deleteContact);
+        List<Contact> childrenContacts = contactToDelete.getChildren(model);
+        childrenContacts.forEach(model::deleteContact);
     }
 }
