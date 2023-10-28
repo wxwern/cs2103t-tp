@@ -11,7 +11,7 @@ import seedu.address.logic.parser.Flag;
 /**
  * A wrapper around a command string as partitions, useful for computing results for autocompletion.
  */
-class PartitionedCommand {
+public class PartitionedCommand {
     private final String name;
     private final String middleText;
     private final String trailingText;
@@ -103,6 +103,14 @@ class PartitionedCommand {
      */
     public String getTrailingText() {
         return trailingText;
+    }
+
+    /**
+     * Gets the trailing part of the text that should be replaced with an autocompletion value.
+     * Equivalent to {@link #getTrailingText}.
+     */
+    public String getAutocompletableText() {
+        return getTrailingText();
     }
 
     /**

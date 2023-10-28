@@ -156,12 +156,16 @@ public class AutocompleteGenerator {
             AutocompleteSupplier supplier,
             Model model
     ) {
-        return supplier.getValidValues(
-                Flag.parseOptional(
-                        command.getLastConfirmedFlagString().orElse(null)
-                ).orElse(null),
-                model
+        Optional<String> flagString = command.getLastConfirmedFlagString();
+        if (flagString.isEmpty()) {
+            return supplier.getValidValues(null, command, model);
+        }
+
+        Optional<Flag> targetFlag = Flag.findMatch(
+                flagString.get(),
+                supplier.getAllPossibleFlags().toArray(Flag[]::new)
         );
+        return targetFlag.flatMap(f -> supplier.getValidValues(f, command, model));
     }
 
 }

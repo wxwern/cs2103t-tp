@@ -19,9 +19,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
@@ -57,7 +59,30 @@ public class EditCommand extends Command {
                     FLAG_ORGANIZATION_ID
             ),
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
-    );
+    ).configureValueMap(map -> {
+        // Add value autocompletion data for:
+        map.put(null /* preamble*/, (command, model) -> {
+
+            String partialText = command.getAutocompletableText();
+            if (partialText.isEmpty() || StringUtil.isNonZeroUnsignedInteger(partialText)) {
+                // Preamble is likely of type Index
+                return Stream.empty();
+
+            } else {
+                // Preamble is likely of type Id
+                return model.getAddressBook()
+                        .getContactList()
+                        .stream()
+                        .map(o -> o.getId().value);
+            }
+        });
+        map.put(FLAG_ORGANIZATION_ID, (command, model) -> model.getAddressBook()
+                .getContactList()
+                .stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .map(o -> o.getId().value)
+        );
+    });
 
     public static final String MESSAGE_ORGANIZATION_USAGE = "Edits an organization.\n"
             + "Parameters: INDEX/ID "
