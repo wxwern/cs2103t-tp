@@ -237,7 +237,7 @@ public class ParserUtil {
         requireNonNull(status);
         String trimmedStatus = status.trim();
         if (!JobStatus.isValidJobStatus(trimmedStatus)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+            throw new ParseException(JobStatus.MESSAGE_CONSTRAINTS);
         }
         return JobStatus.fromString(trimmedStatus);
     }
