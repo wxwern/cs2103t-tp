@@ -19,6 +19,11 @@ public class Flag {
     public static final String DEFAULT_ALIAS_PREFIX = "-";
     public static final String DEFAULT_ALIAS_POSTFIX = "";
 
+    private static final String FULL_OR_ALIAS_NAME_VALIDATION_REGEX = "[a-zA-Z][a-zA-Z0-9]*";
+    private static final String FULL_OR_ALIAS_NAME_FORMAT_ERROR =
+            "Flags must only have alphanumeric characters (a-z, A-Z, 0-9), "
+                    + "may not start with a number, and may not be empty.";
+
     private final String name;
     private final String prefix;
     private final String postfix;
@@ -77,6 +82,12 @@ public class Flag {
             this.aliasPrefix = this.prefix;
             this.aliasPostfix = this.postfix;
         }
+
+        if (!this.name.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX)
+            || !this.alias.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX)) {
+
+            throw new IllegalArgumentException(FULL_OR_ALIAS_NAME_FORMAT_ERROR);
+        }
     }
 
     /**
@@ -93,7 +104,8 @@ public class Flag {
 
     /**
      * Parses the given string using the default prefix and postfix format into a {@link Flag}.
-     * This will work for both full flag strings and flag aliases.
+     * This will work for both full flag strings and flag aliases. However, this may not return the same result
+     * as an existing flag that has both a full value and alias pair - for those, try {@link #findMatch} instead.
      *
      * @param string The string to parse as a flag.
      * @return The corresponding {@link Flag} instance.
@@ -106,7 +118,9 @@ public class Flag {
                     DEFAULT_PREFIX.length(),
                     string.length() - DEFAULT_POSTFIX.length()
             );
-            return new Flag(flag);
+            if (flag.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX)) {
+                return new Flag(flag);
+            }
         }
 
         if (string != null && string.startsWith(DEFAULT_ALIAS_PREFIX) && string.endsWith(DEFAULT_ALIAS_POSTFIX)) {
@@ -114,7 +128,9 @@ public class Flag {
                     DEFAULT_ALIAS_PREFIX.length(),
                     string.length() - DEFAULT_ALIAS_POSTFIX.length()
             );
-            return new Flag(alias, alias); // Treat alias as name, since we don't know any better.
+            if (alias.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX)) {
+                return new Flag(alias, alias); // Treat alias as name, since we don't know any better.
+            }
         }
 
         throw new ParseException(
@@ -228,8 +244,24 @@ public class Flag {
         if (string == null) {
             return false;
         }
-        return (string.startsWith(DEFAULT_PREFIX) && string.endsWith(DEFAULT_POSTFIX))
-                || (string.startsWith(DEFAULT_ALIAS_PREFIX) && string.endsWith(DEFAULT_ALIAS_POSTFIX));
+
+        if (string.startsWith(DEFAULT_PREFIX) && string.endsWith(DEFAULT_POSTFIX)) {
+            String part = string.substring(
+                    DEFAULT_PREFIX.length(),
+                    string.length() - DEFAULT_POSTFIX.length()
+            );
+            return part.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX);
+        }
+
+        if (string.startsWith(DEFAULT_ALIAS_PREFIX) && string.endsWith(DEFAULT_ALIAS_POSTFIX)) {
+            String part = string.substring(
+                    DEFAULT_ALIAS_PREFIX.length(),
+                    string.length() - DEFAULT_ALIAS_POSTFIX.length()
+            );
+            return part.matches(FULL_OR_ALIAS_NAME_VALIDATION_REGEX);
+        }
+
+        return false;
     }
 
     /**

@@ -47,6 +47,39 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String id} into an {@code Id} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code id} is invalid.
+     */
+    public static Id parseId(String id) throws ParseException {
+        requireNonNull(id);
+        String trimmedId = id.trim();
+        if (!Id.isValidId(id)) {
+            throw new ParseException(Id.MESSAGE_CONSTRAINTS);
+        }
+        return new Id(trimmedId);
+    }
+
+    /**
+     * Parses a {@code String id} into a {@code Id} or {@code Index}, depending on the format of the string.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @return {@link Object} that is either an {@link Id} or an {@link Index} instance.
+     * @throws ParseException if the given {@code str} is neither an index nor an id.
+     */
+    public static Object parseIndexXorId(String str) throws ParseException {
+        String trimmedStr = str.trim();
+        Object result;
+        if (trimmedStr.matches("^[0-9]*$")) {
+            result = ParserUtil.parseIndex(trimmedStr);
+        } else {
+            result = ParserUtil.parseId(trimmedStr);
+        }
+        return result;
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -59,21 +92,6 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
-    }
-
-    /**
-     * Parses a {@code String id} into a {@code Status}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code id} is invalid.
-     */
-    public static Id parseId(String id) throws ParseException {
-        requireNonNull(id);
-        String trimmedId = id.trim();
-        if (!Id.isValidId(id)) {
-            throw new ParseException(Id.MESSAGE_CONSTRAINTS);
-        }
-        return new Id(trimmedId);
     }
 
     /**

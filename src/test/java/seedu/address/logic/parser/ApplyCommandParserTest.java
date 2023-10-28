@@ -13,10 +13,12 @@ class ApplyCommandParserTest {
     private static final String VALID_ARGS_2 = "1 --title SWE --by 11-10-2022";
     private static final String VALID_ARGS_3 = "1 --title SWE --desc Pay: $100";
     private static final String VALID_ARGS_4 = "1 --title SWE --stage interview";
-    private static final String VALID_ARGS_5 = "1 --title SWE --status pending";
-    private static final String VALID_ARGS_6 = "--id TEST_ID --title SWE";
+    private static final String VALID_ARGS_5 = "1 --title SWE --stat pending";
+    private static final String VALID_ARGS_6 = "TEST_ID --title SWE --stat pending";
     private static final String INVALID_ARGS_1 = "1";
-    private static final String INVALID_ARGS_2 = "--title SWE";
+    private static final String INVALID_ARGS_2 = "TEST_ID";
+    private static final String INVALID_ARGS_3 = "--title SWE";
+    private static final String INVALID_ARGS_4 = "1 --title SWE --by 99-99-9999";
 
     @Test
     void parse_validArgs_doesNotThrowException() {
@@ -32,5 +34,7 @@ class ApplyCommandParserTest {
     void parse_invalidArgs_throwsException() {
         assertThrows(ParseException.class, () -> new ApplyCommandParser().parse(INVALID_ARGS_1));
         assertThrows(ParseException.class, () -> new ApplyCommandParser().parse(INVALID_ARGS_2));
+        assertThrows(ParseException.class, () -> new ApplyCommandParser().parse(INVALID_ARGS_3));
+        assertThrows(ParseException.class, () -> new ApplyCommandParser().parse(INVALID_ARGS_4));
     }
 }

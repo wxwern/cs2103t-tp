@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
@@ -24,25 +25,35 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
-            FLAG_ID, FLAG_RECURSIVE
-    ).configureValueMap(m -> {
+            FLAG_RECURSIVE
+    ).configureValueMap(map -> {
         // Add value autocompletion data for:
-        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream().map(c -> c.getId().value));
+        map.put(null /* preamble */, (command, model) -> {
 
-        // Disable value autocompletion for:
-        m.put(FLAG_RECURSIVE, null);
+            String partialText = command.getAutocompletableText();
+            if (partialText.isEmpty() || StringUtil.isNonZeroUnsignedInteger(partialText)) {
+                // Preamble is likely of type Index
+                return Stream.empty();
+
+            } else {
+                // Preamble is likely of type Id
+                return model.getAddressBook()
+                        .getContactList()
+                        .stream()
+                        .map(o -> o.getId().value);
+            }
+        });
     });
 
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the contact identified by the index number used in the displayed contact list.\n"
             + "Parameters: "
-            + "INDEX (must be a positive integer) "
-            + FLAG_ID + " ID "
-            + FLAG_RECURSIVE + " RECURSIVE "
+            + "INDEX/ID "
+            + "[" + FLAG_RECURSIVE + "] "
             + "\n"
             + "Example 1: " + COMMAND_WORD + " 1\n"
-            + "Example 2: " + COMMAND_WORD + " --id 0d0h4\n"
+            + "Example 2: " + COMMAND_WORD + " amazon-sg\n"
             + "Example 3: " + COMMAND_WORD + " 1 --recursive\n";
 
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
