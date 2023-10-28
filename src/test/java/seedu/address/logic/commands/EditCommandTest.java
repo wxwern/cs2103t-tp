@@ -148,8 +148,9 @@ public class EditCommandTest {
     @Test
     public void execute_duplicateContactFilteredListWithId_failure() {
         // edit contact in filtered list into a duplicate in address book
+        Contact contactToEdit = model.getAddressBook().getContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         Contact contactInList = model.getAddressBook().getContactList().get(INDEX_SECOND_CONTACT.getZeroBased());
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_CONTACT,
+        EditCommand editCommand = new EditCommand(contactToEdit.getId(),
                 new EditContactDescriptorBuilder(contactInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CONTACT);
