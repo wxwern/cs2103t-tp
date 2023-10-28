@@ -65,7 +65,8 @@ public class AutocompleteGeneratorTest {
                         AutocompleteConstraint.oneAmongAllOf(flagA1, flagA2)
                 ),
                 Map.of(
-                        flagA3, m -> Stream.of("apple", "banana", "car")
+                        flagA3, (c, m) -> Stream.of("apple", "banana", "car"),
+                        flagC1, (c, m) -> null
                 )
         );
 
@@ -145,6 +146,22 @@ public class AutocompleteGeneratorTest {
                 ),
                 new AutocompleteGenerator(supplier)
                         .generateCompletions("cmd -a x y --code z -o")
+                        .collect(Collectors.toList())
+        );
+
+        // autocomplete: --cde <flag>
+        assertEquals(
+                List.of(
+                        // Rationale: --cde does not accept values, so a next flag is immediately suggested
+                        "cmd --cde --aaa",
+                        "cmd --cde --abc",
+                        "cmd --cde --adg",
+                        "cmd --cde --book",
+                        "cmd --cde --cde",
+                        "cmd --cde --code"
+                ),
+                new AutocompleteGenerator(supplier)
+                        .generateCompletions("cmd --cde ")
                         .collect(Collectors.toList())
         );
 

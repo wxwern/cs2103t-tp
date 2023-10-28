@@ -50,13 +50,21 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         try {
             String preambleStr = argMultimap.getPreamble();
-            if (preambleStr.matches("^[A-Za-z].*")) {
-                targetId = ParserUtil.parseId(preambleStr);
+            Object indexXorId = ParserUtil.parseIndexXorId(preambleStr);
+
+            if (indexXorId instanceof Id) {
+                targetId = (Id) indexXorId;
                 index = null;
-            } else {
-                index = ParserUtil.parseIndex(preambleStr);
+            } else if (indexXorId instanceof Index) {
+                index = (Index) indexXorId;
                 targetId = null;
+            } else {
+                assert false
+                        : "If indexXorId is neither an Index nor an Id, "
+                        + "ParserUtil should've thrown ParseException!";
+                throw new IllegalStateException();
             }
+
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }

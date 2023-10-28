@@ -2,17 +2,18 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -37,22 +38,40 @@ public class ApplyCommand extends Command {
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
             AutocompleteDataSet.onceForEachOf(
                     FLAG_TITLE, FLAG_DESCRIPTION,
-                    FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS,
-                    FLAG_ID
+                    FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS
             )
-    ).configureValueMap(m -> {
+    ).configureValueMap(map -> {
         // Add value autocompletion data for:
-        m.put(FLAG_ID, model -> model.getAddressBook().getContactList().stream()
-                .filter(c -> c.getType() == Type.ORGANIZATION)
-                .map(o -> o.getId().value));
-        m.put(FLAG_STAGE, model -> Arrays.stream(ApplicationStage.values()).map(ApplicationStage::toString));
-        m.put(FLAG_STATUS, model -> Arrays.stream(JobStatus.values()).map(JobStatus::toString));
+        map.put(null /* preamble */, (command, model) -> {
+
+            String partialText = command.getAutocompletableText();
+            if (partialText.isEmpty() || StringUtil.isNonZeroUnsignedInteger(partialText)) {
+                // Preamble is likely of type Index
+                return Stream.empty();
+
+            } else {
+                // Preamble is likely of type Id
+                // * Constraint: Applications must be towards organizations
+                return model.getAddressBook()
+                        .getContactList()
+                        .stream()
+                        .filter(c -> c.getType() == Type.ORGANIZATION)
+                        .map(o -> o.getId().value);
+            }
+        });
+
+        map.put(FLAG_STAGE, (command, model)
+                -> Arrays.stream(ApplicationStage.values())
+                .map(ApplicationStage::toString));
+
+        map.put(FLAG_STATUS, (command, model)
+                -> Arrays.stream(JobStatus.values())
+                .map(JobStatus::toString));
     });
 
     public static final String MESSAGE_USAGE = "Adds a new job application.\n"
             + "Parameters: "
-            + "INDEX (must be a positive integer) "
-            + FLAG_ID + " ID "
+            + "INDEX/ID "
             + FLAG_TITLE + " TITLE " // Title
             + FLAG_DESCRIPTION + " DESCRIPTION " // Description
             + FLAG_DEADLINE + " DEADLINE: DD-MM-YYYY " // Deadline
