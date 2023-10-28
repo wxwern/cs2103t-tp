@@ -25,6 +25,9 @@ public class JobApplication {
     public static final Comparator<JobApplication> DEADLINE_COMPARATOR = (a, b) ->
             a.deadline.compareTo(b.deadline);
 
+    public static final Comparator<JobApplication> LAST_UPDATED_COMPARATOR = (a, b) ->
+            a.lastUpdatedTime.compareTo(b.lastUpdatedTime);
+
     private final Id oid;
     private final Name orgName;
 
