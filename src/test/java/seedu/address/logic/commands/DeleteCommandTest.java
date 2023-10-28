@@ -8,7 +8,14 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showContactAtIndex;
 import static seedu.address.testutil.TypicalContacts.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_LINKED_ORGANIZATION;
+import static seedu.address.testutil.TypicalIndexes.INDEX_LINKED_RECRUITER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_CONTACT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_UNLINKED_ORGANIZATION;
+import static seedu.address.testutil.TypicalIndexes.INDEX_UNLINKED_RECRUITER;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +25,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Recruiter;
+import seedu.address.testutil.RecruiterBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -28,9 +37,10 @@ public class DeleteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
-        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
+    public void execute_validIndexUnfilteredList_unlinkedOrganization_success() {
+        Contact contactToDelete = model.getFilteredContactList()
+                .get(INDEX_UNLINKED_ORGANIZATION.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_UNLINKED_ORGANIZATION);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
                 Messages.format(contactToDelete));
@@ -38,6 +48,62 @@ public class DeleteCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deleteContact(contactToDelete);
 
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_unlinkedRecruiter_success() {
+        Contact contactToDelete = model.getFilteredContactList()
+                .get(INDEX_UNLINKED_RECRUITER.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_UNLINKED_RECRUITER);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_linkedOrganization_success() {
+        Contact contactToDelete = model.getFilteredContactList()
+                .get(INDEX_LINKED_ORGANIZATION.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_LINKED_ORGANIZATION);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        List<Contact> childrenContacts = contactToDelete.getChildren(expectedModel);
+        for (Contact child : childrenContacts) {
+            expectedModel.setContact(child,
+                    new RecruiterBuilder((Recruiter) child)
+                            .withOrganization(null)
+                            .build());
+        }
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_linkedRecruiter_success() {
+        Contact contactToDelete = model.getFilteredContactList()
+                .get(INDEX_LINKED_RECRUITER.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_LINKED_RECRUITER);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        Contact parent = contactToDelete.getParent().orElse(null);
+        assert parent != null;
+        List<Contact> childrenContacts = parent.getChildren(expectedModel);
+
+        assertFalse(childrenContacts.contains(contactToDelete));
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -63,6 +129,85 @@ public class DeleteCommandTest {
         expectedModel.deleteContact(contactToDelete);
         showNoContact(expectedModel);
 
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_unlinkedOrganization_success() {
+        showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
+
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        showNoContact(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_unlinkedRecruiter_success() {
+        showContactAtIndex(model, INDEX_UNLINKED_RECRUITER);
+
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        showNoContact(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_linkedOrganization_success() {
+        showContactAtIndex(model, INDEX_LINKED_ORGANIZATION);
+
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        showNoContact(expectedModel);
+        List<Contact> childrenContacts = contactToDelete.getChildren(expectedModel);
+        for (Contact child : childrenContacts) {
+            expectedModel.setContact(child,
+                    new RecruiterBuilder((Recruiter) child)
+                            .withOrganization(null)
+                            .build());
+        }
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_linkedRecruiter_success() {
+        showContactAtIndex(model, INDEX_LINKED_RECRUITER);
+
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        showNoContact(expectedModel);
+        Contact parent = contactToDelete.getParent().orElse(null);
+        assert parent != null;
+        List<Contact> childrenContacts = parent.getChildren(expectedModel);
+
+        assertFalse(childrenContacts.contains(contactToDelete));
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
