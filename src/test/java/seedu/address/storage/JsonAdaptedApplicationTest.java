@@ -1,14 +1,17 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Id;
 import seedu.address.model.jobapplication.ApplicationStage;
 import seedu.address.model.jobapplication.Deadline;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.jobapplication.JobDescription;
 import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.jobapplication.JobTitle;
@@ -101,5 +104,21 @@ class JsonAdaptedApplicationTest {
         assertDoesNotThrow(application2::toModelType);
         assertDoesNotThrow(application3::toModelType);
 
+    }
+
+    @Test
+    public void toModelType_contactGiven_ableToConvertBackToSameContact() throws Exception {
+        JobApplication jobApplication = new JobApplication(
+                new Id(VALID_OID),
+                new JobTitle(VALID_TITLE),
+                new JobDescription(VALID_DESCRIPTION),
+                new Deadline(VALID_DEADLINE),
+                JobStatus.fromString(VALID_STATUS),
+                ApplicationStage.fromString(VALID_STAGE)
+        );
+
+        JsonAdaptedApplication jsonAdaptedApplication = new JsonAdaptedApplication(jobApplication);
+
+        assertEquals(jobApplication, jsonAdaptedApplication.toModelType());
     }
 }
