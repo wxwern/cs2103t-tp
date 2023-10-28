@@ -15,36 +15,50 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * A text field capable of displaying autocomplete details.
+ * A text field capable of displaying and performing autocomplete.
  *
  * <p>
- * Inspired by a proof-of-concept implementation from:
- * <a href="https://gist.github.com/floralvikings/10290131">floralvikings/AutoCompleteTextBox.java</a>
+ * At a basic level, it extends {@link TextField}
+ * to provide an autocomplete result menu configurable via {@link #setCompletionGenerator},
+ * the ability to trigger auto-completions via {@link #triggerImmediateAutocompletion()} or the GUI,
+ * and the ability to undo the latest auto-completions via {@link #undoLastImmediateAutocompletion()}.
+ * </p><br>
+ *
+ * <p>
+ * The base implementation was referenced from a proof-of-concept implementation from
+ * <a href="https://gist.github.com/floralvikings/10290131">floralvikings/AutoCompleteTextBox.java</a>.
+ * Additional functionality like dynamic completion suppliers and autocomplete history tracking for undo
+ * are custom-implemented.
  * </p>
  */
 public class AutocompleteTextField extends TextField {
 
-    protected class TextChangeSnapshot {
-        public final String oldValue;
-        public final String newValue;
+    /**
+     * A snapshot of a text-change due to autocompletion.
+     */
+    protected static class AutocompleteSnapshot {
+        public final String partialValue;
+        public final String completedValue;
 
-        public TextChangeSnapshot(String oldValue, String newValue) {
-            this.oldValue = oldValue;
-            this.newValue = newValue;
+        public AutocompleteSnapshot(String partialValue, String completedValue) {
+            this.partialValue = partialValue;
+            this.completedValue = completedValue;
         }
 
         @Override
         public String toString() {
-            return "TextChangeSnapshot{'" + oldValue + '\'' + " to '" + newValue + "'}";
+            return "AutocompleteSnapshot{'" + partialValue + "' to '" + completedValue + "'}";
         }
     }
 
     /**
-     * A functional interface that performs auto-completions based on the given partial inputs.
+     * A functional interface that generates a stream of auto-completion results
+     * based on the given partial input.
      */
     @FunctionalInterface
     public interface CompletionGenerator extends Function<String, Stream<String>> { }
 
+    // GUI elements
     private final ContextMenu autocompletePopup;
 
     // Configuration variables
@@ -52,7 +66,7 @@ public class AutocompleteTextField extends TextField {
     private int popupLimit = 10;
 
     // History tracking for autocomplete undo operations
-    private final Stack<TextChangeSnapshot> autocompleteHistory = new Stack<>();
+    private final Stack<AutocompleteSnapshot> autocompleteHistory = new Stack<>();
 
     /**
      * Constructs a new text field with the ability to perform autocompletion.
@@ -79,10 +93,17 @@ public class AutocompleteTextField extends TextField {
     }
 
     /**
-     * Sets the maximum number of entries that can be shown in the popup.
+     * Sets the maximum number of entries that can be shown in the autocomplete popup.
      */
     public void setPopupLimit(int popupLimit) {
         this.popupLimit = popupLimit;
+    }
+
+    /**
+     * Gets the current maximum number of entries that can be shown in the autocomplete popup.
+     */
+    public int getPopupLimit() {
+        return popupLimit;
     }
 
     /**
@@ -108,7 +129,7 @@ public class AutocompleteTextField extends TextField {
 
         // Add data for undoing if there's a change
         if (!Objects.equals(oldText, result)) {
-            autocompleteHistory.add(new TextChangeSnapshot(oldText, result));
+            autocompleteHistory.add(new AutocompleteSnapshot(oldText, result));
         }
 
         // Update the text field
@@ -122,17 +143,18 @@ public class AutocompleteTextField extends TextField {
 
     /**
      * Undoes the last immediate autocompleted result.
-     * This only does something when invoked at a stage where the text is the previously autocompleted result.
+     * This only does something when invoked at a stage where the current text matches
+     * a previously autocompleted result.
      */
     public boolean undoLastImmediateAutocompletion() {
         if (autocompleteHistory.isEmpty()) {
             return false;
         }
 
-        TextChangeSnapshot snapshot = autocompleteHistory.peek();
+        AutocompleteSnapshot snapshot = autocompleteHistory.peek();
 
-        // Verify that the current text is correctly at the latest snapshot
-        if (!this.getText().trim().equals(snapshot.newValue)) {
+        // Verify that the current text correctly matches the latest snapshot
+        if (!this.getText().trim().equals(snapshot.completedValue)) {
             return false;
         }
 
@@ -140,7 +162,7 @@ public class AutocompleteTextField extends TextField {
         autocompleteHistory.pop();
 
         // Set the old value back in
-        this.setText(snapshot.oldValue + " "); // preserve the extra space previously added
+        this.setText(snapshot.partialValue + " "); // preserve the extra space previously added
 
         // Update the view and cursor location
         this.requestFocus();
@@ -193,21 +215,16 @@ public class AutocompleteTextField extends TextField {
      * Update undo history tracked state based on the change for text field old values to new values.
      */
     protected void updateUndoHistoryState(String previousValue, String currentValue) {
-        if (autocompleteHistory.isEmpty()) {
-            return;
-        }
 
         // Heuristic for clearing history:
         //   IF current value is no longer a prefix of the latest autocomplete result OR is of the undone state
         //   THEN said autocompletion snapshot is no longer applicable.
 
-        while (!currentValue.startsWith(autocompleteHistory.peek().newValue)
-                || currentValue.trim().equals(autocompleteHistory.peek().oldValue)) {
-
+        while (autocompleteHistory.size() > 0
+                && (!currentValue.startsWith(autocompleteHistory.peek().completedValue)
+                || currentValue.trim().equals(autocompleteHistory.peek().partialValue))
+        ) {
             autocompleteHistory.pop();
-            if (autocompleteHistory.isEmpty()) {
-                break;
-            }
         }
     }
 
