@@ -86,7 +86,6 @@ public class TypicalContacts {
             .withTags("computing", "worldClass")
             .withStatus("Applied")
             .withPosition("Research Assistant")
-            .withRids("soc-rec_ryan")
             .build();
 
     public static final Organization NTU = new OrganizationBuilder()
