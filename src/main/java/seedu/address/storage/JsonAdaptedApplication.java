@@ -23,8 +23,6 @@ import seedu.address.model.jobapplication.LastUpdatedTime;
 public class JsonAdaptedApplication {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job Application's %s field is missing!";
 
-    private final String oid;
-    private final String orgName;
     private final String title;
     private final String description;
     private final String lastUpdatedTime;
@@ -36,16 +34,14 @@ public class JsonAdaptedApplication {
      * Constructs a {@code JsonAdaptedApplication} with the given application details.
      */
     @JsonCreator
-    public JsonAdaptedApplication(@JsonProperty("oid") String oid,
-                              @JsonProperty("orgName") String orgName,
-                              @JsonProperty("title") String title,
+    public JsonAdaptedApplication(@JsonProperty("title") String title,
                               @JsonProperty("description") String description,
                               @JsonProperty("lastUpdatedTime") String lastUpdatedTime,
                               @JsonProperty("deadline") String deadline,
                               @JsonProperty("status") String status,
                               @JsonProperty("stage") String stage) {
-        this.oid = oid;
-        this.orgName = orgName;
+        // TODO: remove oid and orgname and make it dependent on the contact by changing the toModelType signature
+        // TODO: pass name and oid during creation
         this.title = title;
         this.description = description;
         this.lastUpdatedTime = lastUpdatedTime;
@@ -58,9 +54,7 @@ public class JsonAdaptedApplication {
      * Converts a given {@code JobApplication} into this class for Jackson use.
      */
     public JsonAdaptedApplication(JobApplication source) {
-        this.oid = source
-                .getOrganizationId()
-                .toString();
+
         this.title = source
                 .getJobTitle()
                 .toString();
@@ -80,9 +74,6 @@ public class JsonAdaptedApplication {
         this.stage = source
                 .getApplicationStage()
                 .toString();
-        this.orgName = source
-                .getOrgName()
-                .toString();
     }
 
     /**
@@ -90,7 +81,7 @@ public class JsonAdaptedApplication {
      *
      * @throws IllegalValueException if there are any data constraints violated in the adapted application.
      */
-    public JobApplication toModelType() throws IllegalValueException {
+    public JobApplication toModelType(String id, String name) throws IllegalValueException {
         final Id oid;
         final Name orgName;
         final JobTitle title;
@@ -100,10 +91,10 @@ public class JsonAdaptedApplication {
         final JobStatus status;
         final ApplicationStage stage;
 
-        if (this.oid == null || !Id.isValidId(this.oid)) {
+        if (id == null || !Id.isValidId(id)) {
             throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
-        oid = new Id(this.oid);
+        oid = new Id(id);
         if (this.title == null || !JobTitle.isValidJobTitle(this.title)) {
             throw new IllegalValueException(JobTitle.MESSAGE_CONSTRAINTS);
         }
@@ -125,10 +116,10 @@ public class JsonAdaptedApplication {
             throw new IllegalValueException(ApplicationStage.MESSAGE_CONSTRAINTS);
         }
         stage = ApplicationStage.fromString(this.stage);
-        if (this.orgName == null || !Name.isValidName(this.orgName)) {
+        if (name == null || !Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        orgName = new Name(this.orgName);
+        orgName = new Name(name);
 
         return new JobApplication(
                 oid,

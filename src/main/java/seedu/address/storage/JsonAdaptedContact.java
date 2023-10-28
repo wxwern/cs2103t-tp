@@ -132,7 +132,7 @@ class JsonAdaptedContact {
             contactTags.add(tag.toModelType());
         }
         for (JsonAdaptedApplication application: applications) {
-            jobApplications.add(application.toModelType());
+            jobApplications.add(application.toModelType(id, name));
         }
 
         // Type#fromString implicitly returns UNKNOWN if type is null. May change if UNKNOWN is removed in the future.
@@ -189,10 +189,9 @@ class JsonAdaptedContact {
                 throw new IllegalValueException(Position.MESSAGE_CONSTRAINTS);
             }
             final Position modelPosition = position == null ? new Position() : new Position(position);
-
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition, modelRids
+                    modelTags, modelStatus, modelPosition, modelRids, jobApplications
             );
         }
         case RECRUITER: {
