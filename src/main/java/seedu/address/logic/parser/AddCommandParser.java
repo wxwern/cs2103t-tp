@@ -87,7 +87,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Optional<String> idString = argMultimap.getValue(FLAG_ID);
         Id id = idString.isPresent()
                 ? ParserUtil.parseId(idString.get())
-                : new Id();
+                : Id.synthesizeFrom(name.fullName);
 
         Phone phone = ParserUtil.parseOptionally(
                 argMultimap.getValue(FLAG_PHONE), ParserUtil::parsePhone);
@@ -111,7 +111,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Optional<String> idString = argMultimap.getValue(FLAG_ID);
         Id id = idString.isPresent()
                 ? ParserUtil.parseId(idString.get())
-                : new Id();
+                : Id.synthesizeFrom(name.fullName);
 
         Phone phone = ParserUtil.parseOptionally(
                 argMultimap.getValue(FLAG_PHONE), ParserUtil::parsePhone);
