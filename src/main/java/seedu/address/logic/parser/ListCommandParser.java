@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_ORGANIZATIONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new ListCommand object
@@ -17,7 +18,7 @@ public class ListCommandParser implements Parser<ListCommand> {
      * Parses the given {@code String} of arguments in the context of the ListCommand
      * and returns a ListCommand object for execution.
      */
-    public ListCommand parse(String args) {
+    public ListCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
                     ListCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));

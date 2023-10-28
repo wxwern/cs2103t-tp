@@ -55,8 +55,11 @@ title: User Guide
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
 
-* Extraneous parameters and values for all commands will be ignored by default.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extras like `list 123 --other --org 456` will be interpreted as `list --org` (i.e., ignoring all other parameters).
+* Extraneous values for all commands will be ignored by default.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extra values like `list --org 456` will ignore "456".
+
+* Extraneous parameters for all commands will be rejected with an error.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other parameters, then supplying `list --org --abc` will result in an error.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>

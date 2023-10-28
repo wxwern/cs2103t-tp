@@ -15,8 +15,8 @@ public class FlagTest {
 
     @Test
     public void isFlagSyntax() {
-        String validFullStr = Flag.DEFAULT_PREFIX + "123" + Flag.DEFAULT_POSTFIX;
-        String validAliasStr = Flag.DEFAULT_ALIAS_PREFIX + "45" + Flag.DEFAULT_ALIAS_POSTFIX;
+        String validFullStr = Flag.DEFAULT_PREFIX + "a123" + Flag.DEFAULT_POSTFIX;
+        String validAliasStr = Flag.DEFAULT_ALIAS_PREFIX + "b45" + Flag.DEFAULT_ALIAS_POSTFIX;
 
         assertTrue(Flag.isFlagSyntax(validFullStr));
         assertTrue(Flag.isFlagSyntax(validAliasStr));
@@ -37,7 +37,7 @@ public class FlagTest {
 
     @Test
     public void getFlagString() {
-        String flagString = "123";
+        String flagString = "abc123";
 
         // default format works correctly
         Flag f = new Flag(flagString);
@@ -51,17 +51,14 @@ public class FlagTest {
         assertEquals("&zz!", f.getFlagString());
 
         // null inputs work correctly
-        f = Flag.ofCustomFormat("00", "*", null);
-        assertEquals("*00", f.getFlagString());
+        f = Flag.ofCustomFormat("a00", "*", null);
+        assertEquals("*a00", f.getFlagString());
 
-        f = Flag.ofCustomFormat("11", null, "?");
-        assertEquals("11?", f.getFlagString());
+        f = Flag.ofCustomFormat("b11", null, "?");
+        assertEquals("b11?", f.getFlagString());
 
-        f = Flag.ofCustomFormat("22", null, null);
-        assertEquals("22", f.getFlagString());
-
-        f = Flag.ofCustomFormat(null, null, null);
-        assertEquals("", f.getFlagString());
+        f = Flag.ofCustomFormat("c22", null, null);
+        assertEquals("c22", f.getFlagString());
     }
 
     @Test
@@ -129,6 +126,11 @@ public class FlagTest {
         assertThrows(ParseException.class, () -> Flag.parse(alias));
         assertThrows(ParseException.class, () -> Flag.parse(null));
         assertThrows(ParseException.class, () -> Flag.parse(""));
+
+        assertThrows(ParseException.class, ()
+                -> Flag.parse(Flag.DEFAULT_PREFIX + Flag.DEFAULT_POSTFIX));
+        assertThrows(ParseException.class, ()
+                -> Flag.parse(Flag.DEFAULT_ALIAS_POSTFIX + Flag.DEFAULT_ALIAS_POSTFIX));
     }
 
     @Test
