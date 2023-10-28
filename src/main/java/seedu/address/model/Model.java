@@ -114,11 +114,8 @@ public interface Model {
      */
     Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
 
-    /** Returns an unmodifiable view of the filtered contact list */
-    ObservableList<Contact> getFilteredContactList();
-
-    /** Returns a sorted contact list, which does not modify the underlying list */
-    ObservableList<Contact> getSortedContactList();
+    /** Returns an unmodifiable view of the displayed contact list */
+    ObservableList<Contact> getDisplayedContactList();
 
     /**
      * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
@@ -127,8 +124,4 @@ public interface Model {
     void updateFilteredContactList(Predicate<Contact> predicate);
 
     void updateSortedContactList(Comparator<Contact> comparator);
-
-    void setDisplaySorted(Boolean bool);
-
-    Boolean getDisplaySorted();
 }

@@ -76,10 +76,7 @@ public class LogicManager implements Logic {
 
     @Override
     public ObservableList<Contact> getDisplayedContactList() {
-        if (model.getDisplaySorted()) {
-            return model.getSortedContactList();
-        }
-        return model.getFilteredContactList();
+        return model.getDisplayedContactList();
     }
 
     @Override

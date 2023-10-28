@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.Comparator;
 
@@ -44,7 +45,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.setDisplaySorted(true);
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         model.updateSortedContactList(comparator);
         return new CommandResult(MESSAGE_SORTED_SUCCESS);
     }

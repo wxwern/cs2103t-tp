@@ -28,9 +28,9 @@ public class ModelManager implements Model {
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
+    private final FilteredList<Contact> displayedContacts;
     private final FilteredList<Contact> filteredContacts;
-    private SortedList<Contact> sortedContacts;
-    private Boolean displaySorted = false;
+    private final SortedList<Contact> sortedContacts;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -42,8 +42,9 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredContacts = new FilteredList<>(this.addressBook.getContactList());
-        sortedContacts = this.addressBook.getContactList().sorted(COMPARATOR_ADDRESS);
+        this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
+        this.filteredContacts = new FilteredList<>(sortedContacts);
+        this.displayedContacts = filteredContacts;
     }
 
     public ModelManager() {
@@ -140,7 +141,7 @@ public class ModelManager implements Model {
             contact = getContactById(id);
         } else { // else index is not null instead
 
-            List<Contact> lastShownList = this.getFilteredContactList();
+            List<Contact> lastShownList = this.getDisplayedContactList();
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new IllegalValueException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
             }
@@ -161,37 +162,20 @@ public class ModelManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Contact> getFilteredContactList() {
-        return filteredContacts;
-    }
-
-    @Override
-    public ObservableList<Contact> getSortedContactList() {
-        return sortedContacts;
+    public ObservableList<Contact> getDisplayedContactList() {
+        return this.displayedContacts;
     }
 
     @Override
     public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
-        this.displaySorted = false;
-        filteredContacts.setPredicate(predicate);
+        this.filteredContacts.setPredicate(predicate);
     }
 
     @Override
     public void updateSortedContactList(Comparator<Contact> comparator) {
         requireNonNull(comparator);
-        this.displaySorted = true;
-        this.sortedContacts = this.addressBook.getContactList().sorted(comparator);
-    }
-
-    @Override
-    public void setDisplaySorted(Boolean bool) {
-        this.displaySorted = bool;
-    }
-
-    @Override
-    public Boolean getDisplaySorted() {
-        return this.displaySorted;
+        this.sortedContacts.setComparator(comparator);
     }
 
     @Override
