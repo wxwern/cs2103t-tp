@@ -93,7 +93,8 @@ public class Flag {
 
     /**
      * Parses the given string using the default prefix and postfix format into a {@link Flag}.
-     * This will work for both full flag strings and flag aliases.
+     * This will work for both full flag strings and flag aliases. However, this may not return the same result
+     * as an existing flag that has both a full value and alias pair - for those, try {@link #findMatch} instead.
      *
      * @param string The string to parse as a flag.
      * @return The corresponding {@link Flag} instance.
