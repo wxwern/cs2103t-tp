@@ -108,6 +108,9 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the given {@code childrenContacts} for display to the user.
+     */
     public static String formatChildren(List<Contact> childrenContacts) {
         return childrenContacts.stream()
                 .map(c -> Messages.format(c) + "\n")

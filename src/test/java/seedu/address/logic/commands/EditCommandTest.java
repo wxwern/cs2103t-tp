@@ -69,7 +69,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_unlinkedOrganization_allFieldsSpecifiedUnfilteredList_success() {
+    public void execute_allFieldsSpecifiedUnfilteredList_unlinkedOrganizationSuccess() {
         Organization editedContact = new OrganizationBuilder(SMU)
                 .withId(VALID_ID_AMY).build();
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedContact).build();
@@ -86,7 +86,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_unlinkedRecruiter_allFieldsSpecifiedUnfilteredList_success() {
+    public void execute_allFieldsSpecifiedUnfilteredList_unlinkedRecruiterSuccess() {
         Recruiter editedContact = new RecruiterBuilder(RICHARD)
                 .withId(VALID_ID_AMY).build();
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedContact).build();
@@ -103,7 +103,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedOrganization_allFieldsSpecifiedUnfilteredList_success() {
+    public void execute_allFieldsSpecifiedUnfilteredList_linkedOrganizationSuccess() {
         Organization originalOrganization = NUS;
         Organization editedOrganization = new OrganizationBuilder(originalOrganization)
                 .withId(VALID_ID_AMY).build();
@@ -125,7 +125,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedRecruiter_allFieldsSpecifiedUnfilteredList_success() {
+    public void execute_allFieldsSpecifiedUnfilteredList_linkedRecruiterSuccess() {
         Recruiter editedRecruiter = new RecruiterBuilder(RYAN)
                 .withId(VALID_ID_AMY).build();
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedRecruiter).build();
@@ -146,7 +146,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedOrganization_someFieldsSpecifiedUnfilteredList_success() {
+    public void execute_someFieldsSpecifiedUnfilteredList_linkedOrganizationSuccess() {
         Organization originalOrganization = NUS;
         Organization editedOrganization = new OrganizationBuilder(originalOrganization)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -171,7 +171,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedRecruiter_someFieldsSpecifiedUnfilteredList_success() {
+    public void execute_someFieldsSpecifiedUnfilteredList_linkedRecruiterSuccess() {
         Recruiter editedRecruiter = new RecruiterBuilder(RYAN)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
@@ -195,7 +195,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedOrganization_noFieldsSpecifiedUnfilteredList_success() {
+    public void execute_noFieldsSpecifiedUnfilteredList_linkedOrganizationSuccess() {
         EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, new EditContactDescriptor());
         Contact editedContact = model.getFilteredContactList().get(INDEX_LINKED_ORGANIZATION.getZeroBased());
 
@@ -208,7 +208,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedRecruiter_noFieldsSpecifiedUnfilteredList_success() {
+    public void execute_noFieldsSpecifiedUnfilteredList_linkedRecruiterSuccess() {
         EditCommand editCommand = new EditCommand(INDEX_LINKED_RECRUITER, new EditContactDescriptor());
         Contact editedRecruiter = model.getFilteredContactList().get(INDEX_LINKED_RECRUITER.getZeroBased());
 
@@ -224,7 +224,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedOrganization_filteredList_success() {
+    public void execute_filteredList_linkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_LINKED_ORGANIZATION);
 
         Contact contactInFilteredList = model.getFilteredContactList()
@@ -249,7 +249,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_linkedRecruiter_filteredList_success() {
+    public void execute_filteredList_linkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_LINKED_RECRUITER);
 
         Contact contactInFilteredList = model.getFilteredContactList()

@@ -61,11 +61,11 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
 
+    protected final CommandException commandException;
+
     private final Object selector; // TODO: This is very sus but this will only be used for equals comparison
 
     private final Function<Model, Contact> contactFunction;
-
-    protected final CommandException commandException;
 
     /**
      * @param targetIndex of the contact to be deleted

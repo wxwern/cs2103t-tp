@@ -34,7 +34,7 @@ public class DeleteWithChildrenCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_unlinkedOrganization_success() {
+    public void execute_validIndexUnfilteredList_unlinkedOrganizationSuccess() {
         Contact contactToDelete = model.getFilteredContactList()
                 .get(INDEX_UNLINKED_ORGANIZATION.getZeroBased());
         DeleteWithChildrenCommand deleteCommand = new DeleteWithChildrenCommand(INDEX_UNLINKED_ORGANIZATION);
@@ -50,7 +50,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_unlinkedRecruiter_success() {
+    public void execute_validIndexUnfilteredList_unlinkedRecruiterSuccess() {
         Contact contactToDelete = model.getFilteredContactList()
                 .get(INDEX_UNLINKED_RECRUITER.getZeroBased());
         DeleteWithChildrenCommand deleteCommand = new DeleteWithChildrenCommand(INDEX_UNLINKED_RECRUITER);
@@ -66,7 +66,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_linkedOrganization_success() {
+    public void execute_validIndexUnfilteredList_linkedOrganizationSuccess() {
         Contact contactToDelete = model.getFilteredContactList()
                 .get(INDEX_LINKED_ORGANIZATION.getZeroBased());
         DeleteWithChildrenCommand deleteCommand = new DeleteWithChildrenCommand(INDEX_LINKED_ORGANIZATION);
@@ -86,7 +86,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_linkedRecruiter_success() {
+    public void execute_validIndexUnfilteredList_linkedRecruiterSuccess() {
         Contact contactToDelete = model.getFilteredContactList()
                 .get(INDEX_LINKED_RECRUITER.getZeroBased());
         DeleteWithChildrenCommand deleteCommand = new DeleteWithChildrenCommand(INDEX_LINKED_RECRUITER);
@@ -132,7 +132,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_unlinkedOrganization_success() {
+    public void execute_validIndexFilteredList_unlinkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
 
         Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
@@ -150,7 +150,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_unlinkedRecruiter_success() {
+    public void execute_validIndexFilteredList_unlinkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_UNLINKED_RECRUITER);
 
         Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
@@ -168,7 +168,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_linkedOrganization_success() {
+    public void execute_validIndexFilteredList_linkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_LINKED_ORGANIZATION);
 
         Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
@@ -190,7 +190,7 @@ public class DeleteWithChildrenCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_linkedRecruiter_success() {
+    public void execute_validIndexFilteredList_linkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_LINKED_RECRUITER);
 
         Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
