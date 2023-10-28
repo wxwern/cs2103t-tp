@@ -25,8 +25,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Recruiter;
 import seedu.address.testutil.ContactBuilder;
 import seedu.address.testutil.EditContactDescriptorBuilder;
+import seedu.address.testutil.RecruiterBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -55,8 +57,8 @@ public class EditCommandTest {
         Index indexLastContact = Index.fromOneBased(model.getDisplayedContactList().size());
         Contact lastContact = model.getDisplayedContactList().get(indexLastContact.getZeroBased());
 
-        ContactBuilder contactInList = new ContactBuilder(lastContact);
-        Contact editedContact = contactInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        RecruiterBuilder contactInList = new RecruiterBuilder((Recruiter) lastContact);
+        Recruiter editedContact = contactInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder().withName(VALID_NAME_BOB)

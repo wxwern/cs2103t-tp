@@ -55,8 +55,11 @@ title: User Guide
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
 
-* Extraneous parameters and values for all commands will be ignored by default.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extras like `list 123 --other --org 456` will be interpreted as `list --org` (i.e., ignoring all other parameters).
+* Extraneous values for all commands will be ignored by default.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extra values like `list --org 456` will ignore "456".
+
+* Extraneous parameters for all commands will be rejected with an error.<br>
+  e.g. if `list` only accepts the `--org` or `--rec` options and no other parameters, then supplying `list --org --abc` will result in an error.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
@@ -195,7 +198,7 @@ Examples:
 _{To be updated...}_
 
 Deletes the specified contact from the address book and its associated contacts if specified.
-Format: `delete INDEX [--recursive]` or `delete --id ID [--recursive]`
+Format: `delete INDEX/ID [--recursive]`
 
 * `INDEX` refers to the index number shown on the list and must be a positive integer.
 * Deletes the person with id `ID` if specified, ignoring if the contact is shown in the list.
@@ -203,7 +206,7 @@ Format: `delete INDEX [--recursive]` or `delete --id ID [--recursive]`
 
 Examples:
 * `delete 1` deletes the 1st contact in the list of contacts shown.
-* `delete --id 045f` deletes the contact with id `045f` in the address book.
+* `delete amazon-sg` deletes the contact with id `amazon-sg` in the address book.
 * `delete 1 --recursive` deletes the 1st contact along with other contacts associated under it.
 
 

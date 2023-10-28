@@ -41,7 +41,8 @@ public class Organization extends Contact {
         super(name, id, phone, email, url, address, tags);
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
-        this.rids.addAll(rids);
+        // Todo: Likely to deprecate rids completely
+        // this.rids.addAll(rids);
     }
 
     @Override

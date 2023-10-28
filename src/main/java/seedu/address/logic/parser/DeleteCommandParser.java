@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import seedu.address.commons.core.index.Index;
@@ -24,40 +23,24 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 ArgumentTokenizer.tokenize(args,
                         DeleteCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
-        boolean hasIndex = !argumentMultimap.getPreamble().isEmpty();
-        boolean hasId = argumentMultimap.getValue(FLAG_ID).isPresent();
+        if (argumentMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+        Object indexXorId = ParserUtil.parseIndexXorId(argumentMultimap.getPreamble());
         boolean isRecursive = argumentMultimap.getValue(FLAG_RECURSIVE).isPresent();
 
-        if (hasIndex) {
-            return parseDeleteIndexCommand(argumentMultimap.getPreamble(), isRecursive);
+        if (indexXorId instanceof Index) {
+            return DeleteCommand.selectIndex((Index) indexXorId, isRecursive);
         }
 
-        if (hasId) {
-            return parseDeleteIdCommand(argumentMultimap.getValue(FLAG_ID).get(), isRecursive);
+        if (indexXorId instanceof Id) {
+            return DeleteCommand.selectId((Id) indexXorId, isRecursive);
         }
-        throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+
+        assert false : "If indexXorId is neither Index nor Id, then ParserUtil should've thrown ParseException!";
+        throw new IllegalStateException();
     }
 
-    private static DeleteCommand parseDeleteIdCommand(String idString, boolean isRecursive) throws ParseException {
-        Id id;
-        try {
-            id = ParserUtil.parseId(idString);
-            return DeleteCommand.selectId(id, isRecursive);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
-        }
-    }
-
-    private static DeleteCommand parseDeleteIndexCommand(String indexStr, boolean isRecursive) throws ParseException {
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(indexStr);
-            return DeleteCommand.selectIndex(index, isRecursive);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
-        }
-    }
 }

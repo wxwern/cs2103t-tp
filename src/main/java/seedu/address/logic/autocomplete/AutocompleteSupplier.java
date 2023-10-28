@@ -107,14 +107,15 @@ public class AutocompleteSupplier {
      * and not just the lack of completion suggestions.
      *
      * @param flag The flag to check against. This may be null to represent the preamble.
+     * @param currentCommand The current command structure. This should not be null.
      * @param model The model to be supplied for generation. This may be null if model-data is not essential
      *              for any purpose.
      */
-    public Optional<Stream<String>> getValidValues(Flag flag, Model model) {
+    public Optional<Stream<String>> getValidValues(Flag flag, PartitionedCommand currentCommand, Model model) {
         try {
             return Optional.ofNullable(
-                    this.values.getOrDefault(flag, m -> Stream.of())
-            ).map(x -> x.apply(model));
+                    this.values.getOrDefault(flag, (c, m) -> Stream.empty())
+            ).map(flagValueSupplier -> flagValueSupplier.apply(currentCommand, model));
 
         } catch (RuntimeException e) {
             // Guard against errors like NPEs due to supplied lambdas not handling them.

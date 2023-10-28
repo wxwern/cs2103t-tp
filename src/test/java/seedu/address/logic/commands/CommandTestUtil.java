@@ -29,8 +29,8 @@ import seedu.address.testutil.EditContactDescriptorBuilder;
 public class CommandTestUtil {
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_ID_AMY = "3a6e0af8-5092-47c0-baf7-18d6dc535823";
-    public static final String VALID_ID_BOB = "18dfa74c-2229-4f4f-99a5-336c25e6783e";
+    public static final String VALID_ID_AMY = "ca6e0af8-5092-47c0-baf7-18d6dc535823";
+    public static final String VALID_ID_BOB = "a8dfa74c-2229-4f4f-99a5-336c25e6783e";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";

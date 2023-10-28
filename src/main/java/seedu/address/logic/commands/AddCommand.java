@@ -63,18 +63,19 @@ public class AddCommand extends Command {
                     AutocompleteConstraint.where(FLAG_RECRUITER)
                             .isPrerequisiteFor(FLAG_ORGANIZATION_ID)
             ))
-    ).configureValueMap(m -> {
+    ).configureValueMap(map -> {
         // Add value autocompletion for:
-        m.put(FLAG_ORGANIZATION_ID,
-                model -> model.getAddressBook().getContactList().stream()
-                        .filter(c -> c.getType() == Type.ORGANIZATION)
-                        .map(o -> o.getId().value)
+        map.put(FLAG_ORGANIZATION_ID, (command, model) -> model.getAddressBook()
+                .getContactList()
+                .stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .map(o -> o.getId().value)
         );
 
         // Disable value autocompletion for:
-        m.put(null /* preamble */, null);
-        m.put(FLAG_ORGANIZATION, null);
-        m.put(FLAG_RECRUITER, null);
+        map.put(null /* preamble */, null);
+        map.put(FLAG_ORGANIZATION, null);
+        map.put(FLAG_RECRUITER, null);
     });
 
 
