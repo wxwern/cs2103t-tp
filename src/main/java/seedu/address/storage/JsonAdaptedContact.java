@@ -127,8 +127,12 @@ class JsonAdaptedContact {
      */
     public Contact toModelType(ReadOnlyAddressBook reference) throws IllegalValueException {
         final List<Tag> contactTags = new ArrayList<>();
+        final List<JobApplication> jobApplications = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             contactTags.add(tag.toModelType());
+        }
+        for (JsonAdaptedApplication application: applications) {
+            jobApplications.add(application.toModelType());
         }
 
         // Type#fromString implicitly returns UNKNOWN if type is null. May change if UNKNOWN is removed in the future.

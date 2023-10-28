@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Name;
+import seedu.address.model.contact.Organization;
 
 /**
  * Represents a Job Application in the address book.
@@ -24,6 +26,7 @@ public class JobApplication {
             a.deadline.compareTo(b.deadline);
 
     private final Id oid;
+    private final Name orgName;
 
     private final JobTitle jobTitle;
 
@@ -40,60 +43,64 @@ public class JobApplication {
     /**
      * Constructs a job application.
      *
-     * @param oid of the organization applied to.
+     * @param org that is being applied to
      * @param jobTitle of the postion applied to.
      * @param jobDescription of the positon applied to.
      * @param deadline of the application or interview if relevant.
      * @param status of the application
      */
-    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
+    public JobApplication(Organization org, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, JobStatus status, ApplicationStage applicationStage) {
-        this(oid, jobTitle, jobDescription, deadline, status, applicationStage, new LastUpdatedTime());
+        this(org, jobTitle, jobDescription, deadline, status, applicationStage, new LastUpdatedTime());
     }
 
     /**
      * Constructs a job application with default status and application stage.
      *
-     * @param oid of the organization applied to.
+     * @param org that is being applied to
      * @param jobTitle of the postion applied to.
      * @param jobDescription of the positon applied to.
      * @param deadline of the application or interview if relevant.
      */
-    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
+    public JobApplication(Organization org, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, ApplicationStage.DEFAULT_STAGE);
+        this(org, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, ApplicationStage.DEFAULT_STAGE);
     }
 
     /**
      * Constructs a job application with default status.
      *
-     * @param oid of the organization applied to.
+     * @param org that is being applied to
      * @param jobTitle of the postion applied to.
      * @param jobDescription of the positon applied to.
      * @param deadline of the application or interview if relevant.
      * @param applicationStage of the application.
      */
-    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
+    public JobApplication(Organization org, JobTitle jobTitle, JobDescription jobDescription,
                           Deadline deadline, ApplicationStage applicationStage) {
-        this(oid, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, applicationStage);
+        this(org, jobTitle, jobDescription, deadline, JobStatus.DEFAULT_STATUS, applicationStage);
     }
 
     /**
      * Constructs a job application (should be directly used by Jackson only)
      *
-     * @param oid of the organization applied to.
+     * @param oid of the organization that is being applied to.
+     * @param orgName of the organization that is being applied to.
      * @param jobTitle of the postion applied to.
      * @param jobDescription of the positon applied to.
      * @param deadline of the application or interview if relevant.
      * @param status of the application
      * @param lastUpdatedTime of the application
      */
-    public JobApplication(Id oid, JobTitle jobTitle, JobDescription jobDescription,
-                          Deadline deadline, JobStatus status, ApplicationStage applicationStage,
-                          LastUpdatedTime lastUpdatedTime) {
+    public JobApplication(
+            Id oid, Name orgName, JobTitle jobTitle, JobDescription jobDescription,
+            Deadline deadline, JobStatus status, ApplicationStage applicationStage,
+            LastUpdatedTime lastUpdatedTime) {
         requireNonNull(oid);
+        requireNonNull(orgName);
         requireNonNull(jobTitle);
         this.oid = oid;
+        this.orgName = orgName;
         this.jobTitle = jobTitle;
         this.jobDescription = Optional.ofNullable(jobDescription);
 
@@ -101,6 +108,24 @@ public class JobApplication {
         this.status = status == null ? JobStatus.DEFAULT_STATUS : status;
         this.applicationStage = applicationStage == null ? ApplicationStage.DEFAULT_STAGE : applicationStage;
         this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    /**
+     * Constructs a job application (should be directly used by Jackson only)
+     *
+     * @param org that is being applied to
+     * @param jobTitle of the postion applied to.
+     * @param jobDescription of the positon applied to.
+     * @param deadline of the application or interview if relevant.
+     * @param status of the application
+     * @param lastUpdatedTime of the application
+     */
+    public JobApplication(
+            Organization org, JobTitle jobTitle, JobDescription jobDescription,
+            Deadline deadline, JobStatus status, ApplicationStage applicationStage,
+            LastUpdatedTime lastUpdatedTime) {
+        this(org.getId(), org.getName(), jobTitle, jobDescription, deadline, status, applicationStage,
+                lastUpdatedTime);
     }
 
     @Override
@@ -149,6 +174,9 @@ public class JobApplication {
 
     public ApplicationStage getApplicationStage() {
         return applicationStage;
+    }
+    public Name getOrgName() {
+        return orgName;
     }
 
     @Override

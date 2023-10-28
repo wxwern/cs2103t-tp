@@ -5,16 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalContacts.NTU;
+import static seedu.address.testutil.TypicalContacts.NUS;
 
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Name;
 
 public class JobApplicationTest {
     public static final JobApplication SAMPLE_JOB_APPLICATION = new JobApplication(
-            new Id(),
+            NUS,
             new JobTitle("SWE"),
             new JobDescription("None"),
             new Deadline(),
@@ -34,29 +37,29 @@ public class JobApplicationTest {
     public void constructor_nullExceptJobDescription_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new JobApplication(null, validTitle, validJobDescription,
                 validDeadline, validStatus, validApplicationStage));
-        assertThrows(NullPointerException.class, () -> new JobApplication(id1, null, validJobDescription,
+        assertThrows(NullPointerException.class, () -> new JobApplication(NUS, null, validJobDescription,
                 validDeadline, validStatus, validApplicationStage));
     }
 
     @Test
     public void constructor_nullDescription_doesNotThrowNullPointerException() {
-        assertDoesNotThrow(() -> new JobApplication(id1, validTitle, null,
+        assertDoesNotThrow(() -> new JobApplication(NUS, validTitle, null,
                 validDeadline));
-        assertDoesNotThrow(() -> new JobApplication(id1, validTitle, validJobDescription,
+        assertDoesNotThrow(() -> new JobApplication(NUS, validTitle, validJobDescription,
                 null, validStatus, validApplicationStage));
-        assertDoesNotThrow(() -> new JobApplication(id1, validTitle, validJobDescription,
+        assertDoesNotThrow(() -> new JobApplication(NUS, validTitle, validJobDescription,
                 validDeadline, null, validApplicationStage));
-        assertDoesNotThrow(() -> new JobApplication(id1, validTitle, validJobDescription,
+        assertDoesNotThrow(() -> new JobApplication(NUS, validTitle, validJobDescription,
                 validDeadline, validStatus, null));
     }
 
     @Test public void constructor_excludeStatus_createsDefaultStatus() {
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline);
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline);
         assertEquals(ja1.getStatus(), JobStatus.PENDING);
     }
 
     @Test public void constructor_excludesStage_createsDefaultStageAndStatus() {
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline);
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline);
         assertEquals(ja1.getApplicationStage(), validApplicationStage);
         assertEquals(ja1.getStatus(), validStatus);
     }
@@ -68,9 +71,9 @@ public class JobApplicationTest {
 
         JobApplication ja1;
         JobApplication ja2;
-        ja1 = new JobApplication(id1, validTitle, validJobDescription, deadline1, JobStatus.PENDING,
+        ja1 = new JobApplication(NUS, validTitle, validJobDescription, deadline1, JobStatus.PENDING,
                 ApplicationStage.RESUME);
-        ja2 = new JobApplication(id1, validTitle, validJobDescription, deadline2,
+        ja2 = new JobApplication(NUS, validTitle, validJobDescription, deadline2,
                 JobStatus.OFFERED, ApplicationStage.INTERVIEW);
 
         assertTrue(JobApplication.DEADLINE_COMPARATOR.compare(ja1, ja2) > 0);
@@ -83,18 +86,18 @@ public class JobApplicationTest {
     public void equals() {
         assert !id1.equals(id2);
 
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline,
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline,
                 validApplicationStage);
         // JobApplication ja2 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus);
-        JobApplication ja3 = new JobApplication(id2, validTitle, validJobDescription, validDeadline,
+        JobApplication ja3 = new JobApplication(NTU, validTitle, validJobDescription, validDeadline,
                 validApplicationStage);
-        JobApplication ja4 = new JobApplication(id1, new JobTitle("SRE"), validJobDescription, validDeadline,
+        JobApplication ja4 = new JobApplication(NUS, new JobTitle("SRE"), validJobDescription, validDeadline,
                 validApplicationStage);
-        JobApplication ja5 = new JobApplication(id1, validTitle, new JobDescription("Intern"), validDeadline,
+        JobApplication ja5 = new JobApplication(NUS, validTitle, new JobDescription("Intern"), validDeadline,
                 validApplicationStage);
-        JobApplication ja6 = new JobApplication(id1, validTitle, validJobDescription, validDeadline,
+        JobApplication ja6 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline,
                 ApplicationStage.INTERVIEW);
-        JobApplication ja7 = new JobApplication(id1, validTitle, validJobDescription, validDeadline,
+        JobApplication ja7 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline,
                 JobStatus.REJECTED, validApplicationStage);
 
 
@@ -117,10 +120,10 @@ public class JobApplicationTest {
 
     @Test
     public void hashCode_sameFields_getSameHashCode() {
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus,
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline, validStatus,
                 validApplicationStage);
         assertEquals(ja1.hashCode(), Objects.hash(
-                id1.toString(),
+                NUS.getId().toString(),
                 validTitle.toString(),
                 validJobDescription.toString(),
                 validDeadline.toString(),
@@ -132,20 +135,20 @@ public class JobApplicationTest {
 
     @Test
     public void getters_nonNull_getsCorrectItems() {
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus,
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline, validStatus,
                 validApplicationStage);
 
         assertEquals(ja1.getStatus(), validStatus);
         assertEquals(ja1.getDeadline(), validDeadline);
         assertEquals(ja1.getJobTitle(), validTitle);
         assertEquals(ja1.getJobDescription().orElse(null), validJobDescription);
-        assertEquals(ja1.getOrganizationId(), id1);
+        assertEquals(ja1.getOrganizationId(), NUS.getId());
         assertEquals(ja1.getApplicationStage(), validApplicationStage);
     }
 
     @Test
     public void toString_any_givesRelevantInfo() {
-        JobApplication ja1 = new JobApplication(id1, validTitle, validJobDescription, validDeadline, validStatus,
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline, validStatus,
                 validApplicationStage);
         String testString = ja1.toString();
         assertTrue(testString.contains("title"));

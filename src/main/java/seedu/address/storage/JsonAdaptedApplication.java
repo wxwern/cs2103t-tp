@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Name;
 import seedu.address.model.jobapplication.ApplicationStage;
 import seedu.address.model.jobapplication.Deadline;
 import seedu.address.model.jobapplication.JobApplication;
@@ -23,6 +24,7 @@ public class JsonAdaptedApplication {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job Application's %s field is missing!";
 
     private final String oid;
+    private final String orgName;
     private final String title;
     private final String description;
     private final String lastUpdatedTime;
@@ -35,6 +37,7 @@ public class JsonAdaptedApplication {
      */
     @JsonCreator
     public JsonAdaptedApplication(@JsonProperty("oid") String oid,
+                              @JsonProperty("orgName") String orgName,
                               @JsonProperty("title") String title,
                               @JsonProperty("description") String description,
                               @JsonProperty("lastUpdatedTime") String lastUpdatedTime,
@@ -42,6 +45,7 @@ public class JsonAdaptedApplication {
                               @JsonProperty("status") String status,
                               @JsonProperty("stage") String stage) {
         this.oid = oid;
+        this.orgName = orgName;
         this.title = title;
         this.description = description;
         this.lastUpdatedTime = lastUpdatedTime;
@@ -76,6 +80,9 @@ public class JsonAdaptedApplication {
         this.stage = source
                 .getApplicationStage()
                 .toString();
+        this.orgName = source
+                .getOrgName()
+                .toString();
     }
 
     /**
@@ -85,6 +92,7 @@ public class JsonAdaptedApplication {
      */
     public JobApplication toModelType() throws IllegalValueException {
         final Id oid;
+        final Name orgName;
         final JobTitle title;
         final Optional<JobDescription> description;
         final Deadline deadline;
@@ -117,8 +125,14 @@ public class JsonAdaptedApplication {
             throw new IllegalValueException(ApplicationStage.MESSAGE_CONSTRAINTS);
         }
         stage = ApplicationStage.fromString(this.stage);
+        if (this.orgName == null || !Name.isValidName(this.orgName)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        orgName = new Name(this.orgName);
+
         return new JobApplication(
                 oid,
+                orgName,
                 title,
                 description.orElse(null),
                 deadline,
