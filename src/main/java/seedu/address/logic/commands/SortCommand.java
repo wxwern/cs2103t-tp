@@ -26,7 +26,9 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all contacts based on the specified flag.\n"
-            + "Parameters: FLAG\n"
+            + "Parameters: " + FLAG_NAME + "/" + FLAG_ID + "/"
+            + FLAG_PHONE + "/" + FLAG_EMAIL + "/"
+            + FLAG_ADDRESS + "/" + FLAG_URL + "\n"
             + "Example 1: " + COMMAND_WORD + " --name\n"
             + "Example 2: " + COMMAND_WORD + " --id\n"
             + "Example 3: " + COMMAND_WORD + " --url\n";
