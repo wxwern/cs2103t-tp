@@ -44,65 +44,58 @@ class JsonAdaptedApplicationTest {
         JsonAdaptedApplication application1 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class, Id.MESSAGE_CONSTRAINTS,
-                () -> application1.toModelType(INVALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class, Id.MESSAGE_CONSTRAINTS, () -> application1.toModelType(INVALID_OID,
+                VALID_ORG_NAME));
         // invalid title
         JsonAdaptedApplication application2 = new JsonAdaptedApplication(INVALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class, JobTitle.MESSAGE_CONSTRAINTS,
-                () -> application2.toModelType(VALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class,
+                JobTitle.MESSAGE_CONSTRAINTS, () -> application2.toModelType(VALID_OID, VALID_ORG_NAME));
 
         // invalid description
-        JsonAdaptedApplication application3 = new JsonAdaptedApplication(VALID_TITLE,
-                INVALID_DESCRIPTION,
+        JsonAdaptedApplication application3 = new JsonAdaptedApplication(VALID_TITLE, INVALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class, JobDescription.MESSAGE_CONSTRAINTS,
-                () -> application3.toModelType(VALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class,
+                JobDescription.MESSAGE_CONSTRAINTS, () -> application3.toModelType(VALID_OID, VALID_ORG_NAME));
 
-        // invalid last update time
-        JsonAdaptedApplication application4 = new JsonAdaptedApplication(VALID_TITLE,
-                VALID_DESCRIPTION,
+        // invalid last update time, special cuz this one doesn't have a planned err msg yet. TODO: make err msg
+        JsonAdaptedApplication application4 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 INVALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class,
-                () -> application4.toModelType(VALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class, () -> application4.toModelType(VALID_OID, VALID_ORG_NAME));
 
         // invalid deadline
-        JsonAdaptedApplication application5 = new JsonAdaptedApplication(VALID_TITLE,
-                VALID_DESCRIPTION,
+        JsonAdaptedApplication application5 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, INVALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class, Deadline.MESSAGE_CONSTRAINTS,
-                () -> application5.toModelType(VALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class,
+                Deadline.MESSAGE_CONSTRAINTS, () -> application5.toModelType(VALID_OID, VALID_ORG_NAME));
 
         // invalid status
-        JsonAdaptedApplication application6 = new JsonAdaptedApplication(VALID_TITLE,
-                VALID_DESCRIPTION,
+        JsonAdaptedApplication application6 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, INVALID_STATUS, VALID_STAGE
         );
-        assertThrows(IllegalValueException.class, JobStatus.MESSAGE_CONSTRAINTS,
-                () -> application6.toModelType(VALID_OID, VALID_ORG_NAME));
+        assertThrows(IllegalValueException.class,
+                JobStatus.MESSAGE_CONSTRAINTS, () -> application6.toModelType(VALID_OID, VALID_ORG_NAME));
 
         // invalid stage
-        JsonAdaptedApplication application7 = new JsonAdaptedApplication(VALID_TITLE,
-                VALID_DESCRIPTION,
+        JsonAdaptedApplication application7 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, INVALID_STAGE
         );
         assertThrows(
-                IllegalValueException.class, ApplicationStage.MESSAGE_CONSTRAINTS,
-                () -> application7.toModelType(VALID_OID, VALID_ORG_NAME)
+                IllegalValueException.class,
+                ApplicationStage.MESSAGE_CONSTRAINTS, () -> application7.toModelType(VALID_OID, VALID_ORG_NAME)
         );
 
         // invalid organization name
-        JsonAdaptedApplication application8 = new JsonAdaptedApplication(VALID_TITLE,
-                VALID_DESCRIPTION,
+        JsonAdaptedApplication application8 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 VALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );
         assertThrows(
-                IllegalValueException.class, Name.MESSAGE_CONSTRAINTS,
-                () -> application8.toModelType(VALID_OID, INVALID_ORG_NAME)
+                IllegalValueException.class,
+                Name.MESSAGE_CONSTRAINTS, () -> application8.toModelType(VALID_OID, INVALID_ORG_NAME)
         );
     }
 

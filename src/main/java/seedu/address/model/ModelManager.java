@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -169,10 +168,10 @@ public class ModelManager implements Model {
 
     @Override
     public ObservableList<JobApplication> getFilteredApplicationList() {
-        return filteredContacts.stream().
-                filter(c -> c.getType() == Type.ORGANIZATION).
-                flatMap(c -> Arrays.stream(((Organization) c).getJobApplications())).
-                collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return filteredContacts.stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     @Override

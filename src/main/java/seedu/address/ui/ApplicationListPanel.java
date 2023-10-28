@@ -7,12 +7,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.jobapplication.JobApplication;
 
+/**
+ * A UI component that displays a list of applications.
+ */
 public class ApplicationListPanel extends UiPart<Region> {
-    private static String FXML = "ApplicationListPanel.fxml";
+    private static final String FXML = "ApplicationListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ApplicationListPanel.class);
 
     @FXML

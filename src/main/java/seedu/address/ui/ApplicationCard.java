@@ -7,10 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-
 import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.jobapplication.JobDescription;
 
+/**
+ * A UI component that displays information of a {@code JobApplication}.
+ */
 public class ApplicationCard extends UiPart<Region> {
     private static final String FXML = "ApplicationListCard.fxml";
     private final JobApplication jobApplication;

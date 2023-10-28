@@ -13,7 +13,6 @@ import java.util.Objects;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.contact.Id;
-import seedu.address.model.contact.Name;
 
 public class JobApplicationTest {
     public static final JobApplication SAMPLE_JOB_APPLICATION = new JobApplication(
