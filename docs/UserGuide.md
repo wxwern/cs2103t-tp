@@ -198,7 +198,7 @@ Examples:
 _{To be updated...}_
 
 Deletes the specified contact from the address book and its associated contacts if specified.
-Format: `delete INDEX [--recursive]` or `delete --id ID [--recursive]`
+Format: `delete INDEX/ID [--recursive]`
 
 * `INDEX` refers to the index number shown on the list and must be a positive integer.
 * Deletes the person with id `ID` if specified, ignoring if the contact is shown in the list.
@@ -206,7 +206,7 @@ Format: `delete INDEX [--recursive]` or `delete --id ID [--recursive]`
 
 Examples:
 * `delete 1` deletes the 1st contact in the list of contacts shown.
-* `delete --id 045f` deletes the contact with id `045f` in the address book.
+* `delete amazon-sg` deletes the contact with id `amazon-sg` in the address book.
 * `delete 1 --recursive` deletes the 1st contact along with other contacts associated under it.
 
 
