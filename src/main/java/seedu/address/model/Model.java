@@ -85,6 +85,11 @@ public interface Model {
     void setContact(Contact target, Contact editedContact);
 
     /**
+     * Adds the given application.
+     */
+    void addApplication(JobApplication application);
+
+    /**
      * Gives a contact which matches the given id.
      * Gives null if no such contact is found.
      * Given id must not be null.

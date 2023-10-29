@@ -33,6 +33,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Contact> filteredContacts;
+    private final ObservableList<JobApplication> applicationList;
     private final FilteredList<JobApplication> filteredApplications;
 
     /**
@@ -46,11 +47,12 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredContacts = new FilteredList<>(this.addressBook.getContactList());
-        filteredApplications =  new FilteredList<>(filteredContacts.stream()
+        applicationList = FXCollections.observableArrayList(filteredContacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-        filteredApplications.sort(JobApplication.DEADLINE_COMPARATOR);
+                .collect(Collectors.toList()));
+        filteredApplications = new FilteredList<>(applicationList, s->true);
+
     }
 
     public ModelManager() {
@@ -119,6 +121,7 @@ public class ModelManager implements Model {
     public void addContact(Contact contact) {
         addressBook.addContact(contact);
         updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
     }
 
     @Override
@@ -160,6 +163,12 @@ public class ModelManager implements Model {
         return contact;
     }
 
+    @Override
+    public void addApplication(JobApplication application) {
+        applicationList.add(application);
+        System.out.println(applicationList.size());
+        filteredApplications.setPredicate(c -> true);
+    }
 
     //=========== Filtered Contact List Accessors =============================================================
 
@@ -173,14 +182,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ObservableList<JobApplication> getFilteredApplicationList() {
-        return filteredApplications;
-    }
-
-    @Override
     public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
         filteredContacts.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<JobApplication> getFilteredApplicationList() {
+        return applicationList;
     }
 
     @Override
