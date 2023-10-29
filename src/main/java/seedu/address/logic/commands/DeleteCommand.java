@@ -73,7 +73,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(Index targetIndex) {
         this.selector = targetIndex;
         this.contactFunction = (Model model) -> {
-            List<Contact> lastShownList = model.getFilteredContactList();
+            List<Contact> lastShownList = model.getDisplayedContactList();
 
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 return null;

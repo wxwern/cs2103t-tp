@@ -96,8 +96,8 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void getFilteredContactList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredContactList().remove(0));
+    public void getDisplayedContactList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getDisplayedContactList().remove(0));
     }
 
     @Test
