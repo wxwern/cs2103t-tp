@@ -44,7 +44,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setOnKeyPressed(this::handleKeyEvent);
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyFilter);
         commandTextField.addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyFilter);
-        commandTextField.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyFilter);
 
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
@@ -65,10 +64,10 @@ public class CommandBox extends UiPart<Region> {
             this.handleCommandEntered();
 
         } else if (keyEvent.getCode() == KeyCode.TAB) {
-            logger.fine("Received key TAB");
+            logger.fine("Intercepted TAB key");
 
             keyEvent.consume(); // consume by default
-            commandTextField.requestFocus(); // revert to this focus in case
+            commandTextField.requestFocus(); // revert to this focus in case (otherwise tab changes focus)
 
             this.handleCommandAutocompleted(keyEvent);
         }
@@ -79,18 +78,25 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyFilter(KeyEvent keyEvent) {
-        if (keyEvent.getEventType() != KeyEvent.KEY_TYPED) {
-            return;
-        }
-
         if (this.commandTextField.getCaretPosition() < this.commandTextField.getText().length()) {
-            // Caret not at end. Autocomplete not applicable.
+            // Caret not at end. Autocomplete not applicable using standard keyboard intercepts.
             return;
         }
 
-        if (Objects.equals(keyEvent.getCharacter(), " ")) {
+        // Note: Possible JavaFX bug: KEY_PRESSED is not fired for SPACE. We use KEY_TYPED instead to catch it.
+
+        if (keyEvent.getEventType() == KeyEvent.KEY_TYPED
+                && Objects.equals(keyEvent.getCharacter(), " ")) {
+
             logger.fine("Intercepted SPACE typed at end");
             this.handleCommandAutocompleted(keyEvent);
+
+        } else if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED
+                && keyEvent.getCode() == KeyCode.BACK_SPACE) {
+
+            logger.fine("Intercepted BACKSPACE typed at end");
+            this.handleCommandUndoAutocomplete(keyEvent);
+
         }
     }
 
@@ -121,6 +127,18 @@ public class CommandBox extends UiPart<Region> {
 
         boolean hasAutocompletedResult = commandTextField.triggerImmediateAutocompletion();
         if (hasAutocompletedResult) {
+            keyEvent.consume();
+        }
+    }
+
+    /**
+     * Handles the request for undoing autocompletion.
+     */
+    private void handleCommandUndoAutocomplete(KeyEvent keyEvent) {
+        logger.fine("User invoked undo auto-completion!");
+
+        boolean hasUndoneCompletion = commandTextField.undoLastImmediateAutocompletion();
+        if (hasUndoneCompletion) {
             keyEvent.consume();
         }
     }
