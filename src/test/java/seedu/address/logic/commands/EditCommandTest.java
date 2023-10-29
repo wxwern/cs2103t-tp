@@ -37,6 +37,25 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+
+    @Test
+    public void execute_editCommandByTargetId_success() {
+        showContactAtIndex(model, INDEX_FIRST_CONTACT);
+
+        Contact contactInFilteredList = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact editedContact = new ContactBuilder(contactInFilteredList).withName(VALID_NAME_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_CONTACT,
+                new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                Messages.format(editedContact));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setContact(model.getFilteredContactList().get(0), editedContact);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Contact editedContact = new ContactBuilder().build();
@@ -127,6 +146,15 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicateContactFilteredListWithId_failure() {
+        // edit contact in filtered list into a duplicate in address book
+        Contact contactInList = model.getAddressBook().getContactList().get(INDEX_SECOND_CONTACT.getZeroBased());
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_CONTACT,
+                new EditContactDescriptorBuilder(contactInList).build());
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CONTACT);
+    }
+    @Test
     public void execute_invalidContactIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getDisplayedContactList().size() + 1);
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build();
@@ -186,5 +214,7 @@ public class EditCommandTest {
                 + editContactDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
+
+
 
 }
