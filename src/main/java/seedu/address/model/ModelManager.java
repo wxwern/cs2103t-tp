@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -115,6 +116,11 @@ public class ModelManager implements Model {
     @Override
     public void deleteContact(Contact target) {
         addressBook.removeContact(target);
+        if (target.getType() == Type.ORGANIZATION) {
+            for (JobApplication i: ((Organization) target).getJobApplications()) {
+                applicationList.remove(i);
+            }
+        }
     }
 
     @Override
@@ -166,7 +172,7 @@ public class ModelManager implements Model {
     @Override
     public void addApplication(JobApplication application) {
         applicationList.add(application);
-        System.out.println(applicationList.size());
+        // TODO: Tech debt - need separate declaration for the predicates
         filteredApplications.setPredicate(c -> true);
     }
 
@@ -185,11 +191,18 @@ public class ModelManager implements Model {
     public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
         filteredContacts.setPredicate(predicate);
+        // TODO: Tech debt - inefficient?
+        filteredApplications.setPredicate(a -> predicate.test(getContactById(a.getOrganizationId())));
     }
 
     @Override
     public ObservableList<JobApplication> getFilteredApplicationList() {
         return applicationList;
+    }
+
+    @Override
+    public void sortApplications(Comparator<JobApplication> comparator) {
+        applicationList.sort(comparator);
     }
 
     @Override
