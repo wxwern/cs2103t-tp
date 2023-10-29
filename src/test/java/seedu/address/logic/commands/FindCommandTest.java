@@ -60,7 +60,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredContactList());
+        assertEquals(Collections.emptyList(), model.getDisplayedContactList());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON), model.getFilteredContactList());
+        assertEquals(Arrays.asList(ALICE, BENSON), model.getDisplayedContactList());
     }
 
     @Test

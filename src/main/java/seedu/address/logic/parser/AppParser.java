@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -76,6 +77,9 @@ public class AppParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
 
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
+
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
@@ -121,6 +125,9 @@ public class AppParser {
 
         case ListCommand.COMMAND_WORD:
             return new AutocompleteGenerator(ListCommand.AUTOCOMPLETE_SUPPLIER);
+
+        case SortCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(SortCommand.AUTOCOMPLETE_SUPPLIER);
 
         case ClearCommand.COMMAND_WORD:
         case FindCommand.COMMAND_WORD:

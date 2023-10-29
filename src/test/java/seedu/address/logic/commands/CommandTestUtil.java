@@ -121,24 +121,24 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Contact> expectedFilteredList = new ArrayList<>(actualModel.getFilteredContactList());
+        List<Contact> expectedFilteredList = new ArrayList<>(actualModel.getDisplayedContactList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
         assertEquals(expectedAddressBook, actualModel.getAddressBook());
-        assertEquals(expectedFilteredList, actualModel.getFilteredContactList());
+        assertEquals(expectedFilteredList, actualModel.getDisplayedContactList());
     }
     /**
      * Updates {@code model}'s filtered list to show only the contact at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
     public static void showContactAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredContactList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getDisplayedContactList().size());
 
-        Contact contact = model.getFilteredContactList().get(targetIndex.getZeroBased());
+        Contact contact = model.getDisplayedContactList().get(targetIndex.getZeroBased());
         final String[] splitName = contact.getName().fullName.split("\\s+");
         model.updateFilteredContactList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredContactList().size());
+        assertEquals(1, model.getDisplayedContactList().size());
     }
 
 }
