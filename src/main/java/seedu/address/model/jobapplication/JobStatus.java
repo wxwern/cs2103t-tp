@@ -15,6 +15,9 @@ public enum JobStatus {
 
     public static final JobStatus DEFAULT_STATUS = JobStatus.PENDING;
 
+    public static final String MESSAGE_CONSTRAINTS = "Job status are one of the values: pending | rejected | offered "
+            + "| accepted | turned down";
+
     private final String textRepresentation;
 
     JobStatus(String textRepresentation) {
