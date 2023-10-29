@@ -24,10 +24,14 @@ import seedu.address.model.jobapplication.JobApplication;
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER =
-            AutocompleteSupplier.from(AutocompleteDataSet.oneAmongAllOf(
-            FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL, FLAG_STALE)
-    );
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.oneAmongAllOf(
+                FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL, FLAG_STALE
+            )
+    ).configureValueMap(map -> {
+        // Disable value autocompletion for:
+        map.put(null /* preamble */, null);
+    });
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all contacts based on the specified flag.\n"
