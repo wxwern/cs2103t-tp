@@ -77,7 +77,7 @@
     "email" : "rexlee@smu.edu.sg",
     "url": "www.rex.com",
     "address" : "80 Stamford Rd",
-    "oid": "smu-is_sg",
+    "oid": "ntu-soc_sg",
     "tags" : [ "cool", "resourceful" ]
   }, {
     "name" : "Richard Lim",
@@ -87,7 +87,7 @@
     "email" : "richlee@smu.edu.sg",
     "url": "www.richard_lion_heart.com",
     "address" : "80 Stamford Rd",
-    "oid": "smu-is_sg",
+    "oid": null,
     "tags" : [ ]
   } ]
 }

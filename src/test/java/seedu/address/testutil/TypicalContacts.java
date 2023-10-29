@@ -86,7 +86,6 @@ public class TypicalContacts {
             .withTags("computing", "worldClass")
             .withStatus("Applied")
             .withPosition("Research Assistant")
-            .withRids("soc-rec_ryan")
             .build();
 
     public static final Organization NTU = new OrganizationBuilder()
@@ -142,7 +141,7 @@ public class TypicalContacts {
             .withUrl("www.rex.com")
             .withAddress("80 Stamford Rd")
             .withTags("cool", "resourceful")
-            .withOrganization(SMU)
+            .withOrganization(NTU)
             .build();
 
     public static final Recruiter RICHARD = new RecruiterBuilder()
@@ -152,7 +151,7 @@ public class TypicalContacts {
             .withEmail("richlee@smu.edu.sg")
             .withUrl("www.richard_lion_heart.com")
             .withAddress("80 Stamford Rd")
-            .withOrganization(SMU)
+            .withOrganization(null)
             .build();
 
     // Manually added

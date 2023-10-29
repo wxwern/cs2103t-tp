@@ -19,8 +19,6 @@ public class Recruiter extends Contact {
                     + "the linked organization should be present in the address book "
                     + "and have a valid id";
 
-    private final Optional<Organization> organization;
-
     /**
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
@@ -28,24 +26,15 @@ public class Recruiter extends Contact {
      */
     public Recruiter(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags,
                      Organization organization) {
-        super(name, id, phone, email, url, address, tags);
-        this.organization = Optional.ofNullable(organization);
+        super(name, id, phone, email, url, address, tags, organization);
     }
 
     public Optional<Id> getOrganizationId() {
-        return organization.map(Contact::getId);
+        return getOrganization().map(Contact::getId);
     }
 
     public Optional<Organization> getOrganization() {
-        return organization;
-    }
-
-    public boolean isLinkedToOrganization(Organization otherOrg) {
-        return organization.map(org -> org.equals(otherOrg)).orElse(false);
-    }
-
-    public boolean isLinkedToOrganization(Id organizationId) {
-        return organization.map(org -> org.getId().equals(organizationId)).orElse(false);
+        return super.getParent().map(contact -> (Organization) contact);
     }
 
     @Override
@@ -73,19 +62,19 @@ public class Recruiter extends Contact {
                 && getAddress().equals(otherContact.getAddress())
                 && getUrl().equals(otherContact.getUrl())
                 && getTags().equals(otherContact.getTags())
-                && organization.equals(otherContact.organization);
+                && getOrganization().equals(otherContact.getOrganization());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), organization
+                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), getOrganization()
         );
     }
 
     @Override
     public ToStringBuilder toStringBuilder() {
         return super.toStringBuilder()
-                .add("organization", organization);
+                .add("organization", getOrganization());
     }
 }

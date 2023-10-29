@@ -8,8 +8,13 @@ import seedu.address.logic.commands.EditCommand.EditContactDescriptor;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
+import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
+import seedu.address.model.contact.Recruiter;
+import seedu.address.model.contact.Type;
+import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,8 +41,21 @@ public class EditContactDescriptorBuilder {
         descriptor.setId(contact.getId());
         descriptor.setPhone(contact.getPhone().orElse(null));
         descriptor.setEmail(contact.getEmail().orElse(null));
+        descriptor.setUrl(contact.getUrl().orElse(null));
         descriptor.setAddress(contact.getAddress().orElse(null));
         descriptor.setTags(contact.getTags());
+
+        if (contact.getType() == Type.ORGANIZATION) {
+            Organization organization = (Organization) contact;
+            descriptor.setStatus(organization.getStatus().orElse(null));
+            descriptor.setPosition(organization.getPosition().orElse(null));
+            descriptor.setOid(null);
+        } else if (contact.getType() == Type.RECRUITER) {
+            Recruiter recruiter = (Recruiter) contact;
+            descriptor.setStatus(null);
+            descriptor.setPosition(null);
+            descriptor.setOid(recruiter.getOrganizationId().orElse(null));
+        }
     }
 
     /**
@@ -45,6 +63,14 @@ public class EditContactDescriptorBuilder {
      */
     public EditContactDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Id} of the {@code EditContactDescriptor} that we are building.
+     */
+    public EditContactDescriptorBuilder withId(String id) {
+        descriptor.setId(new Id(id));
         return this;
     }
 
@@ -61,6 +87,14 @@ public class EditContactDescriptorBuilder {
      */
     public EditContactDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Url} of the {@code EditContactDescriptor} that we are building.
+     */
+    public EditContactDescriptorBuilder withUrl(String url) {
+        descriptor.setUrl(new Url(url));
         return this;
     }
 
