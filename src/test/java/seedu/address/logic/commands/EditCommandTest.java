@@ -79,7 +79,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_UNLINKED_ORGANIZATION.getZeroBased()), editedContact);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -96,7 +96,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_UNLINKED_RECRUITER.getZeroBased()), editedContact);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -114,7 +114,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_LINKED_ORGANIZATION.getZeroBased()), editedOrganization);
         for (Contact child : originalOrganization.getChildren(expectedModel)) {
             expectedModel.setContact(child,
@@ -135,7 +135,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedRecruiter));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_LINKED_RECRUITER.getZeroBased()), editedRecruiter);
 
         Contact parentContact = editedRecruiter.getParent().orElse(null);
@@ -160,7 +160,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_LINKED_ORGANIZATION.getZeroBased()), editedOrganization);
         for (Contact child : originalOrganization.getChildren(expectedModel)) {
             expectedModel.setContact(child,
@@ -184,7 +184,7 @@ public class EditCommandTest {
                 .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedRecruiter));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList()
+        expectedModel.setContact(model.getDisplayedContactList()
                 .get(INDEX_LINKED_RECRUITER.getZeroBased()), editedRecruiter);
 
         Contact parentContact = editedRecruiter.getParent().orElse(null);
@@ -197,7 +197,7 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldsSpecifiedUnfilteredList_linkedOrganizationSuccess() {
         EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, new EditContactDescriptor());
-        Contact editedContact = model.getFilteredContactList().get(INDEX_LINKED_ORGANIZATION.getZeroBased());
+        Contact editedContact = model.getDisplayedContactList().get(INDEX_LINKED_ORGANIZATION.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
                 Messages.format(editedContact));
@@ -210,7 +210,7 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldsSpecifiedUnfilteredList_linkedRecruiterSuccess() {
         EditCommand editCommand = new EditCommand(INDEX_LINKED_RECRUITER, new EditContactDescriptor());
-        Contact editedRecruiter = model.getFilteredContactList().get(INDEX_LINKED_RECRUITER.getZeroBased());
+        Contact editedRecruiter = model.getDisplayedContactList().get(INDEX_LINKED_RECRUITER.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
                 Messages.format(editedRecruiter));
@@ -227,7 +227,7 @@ public class EditCommandTest {
     public void execute_filteredList_linkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_LINKED_ORGANIZATION);
 
-        Contact contactInFilteredList = model.getFilteredContactList()
+        Contact contactInFilteredList = model.getDisplayedContactList()
                 .get(INDEX_FIRST_CONTACT.getZeroBased());
         Organization editedOrganization = new OrganizationBuilder((Organization) contactInFilteredList)
                 .withName(VALID_NAME_BOB).build();
@@ -238,7 +238,7 @@ public class EditCommandTest {
                 Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
+        expectedModel.setContact(model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
                 editedOrganization);
         for (Contact child : contactInFilteredList.getChildren(expectedModel)) {
             expectedModel.setContact(child,
@@ -252,7 +252,7 @@ public class EditCommandTest {
     public void execute_filteredList_linkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_LINKED_RECRUITER);
 
-        Contact contactInFilteredList = model.getFilteredContactList()
+        Contact contactInFilteredList = model.getDisplayedContactList()
                 .get(INDEX_FIRST_CONTACT.getZeroBased());
         Recruiter editedContact = new RecruiterBuilder((Recruiter) contactInFilteredList)
                 .withName(VALID_NAME_BOB).build();
@@ -263,7 +263,7 @@ public class EditCommandTest {
                 Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
+        expectedModel.setContact(model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
                 editedContact);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);

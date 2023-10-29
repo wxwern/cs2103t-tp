@@ -37,7 +37,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_unlinkedOrganizationSuccess() {
-        Contact contactToDelete = model.getFilteredContactList()
+        Contact contactToDelete = model.getDisplayedContactList()
                 .get(INDEX_UNLINKED_ORGANIZATION.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_UNLINKED_ORGANIZATION);
 
@@ -52,7 +52,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_unlinkedRecruiterSuccess() {
-        Contact contactToDelete = model.getFilteredContactList()
+        Contact contactToDelete = model.getDisplayedContactList()
                 .get(INDEX_UNLINKED_RECRUITER.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_UNLINKED_RECRUITER);
 
@@ -67,7 +67,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_linkedOrganizationSuccess() {
-        Contact contactToDelete = model.getFilteredContactList()
+        Contact contactToDelete = model.getDisplayedContactList()
                 .get(INDEX_LINKED_ORGANIZATION.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_LINKED_ORGANIZATION);
 
@@ -89,7 +89,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_linkedRecruiterSuccess() {
-        Contact contactToDelete = model.getFilteredContactList()
+        Contact contactToDelete = model.getDisplayedContactList()
                 .get(INDEX_LINKED_RECRUITER.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_LINKED_RECRUITER);
 
@@ -135,7 +135,7 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_unlinkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
 
-        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact contactToDelete = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
@@ -152,7 +152,7 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_unlinkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_UNLINKED_RECRUITER);
 
-        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact contactToDelete = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
@@ -169,7 +169,7 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_linkedOrganizationSuccess() {
         showContactAtIndex(model, INDEX_LINKED_ORGANIZATION);
 
-        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact contactToDelete = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
@@ -193,7 +193,7 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_linkedRecruiterSuccess() {
         showContactAtIndex(model, INDEX_LINKED_RECRUITER);
 
-        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact contactToDelete = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_CONTACT);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
