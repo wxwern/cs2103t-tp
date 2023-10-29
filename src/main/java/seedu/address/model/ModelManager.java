@@ -39,6 +39,7 @@ public class ModelManager implements Model {
     private final ObservableList<JobApplication> applicationList;
     private final FilteredList<JobApplication> filteredApplications;
     private final SortedList<Contact> sortedContacts;
+    private final SortedList<JobApplication> sortedApplications;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,8 +56,10 @@ public class ModelManager implements Model {
         applicationList = FXCollections.observableArrayList(filteredContacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
                 .collect(Collectors.toList()));
-        filteredApplications = new FilteredList<>(applicationList, s->true);
+        this.sortedApplications = new SortedList<>(this.applicationList);
+        this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
         this.displayedContacts = filteredContacts;
     }
 
@@ -207,7 +210,7 @@ public class ModelManager implements Model {
 
     @Override
     public void sortApplications(Comparator<JobApplication> comparator) {
-        applicationList.sort(comparator);
+        sortedApplications.setComparator(comparator);
     }
 
     @Override
