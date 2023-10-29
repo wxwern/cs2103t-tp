@@ -246,7 +246,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Contact> getFilteredContactList() {
+        public ObservableList<Contact> getDisplayedContactList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -261,7 +261,11 @@ public class AddCommandTest {
         }
 
         @Override
+<<<<<<< HEAD
         public void sortApplications(Comparator<JobApplication> comparator) {
+=======
+        public void updateSortedContactList(Comparator<Contact> comparator) {
+>>>>>>> master
             throw new AssertionError("This method should not be called.");
         }
     }

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -33,9 +34,11 @@ public class ModelManager implements Model {
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
+    private final FilteredList<Contact> displayedContacts;
     private final FilteredList<Contact> filteredContacts;
     private final ObservableList<JobApplication> applicationList;
     private final FilteredList<JobApplication> filteredApplications;
+    private final SortedList<Contact> sortedContacts;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,14 +49,15 @@ public class ModelManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
+        this.filteredContacts = new FilteredList<>(sortedContacts);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredContacts = new FilteredList<>(this.addressBook.getContactList());
         applicationList = FXCollections.observableArrayList(filteredContacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
                 .collect(Collectors.toList()));
         filteredApplications = new FilteredList<>(applicationList, s->true);
-
+        this.displayedContacts = filteredContacts;
     }
 
     public ModelManager() {
@@ -156,7 +160,7 @@ public class ModelManager implements Model {
             contact = getContactById(id);
         } else { // else index is not null instead
 
-            List<Contact> lastShownList = this.getFilteredContactList();
+            List<Contact> lastShownList = this.getDisplayedContactList();
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new IllegalValueException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
             }
@@ -183,8 +187,8 @@ public class ModelManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Contact> getFilteredContactList() {
-        return filteredContacts;
+    public ObservableList<Contact> getDisplayedContactList() {
+        return this.displayedContacts;
     }
 
     @Override
@@ -204,6 +208,12 @@ public class ModelManager implements Model {
     @Override
     public void sortApplications(Comparator<JobApplication> comparator) {
         applicationList.sort(comparator);
+    }
+
+    @Override
+    public void updateSortedContactList(Comparator<Contact> comparator) {
+        requireNonNull(comparator);
+        this.sortedContacts.setComparator(comparator);
     }
 
     @Override
