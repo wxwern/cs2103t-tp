@@ -192,6 +192,7 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredContacts.setPredicate(predicate);
         // TODO: Tech debt - inefficient?
+        // TODO: Bug - does not show the thing.
         filteredApplications.setPredicate(a -> predicate.test(getContactById(a.getOrganizationId())));
     }
 

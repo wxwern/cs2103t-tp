@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_NOT_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
+import static seedu.address.model.Model.PREDICATE_SHOW_NOT_APPLIED_ORGANIZATIONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_ORGANIZATIONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_RECRUITERS;
 
@@ -20,12 +22,13 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
-            FLAG_ORGANIZATION, FLAG_RECRUITER
+            FLAG_ORGANIZATION, FLAG_RECRUITER, FLAG_NOT_APPLIED
     );
 
     public static final String MESSAGE_SUCCESS_ALL_CONTACTS = "Listed all contacts";
     public static final String MESSAGE_SUCCESS_ORGANIZATIONS = "Listed all organizations";
     public static final String MESSAGE_SUCCESS_RECRUITERS = "Listed all recruiters";
+    public static final String MESSAGE_SUCCESS_TO_APPLY = "Listed all organizations that have not been applied to.";
 
     private final Predicate<Contact> predicate;
 
@@ -46,6 +49,8 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_ORGANIZATIONS);
         } else if (predicate.equals(PREDICATE_SHOW_ONLY_RECRUITERS)) {
             return new CommandResult(MESSAGE_SUCCESS_RECRUITERS);
+        } else if (predicate.equals(PREDICATE_SHOW_NOT_APPLIED_ORGANIZATIONS)) {
+            return new CommandResult(MESSAGE_SUCCESS_TO_APPLY);
         }
         return new CommandResult(MESSAGE_SUCCESS_ALL_CONTACTS);
     }

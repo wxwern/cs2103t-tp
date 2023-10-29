@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Type;
 import seedu.address.model.jobapplication.JobApplication;
 
@@ -21,6 +22,9 @@ public interface Model {
     Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = contact -> true;
     Predicate<Contact> PREDICATE_SHOW_ONLY_ORGANIZATIONS = contact -> contact.getType() == Type.ORGANIZATION;
     Predicate<Contact> PREDICATE_SHOW_ONLY_RECRUITERS = contact -> contact.getType() == Type.RECRUITER;
+    Predicate<Contact> PREDICATE_SHOW_NOT_APPLIED_ORGANIZATIONS =
+            contact -> contact.getType() == Type.ORGANIZATION
+                    && ((Organization) contact).getJobApplications().length == 0;
 
 
     /**
