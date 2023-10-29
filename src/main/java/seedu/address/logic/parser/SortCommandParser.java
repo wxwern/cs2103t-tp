@@ -23,6 +23,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class SortCommandParser implements Parser<SortCommand> {
 
     //this is where i create the comparators
+    // TODO: Tech debt - implement tests
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
