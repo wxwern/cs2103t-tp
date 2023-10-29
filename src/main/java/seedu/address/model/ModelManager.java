@@ -33,6 +33,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Contact> filteredContacts;
+    private final FilteredList<JobApplication> filteredApplications;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,6 +46,11 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredContacts = new FilteredList<>(this.addressBook.getContactList());
+        filteredApplications =  new FilteredList<>(filteredContacts.stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        filteredApplications.sort(JobApplication.DEADLINE_COMPARATOR);
     }
 
     public ModelManager() {
@@ -168,10 +174,7 @@ public class ModelManager implements Model {
 
     @Override
     public ObservableList<JobApplication> getFilteredApplicationList() {
-        return filteredContacts.stream()
-                .filter(c -> c.getType() == Type.ORGANIZATION)
-                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return filteredApplications;
     }
 
     @Override
