@@ -42,7 +42,7 @@ public class EditCommandTest {
     public void execute_editCommandByTargetId_success() {
         showContactAtIndex(model, INDEX_FIRST_CONTACT);
 
-        Contact contactInFilteredList = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Contact contactInFilteredList = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         Contact editedContact = new ContactBuilder(contactInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_CONTACT,
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
@@ -51,7 +51,7 @@ public class EditCommandTest {
                 Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setContact(model.getFilteredContactList().get(0), editedContact);
+        expectedModel.setContact(model.getDisplayedContactList().get(0), editedContact);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
