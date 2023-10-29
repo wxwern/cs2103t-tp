@@ -127,16 +127,16 @@ public interface Model {
     /** Returns an unmodifiable view of the displayed contact list */
     ObservableList<Contact> getDisplayedContactList();
 
-    /** Returns an unmodifiable view of the filtered application list */
-    ObservableList<JobApplication> getFilteredApplicationList();
-
     /**
      * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredContactList(Predicate<Contact> predicate);
 
-
-    void sortApplications(Comparator<JobApplication> comparator);
     void updateSortedContactList(Comparator<Contact> comparator);
+
+    /** Returns an unmodifiable view of the filtered application list */
+    ObservableList<JobApplication> getDisplayedApplicationList();
+
+    void updateSortedApplicationList(Comparator<JobApplication> comparator);
 }

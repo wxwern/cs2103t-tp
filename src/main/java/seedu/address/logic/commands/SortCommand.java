@@ -72,7 +72,7 @@ public class SortCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         if (comparatorApplication != null) {
-            model.sortApplications(comparatorApplication);
+            model.updateSortedApplicationList(comparatorApplication);
             return new CommandResult("Sorted by last updated application");
         }
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);

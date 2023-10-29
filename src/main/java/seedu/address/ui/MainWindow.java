@@ -117,7 +117,7 @@ public class MainWindow extends UiPart<Stage> {
         contactListPanel = new ContactListPanel(logic.getDisplayedContactList());
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
-        applicationListPanel = new ApplicationListPanel(logic.getFilteredApplicationList());
+        applicationListPanel = new ApplicationListPanel(logic.getDisplayedApplicationList());
         applicationListPanelPlaceholder.getChildren().add(applicationListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();

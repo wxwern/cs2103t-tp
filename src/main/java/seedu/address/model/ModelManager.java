@@ -36,10 +36,11 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Contact> displayedContacts;
     private final FilteredList<Contact> filteredContacts;
-    private final ObservableList<JobApplication> applicationList;
-    private final FilteredList<JobApplication> filteredApplications;
     private final SortedList<Contact> sortedContacts;
+    private final ObservableList<JobApplication> applicationList;
     private final SortedList<JobApplication> sortedApplications;
+    private final FilteredList<JobApplication> filteredApplications;
+    private final FilteredList<JobApplication> displayedApplications;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -50,17 +51,18 @@ public class ModelManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userPrefs = new UserPrefs(userPrefs);
         this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
         this.filteredContacts = new FilteredList<>(sortedContacts);
-        this.userPrefs = new UserPrefs(userPrefs);
-        applicationList = FXCollections.observableArrayList(filteredContacts.stream()
+        this.displayedContacts = filteredContacts;
+        this.applicationList = FXCollections.observableArrayList(filteredContacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
                 .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
                 .collect(Collectors.toList()));
         this.sortedApplications = new SortedList<>(this.applicationList);
         this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
-        this.displayedContacts = filteredContacts;
+        this.displayedApplications = filteredApplications;
     }
 
     public ModelManager() {
@@ -204,19 +206,19 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ObservableList<JobApplication> getFilteredApplicationList() {
-        return applicationList;
-    }
-
-    @Override
-    public void sortApplications(Comparator<JobApplication> comparator) {
-        sortedApplications.setComparator(comparator);
-    }
-
-    @Override
     public void updateSortedContactList(Comparator<Contact> comparator) {
         requireNonNull(comparator);
         this.sortedContacts.setComparator(comparator);
+    }
+
+    @Override
+    public ObservableList<JobApplication> getDisplayedApplicationList() {
+        return displayedApplications;
+    }
+
+    @Override
+    public void updateSortedApplicationList(Comparator<JobApplication> comparator) {
+        sortedApplications.setComparator(comparator);
     }
 
     @Override

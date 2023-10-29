@@ -43,7 +43,7 @@ public interface Logic {
     ObservableList<Contact> getDisplayedContactList();
 
     /** Returns an unmodifiable view of the filtered list of applications. */
-    ObservableList<JobApplication> getFilteredApplicationList();
+    ObservableList<JobApplication> getDisplayedApplicationList();
 
     /**
      * Returns the user prefs' address book file path.

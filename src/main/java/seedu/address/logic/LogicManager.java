@@ -81,8 +81,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<JobApplication> getFilteredApplicationList() {
-        return model.getFilteredApplicationList();
+    public ObservableList<JobApplication> getDisplayedApplicationList() {
+        return model.getDisplayedApplicationList();
     }
 
     @Override
