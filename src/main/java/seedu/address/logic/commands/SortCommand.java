@@ -16,6 +16,9 @@ import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 
+/**
+ * Sorts all contacts in the address book.
+ */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 

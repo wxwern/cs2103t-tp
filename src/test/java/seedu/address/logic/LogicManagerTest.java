@@ -104,8 +104,7 @@ public class LogicManagerTest {
 
     @Test
     public void getDisplayedContactList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class,
-                () -> logic.getDisplayedContactList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> logic.getDisplayedContactList().remove(0));
     }
 
     /**
