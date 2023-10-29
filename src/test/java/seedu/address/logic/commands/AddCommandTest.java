@@ -261,11 +261,12 @@ public class AddCommandTest {
         }
 
         @Override
-<<<<<<< HEAD
         public void sortApplications(Comparator<JobApplication> comparator) {
-=======
+            throw new AssertionError("This method should not be called.");
+
+        }
+        @Override
         public void updateSortedContactList(Comparator<Contact> comparator) {
->>>>>>> master
             throw new AssertionError("This method should not be called.");
         }
     }
