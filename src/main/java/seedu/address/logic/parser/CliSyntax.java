@@ -24,6 +24,8 @@ public class CliSyntax {
     public static final Flag FLAG_DEADLINE = new Flag("by");
     public static final Flag FLAG_STAGE = new Flag("stage");
     public static final Flag FLAG_DESCRIPTION = new Flag("desc");
+    public static final Flag FLAG_NOT_APPLIED = new Flag("toapply");
+    public static final Flag FLAG_STALE = new Flag("stale");
 
 
 }

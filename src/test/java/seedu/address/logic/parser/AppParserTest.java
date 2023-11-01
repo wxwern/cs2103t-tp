@@ -143,7 +143,7 @@ public class AppParserTest {
         // List example
         userInput = "list -o";
         assertEquals(
-                List.of("list --org"),
+                List.of("list --org", "list --toapply"),
                 parser.parseCompletionGenerator(userInput)
                         .generateCompletions(userInput)
                         .collect(Collectors.toList())

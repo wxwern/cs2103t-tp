@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * The latest time that the job application was updated.
  * Completely immutable, users are not able to specify the updated time.
  */
-public class LastUpdatedTime {
+public class LastUpdatedTime implements Comparable<LastUpdatedTime> {
 
     private static final String INVALID_FORMAT_MESSAGE = "The given last modified datetime is invalid: %s\n Delete "
             + "the last updated time section to reset the last updated time.";
@@ -63,4 +63,8 @@ public class LastUpdatedTime {
         return lastUpdatedTime.equals(otherLastUpdate.lastUpdatedTime);
     }
 
+    @Override
+    public int compareTo(LastUpdatedTime o) {
+        return this.lastUpdatedTime.compareTo(o.lastUpdatedTime);
+    }
 }
