@@ -217,7 +217,8 @@ class JsonAdaptedContact {
             );
         }
         default:
-            return new Contact(modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress, modelTags);
+            return new Contact(modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
+                    modelTags, null);
         }
     }
 

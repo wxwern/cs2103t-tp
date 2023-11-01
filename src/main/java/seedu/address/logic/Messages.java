@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -105,6 +106,16 @@ public class Messages {
                 .append("; Tags: ");
         contact.getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    /**
+     * Formats the given {@code childrenContacts} for display to the user.
+     */
+    public static String formatChildren(List<Contact> childrenContacts) {
+        return childrenContacts.stream()
+                .map(c -> Messages.format(c) + "\n")
+                .reduce((c1, c2) -> c1 + c2)
+                .orElse("No other contacts found");
     }
 
 }

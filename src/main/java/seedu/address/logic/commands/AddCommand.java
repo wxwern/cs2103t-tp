@@ -177,7 +177,7 @@ public class AddCommand extends Command {
     }
 
     protected Contact createContact() {
-        return new Contact(name, id, phone, email, url, address, tags);
+        return new Contact(name, id, phone, email, url, address, tags, null);
     }
 
     @Override

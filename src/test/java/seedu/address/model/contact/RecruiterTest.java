@@ -2,6 +2,7 @@ package seedu.address.model.contact;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -48,6 +49,20 @@ class RecruiterTest {
         // id differs in case, all other attributes same -> returns false
         editedRyan = new RecruiterBuilder(RYAN).withId(RYAN.getId().value.toUpperCase()).build();
         assertFalse(RYAN.isSameContact(editedRyan));
+    }
+
+    @Test
+    public void recruiterLinkedToValidOrganization() {
+        Recruiter linkedRecruiter = new RecruiterBuilder(RYAN).withOrganization(NTU).build();
+        assertEquals(linkedRecruiter.getOrganization().orElse(null), NTU);
+        assertEquals(linkedRecruiter.getOrganizationId().orElse(null), NTU.getId());
+    }
+
+    @Test
+    public void recruiterLinkedToNoOrganization() {
+        Recruiter unlinkedRecruiter = new RecruiterBuilder(RYAN).withOrganization(null).build();
+        assertNull(unlinkedRecruiter.getOrganization().orElse(null));
+        assertNull(unlinkedRecruiter.getOrganizationId().orElse(null));
     }
 
     @Test

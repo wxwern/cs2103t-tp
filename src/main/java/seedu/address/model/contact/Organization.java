@@ -52,7 +52,7 @@ public class Organization extends Contact {
             Address address, Set<Tag> tags, Status status, Position position,
             Set<Id> rids, List<JobApplication> jobApplications
     ) {
-        super(name, id, phone, email, url, address, tags);
+        super(name, id, phone, email, url, address, tags, null);
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
         this.jobApplications.addAll(jobApplications);

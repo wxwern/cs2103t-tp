@@ -182,10 +182,6 @@ public class EditCommand extends Command {
         return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
     }
 
-
-
-
-
     /**
      * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
      * edited with {@code editContactDescriptor}.
@@ -209,15 +205,31 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editContactDescriptor.getTags()
             .orElse(contactToEdit.getTags());
 
-
+        // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
             Status updatedStatus = editContactDescriptor.getStatus()
                     .orElse(((Organization) contactToEdit).getStatus().orElse(null));
 
             Position updatedPosition = editContactDescriptor.getPosition()
                     .orElse(((Organization) contactToEdit).getPosition().orElse(null));
-            return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
-                    updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+
+            Organization updatedOrganization = new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
+                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+
+            // Updates all recruiters linked to the old organization to link to the updated one.
+            List<Contact> childrenContacts = contactToEdit.getChildren(model);
+            for (Contact child : childrenContacts) {
+                assert child.getType() == Type.RECRUITER;
+                Recruiter updatedRecruiter = new Recruiter(
+                        child.getName(), child.getId(), child.getPhone().orElse(null),
+                        child.getEmail().orElse(null), child.getUrl().orElse(null),
+                        child.getAddress().orElse(null), child.getTags(), updatedOrganization
+                );
+                model.setContact(child, updatedRecruiter);
+            }
+
+            return updatedOrganization;
+
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()
@@ -235,7 +247,8 @@ public class EditCommand extends Command {
                     updatedAddress, updatedTags, updatedOrganization);
         }
 
-        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
+        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
+                updatedTags, null);
     }
 
     @Override
