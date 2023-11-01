@@ -7,11 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.logic.parser.CliSyntax.FLAG_REVERSE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
@@ -19,7 +15,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Comparator;
-import java.util.List;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
