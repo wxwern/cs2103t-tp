@@ -28,42 +28,94 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Usage
+
+This section guides you on understanding and typing commands in the app, like formatting and autocomplete.
+
+If you're instead looking for available commands, check out the [Features](#features) section instead. 
+
+### Command Structure
+
+At a basic level, we write commands in the command box at the top of Jobby's window.
+
+Commands are made up of a few parts: The **command**, **parameter names** and **input values**.
+
+A command like "`edit google --name Google SG --id google-sg`" would refer to:
+* the command `edit`,
+* with a command value `google`,
+* with a parameter `--name`,
+  * which has the parameter value `Google SG`,
+* with a parameter `--id`,
+  * which has the parameter value `google-sg`.
+
+Parameters may be in any order, and are of the form `-a` or `--abc123`.
+
+Any extra values to commands that don't accept them will be ignored (or if ambiguous, throws an error).
+
+### Command Format
+
+Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
+
+* **Words in `UPPER_CASE`**
+  * The parts where you should be typing your parameter values.
+  * e.g., `--name NAME` means inputting names along the lines of `--name Alice`.
+
+* **Terms separated by `/`**
+  * Exactly one of the given options
+  * e.g., `--a/--b` means either `--a` or `--b` but not `--a --b`.
+
+* **Terms surrounded by `[` and `]`**
+  * An optional parameter or option that may be omitted.
+
+* **Terms ending with `...`**
+  * The parameter is multivalued.
+  * e.g., `[--tag TAG]...` means `--tag` can be repeated from 0 to any number of times.
+
+### Command Autocomplete
+
+Command autocompletion allows you to type commands in Jobby at unimaginable speeds.
+
+As you type your command, you may see a list of suggested completions pop up like below. 
+Just press **TAB** or **SPACE** to select the first suggestion to fill in!
+
+![Autocomplete Screenshot](images/autocomplete.png)
+
+To temporarily hide all suggestions, press **ESC**. This temporarily disables autocompletion for the next keystroke. 
+
+If suggestions were hidden or aren't shown when they should, press **TAB** to prompt Jobby to bring it back.
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+**:bulb: Additional tips:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used like `add --name John Doe`.
+* Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
 
-* Terms prefixed with `--` are used to assign a value to some action or property, or to choose an option out of a few settings.
-  e.g. the `--name` field (which requires a `NAME` supplied after it) may configure the name of a contact, while a switch like `--recursive` (which doesn't accept values) may explicitly activate a recursive mode for an action.
+  * For example, you can type `-nm` to get the autocompletion result of `--name`.
 
-* Items in square brackets are optional.<br>
-  e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
+  * This allows you to quickly choose between parameter names with similar prefixes e.g., by typing
+    `-dsp` to select `--description` instead of `--descending`.
 
-* Items in angled brackets describe what the content should be.<br>
-  e.g. `--date <yyyymmdd formatted DATE>` means the parameter `DATE`, which is supplied after the `--date` flag, should be formated as `yyyymmdd`.
+* If you rather choose from the list instead of typing out the prefix, it is possible to use the **UP** and **DOWN**
+  arrow keys to navigate through the menu, then press **ENTER** to select them.
 
-* Items with `...` after them can be used multiple times including zero times.<br>
-  e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
+* Accidentally triggered autocomplete when you didn't intend to? Don't worry, just press **BACKSPACE** to immediately 
+  revert to your previously typed text.
 
-* Items separated by `/` means that only one of them can be used per command.<br>
-  e.g. `--org/--rec` means that either `--org` or `--rec` can be supplied as a flag but not both at the same time.
-
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
-
-* Extraneous values for all commands will be ignored by default.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extra values like `list --org 456` will ignore "456".
-
-* Extraneous parameters for all commands will be rejected with an error.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other parameters, then supplying `list --org --abc` will result in an error.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+## Features
+
+We can see a list of features available in Jobby here.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**<br>
+
+* If you are using a PDF version of this document, be careful when copying and pasting commands
+  that span multiple lines as space characters surrounding line-breaks may be omitted when copied over
+  to the application.
+
+</div>
 
 ### Viewing help: `help`
 
