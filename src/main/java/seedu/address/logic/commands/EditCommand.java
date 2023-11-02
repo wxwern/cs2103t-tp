@@ -58,7 +58,7 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    private static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteDataSet.concat(
+    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteDataSet.concat(
             AutocompleteDataSet.onceForEachOf(
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
