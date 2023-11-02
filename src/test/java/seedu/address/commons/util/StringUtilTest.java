@@ -159,6 +159,8 @@ public class StringUtilTest {
         assertTrue(StringUtil.isFuzzyMatch("b12", "abc123"));
 
         // Boundaries
+        assertTrue(StringUtil.isFuzzyMatch("", "abc123"));
+
         assertTrue(StringUtil.isFuzzyMatch("a", "abc123"));
         assertTrue(StringUtil.isFuzzyMatch("3", "abc123"));
 

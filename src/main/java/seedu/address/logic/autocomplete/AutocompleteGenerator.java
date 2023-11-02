@@ -51,23 +51,14 @@ public class AutocompleteGenerator {
     private final BiFunction<String, Model, Stream<String>> resultEvaluationFunction;
 
     /**
-     * Constructs an autocomplete generator based on the given set of reference full command strings.
-     */
-    public AutocompleteGenerator(Stream<String> referenceCommands) {
-        this(() -> referenceCommands);
-    }
-
-    /**
      * Constructs an autocomplete generator based on the given supplier of full command strings.
      */
     public AutocompleteGenerator(Supplier<Stream<String>> referenceCommandsSupplier) {
         resultEvaluationFunction = (partialCommand, model) -> {
-            if (partialCommand == null) {
-                return Stream.empty();
-            }
+            String input = partialCommand == null ? "" : partialCommand;
 
             return referenceCommandsSupplier.get()
-                    .filter(term -> StringUtil.isFuzzyMatch(partialCommand, term))
+                    .filter(term -> StringUtil.isFuzzyMatch(input, term))
                     .sorted(TEXT_FUZZY_MATCH_COMPARATOR.apply(partialCommand))
                     .distinct();
         };

@@ -103,12 +103,12 @@ public class AppParser {
      */
     public AutocompleteGenerator parseCompletionGenerator(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
+        if (!matcher.matches() && !userInput.isEmpty()) {
             return AutocompleteGenerator.NO_RESULTS;
         }
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = userInput.isEmpty() ? "" : matcher.group("commandWord");
 
-        logger.finest("Preparing autocomplete: " + userInput);
+        logger.finest("Preparing autocomplete: '" + userInput + "'");
 
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:
@@ -137,7 +137,7 @@ public class AppParser {
 
         default:
             // Not a valid command. Return autocompletion results based on all the known command names.
-            return new AutocompleteGenerator(
+            return new AutocompleteGenerator(() ->
                     Command.getCommandWords(Stream.of(
                             AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
                             ListCommand.class, FindCommand.class, SortCommand.class, HelpCommand.class,
