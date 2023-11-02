@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -27,8 +28,10 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
-            FLAG_RECURSIVE, FLAG_APPLICATION
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.oneAmongAllOf(
+                FLAG_RECURSIVE, FLAG_APPLICATION
+            )
     ).configureValueMap(map -> {
         // Add value autocompletion data for:
         map.put(null /* preamble */, (command, model) -> {
