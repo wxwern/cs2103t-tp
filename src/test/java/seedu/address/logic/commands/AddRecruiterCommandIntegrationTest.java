@@ -51,7 +51,8 @@ public class AddRecruiterCommandIntegrationTest {
         );
 
         assertCommandSuccess(addCommand, model,
-                String.format(AddRecruiterCommand.MESSAGE_SUCCESS, Messages.format(validRecruiter)),
+                String.format(AddRecruiterCommand.MESSAGE_SUCCESS,
+                        validRecruiter.getType(), Messages.format(validRecruiter)),
                 expectedModel);
     }
 
