@@ -133,6 +133,9 @@ public class AppParser {
         case SortCommand.COMMAND_WORD:
             return new AutocompleteGenerator(SortCommand.AUTOCOMPLETE_SUPPLIER);
 
+        case ReminderCommand.COMMAND_WORD:
+            return new AutocompleteGenerator(ReminderCommand.AUTOCOMPLETE_SUPPLIER);
+
         case ClearCommand.COMMAND_WORD:
         case FindCommand.COMMAND_WORD:
         case ExitCommand.COMMAND_WORD:
@@ -144,8 +147,8 @@ public class AppParser {
             return new AutocompleteGenerator(
                     Command.getCommandWords(Stream.of(
                             AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
-                            ListCommand.class, FindCommand.class, SortCommand.class, HelpCommand.class,
-                            ClearCommand.class, ExitCommand.class
+                            ListCommand.class, FindCommand.class, SortCommand.class, ReminderCommand.class,
+                            HelpCommand.class, ClearCommand.class, ExitCommand.class
                     )).filter(Optional::isPresent).map(Optional::get)
             );
 

@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;

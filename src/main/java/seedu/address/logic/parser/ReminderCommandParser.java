@@ -7,11 +7,14 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_LATEST;
 import seedu.address.logic.commands.ReminderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new {@code ReminderCommand} object
+ */
 public class ReminderCommandParser implements Parser<ReminderCommand> {
     // TODO: Tech debt - implement tests
     /**
-     * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns a SortCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the
+     * {@code ReminderCommand} and returns a {@code ReminderCommand} object for execution.
      */
     public ReminderCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
