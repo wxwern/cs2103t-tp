@@ -16,8 +16,7 @@ public class Deadline implements Comparable<Deadline> {
     public static final String MESSAGE_CONSTRAINTS =
             "Deadlines should be in the format of DD-MM-YYYY";
 
-    //TODO: To verify that this regex is actually correct
-    public static final String VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-(19|20)\\d\\d$";
+    public static final String VALIDATION_REGEX = "^(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-\\d{4}$";
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("d-M-y");
     public final LocalDate deadline;
