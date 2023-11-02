@@ -32,6 +32,15 @@ public class Deadline implements Comparable<Deadline> {
     }
 
     /**
+     * Gives a deadline given a {@link LocalDate} instance.
+     * @param deadline as a {@link LocalDate} instance.
+     */
+    public Deadline(LocalDate deadline) {
+        requireNonNull(deadline);
+        this.deadline = deadline;
+    }
+
+    /**
      * Gives a default deadline 14 days from now.
      */
     public Deadline() {
