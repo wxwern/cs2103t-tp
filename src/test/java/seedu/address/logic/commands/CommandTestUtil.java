@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -45,6 +47,9 @@ public class CommandTestUtil {
     public static final String VALID_STATUS_BOB = "Rejected";
     public static final String VALID_POSITION_BOB = "Junior Developer";
     public static final String VALID_OID_AMY = "amy_corp-inc";
+
+    public static final String ORG_DESC = " " + FLAG_ORGANIZATION;
+    public static final String REC_DESC = " " + FLAG_RECRUITER;
 
     public static final String NAME_DESC_AMY = " " + FLAG_NAME + " " + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + FLAG_NAME + " " + VALID_NAME_BOB;
