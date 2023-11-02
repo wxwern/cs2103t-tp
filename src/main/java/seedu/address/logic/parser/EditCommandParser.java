@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
@@ -82,7 +81,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
 
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
-                FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_STATUS, FLAG_POSITION, FLAG_ORGANIZATION_ID);
+                FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_ORGANIZATION_ID);
 
         EditContactDescriptor editContactDescriptor = new EditContactDescriptor();
 
@@ -104,12 +103,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(FLAG_ID).isPresent()) {
             editContactDescriptor.setId(ParserUtil.parseId(argMultimap.getValue(FLAG_ID).get()));
-        }
-        if (argMultimap.getValue(FLAG_STATUS).isPresent()) {
-            editContactDescriptor.setStatus(ParserUtil.parseStatus(argMultimap.getValue(FLAG_STATUS).get()));
-        }
-        if (argMultimap.getValue(FLAG_POSITION).isPresent()) {
-            editContactDescriptor.setPosition(ParserUtil.parsePosition(argMultimap.getValue(FLAG_POSITION).get()));
         }
         if (argMultimap.getValue(FLAG_ORGANIZATION_ID).isPresent()) {
             editContactDescriptor.setOid(ParserUtil.parseId(argMultimap.getValue(FLAG_ORGANIZATION_ID).get()));
