@@ -121,8 +121,6 @@ Examples:
 
 #### Adding a recruiter contact: `add --rec`
 
-_{Work in progress...}_
-
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 
