@@ -243,6 +243,43 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### Apply feature
+The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
+
+The following sequence diagram shows how job applications are added to Jobby
+
+<img src="images/apply-command/ApplyCommand.png">
+
+#### Design Considerations
+**Aspect: How to store applications**
+
+* **Actual: Applications are stored as a JSON array belonging to their respective organizations**
+  * Pros: Easy to implement
+  * Cons: Need to initialise a list of job applications from every organization every time on startup. 
+
+* **Alternative 1: Applications are stored as a JSON array separate from the contacts**
+  * Pros: Applications can be loaded immediately into Jobby without waiting for organizations to be initialised.
+  * Cons: Can have complications on other features, such as identifying which applications belong to which organizations.
+
+**Aspect: How to show applications**
+
+* **Actual: Applications are shown on a separate list**
+  * Pros: Easy to implement, less command needed to switch view from split view.
+  * Cons: Requires syncing the list with organizations, since there is no guarantee that the applications in the UI list are the same as all the ones in organizations.
+
+* **Alternative 1: Use a command to switch list view**
+  * Pros: More compact, does not require larger screen size.
+  * Cons: More difficult to implement, requires a command that directly changes the UI.
+
+**Aspect: What should the command syntax be**
+
+* **Actual: Use a separate command for adding applications**
+  * Pros: Easier to type out the command, does not require a lot of typing.
+  * Cons: More implementation effort, to implement a new command with new parser.
+* **Alternative 1: Reuse add command**
+  * Pros: Easier to implement, can make use of existing structures surrounding the add command.
+  * Cons: Overloading the add command too much.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
