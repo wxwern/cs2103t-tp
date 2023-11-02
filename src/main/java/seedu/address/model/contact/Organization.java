@@ -80,6 +80,9 @@ public class Organization extends Contact {
         return this.jobApplications.toArray(new JobApplication[]{});
     }
 
+    /**
+     * Checks if the organization has the given {@code JobApplication}.
+     */
     public boolean hasJobApplication(JobApplication jobApplication) {
         return this.jobApplications.stream()
                 .anyMatch(application -> application.isSameApplication(jobApplication));
