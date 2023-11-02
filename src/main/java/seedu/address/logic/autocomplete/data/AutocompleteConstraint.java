@@ -118,6 +118,33 @@ public interface AutocompleteConstraint<T> {
                 return existingElements.contains(prerequisite); // Prerequisite exists <--> dependents can exist.
             };
         }
+
+        /**
+         * Creates a constraint that enforces that this current item
+         * cannot be present if any of {@code incompatibleItems} exist.
+         */
+        @SafeVarargs
+        public final AutocompleteConstraint<T> cannotExistAlongsideAnyOf(T... incompatibleItems) {
+            T currentItem = this.item;
+
+            Set<T> incompatibleItemsSet = Set.of(incompatibleItems);
+
+            return (input, existingElements) -> {
+                if (!currentItem.equals(input)) {
+                    // Not the current item.
+
+                    // If current item is already in existing elements,
+                    // ensure no incompatible elements pass through.
+                    return !(existingElements.contains(currentItem)
+                            && incompatibleItemsSet.contains(input));
+                }
+
+                // Is thh current item.
+
+                // No items in incompatible set exists in existing set --> current item may exist.
+                return incompatibleItemsSet.stream().noneMatch(existingElements::contains);
+            };
+        }
     }
 
     /**

@@ -32,8 +32,10 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
@@ -56,15 +58,31 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+    private static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteDataSet.concat(
             AutocompleteDataSet.onceForEachOf(
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
                     FLAG_STATUS, FLAG_POSITION,
-                    FLAG_ORGANIZATION_ID, FLAG_APPLICATION, // TODO: Wern help me with cleaning up thx
-                    FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE
+                    FLAG_ORGANIZATION_ID
             ),
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+    );
+
+    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_APPLICATION = AutocompleteDataSet
+            .onceForEachOf(FLAG_APPLICATION)
+            .addDependents(
+                    AutocompleteDataSet.onceForEachOf(
+                            FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE
+                    ))
+            .addConstraint(
+                    AutocompleteConstraint.where(FLAG_APPLICATION).cannotExistAlongsideAnyOf(
+                            AUTOCOMPLETE_SET_STANDARD.getElements().toArray(Flag[]::new)
+                    )
+            );
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AUTOCOMPLETE_SET_STANDARD,
+            AUTOCOMPLETE_SET_APPLICATION
     ).configureValueMap(map -> {
         // Add value autocompletion data for:
         map.put(null /* preamble*/, (command, model) -> {
