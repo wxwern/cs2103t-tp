@@ -20,8 +20,8 @@ import seedu.address.model.jobapplication.LastUpdatedTime;
 class JsonAdaptedApplicationTest {
 
     private static final String INVALID_OID = "    ";
-    private static final String INVALID_ORG_NAME = "@@@@";
-    private static final String INVALID_TITLE = "@D";
+    private static final String INVALID_ORG_NAME = " extra whitespace? ";
+    private static final String INVALID_TITLE = " ";
     private static final String INVALID_DESCRIPTION = "    ";
     private static final String INVALID_DEADLINE = "22-22-2222";
     private static final String INVALID_STATUS = "PEN";

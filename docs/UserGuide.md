@@ -240,6 +240,89 @@ Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobb
 If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </div>
 
+### Applying to an organization: `Apply`
+
+Format: `add index/ id <additional parameters and values...>`
+
+
+App a contact to the address book of the given class type: Organization or Recruiter.
+
+Applying to a Organization by indicating it with the organization's index in the address book or the organization's unique id.
+
+This can be done by supplying the organization's `index` or `id` as the preamble.
+
+Details specifically will be explained the next sections.
+
+
+#### Applying to an Organization: `apply`
+
+Format: `apply INDEX/ID --title TITLE [--desc DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--stat STATUS: pending | offered | accepted | turned down]`
+
+Acceptable Parameters:
+* `TITLE` can accept any value.
+
+* `DESCRIPTION` refers to the description of the internship application.
+
+* `DEADLINE` should be a valid date in the format DD-MM-YYYY.
+
+* `APPLICATION STAGE` should be 1 of 3 pre-determined stage: resume | online assessment | interview.
+
+* `STATUS` should be 1 of 4 pre-determined status: pending | offered | accepted | turned down.
+
+
+
+Examples:
+* `apply 1 --title SWE`
+
+* `apply id_12345_1 --title Unit Tester --by 12-12-2023`
+
+* `apply id_12345_1 --title Unit Tester --desc Unit testing for Google --by 12-12-2023 --stage resume`
+
+* `apply id_12345_1 --title Junior Engineer --desc Junir role --by 12-12-2023 --stage resume --stat pending`
+
+
+### Deleting a job application
+Deletes the specified job application from the list.
+Format: `delete --application INDEX`
+
+* `INDEX` refers to the index number shown on the list and must be a positive integer.
+
+Examples:
+* `delete --application 1` deletes the first job application in the list.
+
+
+### Updating/Editing a job application
+Updates the job applications with the input fields.
+
+Format: `edit --application INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stat STATUS] [--stage STAGE]`
+
+* `INDEX` refers to the index number shown on the list and must be a positive integer.
+* At least one of the optional fields must be specified.
+* `STATUS` is one of `pending`, `offered`, `accepted`, `turned down`
+* `STAGE` is one of `resume`, `online assessment`, `interview`
+
+Examples:
+* `edit --application 1 --title SWE --desc Pay: $100 per hour`
+* `edit --application 1 --stat rejected`
+* `edit --application 1 --stage interview`
+
+### Sort `sort`
+Sorts contacts or applications by the specified flag.
+
+Format: `sort --FLAG_TO_SORT`
+
+* Currently only the following sorting functions are supported:
+  * For contacts:
+    * `--addr`
+    * `--email`
+    * `--name`
+    * `--id`
+    * `--phone`
+    * `--url`
+  * For job applications
+    * `--stale`: Sorts by last updated applications
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -258,13 +341,17 @@ If your changes to the data file makes its format invalid, Jobby will discard al
 
 ## Command summary
 
-Action | Format, Examples
---------|------------------
-**Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research`
-**Add Recruiter** | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`
-**Clear** | `clear`
-**Delete** | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`
-**Edit** | Coming soon...
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Help** | `help`
+ Action               | Format, Examples                                                                                                                                                                                                                                                                            
+----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research` 
+ **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
+ **Delete**           | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`                                                                                                                                                                               
+ **Edit**             | `edit INDEX ...` or <br>`edit ID ...` or <br>`edit --application INDEX ...`                                                                                                                                                                                                                                                                              
+ **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+ **Apply**            | `apply INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` or <br>`apply ID [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` 
+ **List**             | `list [--FLAG_TO_FILTER]`
+ **Sort**             | `sort [--FLAG_TO_SORT]`
+ **Help**             | `help`                                                                                                                                                                                                                                                                                      
+
+
