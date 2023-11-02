@@ -239,6 +239,81 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+THIS IS MINE
+### \[Proposed\] Adding Organization
+
+#### Proposed Implementation
+
+The proposed AddOrganization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
+
+These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+
+![UndoRedoState0](images/UndoRedoState0.png)
+
+Step 2. The user executes `delete 5` command to delete the 5th contact in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+
+![UndoRedoState1](images/UndoRedoState1.png)
+
+Step 3. The user executes `add n/David …​` to add a new contact. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+
+![UndoRedoState2](images/UndoRedoState2.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+
+</div>
+
+Step 4. The user now decides that adding the contact was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+
+![UndoRedoState3](images/UndoRedoState3.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+than attempting to perform the undo.
+
+</div>
+
+The following sequence diagram shows how the undo operation works:
+
+![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</div>
+
+The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+</div>
+
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+
+![UndoRedoState4](images/UndoRedoState4.png)
+
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+
+![UndoRedoState5](images/UndoRedoState5.png)
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+<img src="images/CommitActivityDiagram.png" width="250" />
+
+#### Design considerations:
+
+**Aspect: How Add Organization executes:**
+
+* **Alternative 1 (current choice):** Adds the Organization with a JSON's key 'type': "Organization"
+    * Pros: Easy to implement.
+    * Cons: Might need to commit more lines of code
+
+* **Alternative 2:** Differentiate Organization with JSON key 'isOrganization': True
+    * Pros: Easy to implement
+    * Cons: If we are to add more data types, it we might need to add more isDataType fields
+
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
@@ -315,22 +390,43 @@ Allows for comprehensive tracking of job applications and the information of com
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a(n) ...              | I want to ...                                                | So that I can ...                                                          |
-| -------- | ------------------------ |--------------------------------------------------------------| -------------------------------------------------------------------------- |
-| `* * *`  | new user                 | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
-| `* * *`  | user                     | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
-| `* * *`  | user                     | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user                     | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
-| `* *`    | user                     | find contacts by saved details                               | locate a contact without going through the entire list                     |
-| `* *`    | user                     | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
-| `* *`    | user                     | tag contacts                                                 | organize my contact list for more efficient access of different categories |
-| `* *`    | efficient user           | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
-| `*`      | user                     | import and export contacts                                   | share my list of contacts with my peers                                    |
+| Priority | As a(n) ...    | I want to ...                                                | So that I can ...                                                          |
+|----------|----------------|--------------------------------------------------------------|----------------------------------------------------------------------------|
+| `* * *`  | new user       | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
+| `* * *`  | user           | find the relevant application data                           | see what I did for for my application to specific companies                |
+| `* * *`  | user           | adding a job application                                     | keep track which organization I am applying to                             |
+| `* * *`  | user           | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
+| `* * *`  | user           | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
+| `* *`    | user           | edit my contacts via index, id and name                      | be up to date with changes in organization and recruiter details           |
+| `* *`    | user           | find contacts by saved details                               | locate a contact without going through the entire list                     |
+| `* *`    | user           | store recruiters and job application to organizations        | I can see where the recruiter comes from and where I am applying to        |
+| `* *`    | user           | sort the application deadlines                               | be able to which application deadline ends first                           |
+| `* *`    | user           | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user           | tag contacts                                                 | organize my contact list for more efficient access of different categories |
+| `* *`    | efficient user | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
+| `*`      | user           | import and export contacts                                   | share my list of contacts with my peers                                    |
 
 ### Use cases
 
 (For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
 
+
+
+**Use case: Add an application**
+
+**MSS**
+
+1.  User requests to add an application
+2.  Jobby adds the application into the specified organization
+3.  Jobby shows that the application has been added
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given application does not match to any Organization
+    * 1a1. Jobby shows an error message.
+    Use case ends.
 
 
 **Use case: Edit a contact**
@@ -339,14 +435,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to edit a contact
 2.  Jobby edits the contact
-
     Use case ends.
 
 **Extensions**
 
 * 1a. The given request does not match with any contact.
-    * 1a1. Jobby shows an error message.
-    * 
+    * 1a1. Jobby shows an error message. 
+    
       Use case ends.
 
 
@@ -365,25 +460,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The list is empty.
-
   Use case ends.
 
 * 3a. The given index is invalid.
-
     * 3a1. Jobby shows an error message.
-
+  
       Use case resumes at step 2.
 
 * 3b. The given ID does not match to any organization.
-
     * 3b1. Jobby shows an error message.
-
+  
       Use case resumes at step 2.
 
 * 4a. The user has specified to delete recursively.
-
     * 4a1. Jobby deletes all recruiter contacts associated with the recruiter (WIP)
-      
+  
       Use case ends.
 
 
@@ -400,15 +491,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. User requests to list organizations.
-
     * 1a1. Jobby shows a list of organizations.
-
+  
       Use case ends.
 
 * 1b. User requests to list recruiters.
-
     * 1b1. Jobby shows a list of recruiters.
+  
+      Use case ends.
 
+**Use case: Find contacts**
+
+**MSS**
+
+1.  User requests to find contacts or applications
+2.  Jobby shows a list of contacts or applications found
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to find organizations.
+    * 1a1. Jobby shows a list of organizations that matches the search.
+  
+      Use case ends.
+
+* 1b. User requests to list recruiters.
+    * 1b1. Jobby shows a list of recruiters that matches the search.
+  
+      Use case ends.
+  
+* 1c. User requests to list.
+    * 1c1. Jobby shows a list of application that matches the search.
+
+      Use case ends.
+  
+* 1d. No match found.
+    * 1d1. Jobby shows 0 matched result.
+    
       Use case ends.
 
 
