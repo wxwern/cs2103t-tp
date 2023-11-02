@@ -1,20 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
-import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
-import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
-import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
-import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteApplicationCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.contact.Id;
 
@@ -52,7 +51,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
     private static DeleteCommand handleDeleteApplication(ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteApplicationCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
         Index index = ParserUtil.parseIndex(argMultimap.getValue(FLAG_APPLICATION).get());

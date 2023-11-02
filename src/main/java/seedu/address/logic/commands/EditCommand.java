@@ -132,6 +132,7 @@ public class EditCommand extends Command {
             + ": Edits the details of the contact of the class type Organization or Recruiter,"
             + " identified by its index in the displayed contact list or its id."
             + " Note that existing values will be overwritten by the input values."
+            + " Also can edit job applications in the list identified by its index"
             + " The input format varies depending on the class:\n\n"
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
             + MESSAGE_RECRUITER_USAGE + "\n\n"

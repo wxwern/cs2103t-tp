@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
-import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
-
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -18,13 +15,6 @@ import seedu.address.model.jobapplication.JobApplication;
 public class DeleteApplicationCommand extends DeleteCommand {
 
     public static final String MESSAGE_DELETE_APPLICATION_SUCCESS = "Deleted application: %1$s";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the job application identified by the index number used in the displayed application list.\n"
-            + "Parameters: "
-            + FLAG_APPLICATION + " INDEX "
-            + "\n"
-            + "Example 1: " + COMMAND_WORD + " --application 1\n";
 
     private final Index index;
 
