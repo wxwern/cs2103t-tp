@@ -101,9 +101,7 @@ public class EditCommand extends Command {
             + "[" + FLAG_STATUS + " STATUS] "
             + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + FLAG_PHONE + " 91234567 "
-            + FLAG_STATUS + " Applied";
+            + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_RECRUITER_USAGE = "Edits a recruiter.\n"
             + "Parameters: INDEX/ID "
@@ -119,13 +117,25 @@ public class EditCommand extends Command {
             + FLAG_PHONE + " 91234567 "
             + FLAG_EMAIL + " rexrecruiter@example.com";
 
+    public static final String MESSAGE_APPLICATION_USAGE = "Edits a job application.\n"
+            + "Parameters: "
+            + FLAG_APPLICATION + " INDEX "
+            + "[" + FLAG_TITLE + " TITLE] "
+            + "[" + FLAG_DESCRIPTION + " DESCRIPTION] "
+            + "[" + FLAG_DEADLINE + " DEADLINE] "
+            + "[" + FLAG_STAGE + " STAGE] "
+            + "[" + FLAG_STATUS + " STATUS] \n"
+            + "Example: " + COMMAND_WORD + " " + FLAG_APPLICATION + " 1 " + FLAG_TITLE + " SWE";
+
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the details of the contact of the class type Organization or Recruiter,"
             + " identified by its index in the displayed contact list or its id."
             + " Note that existing values will be overwritten by the input values."
             + " The input format varies depending on the class:\n\n"
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
-            + MESSAGE_RECRUITER_USAGE;
+            + MESSAGE_RECRUITER_USAGE + "\n\n"
+            + MESSAGE_APPLICATION_USAGE;
 
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited %s: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

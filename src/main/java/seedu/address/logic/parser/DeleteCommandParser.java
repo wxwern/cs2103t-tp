@@ -26,7 +26,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 ArgumentTokenizer.tokenize(args,
                         DeleteCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
-        if (!argumentMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
+        if (argumentMultimap.getValue(FLAG_APPLICATION).isPresent()) {
             return handleDeleteApplication(argumentMultimap);
         }
 
@@ -52,7 +52,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
     private static DeleteCommand handleDeleteApplication(ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteApplicationCommand.MESSAGE_USAGE));
         }
 
         Index index = ParserUtil.parseIndex(argMultimap.getValue(FLAG_APPLICATION).get());
