@@ -74,11 +74,11 @@ public class ApplyCommand extends Command {
     public static final String MESSAGE_USAGE = "Adds a new job application.\n"
             + "Parameters: "
             + "INDEX/ID "
-            + FLAG_TITLE + " TITLE " // Title
-            + FLAG_DESCRIPTION + " DESCRIPTION " // Description
-            + FLAG_DEADLINE + " DEADLINE: DD-MM-YYYY " // Deadline
-            + FLAG_STAGE + " APPLICATION STAGE: resume | online assessment | interview " // Application stage
-            + FLAG_STATUS + " STATUS: pending | offered | accepted | turned down "; // Status
+            + FLAG_TITLE + " TITLE "
+            + "[" + FLAG_DESCRIPTION + " DESCRIPTION] "
+            + "[" + FLAG_DEADLINE + " DEADLINE: DD-MM-YYYY] "
+            + "[" + FLAG_STAGE + " APPLICATION STAGE: resume/online assessment/interview] "
+            + "[" + FLAG_STATUS + " STATUS: pending/offered/accepted/turned down] ";
 
     public static final String MESSAGE_APPLY_SUCCESS = "Added application: %1$s to %2$s";
     public static final String MESSAGE_ATTEMPT_TO_ADD_TO_NON_ORG = "Attempted to apply to a non-organization: %1$s";
