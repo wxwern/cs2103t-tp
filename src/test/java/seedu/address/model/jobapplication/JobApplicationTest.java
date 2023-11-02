@@ -26,6 +26,7 @@ public class JobApplicationTest {
     private Id id1 = new Id();
     private Id id2 = new Id();
     private JobTitle validTitle = new JobTitle("SWE");
+    private JobTitle validTitle2 = new JobTitle("Analyst");
     private JobDescription validJobDescription = new JobDescription("Pay: $700/h");
     private JobStatus validStatus = JobStatus.PENDING;
     private ApplicationStage validApplicationStage = ApplicationStage.RESUME;
@@ -72,13 +73,13 @@ public class JobApplicationTest {
         JobApplication ja2;
         ja1 = new JobApplication(NUS, validTitle, validJobDescription, deadline1, JobStatus.PENDING,
                 ApplicationStage.RESUME);
-        ja2 = new JobApplication(NUS, validTitle, validJobDescription, deadline2,
+        ja2 = new JobApplication(NUS, validTitle2, validJobDescription, deadline2,
                 JobStatus.OFFERED, ApplicationStage.INTERVIEW);
 
         assertTrue(JobApplication.DEADLINE_COMPARATOR.compare(ja1, ja2) > 0);
         assertTrue(JobApplication.STAGE_COMPARATOR.compare(ja1, ja2) < 0);
         assertTrue(JobApplication.STATUS_COMPARATOR.compare(ja1, ja2) < 0);
-
+        assertTrue(JobApplication.JOB_TITLE_COMPARATOR.compare(ja1, ja2) > 0);
 
     }
     @Test

@@ -11,10 +11,10 @@ public class JobTitle {
             "Job title should only contain alphanumeric characters, underscores and dashes, and it should not be blank";
 
     /**
-     * The first character of the id must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * Job titles must not be blank, must not contain any leading and trailing whitespaces
+     * and can have any number of characters.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[^\\s](.*[^\\s]|)";
 
     public final String title;
 
