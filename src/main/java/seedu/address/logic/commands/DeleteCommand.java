@@ -60,7 +60,7 @@ public class DeleteCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " amazon-sg\n"
             + "Example 3: " + COMMAND_WORD + " 1 --recursive\n";
 
-    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
+    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted %s: %s";
 
     protected final CommandException commandException;
 
@@ -133,7 +133,8 @@ public class DeleteCommand extends Command {
         }
         model.deleteContact(contactToDelete);
         handleChildren(model, contactToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS, Messages.format(contactToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS,
+                contactToDelete.getType(), Messages.format(contactToDelete)));
     }
 
     protected void handleChildren(Model model, Contact contactToDelete) throws CommandException {

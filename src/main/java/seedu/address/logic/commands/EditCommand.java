@@ -127,7 +127,7 @@ public class EditCommand extends Command {
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
             + MESSAGE_RECRUITER_USAGE;
 
-    public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited Contact: %1$s";
+    public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited %s: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book.";
     public static final String MESSAGE_INVALID_ORGANIZATION =
@@ -183,9 +183,14 @@ public class EditCommand extends Command {
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
+
+        if (editedContact.getType() == Type.ORGANIZATION) {
+            updateLinkedRecruiters(model, (Organization) contactToEdit, (Organization) editedContact);
+        }
         model.setContact(contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
+        return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedContact.getType(), Messages.format(editedContact)));
     }
 
     /**
@@ -219,42 +224,47 @@ public class EditCommand extends Command {
             Position updatedPosition = editContactDescriptor.getPosition()
                     .orElse(((Organization) contactToEdit).getPosition().orElse(null));
 
-            Organization updatedOrganization = new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
+            return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
                     updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
-
-            // Updates all recruiters linked to the old organization to link to the updated one.
-            List<Contact> childrenContacts = contactToEdit.getChildren(model);
-            for (Contact child : childrenContacts) {
-                assert child.getType() == Type.RECRUITER;
-                Recruiter updatedRecruiter = new Recruiter(
-                        child.getName(), child.getId(), child.getPhone().orElse(null),
-                        child.getEmail().orElse(null), child.getUrl().orElse(null),
-                        child.getAddress().orElse(null), child.getTags(), updatedOrganization
-                );
-                model.setContact(child, updatedRecruiter);
-            }
-
-            return updatedOrganization;
 
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()
                     .or(() -> ((Recruiter) contactToEdit).getOrganizationId());
 
-            Organization updatedOrganization = (Organization) updatedOid.map(model::getContactById)
+            Organization linkedOrganization = (Organization) updatedOid.map(model::getContactById)
                     .filter(c -> c.getType() == Type.ORGANIZATION)
                     .orElse(null);
 
-            if (updatedOid.isPresent() && updatedOrganization == null) {
+            if (updatedOid.isPresent() && linkedOrganization == null) {
                 throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
             }
 
             return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
-                    updatedAddress, updatedTags, updatedOrganization);
+                    updatedAddress, updatedTags, linkedOrganization);
         }
 
         return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
                 updatedTags, null);
+    }
+
+    /**
+     * Updates all recruiters linked to the {@code oldOrganization} to link to the {@code updatedOrganization}.
+     */
+    private static void updateLinkedRecruiters(Model model,
+                                               Organization oldOrganization,
+                                               Organization updatedOrganization) {
+        // Updates all recruiters linked to the old organization to link to the updated one.
+        List<Contact> childrenContacts = oldOrganization.getChildren(model);
+        for (Contact child : childrenContacts) {
+            assert child.getType() == Type.RECRUITER;
+            Recruiter updatedRecruiter = new Recruiter(
+                    child.getName(), child.getId(), child.getPhone().orElse(null),
+                    child.getEmail().orElse(null), child.getUrl().orElse(null),
+                    child.getAddress().orElse(null), child.getTags(), updatedOrganization
+            );
+            model.setContact(child, updatedRecruiter);
+        }
     }
 
     @Override
