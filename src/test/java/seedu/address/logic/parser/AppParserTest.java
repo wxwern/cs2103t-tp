@@ -176,6 +176,7 @@ public class AppParserTest {
                         "edit",
                         "exit",
                         "delete",
+                        "remind",
                         "help",
                         "clear"
                 ),

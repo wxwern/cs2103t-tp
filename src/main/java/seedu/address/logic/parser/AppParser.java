@@ -120,6 +120,7 @@ public class AppParser {
         logger.finest("Preparing autocomplete: '" + userInput + "'");
 
 
+
         // Case 1: There is no command name followed by a whitespace character.
         // - The command name is incomplete - we're still typing the name.
         // - Suggest available command names.
