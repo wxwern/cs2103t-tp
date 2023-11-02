@@ -15,6 +15,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ReminderCommand;
 import seedu.address.logic.commands.SortCommand;
 
 /**
@@ -44,6 +45,7 @@ public class ClassMappings {
         orderedMap.put(ListCommand.class, Optional.of(ListCommandParser.class));
         orderedMap.put(FindCommand.class, Optional.of(FindCommandParser.class));
         orderedMap.put(SortCommand.class, Optional.of(SortCommandParser.class));
+        orderedMap.put(ReminderCommand.class, Optional.of(ReminderCommandParser.class));
 
         orderedMap.put(HelpCommand.class, Optional.empty());
         orderedMap.put(ClearCommand.class, Optional.empty());
