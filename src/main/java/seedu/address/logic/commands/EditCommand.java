@@ -18,6 +18,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +50,8 @@ import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
+import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -83,6 +86,7 @@ public class EditCommand extends Command {
             AUTOCOMPLETE_SET_STANDARD,
             AUTOCOMPLETE_SET_APPLICATION
     ).configureValueMap(map -> {
+        
         // Add value autocompletion data for:
         map.put(null /* preamble*/, (command, model) -> {
 
@@ -99,12 +103,21 @@ public class EditCommand extends Command {
                         .map(o -> o.getId().value);
             }
         });
+
         map.put(FLAG_ORGANIZATION_ID, (command, model) -> model.getAddressBook()
                 .getContactList()
                 .stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .map(o -> o.getId().value)
         );
+
+        map.put(FLAG_STAGE, (command, model)
+                -> Arrays.stream(ApplicationStage.values())
+                .map(ApplicationStage::toString));
+
+        map.put(FLAG_STATUS, (command, model)
+                -> Arrays.stream(JobStatus.values())
+                .map(JobStatus::toString));
     });
 
     public static final String MESSAGE_ORGANIZATION_USAGE = "Edits an organization.\n"
