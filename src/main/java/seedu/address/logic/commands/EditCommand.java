@@ -177,14 +177,14 @@ public class EditCommand extends Command {
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
+
+        if (editedContact.getType() == Type.ORGANIZATION) {
+            updateLinkedRecruiters(model, (Organization) contactToEdit, (Organization) editedContact);
+        }
         model.setContact(contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
     }
-
-
-
-
 
     /**
      * Creates and returns a {@code Contact} with the details of {@code contactToEdit}
@@ -209,33 +209,55 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editContactDescriptor.getTags()
             .orElse(contactToEdit.getTags());
 
-
+        // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
             Status updatedStatus = editContactDescriptor.getStatus()
                     .orElse(((Organization) contactToEdit).getStatus().orElse(null));
 
             Position updatedPosition = editContactDescriptor.getPosition()
                     .orElse(((Organization) contactToEdit).getPosition().orElse(null));
-            return new Organization(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
-                    updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+
+            return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
+                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()
                     .or(() -> ((Recruiter) contactToEdit).getOrganizationId());
 
-            Organization updatedOrganization = (Organization) updatedOid.map(model::getContactById)
+            Organization linkedOrganization = (Organization) updatedOid.map(model::getContactById)
                     .filter(c -> c.getType() == Type.ORGANIZATION)
                     .orElse(null);
 
-            if (updatedOid.isPresent() && updatedOrganization == null) {
+            if (updatedOid.isPresent() && linkedOrganization == null) {
                 throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
             }
 
             return new Recruiter(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl,
-                    updatedAddress, updatedTags, updatedOrganization);
+                    updatedAddress, updatedTags, linkedOrganization);
         }
 
-        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress, updatedTags);
+        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
+                updatedTags, null);
+    }
+
+    /**
+     * Updates all recruiters linked to the {@code oldOrganization} to link to the {@code updatedOrganization}.
+     */
+    private static void updateLinkedRecruiters(Model model,
+                                               Organization oldOrganization,
+                                               Organization updatedOrganization) {
+        // Updates all recruiters linked to the old organization to link to the updated one.
+        List<Contact> childrenContacts = oldOrganization.getChildren(model);
+        for (Contact child : childrenContacts) {
+            assert child.getType() == Type.RECRUITER;
+            Recruiter updatedRecruiter = new Recruiter(
+                    child.getName(), child.getId(), child.getPhone().orElse(null),
+                    child.getEmail().orElse(null), child.getUrl().orElse(null),
+                    child.getAddress().orElse(null), child.getTags(), updatedOrganization
+            );
+            model.setContact(child, updatedRecruiter);
+        }
     }
 
     @Override

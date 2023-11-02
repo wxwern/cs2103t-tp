@@ -41,6 +41,7 @@ class JsonSerializableAddressBook {
         persons.addAll(
                 source.getContactList().stream()
                         .sorted((c1, c2) -> {
+                            // TODO: Identified tech debt: Enums have natural ordering.
                             if (c1.getType() == Type.RECRUITER && c2.getType() == Type.ORGANIZATION) {
                                 return 1;
                             } else if (c1.getType() == Type.ORGANIZATION && c2.getType() == Type.RECRUITER) {

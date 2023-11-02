@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.COMPARATOR_ADDRESS;
 import static seedu.address.model.Model.COMPARATOR_EMAIL;
@@ -16,6 +17,7 @@ import static seedu.address.model.Model.COMPARATOR_URL;
 
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -46,6 +48,8 @@ public class SortCommandParser implements Parser<SortCommand> {
             return new SortCommand(COMPARATOR_PHONE);
         } else if (argMultimap.hasFlag(FLAG_URL)) {
             return new SortCommand(COMPARATOR_URL);
+        } else if (argMultimap.hasFlag(FLAG_STALE)) {
+            return new SortCommand(JobApplication.LAST_UPDATED_COMPARATOR, true);
         }
 
         throw new ParseException(

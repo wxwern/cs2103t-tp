@@ -16,6 +16,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Recruiter;
+import seedu.address.model.contact.Type;
 
 /**
  * Deletes a contact identified using its displayed index or its contact id from the address book.
@@ -45,6 +47,7 @@ public class DeleteCommand extends Command {
         });
     });
 
+    public static final String MESSAGE_ILLEGAL_DELETE = "Contacts of type %s cannot have links to a parent contact.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the contact identified by the index number used in the displayed contact list.\n"
@@ -58,11 +61,11 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
 
+    protected final CommandException commandException;
+
     private final Object selector; // TODO: This is very sus but this will only be used for equals comparison
 
     private final Function<Model, Contact> contactFunction;
-
-    private final CommandException commandException;
 
     /**
      * @param targetIndex of the contact to be deleted
@@ -128,7 +131,29 @@ public class DeleteCommand extends Command {
             throw commandException;
         }
         model.deleteContact(contactToDelete);
+        handleChildren(model, contactToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS, Messages.format(contactToDelete)));
+    }
+
+    protected void handleChildren(Model model, Contact contactToDelete) throws CommandException {
+        requireNonNull(model);
+        // At this point if the contact is null, the superclass would have thrown exception.
+        // Superclass would have also deleted the contact from the list.
+        assert contactToDelete != null;
+        List<Contact> childrenContacts = contactToDelete.getChildren(model);
+        for (Contact child : childrenContacts) {
+            // Enforce that only recruiters can have links to parent organizations.
+            if (child.getType() != Type.RECRUITER) {
+                throw new CommandException(String.format(MESSAGE_ILLEGAL_DELETE, child.getType().toString()));
+            }
+            // Create a new recruiter with no link to the deleted organization.
+            Recruiter newRecruiter = new Recruiter(
+                    child.getName(), child.getId(), child.getPhone().orElse(null),
+                    child.getEmail().orElse(null), child.getUrl().orElse(null),
+                    child.getAddress().orElse(null), child.getTags(), null
+            );
+            model.setContact(child, newRecruiter);
+        }
     }
 
     @Override

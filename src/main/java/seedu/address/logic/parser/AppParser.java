@@ -140,7 +140,7 @@ public class AppParser {
             return new AutocompleteGenerator(() ->
                     Command.getCommandWords(Stream.of(
                             AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
-                            ListCommand.class, FindCommand.class, HelpCommand.class,
+                            ListCommand.class, FindCommand.class, SortCommand.class, HelpCommand.class,
                             ClearCommand.class, ExitCommand.class
                     )).filter(Optional::isPresent).map(Optional::get)
             );

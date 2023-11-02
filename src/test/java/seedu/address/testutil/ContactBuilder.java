@@ -118,7 +118,7 @@ public class ContactBuilder {
     }
 
     public Contact build() {
-        return new Contact(name, id, phone, email, url, address, tags);
+        return new Contact(name, id, phone, email, url, address, tags, null);
     }
 
 }

@@ -10,7 +10,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Type;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * The API of the Model component.
@@ -20,6 +22,9 @@ public interface Model {
     Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = contact -> true;
     Predicate<Contact> PREDICATE_SHOW_ONLY_ORGANIZATIONS = contact -> contact.getType() == Type.ORGANIZATION;
     Predicate<Contact> PREDICATE_SHOW_ONLY_RECRUITERS = contact -> contact.getType() == Type.RECRUITER;
+    Predicate<Contact> PREDICATE_SHOW_NOT_APPLIED_ORGANIZATIONS =
+            contact -> contact.getType() == Type.ORGANIZATION
+                    && ((Organization) contact).getJobApplications().length == 0;
 
     Comparator<Contact> COMPARATOR_ADDRESS = Comparator.comparing(contact ->
                     contact.getAddress().map(address -> address.value).orElse(null),
@@ -101,6 +106,11 @@ public interface Model {
     void setContact(Contact target, Contact editedContact);
 
     /**
+     * Adds the given application.
+     */
+    void addApplication(JobApplication application);
+
+    /**
      * Gives a contact which matches the given id.
      * Gives null if no such contact is found.
      * Given id must not be null.
@@ -124,4 +134,9 @@ public interface Model {
     void updateFilteredContactList(Predicate<Contact> predicate);
 
     void updateSortedContactList(Comparator<Contact> comparator);
+
+    /** Returns an unmodifiable view of the filtered application list */
+    ObservableList<JobApplication> getDisplayedApplicationList();
+
+    void updateSortedApplicationList(Comparator<JobApplication> comparator);
 }

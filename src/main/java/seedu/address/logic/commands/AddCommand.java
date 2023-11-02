@@ -131,7 +131,7 @@ public class AddCommand extends Command {
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
             + MESSAGE_RECRUITER_USAGE;
 
-    public static final String MESSAGE_SUCCESS = "New contact added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New %s added: %s";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book";
 
     private static final Logger logger = LogsCenter.getLogger(AddCommand.class);
@@ -173,11 +173,11 @@ public class AddCommand extends Command {
         }
 
         model.addContact(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getType(), Messages.format(toAdd)));
     }
 
     protected Contact createContact() {
-        return new Contact(name, id, phone, email, url, address, tags);
+        return new Contact(name, id, phone, email, url, address, tags, null);
     }
 
     @Override

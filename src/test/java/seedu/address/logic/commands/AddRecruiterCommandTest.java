@@ -63,7 +63,8 @@ public class AddRecruiterCommandTest extends AddCommandTest {
 
         CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertEquals(String.format(AddRecruiterCommand.MESSAGE_SUCCESS, Messages.format(validRecruiter)),
+        assertEquals(String.format(AddRecruiterCommand.MESSAGE_SUCCESS,
+                        validRecruiter.getType(), Messages.format(validRecruiter)),
                 commandResult.getFeedbackToUser());
 
         assertEquals(Arrays.asList(validRecruiter), modelStub.contactsAdded);

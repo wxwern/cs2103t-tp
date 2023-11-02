@@ -67,7 +67,8 @@ public class AddOrganizationCommandTest extends AddCommandTest {
 
         CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertEquals(String.format(AddOrganizationCommand.MESSAGE_SUCCESS, Messages.format(validOrganization)),
+        assertEquals(String.format(AddOrganizationCommand.MESSAGE_SUCCESS,
+                        validOrganization.getType(), Messages.format(validOrganization)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validOrganization), modelStub.contactsAdded);
     }

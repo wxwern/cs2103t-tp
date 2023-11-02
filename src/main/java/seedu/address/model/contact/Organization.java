@@ -38,9 +38,24 @@ public class Organization extends Contact {
             Address address, Set<Tag> tags, Status status, Position position,
             Set<Id> rids
     ) {
-        super(name, id, phone, email, url, address, tags);
+        this(name, id, phone, email, url, address, tags, status, position, rids, new ArrayList<>());
+    }
+
+    /**
+     * Name and id fields must be non-null.
+     * Tags must be non-null but can be empty as well.
+     * List of applications must not be null.
+     * The other fields can be null.
+     */
+    public Organization(
+            Name name, Id id, Phone phone, Email email, Url url,
+            Address address, Set<Tag> tags, Status status, Position position,
+            Set<Id> rids, List<JobApplication> jobApplications
+    ) {
+        super(name, id, phone, email, url, address, tags, null);
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
+        this.jobApplications.addAll(jobApplications);
         // Todo: Likely to deprecate rids completely
         // this.rids.addAll(rids);
     }
