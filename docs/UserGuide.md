@@ -253,8 +253,6 @@ Examples:
 
 ### Deleting a contact: `delete`
 
-_{To be updated...}_
-
 Deletes the specified contact from the address book and its associated contacts if specified.
 Format: `delete INDEX/ID [--recursive]`
 
