@@ -103,6 +103,27 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicateLinkedOrganization_failure() {
+        Organization firstOrganization = (Organization) model.getDisplayedContactList()
+                .get(INDEX_LINKED_ORGANIZATION.getZeroBased());
+        Organization secondOrganization = (Organization) model.getDisplayedContactList()
+                .get(INDEX_UNLINKED_ORGANIZATION.getZeroBased());
+
+        Organization editedOrganization = new OrganizationBuilder(firstOrganization)
+                .withId(secondOrganization.getId().value).build();
+        EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedOrganization).build();
+        EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_DUPLICATE_CONTACT,
+                Messages.format(editedOrganization));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        assertCommandFailure(editCommand, model, expectedMessage);
+        assertEquals(model, expectedModel);
+    }
+
+    @Test
     public void execute_allFieldsSpecifiedUnfilteredList_linkedOrganizationSuccess() {
         Organization originalOrganization = NUS;
         Organization editedOrganization = new OrganizationBuilder(originalOrganization)
@@ -110,8 +131,8 @@ public class EditCommandTest {
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedOrganization).build();
         EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedOrganization));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()

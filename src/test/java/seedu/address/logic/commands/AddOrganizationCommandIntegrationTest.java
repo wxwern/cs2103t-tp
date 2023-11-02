@@ -47,7 +47,8 @@ public class AddOrganizationCommandIntegrationTest {
         );
 
         assertCommandSuccess(addCommand, model,
-                String.format(AddOrganizationCommand.MESSAGE_SUCCESS, Messages.format(validOrganization)),
+                String.format(AddOrganizationCommand.MESSAGE_SUCCESS,
+                        validOrganization.getType(), Messages.format(validOrganization)),
                 expectedModel);
     }
 
