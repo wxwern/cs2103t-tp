@@ -31,4 +31,7 @@ public class CliSyntax {
     public static final Flag FLAG_STALE = new Flag("stale");
     public static final Flag FLAG_EARLIEST = new Flag("earliest");
     public static final Flag FLAG_LATEST = new Flag("latest");
+    public static final Flag FLAG_APPLICATION = new Flag("application");
+
+
 }

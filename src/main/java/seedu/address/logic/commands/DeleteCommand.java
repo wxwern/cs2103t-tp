@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -26,8 +28,10 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.fromUniqueFlags(
-            FLAG_RECURSIVE
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AutocompleteDataSet.oneAmongAllOf(
+                FLAG_RECURSIVE, FLAG_APPLICATION
+            )
     ).configureValueMap(map -> {
         // Add value autocompletion data for:
         map.put(null /* preamble */, (command, model) -> {
@@ -49,8 +53,7 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_ILLEGAL_DELETE = "Contacts of type %s cannot have links to a parent contact.";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the contact identified by the index number used in the displayed contact list.\n"
+    public static final String MESSAGE_CONTACT_USAGE = "Deletes a contact.\n"
             + "Parameters: "
             + "INDEX/ID "
             + "[" + FLAG_RECURSIVE + "] "
@@ -59,7 +62,19 @@ public class DeleteCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " amazon-sg\n"
             + "Example 3: " + COMMAND_WORD + " 1 --recursive\n";
 
-    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted Contact: %1$s";
+    public static final String MESSAGE_APPLICATION_USAGE = "Deletes a job application.\n"
+            + "Parameters: "
+            + FLAG_APPLICATION + " INDEX "
+            + "\n"
+            + "Example 1: " + COMMAND_WORD + " --application 1\n";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the contact identified by the index number used in the displayed contact list."
+            + " Also can delete job applications by index displayed in the application list."
+            + MESSAGE_CONTACT_USAGE + "\n\n"
+            + MESSAGE_APPLICATION_USAGE;
+
+    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Deleted %s: %s";
 
     protected final CommandException commandException;
 
@@ -132,7 +147,8 @@ public class DeleteCommand extends Command {
         }
         model.deleteContact(contactToDelete);
         handleChildren(model, contactToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS, Messages.format(contactToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS,
+                contactToDelete.getType(), Messages.format(contactToDelete)));
     }
 
     protected void handleChildren(Model model, Contact contactToDelete) throws CommandException {

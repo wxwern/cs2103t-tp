@@ -32,12 +32,4 @@ public interface ReadOnlyAddressBook {
         return null;
     }
 
-    /**
-     * Returns true if a contact with the same identity as {@code contact} exists in the address book.
-     */
-    default boolean hasContact(Contact contact) {
-        requireNonNull(contact);
-        return getContactList().contains(contact);
-    }
-
 }

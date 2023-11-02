@@ -36,12 +36,19 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.EditApplicationCommand;
+import seedu.address.logic.commands.EditApplicationCommand.EditApplicationDescriptor;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditContactDescriptor;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Phone;
+import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.Deadline;
+import seedu.address.model.jobapplication.JobDescription;
+import seedu.address.model.jobapplication.JobStatus;
+import seedu.address.model.jobapplication.JobTitle;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditContactDescriptorBuilder;
 
@@ -64,6 +71,14 @@ public class EditCommandParserTest {
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+
+        // Job Applications
+
+        // no index specified
+        assertParseFailure(parser, "--application ", MESSAGE_INVALID_FORMAT);
+
+        // no field specified
+        assertParseFailure(parser, "--application 1", EditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
@@ -79,6 +94,11 @@ public class EditCommandParserTest {
 
         // invalid flag being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+
+        // Job Application
+
+        // zero index
+        assertParseFailure(parser, "--application 0", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -101,6 +121,17 @@ public class EditCommandParserTest {
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
+
+        // Job Application
+
+        // invalid status
+        assertParseFailure(parser, "--application 1 --stat resume", JobStatus.MESSAGE_CONSTRAINTS);
+
+        // invalid stage
+        assertParseFailure(parser, "--application 1 --stage resum", ApplicationStage.MESSAGE_CONSTRAINTS);
+
+        // invalid deadline
+        assertParseFailure(parser, "--application 1 --by 22-22-2022", Deadline.MESSAGE_CONSTRAINTS);
     }
 
     @Test
@@ -115,6 +146,22 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+
+        // Job Application
+
+        String userApplicationInput = "--application 1 --title SWE --desc Pay: $100 --by 12-12-2022 --stat pending "
+                + "--stage " + "resume";
+        EditApplicationDescriptor applicationDescriptor = new EditApplicationDescriptor();
+        applicationDescriptor.setApplicationStage(ApplicationStage.RESUME);
+        applicationDescriptor.setJobDescription(new JobDescription("Pay: $100"));
+        applicationDescriptor.setStatus(JobStatus.PENDING);
+        applicationDescriptor.setJobTitle(new JobTitle("SWE"));
+        applicationDescriptor.setDeadline(new Deadline("12-12-2022"));
+
+        EditApplicationCommand expectedApplicationCmd = new EditApplicationCommand(INDEX_FIRST_CONTACT,
+                applicationDescriptor);
+
+        assertParseSuccess(parser, userApplicationInput, expectedApplicationCmd);
     }
 
     @Test
