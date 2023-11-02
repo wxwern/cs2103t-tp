@@ -121,6 +121,6 @@ public class SortCommand extends Command {
         }
         Boolean equalsContact = comparatorContact.equals(otherSortCommand.comparatorContact);
         Boolean equalsApplication = comparatorApplication.equals(otherSortCommand.comparatorApplication);
-        return (equalsContact && equalsApplication);
+        return (equalsContact && equalsApplication && !otherSortCommand.isReset);
     }
 }
