@@ -4,19 +4,22 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 /**
@@ -68,6 +71,7 @@ public class AutocompleteTextField extends TextField {
 
     // Configuration variables
     private CompletionGenerator completionGenerator = s -> Stream.empty();
+    private String autocompleteHintString = "[Select to autocomplete]";
     private int popupLimit = 10;
 
     // History tracking for autocomplete undo operations
@@ -79,6 +83,18 @@ public class AutocompleteTextField extends TextField {
     public AutocompleteTextField() {
         super();
         this.autocompletePopup = new ContextMenu();
+
+        // Setup default behaviours
+        autocompletePopup.setHideOnEscape(true);
+        autocompletePopup.setAutoFix(true);
+        autocompletePopup.setAutoHide(false);
+        autocompletePopup.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.SPACE) {
+                // SPACE dismisses the popup if none is selected via tab focus.
+                // We disallow this by intercepting it before it does.
+                e.consume();
+            }
+        });
 
         // Setup autocompletion popup menu UI updates
         this.textProperty().addListener(e -> refreshPopupState());
@@ -117,13 +133,14 @@ public class AutocompleteTextField extends TextField {
      * @return true if an autocompleted result has been filled in, false otherwise.
      */
     public boolean triggerImmediateAutocompletion() {
-        Optional<String> firstSuggestion = completionGenerator.apply(getText())
-                .limit(1)
-                .findFirst();
+        ObservableList<MenuItem> menuItems = autocompletePopup.getItems();
 
-        firstSuggestion.ifPresent(this::triggerImmediateAutocompletionUsingResult);
+        if (!isPopupVisible() || menuItems.isEmpty()) {
+            return false;
+        }
 
-        return firstSuggestion.isPresent();
+        menuItems.get(0).fire();
+        return true;
     }
 
     /**
@@ -167,13 +184,20 @@ public class AutocompleteTextField extends TextField {
         autocompleteHistory.pop();
 
         // Set the old value back in
-        this.setText(snapshot.partialValue + " "); // preserve the extra space previously added
+        this.setText(snapshot.partialValue);
 
         // Update the view and cursor location
         this.requestFocus();
         this.end();
         this.refreshPopupState();
         return true;
+    }
+
+    /**
+     * Sets the string used to hint that an option can be autocompleted.
+     */
+    public void setAutocompleteHintString(String autocompleteHintString) {
+        this.autocompleteHintString = autocompleteHintString;
     }
 
     /**
@@ -206,7 +230,9 @@ public class AutocompleteTextField extends TextField {
      */
     public void refreshPopupState() {
         String text = getText();
-        if (!isFocused() || popupLimit <= 0) {
+        if ((!isFocused() && !autocompletePopup.isFocused())
+                || popupLimit <= 0) {
+
             autocompletePopup.hide();
             return;
         }
@@ -254,7 +280,7 @@ public class AutocompleteTextField extends TextField {
             // Handle special case styling
             if (i == 0) {
                 // Special Case 1: First completion option
-                Label completionHint = new Label("[Press TAB or SPACE to autocomplete]");
+                Label completionHint = new Label(autocompleteHintString);
                 completionHint.getStyleClass().add("completion-hint");
                 completionHint.setPadding(new Insets(0, 8, 0, 8));
 
