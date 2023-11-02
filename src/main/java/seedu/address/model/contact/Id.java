@@ -12,7 +12,8 @@ import java.util.UUID;
  */
 public class Id {
     public static final String MESSAGE_CONSTRAINTS =
-            "Id should only contain alphanumeric characters, underscores and dashes, and it should not be blank";
+            "Id should only contain alphanumeric characters, underscores and dashes, and it should not be blank. "
+                    + "Ids must also start with alphabets, and may not have consecutive underscores and/or dashes.";
 
     /**
      * The first character of the id must not be a whitespace,
