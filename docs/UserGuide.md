@@ -269,35 +269,6 @@ Examples:
 
 
 
-
-### Clearing all entries: `clear`
-
-Clears all data from the app.
-
-Format: `clear`
-
-
-### Exiting the program: `exit`
-
-Exits the program.
-
-Format: `exit`
-
-
-### Saving the data
-
-Jobby data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-
-### Editing the data file
-
-Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
-</div>
-
-
 #### Applying to an Organization: `apply`
 
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
@@ -396,6 +367,37 @@ Specifying `--latest` will list the application deadlines in order of reverse ur
 Examples:
 * `remind --earliest`
 * `remind --latest`
+
+
+
+### Clearing all entries: `clear`
+
+Clears all data from the app.
+
+Format: `clear`
+
+
+### Exiting the program: `exit`
+
+Exits the program.
+
+Format: `exit`
+
+
+### Saving the data
+
+Jobby data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+
+### Editing the data file
+
+Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
+</div>
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
