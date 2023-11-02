@@ -134,6 +134,20 @@ public class JobApplication {
                 lastUpdatedTime);
     }
 
+    /**
+     * Returns true if both job applications have the same job title.
+     * This defines a weaker notion of equality between two job applications.
+     */
+    public boolean isSameApplication(JobApplication otherApplication) {
+        if (otherApplication == this) {
+            return true;
+        }
+
+        return otherApplication != null
+                && otherApplication.getOrganizationId().equals(getOrganizationId())
+                && otherApplication.getJobTitle().equals(getJobTitle());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

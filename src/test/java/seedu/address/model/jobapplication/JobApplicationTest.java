@@ -2,6 +2,7 @@ package seedu.address.model.jobapplication;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -82,6 +83,31 @@ public class JobApplicationTest {
         assertTrue(JobApplication.JOB_TITLE_COMPARATOR.compare(ja1, ja2) > 0);
 
     }
+
+    @Test
+    public void isSameApplication() {
+        // Same organization, same title
+        JobApplication ja1 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline,
+                validApplicationStage);
+
+        JobApplication ja2 = new JobApplication(NUS, validTitle, validJobDescription, validDeadline,
+                validApplicationStage);
+        JobApplication ja3 = new JobApplication(NUS, validTitle, new JobDescription("Intern"),
+                new Deadline("11-12" + "-2020"), ApplicationStage.INTERVIEW);
+
+        JobApplication ja4 = new JobApplication(NTU, validTitle, validJobDescription,
+                validDeadline, validApplicationStage);
+
+        assertTrue(ja1.isSameApplication(ja1));
+
+        // Same organization
+        assertTrue(ja1.isSameApplication(ja2));
+        assertTrue(ja1.isSameApplication(ja3));
+
+        // Different organization
+        assertFalse(ja1.isSameApplication(ja4));
+    }
+
     @Test
     public void equals() {
         assert !id1.equals(id2);

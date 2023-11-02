@@ -79,6 +79,14 @@ public class Organization extends Contact {
     }
 
     /**
+     * Checks if the organization has the given {@code JobApplication}.
+     */
+    public boolean hasJobApplication(JobApplication jobApplication) {
+        return this.jobApplications.stream()
+                .anyMatch(application -> application.isSameApplication(jobApplication));
+    }
+
+    /**
      * Adds a {@code JobApplication} to the list of applications.
      */
     public void addJobApplication(JobApplication jobApplication) {
