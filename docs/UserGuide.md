@@ -163,7 +163,7 @@ Examples:
 
 Current: Edit contacts whose names contain any of the given keywords or ids.
 
-Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG] [--stat STATUS] [--pos POSITION]`
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 * Names, index and id are being searched.
 * For id, the search is case-insensitive, e.g. `hans` will match `Hans`
@@ -180,7 +180,7 @@ Examples:
 
 Current: Finds contacts whose names contain any of the given keywords or ids.
 
-Format: `find KEYWORD/ ID [MORE_KEYWORDS/ IDS]`
+Format: `find KEYWORD/ID...`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
