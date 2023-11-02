@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_URGENT;
+import static seedu.address.logic.parser.CliSyntax.FLAG_EARLIEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_LATEST;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
@@ -17,7 +17,7 @@ public class ReminderCommand extends Command {
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
             AutocompleteDataSet.oneAmongAllOf(
-                    FLAG_STALE, FLAG_URGENT
+                    FLAG_EARLIEST, FLAG_LATEST
             )
     ).configureValueMap(map -> {
         // Disable value autocompletion for:
@@ -26,12 +26,12 @@ public class ReminderCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Reminds the user of applications based on the specified flag.\n"
-            + "Parameters: " + FLAG_STALE + "/" + FLAG_URGENT + "\n"
-            + "Example 1: " + COMMAND_WORD + " --stale\n"
-            + "Example 2: " + COMMAND_WORD + " --urgent\n";
+            + "Parameters: " + FLAG_EARLIEST + "/" + FLAG_LATEST + "\n"
+            + "Example 1: " + COMMAND_WORD + " --earliest\n"
+            + "Example 2: " + COMMAND_WORD + " --latest\n";
 
-    public static final String MESSAGE_REMINDED_URGENT = "Reminded user of urgent applications";
-    public static final String MESSAGE_REMINDED_STALE = "Reminded user of stale applications";
+    public static final String MESSAGE_REMINDED_EARLIEST = "Reminded user of high priority applications";
+    public static final String MESSAGE_REMINDED_LATEST = "Reminded user of low priority applications";
     private final Boolean isUrgent;
 
     /**
@@ -46,10 +46,10 @@ public class ReminderCommand extends Command {
         requireNonNull(model);
         if (isUrgent) {
             model.updateSortedApplicationList(JobApplication.DEADLINE_COMPARATOR);
-            return new CommandResult(MESSAGE_REMINDED_URGENT);
+            return new CommandResult(MESSAGE_REMINDED_EARLIEST);
         }
         model.updateSortedApplicationList(JobApplication.DEADLINE_COMPARATOR.reversed());
-        return new CommandResult(MESSAGE_REMINDED_STALE);
+        return new CommandResult(MESSAGE_REMINDED_LATEST);
     }
 
     @Override

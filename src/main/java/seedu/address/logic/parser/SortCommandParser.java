@@ -2,23 +2,29 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_REVERSE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.COMPARATOR_ADDRESS;
+import static seedu.address.model.Model.COMPARATOR_ADDRESS_REVERSED;
 import static seedu.address.model.Model.COMPARATOR_EMAIL;
+import static seedu.address.model.Model.COMPARATOR_EMAIL_REVERSED;
 import static seedu.address.model.Model.COMPARATOR_ID;
 import static seedu.address.model.Model.COMPARATOR_NAME;
 import static seedu.address.model.Model.COMPARATOR_PHONE;
+import static seedu.address.model.Model.COMPARATOR_PHONE_REVERSED;
 import static seedu.address.model.Model.COMPARATOR_URL;
+import static seedu.address.model.Model.COMPARATOR_URL_REVERSED;
 
 import java.util.Comparator;
 
@@ -51,20 +57,20 @@ public class SortCommandParser implements Parser<SortCommand> {
         Comparator<Contact> contactComparator = null;
         Comparator<JobApplication> applicationComparator = null;
 
-        if (argMultimap.hasFlag(FLAG_REVERSE)) {
+        if (argMultimap.hasFlag(FLAG_DESCENDING)) {
             isReverse = true;
         }
         //I feel there should be a more elegant way to write this.
         if (argMultimap.hasFlag(FLAG_ADDRESS)) {
             if (isReverse) {
-                contactComparator = COMPARATOR_ADDRESS.reversed();
+                contactComparator = COMPARATOR_ADDRESS_REVERSED;
             } else {
                 contactComparator = COMPARATOR_ADDRESS;
             }
             return new SortCommand(contactComparator, applicationComparator, false);
         } else if (argMultimap.hasFlag(FLAG_EMAIL)) {
             if (isReverse) {
-                contactComparator = COMPARATOR_EMAIL.reversed();
+                contactComparator = COMPARATOR_EMAIL_REVERSED;
             } else {
                 contactComparator = COMPARATOR_EMAIL;
             }
@@ -85,14 +91,14 @@ public class SortCommandParser implements Parser<SortCommand> {
             return new SortCommand(contactComparator, applicationComparator, false);
         } else if (argMultimap.hasFlag(FLAG_PHONE)) {
             if (isReverse) {
-                contactComparator = COMPARATOR_PHONE.reversed();
+                contactComparator = COMPARATOR_PHONE_REVERSED;
             } else {
                 contactComparator = COMPARATOR_PHONE;
             }
             return new SortCommand(contactComparator, applicationComparator, false);
         } else if (argMultimap.hasFlag(FLAG_URL)) {
             if (isReverse) {
-                contactComparator = COMPARATOR_URL.reversed();
+                contactComparator = COMPARATOR_URL_REVERSED;
             } else {
                 contactComparator = COMPARATOR_URL;
             }
@@ -123,6 +129,13 @@ public class SortCommandParser implements Parser<SortCommand> {
                 applicationComparator = JobApplication.DEADLINE_COMPARATOR.reversed();
             } else {
                 applicationComparator = JobApplication.DEADLINE_COMPARATOR;
+            }
+            return new SortCommand(contactComparator, applicationComparator, false);
+        } else if (argMultimap.hasFlag(FLAG_TITLE)) {
+            if (isReverse) {
+                applicationComparator = JobApplication.JOB_TITLE_COMPARATOR.reversed();
+            } else {
+                applicationComparator = JobApplication.JOB_TITLE_COMPARATOR;
             }
             return new SortCommand(contactComparator, applicationComparator, false);
         }

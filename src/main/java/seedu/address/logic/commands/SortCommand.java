@@ -2,16 +2,18 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_REVERSE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Comparator;
@@ -33,13 +35,14 @@ public class SortCommand extends Command {
             AutocompleteDataSet.concat(
                     AutocompleteDataSet.oneAmongAllOf(
                             FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
-                            FLAG_STALE, FLAG_STAGE, FLAG_STATUS, FLAG_DEADLINE, FLAG_NONE
+                            FLAG_STALE, FLAG_STAGE, FLAG_STATUS, FLAG_DEADLINE, FLAG_TITLE,
+                            FLAG_NONE
                     ), AutocompleteDataSet.oneAmongAllOf(
-                            FLAG_REVERSE
+                            FLAG_ASCENDING, FLAG_DESCENDING
                     )
             ).addConstraint(
                     AutocompleteConstraint.oneAmongAllOf(
-                            FLAG_NONE, FLAG_REVERSE
+                            FLAG_NONE, FLAG_ASCENDING, FLAG_DESCENDING
                     )
             )
     ).configureValueMap(map -> {
@@ -51,13 +54,14 @@ public class SortCommand extends Command {
             + ": Sorts contacts or applications based on the specified flag.\n"
             + "Parameters: " + FLAG_NAME + "/" + FLAG_ID + "/"
             + FLAG_PHONE + "/" + FLAG_EMAIL + "/"
-            + FLAG_ADDRESS + "/" + FLAG_URL + "\n"
-            + FLAG_DEADLINE + "/" + FLAG_STATUS + "\n"
-            + FLAG_STAGE + "/" + FLAG_STALE + "\n"
-            + FLAG_NONE + " [" + FLAG_REVERSE + "]\n"
+            + FLAG_ADDRESS + "/" + FLAG_URL + "/"
+            + FLAG_DEADLINE + "/" + FLAG_STATUS + "/"
+            + FLAG_STAGE + "/" + FLAG_STALE + "/"
+            + FLAG_TITLE + "/" + FLAG_NONE
+            + " [" + FLAG_ASCENDING + "/" + FLAG_DESCENDING + "]\n"
             + "Example 1: " + COMMAND_WORD + " --name\n"
-            + "Example 2: " + COMMAND_WORD + " --id" + " --reverse\n"
-            + "Example 3: " + COMMAND_WORD + " --stale\n";
+            + "Example 2: " + COMMAND_WORD + " --id" + " --descending\n"
+            + "Example 3: " + COMMAND_WORD + " --stale" + " --ascending\n";
 
     public static final String MESSAGE_SORTED_CONTACTS = "Sorted contacts as specified";
     public static final String MESSAGE_SORTED_APPLICATIONS = "Sorted applications as specified";

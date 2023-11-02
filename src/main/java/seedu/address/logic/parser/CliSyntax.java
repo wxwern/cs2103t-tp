@@ -26,7 +26,9 @@ public class CliSyntax {
     public static final Flag FLAG_DESCRIPTION = new Flag("desc");
     public static final Flag FLAG_NOT_APPLIED = new Flag("toapply");
     public static final Flag FLAG_NONE = new Flag("none");
-    public static final Flag FLAG_REVERSE = new Flag("rev");
+    public static final Flag FLAG_ASCENDING = new Flag("ascending");
+    public static final Flag FLAG_DESCENDING = new Flag("descending");
     public static final Flag FLAG_STALE = new Flag("stale");
-    public static final Flag FLAG_URGENT = new Flag("urgent");
+    public static final Flag FLAG_EARLIEST = new Flag("earliest");
+    public static final Flag FLAG_LATEST = new Flag("latest");
 }

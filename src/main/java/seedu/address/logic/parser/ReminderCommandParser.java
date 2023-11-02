@@ -1,11 +1,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_URGENT;
+import static seedu.address.logic.parser.CliSyntax.FLAG_EARLIEST;
+import static seedu.address.logic.parser.CliSyntax.FLAG_LATEST;
 
 import seedu.address.logic.commands.ReminderCommand;
-import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class ReminderCommandParser implements Parser<ReminderCommand> {
@@ -17,11 +16,11 @@ public class ReminderCommandParser implements Parser<ReminderCommand> {
     public ReminderCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        SortCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
+                        ReminderCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
-        if (argMultimap.hasFlag(FLAG_URGENT)) {
+        if (argMultimap.hasFlag(FLAG_EARLIEST)) {
             return new ReminderCommand(true);
-        } else if (argMultimap.hasFlag(FLAG_STALE)) {
+        } else if (argMultimap.hasFlag(FLAG_LATEST)) {
             return new ReminderCommand(false);
         }
 

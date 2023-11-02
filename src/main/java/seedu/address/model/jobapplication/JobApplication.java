@@ -28,6 +28,9 @@ public class JobApplication {
     public static final Comparator<JobApplication> LAST_UPDATED_COMPARATOR = (a, b) ->
             a.lastUpdatedTime.compareTo(b.lastUpdatedTime);
 
+    public static final Comparator<JobApplication> JOB_TITLE_COMPARATOR = Comparator.comparing(
+            application -> application.getJobTitle().title, String.CASE_INSENSITIVE_ORDER);
+
     private final Id oid;
     private final Name orgName;
 
