@@ -150,11 +150,18 @@ public class EditCommandParser implements Parser<EditCommand> {
     private static EditCommand handleEditApplication(ArgumentMultimap argMultimap) throws ParseException {
         EditApplicationDescriptor editApplicationDescriptor = new EditApplicationDescriptor();
 
-        if (argMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
+        Optional<String> indexStringOptional = argMultimap.getValue(FLAG_APPLICATION).filter(s -> !s.isEmpty());
+
+        Index index;
+        if (indexStringOptional.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(FLAG_APPLICATION).get());
+        try {
+            index = ParserUtil.parseIndex(indexStringOptional.get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE, pe));
+        }
 
         editApplicationDescriptor.setDeadline(
                 ParserUtil.parseOptionally(

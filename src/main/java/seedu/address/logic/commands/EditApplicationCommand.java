@@ -65,6 +65,19 @@ public class EditApplicationCommand extends EditCommand {
         return new CommandResult(String.format(MESSAGE_EDIT_APPLICATION_SUCCESS, newApplication));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof EditApplicationCommand)) {
+            return false;
+        }
+        EditApplicationCommand cmd = (EditApplicationCommand) other;
+        return this.targetIndex.equals(cmd.targetIndex)
+                && this.editApplicationDescriptor.equals(cmd.editApplicationDescriptor);
+    }
+
     private static JobApplication createApplication(JobApplication jobApplication,
                                                     EditApplicationDescriptor editApplicationDescriptor) {
         Objects.requireNonNull(jobApplication);
@@ -166,6 +179,23 @@ public class EditApplicationCommand extends EditCommand {
                     .add("status", status)
                     .add("stage", applicationStage)
                     .toString();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (!(other instanceof EditApplicationDescriptor)) {
+                return false;
+            }
+
+            EditApplicationDescriptor editDescriptor = (EditApplicationDescriptor) other;
+            return this.jobDescription.equals(editDescriptor.jobDescription)
+                    && this.applicationStage.equals(editDescriptor.applicationStage)
+                    && this.deadline.equals(editDescriptor.deadline)
+                    && this.jobTitle.equals(editDescriptor.jobTitle)
+                    && this.status.equals(editDescriptor.status);
         }
     }
 }

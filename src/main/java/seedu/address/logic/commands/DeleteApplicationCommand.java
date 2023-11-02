@@ -41,4 +41,18 @@ public class DeleteApplicationCommand extends DeleteCommand {
         }
         return new CommandResult(String.format(MESSAGE_DELETE_APPLICATION_SUCCESS, application));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof DeleteApplicationCommand)) {
+            return false;
+        }
+
+        DeleteApplicationCommand cmd = (DeleteApplicationCommand) other;
+        return this.index.equals(cmd.index);
+    }
 }
