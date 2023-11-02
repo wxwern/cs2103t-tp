@@ -213,27 +213,40 @@ Examples:
 
 ### Editing a contact: `edit`
 
-_{To be updated...}_
+Current: Edit contacts whose names contain any of the given keywords or ids.
+
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* Names, index and id are being searched.
+* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
+* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
+
+Examples:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
 
 
-### Locating contacts by name: `find`
+### Locating contacts by name and id: `find`
 
-_{To be updated...}_
+Current: Finds contacts whose names contain any of the given keywords or ids.
 
-
-Current: Finds contacts whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD/ID...`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Name & ID are searched
+* The partial keyword can be matched with `ha` will match with `hambarger`
+* Partial ID can match with the entire id as well `12345` will match with `id_12345`, however good to be more specific
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
 
 Examples:
 * `find John` returns `john` and `John Doe`
+* `find id_12345` returns `john` and whose id is `id_12345`
+* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
