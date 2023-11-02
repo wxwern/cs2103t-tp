@@ -65,10 +65,11 @@ public class CommandBox extends UiPart<Region> {
         //   These captures keystrokes at different KeyEvent due to weird JavaFX quirks not actually delivering
         //   all events at all situations.
 
-        if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED
+        if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED
                 && keyEvent.getCode() == KeyCode.ENTER) {
 
             logger.fine("Received key ENTER");
+
             this.handleCommandEntered();
 
         } else if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED
@@ -120,16 +121,25 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleCommandEntered() {
         String commandText = commandTextField.getText();
-        if (commandText.equals("")) {
+
+        if (commandText.isBlank()) {
+            // Ignore and reset blank (whitespace-only or empty) inputs
+            commandTextField.setText("");
             return;
         }
 
         try {
+            // Process the command
             commandExecutor.execute(commandText);
+
+            // Once successful, reset the text field
             commandTextField.setText("");
             commandTextField.requestFocus();
+            commandTextField.hidePopup();
+
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+            commandTextField.hidePopup();
         }
     }
 

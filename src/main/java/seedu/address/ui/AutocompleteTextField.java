@@ -1,18 +1,23 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 /**
  * A text field capable of displaying and performing autocomplete.
@@ -179,29 +184,98 @@ public class AutocompleteTextField extends TextField {
     }
 
     /**
+     * Hides the autocomplete popup menu if it is visible.
+     * This is temporary and may be shown again if the user types anything,
+     * or if {@link #refreshPopupState()} is invoked.
+     */
+    public void hidePopup() {
+        this.autocompletePopup.hide();
+    }
+
+    /**
+     * Shows the autocomplete popup menu if there are contents to show but it is not yet visible.
+     * This is equivalent to calling {@link #refreshPopupState()}, since the popup is visible by default when there
+     * are elements.
+     */
+    public void showPopup() {
+        this.refreshPopupState();
+    }
+
+    /**
      * Updates the state of the popup indicating the autocompletion entries.
      */
     public void refreshPopupState() {
         String text = getText();
-        if (text.isEmpty() || !isFocused()) {
+        if (!isFocused() || popupLimit <= 0) {
             autocompletePopup.hide();
             return;
         }
 
+        // Obtain the list of completions
+        List<String> completions = completionGenerator.apply(text)
+                .limit(popupLimit + 1) // (+ 1 so we can tell if it exceeds the limit)
+                .collect(Collectors.toList());
+
+        // Obtain the length of the prefix part of the completion strings that can be truncated
+        int hidableCompletionPrefixLength = completions.stream()
+                .min(Comparator.comparingInt(String::length))
+                .map(String::length)
+                .map(l -> Math.max(0, l - 48)) // Keep the last 48 characters in view
+                .orElse(0);
+
+        // Populate the menu items
         List<CustomMenuItem> menuItems = new LinkedList<>();
+        for (int i = 0; i < completions.size(); i++) {
 
-        completionGenerator.apply(text)
-                .limit(popupLimit)
-                .forEachOrdered(autocompletedString -> {
-                    Label entryLabel = new Label(autocompletedString);
-                    CustomMenuItem item = new CustomMenuItem(entryLabel, false);
-                    item.setOnAction(e -> triggerImmediateAutocompletionUsingResult(autocompletedString));
-                    menuItems.add(item);
-                });
+            // Create the relevant labels
+            String completion = completions.get(i);
+            String[] completionParts = splitIntoAutocompletionComponents(getText(), completion);
 
+            String prefixMatchPart = truncateFrontWithEllipsis(completionParts[0], hidableCompletionPrefixLength);
+            String postfixCompletionPart = completionParts[1];
+
+            Label completionLabelFront = new Label(prefixMatchPart);
+            Label completionLabelBack = new Label(postfixCompletionPart);
+
+            completionLabelFront.getStyleClass().add("completion-prefix");
+            completionLabelBack.getStyleClass().add("completion-data");
+
+            // Create the horizontal box
+            HBox completionBox = new HBox(completionLabelFront, completionLabelBack);
+            completionBox.getStyleClass().add("autocomplete-box");
+            completionBox.setPadding(new Insets(0, 8, 0, 8));
+            completionBox.setAlignment(Pos.BASELINE_CENTER);
+
+            // Create the context menu item
+            CustomMenuItem item = new CustomMenuItem(completionBox, false);
+            item.setOnAction(e -> triggerImmediateAutocompletionUsingResult(completion));
+            menuItems.add(item);
+
+            // Handle special case styling
+            if (i == 0) {
+                // Special Case 1: First completion option
+                Label completionHint = new Label("[Press TAB or SPACE to autocomplete]");
+                completionHint.getStyleClass().add("completion-hint");
+                completionHint.setPadding(new Insets(0, 8, 0, 8));
+
+                completionBox.getStyleClass().add("primary");
+                completionBox.getChildren().add(completionHint);
+
+            } else if (i >= popupLimit) {
+                // Special Case 2: Options exceeding limit and not first element
+                completionLabelFront.setText("... (more options hidden)");
+                completionLabelBack.setText(null);
+                item.setDisable(true);
+                break; // Stop further processing immediately - only one of this should be displayed.
+
+            }
+        }
+
+        // Replace the current menu items with the new set
         autocompletePopup.getItems().clear();
         autocompletePopup.getItems().addAll(menuItems);
 
+        // Update popup display state accordingly
         if (menuItems.size() > 0) {
             if (!autocompletePopup.isShowing()) {
                 autocompletePopup.show(AutocompleteTextField.this, Side.BOTTOM, 0, 0);
@@ -226,6 +300,54 @@ public class AutocompleteTextField extends TextField {
         ) {
             autocompleteHistory.pop();
         }
+    }
+
+    /**
+     * Splits the given autocomplete result by the closest prefix matched phrase and the autocompleted result.
+     *
+     * <p>
+     * For example, providing the input {@code "abc def 1234"} with autocompletion {@code "abc def 12345 ghi"}
+     * would yield a split of {@code new String[] { "abc def", "12345 ghi" }}
+     * </p>
+     *
+     * @return an array of length 2 that contains the (prefix part, autocompletion part).
+     */
+    private String[] splitIntoAutocompletionComponents(String input, String autocompletionResult) {
+        int secondPartIndex = 0;
+
+        // Step 1: Find the index beyond the prefix match.
+        while (secondPartIndex < input.length()
+                && secondPartIndex < autocompletionResult.length()
+                && input.charAt(secondPartIndex) == autocompletionResult.charAt(secondPartIndex)) {
+            secondPartIndex++;
+        }
+
+        // Step 2: Backtrack till a space is found.
+        while (secondPartIndex - 1 >= 0
+                && autocompletionResult.charAt(secondPartIndex - 1) != ' ') {
+            secondPartIndex--;
+        }
+
+        // Step 3: Split by the given index, if possible.
+        if (secondPartIndex >= 0 && secondPartIndex <= autocompletionResult.length()) {
+            return new String[] {
+                    autocompletionResult.substring(0, secondPartIndex),
+                    autocompletionResult.substring(secondPartIndex),
+            };
+        } else {
+            return new String[] { autocompletionResult, "" };
+        }
+    }
+
+    /**
+     * Truncates the given string by the given {@code truncateAmount} of characters at the front, and adds
+     * leading ellipsis. It returns just the ellipsis if the number of characters truncated exceeds the string length.
+     */
+    private String truncateFrontWithEllipsis(String str, int truncateAmount) {
+        if (truncateAmount <= 0) {
+            return str;
+        }
+        return truncateAmount >= str.length() ? "..." : "..." + str.substring(truncateAmount);
     }
 
 }
