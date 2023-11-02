@@ -21,7 +21,10 @@ import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.jobapplication.JobTitle;
 import seedu.address.model.jobapplication.LastUpdatedTime;
 
-public class EditApplicationCommand extends Command {
+/**
+ * Edit command but for application.
+ */
+public class EditApplicationCommand extends EditCommand {
 
     public static final String MESSAGE_EDIT_APPLICATION_SUCCESS = "Edited job application: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -29,7 +32,13 @@ public class EditApplicationCommand extends Command {
     private final Index targetIndex;
     private final EditApplicationDescriptor editApplicationDescriptor;
 
+    /**
+     * Creates a command based on the index of the application in the list and the description given.
+     * @param index of the application in the list
+     * @param editApplicationDescriptor of the application to edit
+     */
     public EditApplicationCommand(Index index, EditApplicationDescriptor editApplicationDescriptor) {
+        super(index, new EditContactDescriptor()); // dummy things to make the compiler happy.
         this.targetIndex = index;
         this.editApplicationDescriptor = new EditApplicationDescriptor(editApplicationDescriptor);
     }
@@ -48,7 +57,7 @@ public class EditApplicationCommand extends Command {
         JobApplication newApplication = createApplication(jobApplication, editApplicationDescriptor);
 
         try {
-            model.replaceApplication(jobApplication, newApplication);
+            model.replaceApplication(targetIndex, newApplication);
         } catch (IllegalValueException e) {
             throw new CommandException(e.getMessage());
         }
@@ -64,7 +73,8 @@ public class EditApplicationCommand extends Command {
         Id oid = jobApplication.getOrganizationId();
         Name name = jobApplication.getOrgName();
         JobTitle jobTitle = editApplicationDescriptor.getTitle().orElse(jobApplication.getJobTitle());
-        JobDescription jobDescription = editApplicationDescriptor.getDescription().orElse(jobApplication.getJobDescription()
+        JobDescription jobDescription =
+                editApplicationDescriptor.getDescription().orElse(jobApplication.getJobDescription()
                 .orElse(null));
         JobStatus status = editApplicationDescriptor.getStatus().orElse(jobApplication.getStatus());
         ApplicationStage stage = editApplicationDescriptor.getStage().orElse(jobApplication.getApplicationStage());
@@ -73,12 +83,13 @@ public class EditApplicationCommand extends Command {
         return new JobApplication(oid, name, jobTitle, jobDescription, deadline, status, stage, new LastUpdatedTime());
     }
 
+    /**
+     * Class to store information on details to edit.
+     */
     public static class EditApplicationDescriptor {
         private JobTitle jobTitle;
 
         private JobDescription jobDescription;
-
-        private LastUpdatedTime lastUpdatedTime = new LastUpdatedTime();
 
         private Deadline deadline;
 
@@ -88,6 +99,9 @@ public class EditApplicationCommand extends Command {
 
         public EditApplicationDescriptor() {}
 
+        /**
+         * Creates a shallow copy of {@code EditApplicationDescriptor}
+         */
         public EditApplicationDescriptor(EditApplicationDescriptor toCopy) {
             setDeadline(toCopy.deadline);
             setApplicationStage(toCopy.applicationStage);

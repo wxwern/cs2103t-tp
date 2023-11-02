@@ -2,14 +2,19 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
@@ -56,7 +61,8 @@ public class EditCommand extends Command {
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
                     FLAG_STATUS, FLAG_POSITION,
-                    FLAG_ORGANIZATION_ID
+                    FLAG_ORGANIZATION_ID, FLAG_APPLICATION, // TODO: Wern help me with cleaning up thx
+                    FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE
             ),
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
     ).configureValueMap(map -> {

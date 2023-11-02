@@ -3,14 +3,19 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Collection;
@@ -19,6 +24,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditApplicationCommand;
+import seedu.address.logic.commands.EditApplicationCommand.EditApplicationDescriptor;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditContactDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -45,6 +52,10 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args,
                         EditCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
+        if (argMultimap.getValue(FLAG_APPLICATION).isPresent()) {
+            return handleEditApplication(argMultimap);
+        }
+
         Index index;
         Id targetId;
 
@@ -69,11 +80,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
+
         argMultimap.verifyNoDuplicateFlagsFor(FLAG_NAME, FLAG_PHONE, FLAG_EMAIL,
                 FLAG_ADDRESS, FLAG_URL, FLAG_ID, FLAG_STATUS, FLAG_POSITION, FLAG_ORGANIZATION_ID);
 
         EditContactDescriptor editContactDescriptor = new EditContactDescriptor();
 
+        // TODO: Tech debt - parseOptionally
         if (argMultimap.getValue(FLAG_NAME).isPresent()) {
             editContactDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(FLAG_NAME).get()));
         }
@@ -132,6 +145,42 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    private static EditCommand handleEditApplication(ArgumentMultimap argMultimap) throws ParseException {
+        EditApplicationDescriptor editApplicationDescriptor = new EditApplicationDescriptor();
+
+        if (argMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        Index index = ParserUtil.parseIndex(argMultimap.getValue(FLAG_APPLICATION).get());
+
+        editApplicationDescriptor.setDeadline(
+                ParserUtil.parseOptionally(
+                        argMultimap.getValue(FLAG_DEADLINE),
+                        ParserUtil::parseDeadline));
+        editApplicationDescriptor.setApplicationStage(
+                ParserUtil.parseOptionally(
+                        argMultimap.getValue(FLAG_STAGE),
+                        ParserUtil::parseApplicationStage));
+        editApplicationDescriptor.setJobTitle(
+                ParserUtil.parseOptionally(
+                        argMultimap.getValue(FLAG_TITLE),
+                        ParserUtil::parseJobTitle));
+        editApplicationDescriptor.setStatus(
+                ParserUtil.parseOptionally(
+                        argMultimap.getValue(FLAG_STATUS),
+                        ParserUtil::parseJobStatus));
+        editApplicationDescriptor.setJobDescription(
+                ParserUtil.parseOptionally(
+                        argMultimap.getValue(FLAG_DESCRIPTION),
+                        ParserUtil::parseJobDescription));
+
+        if (!editApplicationDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+        }
+        return new EditApplicationCommand(index, editApplicationDescriptor);
     }
 
 }

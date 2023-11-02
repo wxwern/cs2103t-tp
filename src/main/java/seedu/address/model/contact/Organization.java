@@ -87,12 +87,22 @@ public class Organization extends Contact {
         this.jobApplications.add(jobApplication);
     }
 
+    /**
+     * Replaces the old job application in the list with the new one.
+     */
     public void replaceJobApplication(JobApplication oldApplication, JobApplication newApplication) {
         assert newApplication.getOrganizationId().equals(this.getId());
         assert newApplication.getOrganizationId().equals(oldApplication.getOrganizationId());
 
         this.jobApplications.remove(oldApplication);
         this.jobApplications.add(newApplication);
+    }
+
+    /**
+     * Deletes the job application in the list.
+     */
+    public void deleteJobApplication(JobApplication application) {
+        this.jobApplications.remove(application);
     }
 
     /**
