@@ -86,7 +86,7 @@ public class EditCommand extends Command {
             AUTOCOMPLETE_SET_STANDARD,
             AUTOCOMPLETE_SET_APPLICATION
     ).configureValueMap(map -> {
-        
+
         // Add value autocompletion data for:
         map.put(null /* preamble*/, (command, model) -> {
 
