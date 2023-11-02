@@ -37,4 +37,18 @@ public class JobApplicationList {
     public void add(JobApplication jobApplication) {
         applications.add(jobApplication);
     }
+
+    /**
+     * Sets application at the specified index.
+     */
+    public void set(int index, JobApplication jobApplication) {
+        applications.set(index, jobApplication);
+    }
+
+    /**
+     * Gets the application at the specified index.
+     */
+    public JobApplication get(int index) {
+        return applications.get(index);
+    }
 }

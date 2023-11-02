@@ -182,9 +182,9 @@ public class ModelManager implements Model {
 
     @Override
     public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
-        JobApplication oldApplication = this.applicationList.get(index.getZeroBased());
+        JobApplication oldApplication = jobApplicationList.get(index.getZeroBased());
 
-        this.applicationList.set(index.getZeroBased(), newApplication);
+        jobApplicationList.set(index.getZeroBased(), newApplication);
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
             throw new IllegalValueException("Id field is invalid!");
@@ -202,7 +202,7 @@ public class ModelManager implements Model {
             throw new IllegalValueException("Id field is invalid!");
         }
         Organization org = (Organization) contact;
-        this.applicationList.remove(application);
+        this.jobApplicationList.remove(application);
         org.deleteJobApplication(application);
     }
 
