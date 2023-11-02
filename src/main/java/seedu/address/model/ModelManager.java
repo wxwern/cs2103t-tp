@@ -181,6 +181,32 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
+        JobApplication oldApplication = this.applicationList.get(index.getZeroBased());
+
+        this.applicationList.set(index.getZeroBased(), newApplication);
+        Contact contact = getContactById(newApplication.getOrganizationId());
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new IllegalValueException("Id field is invalid!");
+        }
+        Organization organization = (Organization) contact;
+        organization.replaceJobApplication(oldApplication, newApplication);
+
+
+    }
+
+    @Override
+    public void deleteApplication(JobApplication application) throws IllegalValueException {
+        Contact contact = getContactById(application.getOrganizationId());
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new IllegalValueException("Id field is invalid!");
+        }
+        Organization org = (Organization) contact;
+        this.applicationList.remove(application);
+        org.deleteJobApplication(application);
+    }
+
+    @Override
     public void addApplication(JobApplication application) {
         jobApplicationList.add(application);
         // TODO: Tech debt - need separate declaration for the predicates

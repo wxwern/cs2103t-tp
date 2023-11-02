@@ -40,37 +40,20 @@ public class CommandBox extends UiPart<Region> {
         this.completionGenerator = completionGenerator;
 
         assert commandTextField != null;
+
+        // Setup completion results and hints
         commandTextField.setCompletionGenerator(completionGenerator);
-        commandTextField.setOnKeyPressed(this::handleKeyEvent);
+        commandTextField.setAutocompleteHintString("[Press TAB or SPACE to autocomplete]");
+
+        // Setup UI events
+        commandTextField.setOnAction(e -> this.handleCommandEntered());
+
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyFilter);
+        commandTextField.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyFilter);
         commandTextField.addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyFilter);
 
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // Sets the style to default whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-    }
-
-
-    /**
-     * Handles the key event of a textbox.
-     */
-    @FXML
-    private void handleKeyEvent(KeyEvent keyEvent) {
-        if (keyEvent.getEventType() != KeyEvent.KEY_PRESSED) {
-            return;
-        }
-
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            logger.fine("Received key ENTER");
-            this.handleCommandEntered();
-
-        } else if (keyEvent.getCode() == KeyCode.TAB) {
-            logger.fine("Intercepted TAB key");
-
-            keyEvent.consume(); // consume by default
-            commandTextField.requestFocus(); // revert to this focus in case (otherwise tab changes focus)
-
-            this.handleCommandAutocompleted(keyEvent);
-        }
     }
 
     /**
@@ -78,25 +61,40 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyFilter(KeyEvent keyEvent) {
-        if (this.commandTextField.getCaretPosition() < this.commandTextField.getText().length()) {
-            // Caret not at end. Autocomplete not applicable using standard keyboard intercepts.
-            return;
-        }
+        boolean isTextCaretAtEnd =
+                this.commandTextField.getCaretPosition() == this.commandTextField.getText().length()
+                    && this.commandTextField.getSelectedText().isEmpty();
+        boolean isKeyTyped = keyEvent.getEventType() == KeyEvent.KEY_TYPED;
+        boolean isKeyPressed = keyEvent.getEventType() == KeyEvent.KEY_PRESSED;
 
-        // Note: Possible JavaFX bug: KEY_PRESSED is not fired for SPACE. We use KEY_TYPED instead to catch it.
+        // Note:
+        //   These captures keystrokes at different KeyEvent types, as there some events are captured by
+        //   other elements, and hence not all events are delivered in all situations.
 
-        if (keyEvent.getEventType() == KeyEvent.KEY_TYPED
-                && Objects.equals(keyEvent.getCharacter(), " ")) {
-
+        if (isKeyTyped && isTextCaretAtEnd && Objects.equals(keyEvent.getCharacter(), " ")) {
             logger.fine("Intercepted SPACE typed at end");
             this.handleCommandAutocompleted(keyEvent);
 
-        } else if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED
-                && keyEvent.getCode() == KeyCode.BACK_SPACE) {
 
+        } else if (isKeyPressed && isTextCaretAtEnd && keyEvent.getCode() == KeyCode.BACK_SPACE) {
             logger.fine("Intercepted BACKSPACE typed at end");
             this.handleCommandUndoAutocomplete(keyEvent);
 
+
+        } else if (isKeyPressed && keyEvent.getCode() == KeyCode.TAB) {
+            logger.fine("Intercepted TAB key");
+
+            keyEvent.consume(); // Consume to prevent element focus change.
+
+            // There are two cases for TAB:
+            //  - Case 1: Autocomplete popup shown --> Triggers autocomplete result
+            //  - Case 2: Autocomplete popup not shown --> Tries to make autocomplete popup visible
+
+            if (commandTextField.isPopupVisible()) {
+                this.handleCommandAutocompleted(keyEvent);
+            } else {
+                commandTextField.showPopup();
+            }
         }
     }
 
@@ -105,16 +103,25 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleCommandEntered() {
         String commandText = commandTextField.getText();
-        if (commandText.equals("")) {
+
+        if (commandText.isBlank()) {
+            // Ignore and reset blank (whitespace-only or empty) inputs
+            commandTextField.setText("");
             return;
         }
 
         try {
+            // Process the command
             commandExecutor.execute(commandText);
+
+            // Once successful, reset the text field
             commandTextField.setText("");
             commandTextField.requestFocus();
+            commandTextField.hidePopup();
+
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+            commandTextField.hidePopup();
         }
     }
 
@@ -128,6 +135,9 @@ public class CommandBox extends UiPart<Region> {
         boolean hasAutocompletedResult = commandTextField.triggerImmediateAutocompletion();
         if (hasAutocompletedResult) {
             keyEvent.consume();
+
+            commandTextField.requestFocus();
+            commandTextField.end();
         }
     }
 
@@ -140,6 +150,9 @@ public class CommandBox extends UiPart<Region> {
         boolean hasUndoneCompletion = commandTextField.undoLastImmediateAutocompletion();
         if (hasUndoneCompletion) {
             keyEvent.consume();
+
+            commandTextField.requestFocus();
+            commandTextField.end();
         }
     }
 

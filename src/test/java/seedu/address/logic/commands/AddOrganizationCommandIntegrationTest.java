@@ -11,7 +11,6 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
 import seedu.address.testutil.OrganizationBuilder;
 
@@ -48,25 +47,29 @@ public class AddOrganizationCommandIntegrationTest {
         );
 
         assertCommandSuccess(addCommand, model,
-                String.format(AddOrganizationCommand.MESSAGE_SUCCESS, Messages.format(validOrganization)),
+                String.format(AddOrganizationCommand.MESSAGE_SUCCESS,
+                        validOrganization.getType(), Messages.format(validOrganization)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicateOrganization_throwsCommandException() {
-        Contact contactInList = model.getAddressBook().getContactList().get(3);
-        Organization organizationInList = (Organization) contactInList;
+        Organization organizationInList = (Organization) model.getAddressBook().getContactList().get(2);
+        Organization duplicateOrganization = new OrganizationBuilder()
+                .withId(organizationInList.getId().value).build();
+
+        // Ensure that AddOrganizationCommand checks duplicate contact BY ID ONLY.
         AddOrganizationCommand addCommand = new AddOrganizationCommand(
-                organizationInList.getName(),
-                organizationInList.getId(),
-                organizationInList.getPhone().orElse(null),
-                organizationInList.getEmail().orElse(null),
-                organizationInList.getUrl().orElse(null),
-                organizationInList.getAddress().orElse(null),
-                organizationInList.getTags(),
-                organizationInList.getStatus().orElse(null),
-                organizationInList.getPosition().orElse(null),
-                organizationInList.getRecruiterIds()
+                duplicateOrganization.getName(),
+                duplicateOrganization.getId(),
+                duplicateOrganization.getPhone().orElse(null),
+                duplicateOrganization.getEmail().orElse(null),
+                duplicateOrganization.getUrl().orElse(null),
+                duplicateOrganization.getAddress().orElse(null),
+                duplicateOrganization.getTags(),
+                duplicateOrganization.getStatus().orElse(null),
+                duplicateOrganization.getPosition().orElse(null),
+                duplicateOrganization.getRecruiterIds()
         );
         assertCommandFailure(addCommand, model, AddOrganizationCommand.MESSAGE_DUPLICATE_CONTACT);
     }

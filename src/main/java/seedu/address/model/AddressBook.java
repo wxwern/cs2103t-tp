@@ -86,6 +86,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         contacts.remove(key);
     }
 
+    /**
+     * Returns true if a contact with the same identity as {@code contact} exists in the address book.
+     */
+    public boolean hasContact(Contact contact) {
+        requireNonNull(contact);
+        return contacts.contains(contact);
+    }
 
     //// util methods
 
