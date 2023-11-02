@@ -15,6 +15,7 @@ Class ContactListPanel
 Class ContactCard
 Class StatusBarFooter
 Class CommandBox
+Class AutocompleteTextField
 }
 
 package Model <<Rectangle>> {
@@ -46,6 +47,8 @@ ContactListPanel --|> UiPart
 ContactCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
+
+CommandBox -down--> "1" AutocompleteTextField
 
 ContactCard ..> Model
 UiManager -right-> Logic
