@@ -305,6 +305,22 @@ Examples:
 * `edit --application 1 --stat rejected`
 * `edit --application 1 --stage interview`
 
+### Sort `sort`
+Sorts contacts or applications by the specified flag.
+
+Format: `sort --FLAG_TO_SORT`
+
+* Currently only the following sorting functions are supported:
+  * For contacts:
+    * `--addr`
+    * `--email`
+    * `--name`
+    * `--id`
+    * `--phone`
+    * `--url`
+  * For job applications
+    * `--stale`: Sorts by last updated applications
+
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -333,7 +349,8 @@ Examples:
  **Edit**             | `edit INDEX ...` or <br>`edit ID ...` or <br>`edit --application INDEX ...`                                                                                                                                                                                                                                                                              
  **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
  **Apply**            | `apply INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` or <br>`apply ID [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` 
- **List**             | `list [--FLAG_TO_SORT]`                                                                                                                                                                                                                                                                                      
+ **List**             | `list [--FLAG_TO_FILTER]`
+ **Sort**             | `sort [--FLAG_TO_SORT]`
  **Help**             | `help`                                                                                                                                                                                                                                                                                      
 
 
