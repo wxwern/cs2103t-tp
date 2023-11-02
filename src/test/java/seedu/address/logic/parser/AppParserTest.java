@@ -121,7 +121,6 @@ public class AppParserTest {
         String userInput = "add --org -o";
         assertEquals(
                 List.of(
-                        "add --org --pos",
                         "add --org --phone"
                 ),
                 parser.parseCompletionGenerator(userInput)

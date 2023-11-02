@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
@@ -128,8 +127,6 @@ public class EditCommand extends Command {
             + "[" + FLAG_EMAIL + " EMAIL] "
             + "[" + FLAG_URL + " URL] "
             + "[" + FLAG_ADDRESS + " ADDRESS] "
-            + "[" + FLAG_STATUS + " STATUS] "
-            + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 

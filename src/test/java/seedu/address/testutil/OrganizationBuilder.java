@@ -6,19 +6,13 @@ import java.util.Set;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Organization;
-import seedu.address.model.contact.Position;
-import seedu.address.model.contact.Status;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Organization objects.
  */
 public class OrganizationBuilder extends ContactBuilder {
-    public static final String DEFAULT_STATUS = "Applied";
-    public static final String DEFAULT_POSITION = "Manager";
-    private Position position;
     private Set<Id> rids;
-    private Status status;
 
 
     /**
@@ -26,8 +20,6 @@ public class OrganizationBuilder extends ContactBuilder {
      */
     public OrganizationBuilder() {
         super();
-        position = new Position(DEFAULT_POSITION);
-        status = new Status(DEFAULT_STATUS);
         rids = new HashSet<>();
     }
 
@@ -36,8 +28,6 @@ public class OrganizationBuilder extends ContactBuilder {
      */
     public OrganizationBuilder(Organization organizationToCopy) {
         super(organizationToCopy);
-        position = organizationToCopy.getPosition().orElse(null);
-        status = organizationToCopy.getStatus().orElse(null);
         rids = organizationToCopy.getRecruiterIds();
     }
 
@@ -88,16 +78,18 @@ public class OrganizationBuilder extends ContactBuilder {
     /**
      * Sets the {@code Status} of the {@code Contact} that we are building.
      */
+    @Deprecated
     public OrganizationBuilder withStatus(String status) {
-        this.status = status == null ? null : new Status(status);
+        // TODO: Remove entirely
         return this;
     }
 
     /**
      * Sets the {@code Position} of the {@code Contact} that we are building.
      */
+    @Deprecated
     public OrganizationBuilder withPosition(String position) {
-        this.position = position == null ? null : new Position(position);
+        // TODO: Remove entirely
         return this;
     }
 
@@ -112,8 +104,8 @@ public class OrganizationBuilder extends ContactBuilder {
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
                 contact.getTags(),
-                status,
-                position,
+                null,
+                null,
                 rids
         );
     }
