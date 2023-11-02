@@ -24,6 +24,7 @@ public class Position {
      *
      * @param position A valid position.
      */
+    @Deprecated
     public Position(String position) {
         requireNonNull(position);
         checkArgument(isValidPosition(position), MESSAGE_CONSTRAINTS);
@@ -33,6 +34,7 @@ public class Position {
     /**
      * Constructs an empty {@code Position}.
      */
+    @Deprecated
     public Position() {
         jobPosition = "";
     }
