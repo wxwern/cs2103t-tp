@@ -106,10 +106,6 @@ Acceptable Parameters:
 
 * `ADDRESS` can accept any value. It designates the contact’s physical address.
 
-* `STATUS` must be one of _interested, applied, pending, offered, rejected, current_ (case-insensitive, prefix-only match allowed).
-
-* `POSITION` may be any value. It designates the position you intend to apply to.
-
 * `TAG` can accept any value and may have multiple inputs.
 
 
@@ -122,7 +118,7 @@ Examples:
 
 * `add --org --name Example --url www.organization.org --tag freelance`
 
-* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
 
 
 #### Adding a recruiter contact: `add --rec`
@@ -139,6 +135,7 @@ Acceptable Parameters:
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
 * `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
+The value provided must also be the ID of an existing organization in the address book.
 
 * `NUMBER` should be a valid phone number.
 
@@ -150,7 +147,7 @@ Acceptable Parameters:
 
 
 Examples:
-* `add --rec --name John Doe --oid paypal-sg`
+* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
 
 
 ### Listing all contacts: `list`
@@ -239,20 +236,6 @@ Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobb
 If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </div>
 
-### Applying to an organization: `Apply`
-
-Format: `add index/ id <additional parameters and values...>`
-
-
-App a contact to the address book of the given class type: Organization or Recruiter.
-
-Applying to a Organization by indicating it with the organization's index in the address book or the organization's unique id.
-
-This can be done by supplying the organization's `index` or `id` as the preamble.
-
-Details specifically will be explained the next sections.
-
-
 #### Applying to an Organization: `apply`
 
 Format: `apply INDEX/ID --title TITLE [--desc DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--stat STATUS: pending | offered | accepted | turned down]`
@@ -305,24 +288,52 @@ Examples:
 * `edit --application 1 --stat rejected`
 * `edit --application 1 --stage interview`
 
-### Sort `sort`
+### Sorting contacts/job applications: `sort`
 Sorts contacts or applications by the specified flag.
 
 Format: `sort --FLAG_TO_SORT`
 
-* Currently only the following sorting functions are supported:
-  * For contacts:
-    * `--addr`
-    * `--email`
-    * `--name`
-    * `--id`
-    * `--phone`
-    * `--url`
-  * For job applications
-    * `--stale`: Sorts by last updated applications
+The following sorting flags are supported:
+* For contacts:
+  * `--address`
+  * `--email`
+  * `--name`
+  * `--id`
+  * `--phone`
+  * `--url`
+* For job applications:
+  * `--deadline`: Sorts by application deadline
+  * `--stage`: Sorts by application stage
+  * `--stale`: Sorts by last updated applications
+  * `--status`: Sorts by application status
+  * `--title`: Sorts by job title
+* To reset the sorting arrangement:
+  * `--none`
 
+Supplying `--ascending` or `--descending` sorts the contacts or applications in the specified order. 
+If not specified, the default order is used:
+* Chronological (for deadlines)
+* According to the stage/status order (for application stages and statuses)
+* Alphabetical (for the rest)
+Neither order flag may be supplied if `-none` is the specified sorting flag.
 
+Examples:
+* `sort --name`
+* `sort --deadline --descending`
+* `sort --title --ascending`
+* `sort --none`
 
+### Reminding about deadlines: `remind`
+Reminds the user of upcoming deadlines for job applications.
+
+Format: `remind --earliest/--latest`
+
+Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
+Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
+
+Examples:
+* `remind --earliest`
+* `remind --latest`
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -342,7 +353,7 @@ Format: `sort --FLAG_TO_SORT`
 
  Action               | Format, Examples                                                                                                                                                                                                                                                                            
 ----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research` 
+ **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
  **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
  **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
  **Delete**           | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`                                                                                                                                                                               

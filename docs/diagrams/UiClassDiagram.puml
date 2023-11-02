@@ -13,8 +13,11 @@ Class HelpWindow
 Class ResultDisplay
 Class ContactListPanel
 Class ContactCard
+Class ApplicationListPanel
+Class ApplicationCard
 Class StatusBarFooter
 Class CommandBox
+Class AutoCompleteTextField
 }
 
 package Model <<Rectangle>> {
@@ -33,12 +36,15 @@ UiManager -down-> "1" MainWindow
 MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
 MainWindow *-down-> "1" ContactListPanel
+MainWindow *-down-> "1" ApplicationListPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
 
 ContactListPanel -down-> "*" ContactCard
+ApplicationListPanel -down-> "*" ApplicationCard
+CommandBox -down-> "0..1" AutoCompleteTextField
 
-MainWindow -left-|> UiPart
+MainWindow --|> UiPart
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
@@ -46,12 +52,17 @@ ContactListPanel --|> UiPart
 ContactCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
+AutoCompleteTextField --|> UiPart
+ApplicationListPanel --|> UiPart
+ApplicationCard --|> UiPart
 
 ContactCard ..> Model
+ApplicationCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
 ContactListPanel -[hidden]left- HelpWindow
+ApplicationListPanel -[hidden]left- ContactListPanel
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
