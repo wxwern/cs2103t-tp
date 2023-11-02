@@ -106,10 +106,6 @@ Acceptable Parameters:
 
 * `ADDRESS` can accept any value. It designates the contact’s physical address.
 
-* `STATUS` must be one of _interested, applied, pending, offered, rejected, current_ (case-insensitive, prefix-only match allowed).
-
-* `POSITION` may be any value. It designates the position you intend to apply to.
-
 * `TAG` can accept any value and may have multiple inputs.
 
 
@@ -122,7 +118,7 @@ Examples:
 
 * `add --org --name Example --url www.organization.org --tag freelance`
 
-* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
 
 
 #### Adding a recruiter contact: `add --rec`
@@ -239,20 +235,6 @@ Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobb
 If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </div>
 
-### Applying to an organization: `Apply`
-
-Format: `add index/ id <additional parameters and values...>`
-
-
-App a contact to the address book of the given class type: Organization or Recruiter.
-
-Applying to a Organization by indicating it with the organization's index in the address book or the organization's unique id.
-
-This can be done by supplying the organization's `index` or `id` as the preamble.
-
-Details specifically will be explained the next sections.
-
-
 #### Applying to an Organization: `apply`
 
 Format: `apply INDEX/ID --title TITLE [--desc DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--stat STATUS: pending | offered | accepted | turned down]`
@@ -342,7 +324,7 @@ Format: `sort --FLAG_TO_SORT`
 
  Action               | Format, Examples                                                                                                                                                                                                                                                                            
 ----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research` 
+ **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
  **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
  **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
  **Delete**           | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`                                                                                                                                                                               
