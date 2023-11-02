@@ -171,6 +171,7 @@ public class EditCommand extends Command {
         return getCommandResult(model, contactToEdit);
     }
 
+    // TODO: Tech debt - Method name does not really reflect what it does
     private CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
         Contact editedContact = createEditedContact(model, contactToEdit, editContactDescriptor);
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
