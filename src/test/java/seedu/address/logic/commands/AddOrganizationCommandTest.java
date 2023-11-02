@@ -173,8 +173,6 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 + ", url=" + NUS.getUrl().orElse(null)
                 + ", address=" + NUS.getAddress().orElse(null)
                 + ", tags=" + NUS.getTags()
-                + ", status=" + NUS.getStatus().orElse(null)
-                + ", position=" + NUS.getPosition().orElse(null)
                 + ", rids=" + NUS.getRecruiterIds() + "}";
         assertEquals(expected, addCommand.toString());
     }

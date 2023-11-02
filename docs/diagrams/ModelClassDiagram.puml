@@ -22,6 +22,9 @@ Class Url
 Class Phone
 Class Tag
 
+Class JobApplicationList
+Class JobApplication
+
 Class I #FFFFFF
 }
 
@@ -46,6 +49,9 @@ Contact *--> Email
 Contact *--> Url
 Contact *--> Address
 Contact *--> "*" Tag
+
+ModelManager *-down-> "1" JobApplicationList
+JobApplicationList -down-> "*" JobApplication
 
 Contact -[hidden]up--> I
 UniqueContactList -[hidden]right-> I

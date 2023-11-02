@@ -323,9 +323,71 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### \[Proposed\] Adding Organization
+
+#### Proposed Implementation
+
+The proposed AddOrganization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
+
+These operations are parsed in the `AddCommandParser` class, where the user inputs e.g. `add --org --name Google` will be handled and saved into the JSON database and displayed in the GUI.
+
+Given below is an example usage scenario and how the `AddOrganization` mechanism behaves at each step.
+
+Step 1. The user inputs an add organization command. The `AddCommandParser` will check for `--org` flag, and parse the input as an `Organization`.
+
+Step 2. This triggers the `AddOrganizationCommand`, where a new `Organization` object will be created. And it will be pased down into `JsonAdaptedContact` and `ModelManager` to be converted into JSON data and be displayed into the GUI respectively.
+
+Step 3. When the user want decide to add more information regarding the Organization, he can use the `Edit` command, which will be handled by the `EditCommandParser`. And the added field will be passed down into into `JsonAdaptedContact` and `ModelManager` to be converted into JSON data and be displayed into the GUI respectively.
+
+#### Design considerations:
+
+**Aspect: How Add Organization executes:**
+
+* **Alternative 1 (current choice):** Adds the Organization with a JSON's key 'type': "Organization"
+    * Pros: Easy to implement and flexible to implement more types.
+    * Cons: NIL
+
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
+
+### Apply feature
+The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
+
+The following sequence diagram shows how job applications are added to Jobby
+
+<img src="images/apply-command/ApplyCommand.png">
+
+#### Design Considerations
+**Aspect: How to store applications**
+
+* **Actual: Applications are stored as a JSON array belonging to their respective organizations**
+  * Pros: Easy to implement
+  * Cons: Need to initialise a list of job applications from every organization every time on startup. 
+
+* **Alternative 1: Applications are stored as a JSON array separate from the contacts**
+  * Pros: Applications can be loaded immediately into Jobby without waiting for organizations to be initialised.
+  * Cons: Can have complications on other features, such as identifying which applications belong to which organizations.
+
+**Aspect: How to show applications**
+
+* **Actual: Applications are shown on a separate list**
+  * Pros: Easy to implement, less command needed to switch view from split view.
+  * Cons: Requires syncing the list with organizations, since there is no guarantee that the applications in the UI list are the same as all the ones in organizations.
+
+* **Alternative 1: Use a command to switch list view**
+  * Pros: More compact, does not require larger screen size.
+  * Cons: More difficult to implement, requires a command that directly changes the UI.
+
+**Aspect: What should the command syntax be**
+
+* **Actual: Use a separate command for adding applications**
+  * Pros: Easier to type out the command, does not require a lot of typing.
+  * Cons: More implementation effort, to implement a new command with new parser.
+* **Alternative 1: Reuse add command**
+  * Pros: Easier to implement, can make use of existing structures surrounding the add command.
+  * Cons: Overloading the add command too much.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -362,22 +424,43 @@ Allows for comprehensive tracking of job applications and the information of com
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a(n) ...              | I want to ...                                                | So that I can ...                                                          |
-| -------- | ------------------------ |--------------------------------------------------------------| -------------------------------------------------------------------------- |
-| `* * *`  | new user                 | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
-| `* * *`  | user                     | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
-| `* * *`  | user                     | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user                     | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
-| `* *`    | user                     | find contacts by saved details                               | locate a contact without going through the entire list                     |
-| `* *`    | user                     | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
-| `* *`    | user                     | tag contacts                                                 | organize my contact list for more efficient access of different categories |
-| `* *`    | efficient user           | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
-| `*`      | user                     | import and export contacts                                   | share my list of contacts with my peers                                    |
+| Priority | As a(n) ...    | I want to ...                                                | So that I can ...                                                          |
+|----------|----------------|--------------------------------------------------------------|----------------------------------------------------------------------------|
+| `* * *`  | new user       | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
+| `* * *`  | user           | find the relevant application data                           | see what I did for for my application to specific companies                |
+| `* * *`  | user           | adding a job application                                     | keep track which organization I am applying to                             |
+| `* * *`  | user           | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
+| `* * *`  | user           | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
+| `* *`    | user           | edit my contacts via index, id and name                      | be up to date with changes in organization and recruiter details           |
+| `* *`    | user           | find contacts by saved details                               | locate a contact without going through the entire list                     |
+| `* *`    | user           | store recruiters and job application to organizations        | I can see where the recruiter comes from and where I am applying to        |
+| `* *`    | user           | sort the application deadlines                               | be able to which application deadline ends first                           |
+| `* *`    | user           | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user           | tag contacts                                                 | organize my contact list for more efficient access of different categories |
+| `* *`    | efficient user | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
+| `*`      | user           | import and export contacts                                   | share my list of contacts with my peers                                    |
 
 ### Use cases
 
 (For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
 
+
+
+**Use case: Add an application**
+
+**MSS**
+
+1.  User requests to add an application
+2.  Jobby adds the application into the specified organization
+3.  Jobby shows that the application has been added
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given application does not match to any Organization
+    * 1a1. Jobby shows an error message.
+    Use case ends.
 
 
 **Use case: Edit a contact**
@@ -386,14 +469,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to edit a contact
 2.  Jobby edits the contact
-
     Use case ends.
 
 **Extensions**
 
 * 1a. The given request does not match with any contact.
-    * 1a1. Jobby shows an error message.
-    * 
+    * 1a1. Jobby shows an error message. 
+    
       Use case ends.
 
 
@@ -412,25 +494,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The list is empty.
-
   Use case ends.
 
 * 3a. The given index is invalid.
-
     * 3a1. Jobby shows an error message.
-
+  
       Use case resumes at step 2.
 
 * 3b. The given ID does not match to any organization.
-
     * 3b1. Jobby shows an error message.
-
+  
       Use case resumes at step 2.
 
 * 4a. The user has specified to delete recursively.
-
     * 4a1. Jobby deletes all recruiter contacts associated with the recruiter (WIP)
-      
+  
       Use case ends.
 
 
@@ -447,15 +525,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. User requests to list organizations.
-
     * 1a1. Jobby shows a list of organizations.
-
+  
       Use case ends.
 
 * 1b. User requests to list recruiters.
-
     * 1b1. Jobby shows a list of recruiters.
+  
+      Use case ends.
 
+**Use case: Find contacts**
+
+**MSS**
+
+1.  User requests to find contacts or applications
+2.  Jobby shows a list of contacts or applications found
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to find organizations.
+    * 1a1. Jobby shows a list of organizations that matches the search.
+  
+      Use case ends.
+
+* 1b. User requests to list recruiters.
+    * 1b1. Jobby shows a list of recruiters that matches the search.
+  
+      Use case ends.
+  
+* 1c. User requests to list.
+    * 1c1. Jobby shows a list of application that matches the search.
+
+      Use case ends.
+  
+* 1d. No match found.
+    * 1d1. Jobby shows 0 matched result.
+    
       Use case ends.
 
 

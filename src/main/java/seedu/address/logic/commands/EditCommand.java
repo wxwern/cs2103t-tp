@@ -2,17 +2,22 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -27,8 +32,10 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
 import seedu.address.model.contact.Contact;
@@ -42,6 +49,8 @@ import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
+import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -51,15 +60,32 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteDataSet.concat(
             AutocompleteDataSet.onceForEachOf(
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
-                    FLAG_STATUS, FLAG_POSITION,
                     FLAG_ORGANIZATION_ID
             ),
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+    );
+
+    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_APPLICATION = AutocompleteDataSet
+            .onceForEachOf(FLAG_APPLICATION)
+            .addDependents(
+                    AutocompleteDataSet.onceForEachOf(
+                            FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS
+                    ))
+            .addConstraint(
+                    AutocompleteConstraint.where(FLAG_APPLICATION).cannotExistAlongsideAnyOf(
+                            AUTOCOMPLETE_SET_STANDARD.getElements().toArray(Flag[]::new)
+                    )
+            );
+
+    public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
+            AUTOCOMPLETE_SET_STANDARD,
+            AUTOCOMPLETE_SET_APPLICATION
     ).configureValueMap(map -> {
+
         // Add value autocompletion data for:
         map.put(null /* preamble*/, (command, model) -> {
 
@@ -76,12 +102,21 @@ public class EditCommand extends Command {
                         .map(o -> o.getId().value);
             }
         });
+
         map.put(FLAG_ORGANIZATION_ID, (command, model) -> model.getAddressBook()
                 .getContactList()
                 .stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .map(o -> o.getId().value)
         );
+
+        map.put(FLAG_STAGE, (command, model)
+                -> Arrays.stream(ApplicationStage.values())
+                .map(ApplicationStage::toString));
+
+        map.put(FLAG_STATUS, (command, model)
+                -> Arrays.stream(JobStatus.values())
+                .map(JobStatus::toString));
     });
 
     public static final String MESSAGE_ORGANIZATION_USAGE = "Edits an organization.\n"
@@ -92,12 +127,8 @@ public class EditCommand extends Command {
             + "[" + FLAG_EMAIL + " EMAIL] "
             + "[" + FLAG_URL + " URL] "
             + "[" + FLAG_ADDRESS + " ADDRESS] "
-            + "[" + FLAG_STATUS + " STATUS] "
-            + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + FLAG_PHONE + " 91234567 "
-            + FLAG_STATUS + " Applied";
+            + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_RECRUITER_USAGE = "Edits a recruiter.\n"
             + "Parameters: INDEX/ID "
@@ -113,13 +144,26 @@ public class EditCommand extends Command {
             + FLAG_PHONE + " 91234567 "
             + FLAG_EMAIL + " rexrecruiter@example.com";
 
+    public static final String MESSAGE_APPLICATION_USAGE = "Edits a job application.\n"
+            + "Parameters: "
+            + FLAG_APPLICATION + " INDEX "
+            + "[" + FLAG_TITLE + " TITLE] "
+            + "[" + FLAG_DESCRIPTION + " DESCRIPTION] "
+            + "[" + FLAG_DEADLINE + " DEADLINE] "
+            + "[" + FLAG_STAGE + " STAGE] "
+            + "[" + FLAG_STATUS + " STATUS] \n"
+            + "Example: " + COMMAND_WORD + " " + FLAG_APPLICATION + " 1 " + FLAG_TITLE + " SWE";
+
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the details of the contact of the class type Organization or Recruiter,"
             + " identified by its index in the displayed contact list or its id."
             + " Note that existing values will be overwritten by the input values."
+            + " Also can edit job applications in the list identified by its index"
             + " The input format varies depending on the class:\n\n"
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
-            + MESSAGE_RECRUITER_USAGE;
+            + MESSAGE_RECRUITER_USAGE + "\n\n"
+            + MESSAGE_APPLICATION_USAGE;
 
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited %s: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -171,8 +215,8 @@ public class EditCommand extends Command {
         return getCommandResult(model, contactToEdit);
     }
 
-
-    public CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
+    // TODO: Tech debt - Method name does not really reflect what it does
+    private CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
         Contact editedContact = createEditedContact(model, contactToEdit, editContactDescriptor);
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);

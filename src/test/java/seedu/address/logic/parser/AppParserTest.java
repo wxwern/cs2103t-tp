@@ -9,11 +9,12 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddOrganizationCommand;
 import seedu.address.logic.commands.ApplyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -35,17 +36,20 @@ public class AppParserTest {
     private final AppParser parser = new AppParser();
 
     @Test
-    public void parseCommand_add() throws Exception {
+    public void parseCommand_addOrganization() throws Exception {
         Contact contact = new ContactBuilder().build();
-        AddCommand parsedAddCommand = (AddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
-        AddCommand addCommand = new AddCommand(
+        var parsedAddCommand = (AddOrganizationCommand) parser.parseCommand(ContactUtil.getAddOrgCommand(contact));
+        AddOrganizationCommand addCommand = new AddOrganizationCommand(
                 contact.getName(),
                 contact.getId(),
                 contact.getPhone().orElse(null),
                 contact.getEmail().orElse(null),
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
-                contact.getTags()
+                contact.getTags(),
+                null,
+                null,
+                Set.of()
         );
         assertEquals(addCommand, parsedAddCommand);
     }
@@ -121,7 +125,6 @@ public class AppParserTest {
         String userInput = "add --org -o";
         assertEquals(
                 List.of(
-                        "add --org --pos",
                         "add --org --phone"
                 ),
                 parser.parseCompletionGenerator(userInput)
@@ -176,6 +179,7 @@ public class AppParserTest {
                         "edit",
                         "exit",
                         "delete",
+                        "remind",
                         "help",
                         "clear"
                 ),

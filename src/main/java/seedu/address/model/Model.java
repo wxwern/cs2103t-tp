@@ -28,20 +28,36 @@ public interface Model {
 
     Comparator<Contact> COMPARATOR_ADDRESS = Comparator.comparing(contact ->
                     contact.getAddress().map(address -> address.value).orElse(null),
-            Comparator.nullsLast(Comparator.naturalOrder()));
+            Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_ADDRESS_NULLS_FIRST = Comparator.comparing(contact ->
+                    contact.getAddress().map(address -> address.value).orElse(null),
+            Comparator.nullsFirst(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_ADDRESS_REVERSED = COMPARATOR_ADDRESS_NULLS_FIRST.reversed();
     Comparator<Contact> COMPARATOR_EMAIL = Comparator.comparing(contact ->
                     contact.getEmail().map(email -> email.value).orElse(null),
-            Comparator.nullsLast(Comparator.naturalOrder()));
+            Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_EMAIL_NULLS_FIRST = Comparator.comparing(contact ->
+                    contact.getEmail().map(email -> email.value).orElse(null),
+            Comparator.nullsFirst(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_EMAIL_REVERSED = COMPARATOR_EMAIL_NULLS_FIRST.reversed();
     Comparator<Contact> COMPARATOR_ID = Comparator.comparing(contact ->
-            contact.getId().value);
+            contact.getId().value, String.CASE_INSENSITIVE_ORDER);
     Comparator<Contact> COMPARATOR_NAME = Comparator.comparing(contact ->
-                    contact.getName().fullName);
+                    contact.getName().fullName, String.CASE_INSENSITIVE_ORDER);
     Comparator<Contact> COMPARATOR_PHONE = Comparator.comparing(contact ->
                     contact.getPhone().map(phone -> phone.value).orElse(null),
-            Comparator.nullsLast(Comparator.naturalOrder()));
+            Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_PHONE_NULLS_FIRST = Comparator.comparing(contact ->
+                    contact.getPhone().map(phone -> phone.value).orElse(null),
+            Comparator.nullsFirst(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_PHONE_REVERSED = COMPARATOR_PHONE_NULLS_FIRST.reversed();
     Comparator<Contact> COMPARATOR_URL = Comparator.comparing(contact ->
                     contact.getUrl().map(url -> url.value).orElse(null),
-            Comparator.nullsLast(Comparator.naturalOrder()));
+            Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_URL_NULLS_FIRST = Comparator.comparing(contact ->
+                    contact.getUrl().map(url -> url.value).orElse(null),
+            Comparator.nullsFirst(String.CASE_INSENSITIVE_ORDER));
+    Comparator<Contact> COMPARATOR_URL_REVERSED = COMPARATOR_URL_NULLS_FIRST.reversed();
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -123,6 +139,17 @@ public interface Model {
      * @throws IllegalValueException if both are given or not given, or if model cannot access the contact.
      */
     Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
+
+    /**
+     * Replaces the old {@code JobApplication} with the new {@code JobApplication}
+     */
+    void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException;
+
+    /**
+     * Removes the application from the list.
+     */
+    void deleteApplication(JobApplication application) throws IllegalValueException;
+
 
     /** Returns an unmodifiable view of the displayed contact list */
     ObservableList<Contact> getDisplayedContactList();

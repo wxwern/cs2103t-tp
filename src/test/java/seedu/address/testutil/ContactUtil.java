@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
@@ -21,10 +22,10 @@ import seedu.address.model.tag.Tag;
 public class ContactUtil {
 
     /**
-     * Returns an add command string for adding the {@code contact}.
+     * Returns an add organization command string for adding the {@code contact}.
      */
-    public static String getAddCommand(Contact contact) {
-        return AddCommand.COMMAND_WORD + " " + getContactDetails(contact);
+    public static String getAddOrgCommand(Contact contact) {
+        return AddCommand.COMMAND_WORD + " " + FLAG_ORGANIZATION + " " + getContactDetails(contact);
     }
 
     /**
