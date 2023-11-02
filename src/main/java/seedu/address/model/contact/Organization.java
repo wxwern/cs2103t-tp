@@ -38,9 +38,24 @@ public class Organization extends Contact {
             Address address, Set<Tag> tags, Status status, Position position,
             Set<Id> rids
     ) {
+        this(name, id, phone, email, url, address, tags, status, position, rids, new ArrayList<>());
+    }
+
+    /**
+     * Name and id fields must be non-null.
+     * Tags must be non-null but can be empty as well.
+     * List of applications must not be null.
+     * The other fields can be null.
+     */
+    public Organization(
+            Name name, Id id, Phone phone, Email email, Url url,
+            Address address, Set<Tag> tags, Status status, Position position,
+            Set<Id> rids, List<JobApplication> jobApplications
+    ) {
         super(name, id, phone, email, url, address, tags, null);
         this.status = Optional.ofNullable(status);
         this.position = Optional.ofNullable(position);
+        this.jobApplications.addAll(jobApplications);
         // Todo: Likely to deprecate rids completely
         // this.rids.addAll(rids);
     }
@@ -70,6 +85,24 @@ public class Organization extends Contact {
      */
     public void addJobApplication(JobApplication jobApplication) {
         this.jobApplications.add(jobApplication);
+    }
+
+    /**
+     * Replaces the old job application in the list with the new one.
+     */
+    public void replaceJobApplication(JobApplication oldApplication, JobApplication newApplication) {
+        assert newApplication.getOrganizationId().equals(this.getId());
+        assert newApplication.getOrganizationId().equals(oldApplication.getOrganizationId());
+
+        this.jobApplications.remove(oldApplication);
+        this.jobApplications.add(newApplication);
+    }
+
+    /**
+     * Deletes the job application in the list.
+     */
+    public void deleteJobApplication(JobApplication application) {
+        this.jobApplications.remove(application);
     }
 
     /**

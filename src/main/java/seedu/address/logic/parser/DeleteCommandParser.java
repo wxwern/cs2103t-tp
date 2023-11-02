@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.FLAG_APPLICATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECURSIVE;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.DeleteApplicationCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.contact.Id;
@@ -23,6 +25,10 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 ArgumentTokenizer.tokenize(args,
                         DeleteCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
+        if (argumentMultimap.getValue(FLAG_APPLICATION).isPresent()) {
+            return handleDeleteApplication(argumentMultimap);
+        }
+
         if (argumentMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
@@ -41,6 +47,16 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
         assert false : "If indexXorId is neither Index nor Id, then ParserUtil should've thrown ParseException!";
         throw new IllegalStateException();
+    }
+
+    private static DeleteCommand handleDeleteApplication(ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(FLAG_APPLICATION).isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+        Index index = ParserUtil.parseIndex(argMultimap.getValue(FLAG_APPLICATION).get());
+
+        return new DeleteApplicationCommand(index);
     }
 
 }

@@ -4,11 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -19,6 +22,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.contact.Organization;
+import seedu.address.model.contact.Type;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,6 +37,10 @@ public class ModelManager implements Model {
     private final FilteredList<Contact> displayedContacts;
     private final FilteredList<Contact> filteredContacts;
     private final SortedList<Contact> sortedContacts;
+    private final ObservableList<JobApplication> applicationList;
+    private final SortedList<JobApplication> sortedApplications;
+    private final FilteredList<JobApplication> filteredApplications;
+    private final FilteredList<JobApplication> displayedApplications;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,6 +55,14 @@ public class ModelManager implements Model {
         this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
         this.filteredContacts = new FilteredList<>(sortedContacts);
         this.displayedContacts = filteredContacts;
+        this.applicationList = FXCollections.observableArrayList(filteredContacts.stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
+                .collect(Collectors.toList()));
+        this.sortedApplications = new SortedList<>(this.applicationList);
+        this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
+        this.displayedApplications = filteredApplications;
     }
 
     public ModelManager() {
@@ -107,12 +125,18 @@ public class ModelManager implements Model {
     @Override
     public void deleteContact(Contact target) {
         addressBook.removeContact(target);
+        if (target.getType() == Type.ORGANIZATION) {
+            for (JobApplication i: ((Organization) target).getJobApplications()) {
+                applicationList.remove(i);
+            }
+        }
     }
 
     @Override
     public void addContact(Contact contact) {
         addressBook.addContact(contact);
         updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
     }
 
     @Override
@@ -154,6 +178,38 @@ public class ModelManager implements Model {
         return contact;
     }
 
+    @Override
+    public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
+        JobApplication oldApplication = this.applicationList.get(index.getZeroBased());
+
+        this.applicationList.set(index.getZeroBased(), newApplication);
+        Contact contact = getContactById(newApplication.getOrganizationId());
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new IllegalValueException("Id field is invalid!");
+        }
+        Organization organization = (Organization) contact;
+        organization.replaceJobApplication(oldApplication, newApplication);
+
+
+    }
+
+    @Override
+    public void deleteApplication(JobApplication application) throws IllegalValueException {
+        Contact contact = getContactById(application.getOrganizationId());
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new IllegalValueException("Id field is invalid!");
+        }
+        Organization org = (Organization) contact;
+        this.applicationList.remove(application);
+        org.deleteJobApplication(application);
+    }
+
+    @Override
+    public void addApplication(JobApplication application) {
+        applicationList.add(application);
+        // TODO: Tech debt - need separate declaration for the predicates
+        filteredApplications.setPredicate(c -> true);
+    }
 
     //=========== Filtered Contact List Accessors =============================================================
 
@@ -169,13 +225,26 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
-        this.filteredContacts.setPredicate(predicate);
+        filteredContacts.setPredicate(predicate);
+        // TODO: Tech debt - inefficient?
+        // TODO: Bug - does not show the thing.
+        filteredApplications.setPredicate(a -> predicate.test(getContactById(a.getOrganizationId())));
     }
 
     @Override
     public void updateSortedContactList(Comparator<Contact> comparator) {
         requireNonNull(comparator);
         this.sortedContacts.setComparator(comparator);
+    }
+
+    @Override
+    public ObservableList<JobApplication> getDisplayedApplicationList() {
+        return displayedApplications;
+    }
+
+    @Override
+    public void updateSortedApplicationList(Comparator<JobApplication> comparator) {
+        sortedApplications.setComparator(comparator);
     }
 
     @Override

@@ -11,7 +11,6 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 import seedu.address.testutil.OrganizationBuilder;
@@ -52,7 +51,8 @@ public class AddRecruiterCommandIntegrationTest {
         );
 
         assertCommandSuccess(addCommand, model,
-                String.format(AddRecruiterCommand.MESSAGE_SUCCESS, Messages.format(validRecruiter)),
+                String.format(AddRecruiterCommand.MESSAGE_SUCCESS,
+                        validRecruiter.getType(), Messages.format(validRecruiter)),
                 expectedModel);
     }
 
@@ -82,17 +82,19 @@ public class AddRecruiterCommandIntegrationTest {
 
     @Test
     public void execute_duplicateRecruiter_throwsCommandException() {
-        Contact contactInList = model.getAddressBook().getContactList().get(5);
-        Recruiter recruiterInList = (Recruiter) contactInList;
+        Recruiter recruiterInList = (Recruiter) model.getAddressBook().getContactList().get(5);
+        Recruiter duplicateRecruiter = new RecruiterBuilder().withId(recruiterInList.getId().value).build();
+
+        // Ensure that AddRecruiterCommand checks duplicate contact BY ID ONLY.
         AddRecruiterCommand addCommand = new AddRecruiterCommand(
-                recruiterInList.getName(),
-                recruiterInList.getId(),
-                recruiterInList.getPhone().orElse(null),
-                recruiterInList.getEmail().orElse(null),
-                recruiterInList.getUrl().orElse(null),
-                recruiterInList.getAddress().orElse(null),
-                recruiterInList.getTags(),
-                recruiterInList.getOrganizationId().orElse(null)
+                duplicateRecruiter.getName(),
+                duplicateRecruiter.getId(),
+                duplicateRecruiter.getPhone().orElse(null),
+                duplicateRecruiter.getEmail().orElse(null),
+                duplicateRecruiter.getUrl().orElse(null),
+                duplicateRecruiter.getAddress().orElse(null),
+                duplicateRecruiter.getTags(),
+                duplicateRecruiter.getOrganizationId().orElse(null)
         );
         assertCommandFailure(addCommand, model, AddRecruiterCommand.MESSAGE_DUPLICATE_CONTACT);
     }

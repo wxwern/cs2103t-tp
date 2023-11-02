@@ -33,6 +33,8 @@ import seedu.address.model.jobapplication.JobTitle;
  * Adds a job application to the address book.
  */
 public class ApplyCommand extends Command {
+
+    //TODO: Make the command msg consistent with the add command format - use [] for optionals
     public static final String COMMAND_WORD = "apply";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
@@ -114,9 +116,9 @@ public class ApplyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         Organization org = getOrganization(index, oid, model);
-        Id id = oid == null ? org.getId() : oid;
-        JobApplication ja = new JobApplication(id, title, description, deadline, status, applicationStage);
+        JobApplication ja = new JobApplication(org, title, description, deadline, status, applicationStage);
         org.addJobApplication(ja);
+        model.addApplication(ja);
         return new CommandResult(String.format(MESSAGE_APPLY_SUCCESS, ja, org));
     }
 

@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
@@ -27,6 +28,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.testutil.ContactBuilder;
 
 public class AddCommandTest {
@@ -72,7 +74,8 @@ public class AddCommandTest {
 
         CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS,
+                        validContact.getType(), Messages.format(validContact)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validContact), modelStub.contactsAdded);
     }
@@ -204,6 +207,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addApplication(JobApplication application) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
+        @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -239,7 +248,23 @@ public class AddCommandTest {
         }
 
         @Override
+        public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
+            throw new AssertionError("This method should not be called.");
+
+        }
+
+        @Override
+        public void deleteApplication(JobApplication application) throws IllegalValueException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Contact> getDisplayedContactList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<JobApplication> getDisplayedApplicationList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -248,6 +273,11 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void updateSortedApplicationList(Comparator<JobApplication> comparator) {
+            throw new AssertionError("This method should not be called.");
+
+        }
         @Override
         public void updateSortedContactList(Comparator<Contact> comparator) {
             throw new AssertionError("This method should not be called.");
