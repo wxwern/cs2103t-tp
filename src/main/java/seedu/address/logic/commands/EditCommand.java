@@ -62,7 +62,6 @@ public class EditCommand extends Command {
             AutocompleteDataSet.onceForEachOf(
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
-                    FLAG_STATUS, FLAG_POSITION,
                     FLAG_ORGANIZATION_ID
             ),
             AutocompleteDataSet.anyNumberOf(FLAG_TAG)
@@ -72,7 +71,7 @@ public class EditCommand extends Command {
             .onceForEachOf(FLAG_APPLICATION)
             .addDependents(
                     AutocompleteDataSet.onceForEachOf(
-                            FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE
+                            FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS
                     ))
             .addConstraint(
                     AutocompleteConstraint.where(FLAG_APPLICATION).cannotExistAlongsideAnyOf(
