@@ -171,8 +171,7 @@ public class EditCommand extends Command {
         return getCommandResult(model, contactToEdit);
     }
 
-
-    public CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
+    private CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
         Contact editedContact = createEditedContact(model, contactToEdit, editContactDescriptor);
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
