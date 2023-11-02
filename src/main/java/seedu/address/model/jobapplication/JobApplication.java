@@ -144,6 +144,7 @@ public class JobApplication {
         }
 
         return otherApplication != null
+                && otherApplication.getOrganizationId().equals(getOrganizationId())
                 && otherApplication.getJobTitle().equals(getJobTitle());
     }
 
