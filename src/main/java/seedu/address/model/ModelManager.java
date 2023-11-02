@@ -194,8 +194,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteApplication(JobApplication application) {
-
+    public void deleteApplication(JobApplication application) throws IllegalValueException {
+        Contact contact = getContactById(application.getOrganizationId());
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new IllegalValueException("Id field is invalid!");
+        }
+        Organization org = (Organization) contact;
+        this.applicationList.remove(application);
+        org.deleteJobApplication(application);
     }
 
     @Override

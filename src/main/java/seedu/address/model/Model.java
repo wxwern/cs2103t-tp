@@ -132,7 +132,7 @@ public interface Model {
     /**
      * Removes the application from the list.
      */
-    void deleteApplication(JobApplication application);
+    void deleteApplication(JobApplication application) throws IllegalValueException;
 
 
     /** Returns an unmodifiable view of the displayed contact list */

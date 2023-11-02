@@ -253,7 +253,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteApplication(JobApplication application) {
+        public void deleteApplication(JobApplication application) throws IllegalValueException {
             throw new AssertionError("This method should not be called.");
         }
 
