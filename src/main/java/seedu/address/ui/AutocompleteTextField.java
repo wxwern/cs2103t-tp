@@ -87,7 +87,7 @@ public class AutocompleteTextField extends TextField {
         // Setup default behaviours
         autocompletePopup.setHideOnEscape(true);
         autocompletePopup.setAutoFix(true);
-        autocompletePopup.setAutoHide(false);
+        autocompletePopup.setAutoHide(true);
         autocompletePopup.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             if (e.getCode() == KeyCode.SPACE) {
                 // SPACE dismisses the popup if none is selected via tab focus.

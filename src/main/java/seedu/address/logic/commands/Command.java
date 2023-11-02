@@ -26,7 +26,6 @@ public abstract class Command {
     public abstract CommandResult execute(Model model) throws CommandException;
 
 
-
     /**
      * Obtains the {@code AUTOCOMPLETE_SUPPLIER} which can supply autocompletion results for a given command.
      *
