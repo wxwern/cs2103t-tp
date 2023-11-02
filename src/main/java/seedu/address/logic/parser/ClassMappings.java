@@ -68,10 +68,10 @@ public class ClassMappings {
                 assert Command.getCommandWord(entry.getKey()).isPresent();
 
                 if (entry.getValue().isPresent()) {
-                    // If there's a parser class, we must be able to initialize them with no arguments without errors.
+                    // If there's a parser class, we must be able to initialize them with no args without errors.
                     entry.getValue().get().getDeclaredConstructor().newInstance();
                 } else {
-                    // Otherwise, we must be able to initialize the command class directly with no arguments without errors.
+                    // Otherwise, we must be able to initialize the command class directly with no args without errors.
                     entry.getKey().getDeclaredConstructor().newInstance();
                 }
             }
