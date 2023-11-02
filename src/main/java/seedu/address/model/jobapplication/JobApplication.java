@@ -134,6 +134,15 @@ public class JobApplication {
                 lastUpdatedTime);
     }
 
+    public boolean isSameApplication(JobApplication otherApplication ) {
+        if (otherApplication == this) {
+            return true;
+        }
+
+        return otherApplication != null
+                && otherApplication.getJobTitle().equals(getJobTitle());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
