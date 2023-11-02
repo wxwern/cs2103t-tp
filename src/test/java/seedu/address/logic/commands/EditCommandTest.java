@@ -60,7 +60,7 @@ public class EditCommandTest {
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedContact));
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList().get(0), editedContact);
@@ -75,8 +75,8 @@ public class EditCommandTest {
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedContact).build();
         EditCommand editCommand = new EditCommand(INDEX_UNLINKED_ORGANIZATION, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -92,8 +92,8 @@ public class EditCommandTest {
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedContact).build();
         EditCommand editCommand = new EditCommand(INDEX_UNLINKED_RECRUITER, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -132,7 +132,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedOrganization));
+                editedOrganization.getType(), Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -152,8 +152,8 @@ public class EditCommandTest {
         EditContactDescriptor descriptor = new EditContactDescriptorBuilder(editedRecruiter).build();
         EditCommand editCommand = new EditCommand(INDEX_LINKED_RECRUITER, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedRecruiter));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedRecruiter.getType(), Messages.format(editedRecruiter));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -177,8 +177,8 @@ public class EditCommandTest {
                 .withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(INDEX_LINKED_ORGANIZATION, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedOrganization));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedOrganization.getType(), Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -201,8 +201,8 @@ public class EditCommandTest {
                 .withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(INDEX_LINKED_RECRUITER, descriptor);
 
-        String expectedMessage = String
-                .format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedRecruiter));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedRecruiter.getType(), Messages.format(editedRecruiter));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList()
@@ -221,7 +221,7 @@ public class EditCommandTest {
         Contact editedContact = model.getDisplayedContactList().get(INDEX_LINKED_ORGANIZATION.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedContact));
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -234,7 +234,7 @@ public class EditCommandTest {
         Contact editedRecruiter = model.getDisplayedContactList().get(INDEX_LINKED_RECRUITER.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedRecruiter));
+                editedRecruiter.getType(), Messages.format(editedRecruiter));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         Contact parentContact = editedRecruiter.getParent().orElse(null);
@@ -256,7 +256,7 @@ public class EditCommandTest {
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedOrganization));
+                editedOrganization.getType(), Messages.format(editedOrganization));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
@@ -281,7 +281,7 @@ public class EditCommandTest {
                 new EditContactDescriptorBuilder(editedContact).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedContact));
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased()),
@@ -300,7 +300,7 @@ public class EditCommandTest {
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
-                Messages.format(editedContact));
+                editedContact.getType(), Messages.format(editedContact));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setContact(model.getDisplayedContactList().get(0), editedContact);

@@ -121,7 +121,7 @@ public class EditCommand extends Command {
             + MESSAGE_ORGANIZATION_USAGE + "\n\n"
             + MESSAGE_RECRUITER_USAGE;
 
-    public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited Contact: %1$s";
+    public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Edited %s: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact already exists in the address book.";
     public static final String MESSAGE_INVALID_ORGANIZATION =
@@ -183,7 +183,8 @@ public class EditCommand extends Command {
         }
         model.setContact(contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
+        return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS,
+                editedContact.getType(), Messages.format(editedContact)));
     }
 
     /**
