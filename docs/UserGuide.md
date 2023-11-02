@@ -87,9 +87,7 @@ Details specifically on organization and recruiter level are specified in the ne
 
 #### Adding an organization contact: `add --org`
 
-_{Work in progress...}_
-
-Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]... `
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
 
 
 Acceptable Parameters:
@@ -122,14 +120,14 @@ Examples:
 
 * `add --org --name Example --url www.organization.org --tag freelance`
 
-* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/ --stat pending`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
 
 
 #### Adding a recruiter contact: `add --rec`
 
 _{Work in progress...}_
 
-Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 
 Acceptable Parameters:
@@ -323,6 +321,76 @@ Format: `sort --FLAG_TO_SORT`
 
 
 
+#### Applying to an Organization: `apply`
+
+Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
+
+Acceptable Parameters:
+* `TITLE` can accept any value.
+
+* `DESCRIPTION` refers to the description of the internship application.
+
+* `DEADLINE` should be a valid date in the format DD-MM-YYYY.
+
+* `APPLICATION STAGE` should be 1 of 3 pre-determined stage: resume | online assessment | interview.
+
+* `STATUS` should be 1 of 4 pre-determined status: pending | offered | accepted | turned down.
+
+
+
+Examples:
+* `apply 1 --title SWE`
+
+* `apply id_12345_1 --title Unit Tester --by 12-12-2023`
+
+* `apply id_12345_1 --title Unit Tester --description Unit testing for Google --by 12-12-2023 --stage resume`
+
+* `apply id_12345_1 --title Junior Engineer --description Junior role --by 12-12-2023 --stage resume --status pending`
+
+
+### Deleting a job application
+Deletes the specified job application from the list.
+Format: `delete --application INDEX`
+
+* `INDEX` refers to the index number shown on the list and must be a positive integer.
+
+Examples:
+* `delete --application 1` deletes the first job application in the list.
+
+
+### Updating/Editing a job application
+Updates the job applications with the input fields.
+
+Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
+
+* `INDEX` refers to the index number shown on the list and must be a positive integer.
+* At least one of the optional fields must be specified.
+* `STATUS` is one of `pending`, `offered`, `accepted`, `turned down`
+* `STAGE` is one of `resume`, `online assessment`, `interview`
+
+Examples:
+* `edit --application 1 --title SWE --description Pay: $100 per hour`
+* `edit --application 1 --status rejected`
+* `edit --application 1 --stage interview`
+
+### Sort `sort`
+Sorts contacts or applications by the specified flag.
+
+Format: `sort --FLAG_TO_SORT`
+
+* Currently only the following sorting functions are supported:
+  * For contacts:
+    * `--address`
+    * `--email`
+    * `--name`
+    * `--id`
+    * `--phone`
+    * `--url`
+  * For job applications
+    * `--stale`: Sorts by last updated applications
+
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -342,15 +410,15 @@ Format: `sort --FLAG_TO_SORT`
 
  Action               | Format, Examples                                                                                                                                                                                                                                                                            
 ----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/ --stat pending --pos Research` 
- **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
+ **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
  **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
- **Delete**           | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`                                                                                                                                                                               
+ **Delete**           | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
  **Edit**             | `edit INDEX ...` or <br>`edit ID ...` or <br>`edit --application INDEX ...`                                                                                                                                                                                                                                                                              
  **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
- **Apply**            | `apply INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` or <br>`apply ID [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` 
- **List**             | `list [--FLAG_TO_FILTER]`
- **Sort**             | `sort [--FLAG_TO_SORT]`
+ **Apply**            | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]` 
+ **List**             | `list [--org/--rec]`
+ **Sort**             | `sort --FLAG_TO_SORT`
  **Help**             | `help`                                                                                                                                                                                                                                                                                      
 
 
