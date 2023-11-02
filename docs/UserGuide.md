@@ -133,6 +133,7 @@ Acceptable Parameters:
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
 * `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
+The value provided must also be the ID of an existing organization in the address book.
 
 * `NUMBER` should be a valid phone number.
 
@@ -144,7 +145,7 @@ Acceptable Parameters:
 
 
 Examples:
-* `add --rec --name John Doe --oid paypal-sg`
+* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
 
 
 ### Listing all contacts: `list`
@@ -286,24 +287,52 @@ Examples:
 * `edit --application 1 --status rejected`
 * `edit --application 1 --stage interview`
 
-### Sort `sort`
+### Sorting contacts/job applications: `sort`
 Sorts contacts or applications by the specified flag.
 
 Format: `sort --FLAG_TO_SORT`
 
-* Currently only the following sorting functions are supported:
-  * For contacts:
-    * `--address`
-    * `--email`
-    * `--name`
-    * `--id`
-    * `--phone`
-    * `--url`
-  * For job applications
-    * `--stale`: Sorts by last updated applications
+The following sorting flags are supported:
+* For contacts:
+  * `--address`
+  * `--email`
+  * `--name`
+  * `--id`
+  * `--phone`
+  * `--url`
+* For job applications:
+  * `--deadline`: Sorts by application deadline
+  * `--stage`: Sorts by application stage
+  * `--stale`: Sorts by last updated applications
+  * `--status`: Sorts by application status
+  * `--title`: Sorts by job title
+* To reset the sorting arrangement:
+  * `--none`
 
+Supplying `--ascending` or `--descending` sorts the contacts or applications in the specified order. 
+If not specified, the default order is used:
+* Chronological (for deadlines)
+* According to the stage/status order (for application stages and statuses)
+* Alphabetical (for the rest)
+Neither order flag may be supplied if `-none` is the specified sorting flag.
 
+Examples:
+* `sort --name`
+* `sort --deadline --descending`
+* `sort --title --ascending`
+* `sort --none`
 
+### Reminding about deadlines: `remind`
+Reminds the user of upcoming deadlines for job applications.
+
+Format: `remind --earliest/--latest`
+
+Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
+Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
+
+Examples:
+* `remind --earliest`
+* `remind --latest`
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
