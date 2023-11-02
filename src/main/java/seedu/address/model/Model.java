@@ -124,6 +124,17 @@ public interface Model {
      */
     Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
 
+    /**
+     * Replaces the old {@code JobApplication} with the new {@code JobApplication}
+     */
+    void replaceApplication(JobApplication oldApplication, JobApplication newApplication) throws IllegalValueException;
+
+    /**
+     * Removes the application from the list.
+     */
+    void deleteApplication(JobApplication application);
+
+
     /** Returns an unmodifiable view of the displayed contact list */
     ObservableList<Contact> getDisplayedContactList();
 

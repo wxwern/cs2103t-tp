@@ -87,6 +87,14 @@ public class Organization extends Contact {
         this.jobApplications.add(jobApplication);
     }
 
+    public void replaceJobApplication(JobApplication oldApplication, JobApplication newApplication) {
+        assert newApplication.getOrganizationId().equals(this.getId());
+        assert newApplication.getOrganizationId().equals(oldApplication.getOrganizationId());
+
+        this.jobApplications.remove(oldApplication);
+        this.jobApplications.add(newApplication);
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
