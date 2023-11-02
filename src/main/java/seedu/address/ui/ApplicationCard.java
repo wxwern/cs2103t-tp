@@ -48,9 +48,9 @@ public class ApplicationCard extends UiPart<Region> {
         linkedParentOrganization.setText(application.getOrgName().fullName);
         title.setText(application.getJobTitle().title);
         status.setText(application.getStatus().toString());
-        deadline.setText(application.getDeadline().toString());
+        deadline.setText("Deadline: " + application.getDeadline().toString());
         stage.setText(application.getApplicationStage().toString());
-        lastUpdatedTime.setText(application.getLastUpdatedTime().toString());
+        lastUpdatedTime.setText("Last Updated: " + application.getLastUpdatedTime().toDisplayString());
         setVboxInnerLabelText(
                 description, () -> application.getJobDescription().map(JobDescription::toString).orElse(null));
     }

@@ -2,31 +2,48 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
+import static seedu.address.logic.parser.CliSyntax.FLAG_NONE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STAGE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_STALE;
+import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.Comparator;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
+import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
 import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.jobapplication.JobApplication;
 
 /**
- * Sorts all contacts in the address book.
+ * Sorts contacts and job applications in the address book.
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
-            AutocompleteDataSet.oneAmongAllOf(
-                FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL, FLAG_STALE
+            AutocompleteDataSet.concat(
+                    AutocompleteDataSet.oneAmongAllOf(
+                            FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
+                            FLAG_STALE, FLAG_STAGE, FLAG_STATUS, FLAG_DEADLINE, FLAG_TITLE,
+                            FLAG_NONE
+                    ), AutocompleteDataSet.oneAmongAllOf(
+                            FLAG_ASCENDING, FLAG_DESCENDING
+                    )
+            ).addConstraint(
+                    AutocompleteConstraint.oneAmongAllOf(
+                            FLAG_NONE, FLAG_ASCENDING, FLAG_DESCENDING
+                    )
             )
     ).configureValueMap(map -> {
         // Disable value autocompletion for:
@@ -34,54 +51,57 @@ public class SortCommand extends Command {
     });
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts all contacts based on the specified flag.\n"
+            + ": Sorts contacts or applications based on the specified flag.\n"
             + "Parameters: " + FLAG_NAME + "/" + FLAG_ID + "/"
             + FLAG_PHONE + "/" + FLAG_EMAIL + "/"
-            + FLAG_ADDRESS + "/" + FLAG_URL + "\n"
+            + FLAG_ADDRESS + "/" + FLAG_URL + "/"
+            + FLAG_DEADLINE + "/" + FLAG_STATUS + "/"
+            + FLAG_STAGE + "/" + FLAG_STALE + "/"
+            + FLAG_TITLE + "/" + FLAG_NONE
+            + " [" + FLAG_ASCENDING + "/" + FLAG_DESCENDING + "]\n"
             + "Example 1: " + COMMAND_WORD + " --name\n"
-            + "Example 2: " + COMMAND_WORD + " --id\n"
-            + "Example 3: " + COMMAND_WORD + " --url\n";
+            + "Example 2: " + COMMAND_WORD + " --id" + " --descending\n"
+            + "Example 3: " + COMMAND_WORD + " --stale" + " --ascending\n";
 
-    public static final String MESSAGE_SORTED_SUCCESS = "Sorted all contacts";
+    public static final String MESSAGE_SORTED_CONTACTS = "Sorted contacts as specified";
+    public static final String MESSAGE_SORTED_APPLICATIONS = "Sorted applications as specified";
+    public static final String MESSAGE_RESET_SORTING = "Sorting reset to default order";
 
-    // TODO: Tech debt - bad implementation
-    private final Comparator<Contact> comparator;
+    private final Comparator<Contact> comparatorContact;
     private final Comparator<JobApplication> comparatorApplication;
-
-
-    /**
-     * Creates a SortCommand sorting the {@code Contact} entries by the specified comparator.
-     * @param comparator the comparator determining the sorting of {@code Contact} entries
-     */
-    public SortCommand(Comparator<Contact> comparator) {
-        requireNonNull(comparator);
-        this.comparator = comparator;
-        this.comparatorApplication = null;
-    }
+    private final Boolean isReset;
 
     /**
-     * Creats a SortCommand sorting the {@code JobApplication} entries by the specified comparator.
-     * @param comparator the comparator determining the sorting of the application
-     * @param iAmLosingMyMind does nothing
+     * Creates a SortCommand sorting the {@code Contact} entries and the {@code JobApplication}
+     * entries by the specified comparators.
+     * @param contactComparator the comparator determining the sorting of {@code Contact} entries.
+     *                          May be null, should the SortCommand seek to sort applications instead.
+     * @param applicationComparator the comparator determining the sorting of {@code JobApplication} entries.
+     *                              May be null, should the SortCommand seek to sort contacts.
+     * @param isReset checks if the {@code SortCommand} is going to reset the sorting order
+     *                to the original order.
      */
-    public SortCommand(Comparator<JobApplication> comparator, Boolean iAmLosingMyMind) {
-        requireNonNull(comparator);
-        this.comparatorApplication = comparator;
-        this.comparator = null;
+    public SortCommand(Comparator<Contact> contactComparator,
+                       Comparator<JobApplication> applicationComparator, Boolean isReset) {
+        this.comparatorContact = contactComparator;
+        this.comparatorApplication = applicationComparator;
+        this.isReset = isReset;
     }
-
-
-
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        if (isReset) {
+            //both comparators should be null here
+            model.updateSortedContactList(comparatorContact);
+            model.updateSortedApplicationList(comparatorApplication);
+            return new CommandResult(MESSAGE_RESET_SORTING);
+        }
         if (comparatorApplication != null) {
             model.updateSortedApplicationList(comparatorApplication);
-            return new CommandResult("Sorted by last updated application");
+            return new CommandResult(MESSAGE_SORTED_APPLICATIONS);
         }
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-        model.updateSortedContactList(comparator);
-        return new CommandResult(MESSAGE_SORTED_SUCCESS);
+        model.updateSortedContactList(comparatorContact);
+        return new CommandResult(MESSAGE_SORTED_CONTACTS);
     }
 
     @Override
@@ -96,6 +116,11 @@ public class SortCommand extends Command {
         }
 
         SortCommand otherSortCommand = (SortCommand) other;
-        return comparator.equals(otherSortCommand.comparator);
+        if (this.isReset) {
+            return otherSortCommand.isReset;
+        }
+        Boolean equalsContact = comparatorContact.equals(otherSortCommand.comparatorContact);
+        Boolean equalsApplication = comparatorApplication.equals(otherSortCommand.comparatorApplication);
+        return (equalsContact && equalsApplication && !otherSortCommand.isReset);
     }
 }

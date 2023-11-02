@@ -125,7 +125,7 @@ public class EditCommandParserTest {
         // Job Application
 
         // invalid status
-        assertParseFailure(parser, "--application 1 --stat resume", JobStatus.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "--application 1 --status resume", JobStatus.MESSAGE_CONSTRAINTS);
 
         // invalid stage
         assertParseFailure(parser, "--application 1 --stage resum", ApplicationStage.MESSAGE_CONSTRAINTS);
@@ -149,8 +149,8 @@ public class EditCommandParserTest {
 
         // Job Application
 
-        String userApplicationInput = "--application 1 --title SWE --desc Pay: $100 --by 12-12-2022 --stat pending "
-                + "--stage " + "resume";
+        String userApplicationInput = "--application 1 --title SWE --description Pay: $100 --by 12-12-2022 "
+                + "--status pending --stage resume";
         EditApplicationDescriptor applicationDescriptor = new EditApplicationDescriptor();
         applicationDescriptor.setApplicationStage(ApplicationStage.RESUME);
         applicationDescriptor.setJobDescription(new JobDescription("Pay: $100"));
