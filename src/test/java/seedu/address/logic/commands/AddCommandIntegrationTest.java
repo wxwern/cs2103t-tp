@@ -44,7 +44,8 @@ public class AddCommandIntegrationTest {
         );
 
         assertCommandSuccess(addCommand, model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
+                String.format(AddCommand.MESSAGE_SUCCESS,
+                        validContact.getType(), Messages.format(validContact)),
                 expectedModel);
     }
 

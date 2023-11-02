@@ -40,7 +40,7 @@ public class AutocompleteGeneratorTest {
 
         assertEquals(
                 resultList,
-                new AutocompleteGenerator(sourceList.stream())
+                new AutocompleteGenerator(sourceList::stream)
                         .generateCompletions("ad")
                         .collect(Collectors.toList())
         );

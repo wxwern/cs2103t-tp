@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
@@ -73,7 +74,8 @@ public class AddCommandTest {
 
         CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS,
+                        validContact.getType(), Messages.format(validContact)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validContact), modelStub.contactsAdded);
     }
@@ -242,6 +244,17 @@ public class AddCommandTest {
 
         @Override
         public Contact getContactByIdXorIndex(Id id, Index index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
+            throw new AssertionError("This method should not be called.");
+
+        }
+
+        @Override
+        public void deleteApplication(JobApplication application) throws IllegalValueException {
             throw new AssertionError("This method should not be called.");
         }
 

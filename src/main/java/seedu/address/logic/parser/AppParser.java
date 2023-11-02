@@ -2,26 +2,18 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.ClassMappings.COMMAND_TO_PARSER_MAP;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.autocomplete.AutocompleteGenerator;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ApplyCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -30,11 +22,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AppParser {
 
+
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
     private static final Logger logger = LogsCenter.getLogger(AppParser.class);
+
+
 
     /**
      * Parses user input into command for execution.
@@ -57,40 +53,53 @@ public class AppParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        // Iterate through the available command and parser classes and locate the one matching the command word.
+        final Optional<Class<? extends Command>> commandClass = COMMAND_TO_PARSER_MAP
+                .keySet()
+                .stream()
+                .filter(c -> commandWord.equals(
+                        Command.getCommandWord(c).orElse(null)
+                ))
+                .findFirst();
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+        final Optional<Class<? extends Parser<? extends Command>>> parserClass = commandClass
+                .map(COMMAND_TO_PARSER_MAP::get)
+                .flatMap(x -> x);
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+        // Instantiate the class found and return the command instance.
+        try {
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+            if (parserClass.isPresent()) {
+                return parserClass.get()
+                        .getDeclaredConstructor()
+                        .newInstance()
+                        .parse(arguments);
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            } else if (commandClass.isPresent()) {
+                return commandClass
+                        .get()
+                        .getDeclaredConstructor()
+                        .newInstance();
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommandParser().parse(arguments);
+            } else {
+                // We don't know what this command is.
+                // - Note: To add a support for new commands, add them in ClassMappings.java.
+                logger.finer("This user input has no known mapped commands: " + userInput);
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
 
-        case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(arguments);
+        } catch (InstantiationException
+                 | IllegalAccessException
+                 | NoSuchMethodException
+                 | InvocationTargetException e) {
 
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
+            assert false
+                    : "All command and parser classes should be correctly defined to have an no-args constructor, "
+                    + "but " + e.getClass().getName() + " was thrown for command '" + commandWord + "'!";
 
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case ApplyCommand.COMMAND_WORD:
-            return new ApplyCommandParser().parse(arguments);
-
-        default:
-            logger.finer("This user input caused a ParseException: " + userInput);
+            logger.severe("This user input unexpectedly caused an error during instantiation: " + e);
+            logger.severe("Will report to the user that the command doesn't exist instead.");
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
@@ -103,49 +112,37 @@ public class AppParser {
      */
     public AutocompleteGenerator parseCompletionGenerator(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
+        if (!matcher.matches() && !userInput.isEmpty()) {
             return AutocompleteGenerator.NO_RESULTS;
         }
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = userInput.isEmpty() ? "" : matcher.group("commandWord");
 
-        logger.finest("Preparing autocomplete: " + userInput);
+        logger.finest("Preparing autocomplete: '" + userInput + "'");
 
-        switch (commandWord) {
-        case AddCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(AddCommand.AUTOCOMPLETE_SUPPLIER);
 
-        case ApplyCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(ApplyCommand.AUTOCOMPLETE_SUPPLIER);
-
-        case EditCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(EditCommand.AUTOCOMPLETE_SUPPLIER);
-
-        case DeleteCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(DeleteCommand.AUTOCOMPLETE_SUPPLIER);
-
-        case ListCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(ListCommand.AUTOCOMPLETE_SUPPLIER);
-
-        case SortCommand.COMMAND_WORD:
-            return new AutocompleteGenerator(SortCommand.AUTOCOMPLETE_SUPPLIER);
-
-        case ClearCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_WORD:
-        case ExitCommand.COMMAND_WORD:
-        case HelpCommand.COMMAND_WORD:
-            return AutocompleteGenerator.NO_RESULTS;
-
-        default:
-            // Not a valid command. Return autocompletion results based on all the known command names.
-            return new AutocompleteGenerator(
-                    Command.getCommandWords(Stream.of(
-                            AddCommand.class, ApplyCommand.class, DeleteCommand.class, EditCommand.class,
-                            ListCommand.class, FindCommand.class, SortCommand.class, HelpCommand.class,
-                            ClearCommand.class, ExitCommand.class
-                    )).filter(Optional::isPresent).map(Optional::get)
+        // Case 1: There is no command name followed by a whitespace character.
+        // - The command name is incomplete - we're still typing the name.
+        // - Suggest available command names.
+        if (!userInput.matches(".+\\s.*")) {
+            return new AutocompleteGenerator(() ->
+                    Command.getCommandWords(COMMAND_TO_PARSER_MAP.keySet().stream())
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
             );
-
         }
+
+        // Case 2: There exists a whitespace character.
+        // - The command name is complete, and we're typing the arguments now.
+        // - Lookup and suggest with the relevant command supplier.
+        return COMMAND_TO_PARSER_MAP.keySet()
+                .stream()
+                .filter(cls -> commandWord.equals(
+                        Command.getCommandWord(cls).orElse(null)
+                ))
+                .findFirst()
+                .flatMap(Command::getAutocompleteSupplier)
+                .map(AutocompleteGenerator::new)
+                .orElse(AutocompleteGenerator.NO_RESULTS);
     }
 
 }
