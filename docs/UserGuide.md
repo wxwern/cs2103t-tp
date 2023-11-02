@@ -135,6 +135,7 @@ Acceptable Parameters:
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
 * `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
+The value provided must also be the ID of an existing organization in the address book.
 
 * `NUMBER` should be a valid phone number.
 
@@ -146,7 +147,7 @@ Acceptable Parameters:
 
 
 Examples:
-* `add --rec --name John Doe --oid paypal-sg`
+* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
 
 
 ### Listing all contacts: `list`
