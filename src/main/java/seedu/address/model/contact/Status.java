@@ -20,6 +20,7 @@ public class Status {
      *
      * @param status A valid status.
      */
+    @Deprecated
     public Status(String status) {
         requireNonNull(status);
         checkArgument(isValidStatus(status), MESSAGE_CONSTRAINTS);
