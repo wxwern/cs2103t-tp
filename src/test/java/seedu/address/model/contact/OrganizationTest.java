@@ -106,14 +106,6 @@ public class OrganizationTest {
         // different tags -> returns false
         editedNus = new OrganizationBuilder(NUS).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(NUS.equals(editedNus));
-
-        // different status -> returns false
-        editedNus = new OrganizationBuilder(NUS).withStatus(VALID_STATUS_BOB).build();
-        assertFalse(NUS.equals(editedNus));
-
-        // different position -> returns false
-        editedNus = new OrganizationBuilder(NUS).withPosition(VALID_POSITION_BOB).build();
-        assertFalse(NUS.equals(editedNus));
     }
 
     @Test
@@ -126,9 +118,7 @@ public class OrganizationTest {
                 + ", email=" + NUS.getEmail()
                 + ", url=" + NUS.getUrl()
                 + ", address=" + NUS.getAddress()
-                + ", tags=" + NUS.getTags()
-                + ", status=" + NUS.getStatus()
-                + ", position=" + NUS.getPosition() + "}";
+                + ", tags=" + NUS.getTags() + "}";
         assertEquals(expected, NUS.toString());
     }
 }

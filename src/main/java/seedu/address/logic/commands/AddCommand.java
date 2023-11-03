@@ -9,9 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_NAME;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ORGANIZATION_ID;
 import static seedu.address.logic.parser.CliSyntax.FLAG_PHONE;
-import static seedu.address.logic.parser.CliSyntax.FLAG_POSITION;
 import static seedu.address.logic.parser.CliSyntax.FLAG_RECRUITER;
-import static seedu.address.logic.parser.CliSyntax.FLAG_STATUS;
 import static seedu.address.logic.parser.CliSyntax.FLAG_TAG;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
@@ -53,13 +51,10 @@ public class AddCommand extends Command {
                     AutocompleteDataSet.onceForEachOf(
                             FLAG_NAME, FLAG_ID,
                             FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
-                            FLAG_STATUS, FLAG_POSITION,
                             FLAG_ORGANIZATION_ID
                     ),
                     AutocompleteDataSet.anyNumberOf(FLAG_TAG)
             ).addConstraints(List.of(
-                    AutocompleteConstraint.where(FLAG_ORGANIZATION)
-                            .isPrerequisiteFor(FLAG_STATUS, FLAG_POSITION),
                     AutocompleteConstraint.where(FLAG_RECRUITER)
                             .isPrerequisiteFor(FLAG_ORGANIZATION_ID)
             ))
@@ -88,8 +83,6 @@ public class AddCommand extends Command {
             + "[" + FLAG_EMAIL + " EMAIL] "
             + "[" + FLAG_URL + " URL] "
             + "[" + FLAG_ADDRESS + " ADDRESS] "
-            + "[" + FLAG_STATUS + " STATUS] "
-            + "[" + FLAG_POSITION + " POSITION] "
             + "[" + FLAG_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + FLAG_ORGANIZATION + " "
@@ -99,8 +92,6 @@ public class AddCommand extends Command {
             + FLAG_EMAIL + " jobsInc@example.com "
             + FLAG_URL + " www.jobsinc.com "
             + FLAG_ADDRESS + " 311, Clementi Ave 2, #02-25 "
-            + FLAG_STATUS + " applied "
-            + FLAG_POSITION + " Junior Software Engineer "
             + FLAG_TAG + " softwareEngineering "
             + FLAG_TAG + " competitive ";
 
@@ -149,7 +140,12 @@ public class AddCommand extends Command {
 
     /**
      * Creates an AddCommand to add a {@code Contact} to the address book with the given parameters.
+     *
+     * <p>
+     * TODO: This class should be made abstract.
+     * </p>
      */
+    @Deprecated
     public AddCommand(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
         requireAllNonNull(name, id, tags);
         this.name = name;
