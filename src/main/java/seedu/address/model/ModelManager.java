@@ -25,6 +25,7 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Type;
 import seedu.address.model.jobapplication.JobApplication;
+import seedu.address.model.jobapplication.JobApplicationList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -37,7 +38,7 @@ public class ModelManager implements Model {
     private final FilteredList<Contact> displayedContacts;
     private final FilteredList<Contact> filteredContacts;
     private final SortedList<Contact> sortedContacts;
-    private final ObservableList<JobApplication> applicationList;
+    private final JobApplicationList jobApplicationList;
     private final SortedList<JobApplication> sortedApplications;
     private final FilteredList<JobApplication> filteredApplications;
     private final FilteredList<JobApplication> displayedApplications;
@@ -55,12 +56,13 @@ public class ModelManager implements Model {
         this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
         this.filteredContacts = new FilteredList<>(sortedContacts);
         this.displayedContacts = filteredContacts;
-        this.applicationList = FXCollections.observableArrayList(filteredContacts.stream()
+        ObservableList<JobApplication> applicationList = FXCollections.observableArrayList(filteredContacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
                 .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
                 .collect(Collectors.toList()));
-        this.sortedApplications = new SortedList<>(this.applicationList);
+        this.jobApplicationList = new JobApplicationList(applicationList);
+        this.sortedApplications = new SortedList<>(applicationList);
         this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
         this.displayedApplications = filteredApplications;
     }
@@ -127,7 +129,7 @@ public class ModelManager implements Model {
         addressBook.removeContact(target);
         if (target.getType() == Type.ORGANIZATION) {
             for (JobApplication i: ((Organization) target).getJobApplications()) {
-                applicationList.remove(i);
+                jobApplicationList.remove(i);
             }
         }
     }
@@ -180,9 +182,9 @@ public class ModelManager implements Model {
 
     @Override
     public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
-        JobApplication oldApplication = this.applicationList.get(index.getZeroBased());
+        JobApplication oldApplication = jobApplicationList.get(index.getZeroBased());
 
-        this.applicationList.set(index.getZeroBased(), newApplication);
+        jobApplicationList.set(index.getZeroBased(), newApplication);
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
             throw new IllegalValueException("Id field is invalid!");
@@ -200,13 +202,13 @@ public class ModelManager implements Model {
             throw new IllegalValueException("Id field is invalid!");
         }
         Organization org = (Organization) contact;
-        this.applicationList.remove(application);
+        this.jobApplicationList.remove(application);
         org.deleteJobApplication(application);
     }
 
     @Override
     public void addApplication(JobApplication application) {
-        applicationList.add(application);
+        jobApplicationList.add(application);
         // TODO: Tech debt - need separate declaration for the predicates
         filteredApplications.setPredicate(c -> true);
     }

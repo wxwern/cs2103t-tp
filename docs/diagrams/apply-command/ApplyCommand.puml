@@ -1,0 +1,70 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AppParser" as AddressBookParser LOGIC_COLOR
+participant ":ApplyCommandParser" as ApplyCommandParser LOGIC_COLOR
+participant ":ApplyCommand" as ApplyCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("apply 1 --title SWE")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("apply 1 --title SWE")
+activate AddressBookParser
+
+create ApplyCommandParser
+AddressBookParser -> ApplyCommandParser
+activate ApplyCommandParser
+
+ApplyCommandParser --> AddressBookParser
+deactivate ApplyCommandParser
+
+AddressBookParser -> ApplyCommandParser : parse(" --title SWE")
+activate ApplyCommandParser
+
+create ApplyCommand
+ApplyCommandParser -> ApplyCommand
+activate ApplyCommand
+
+ApplyCommand --> ApplyCommandParser :
+deactivate ApplyCommand
+
+ApplyCommandParser --> AddressBookParser :
+deactivate ApplyCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ApplyCommandParser -[hidden]-> AddressBookParser
+destroy ApplyCommandParser
+
+AddressBookParser --> LogicManager :
+deactivate AddressBookParser
+
+LogicManager -> ApplyCommand : execute()
+activate ApplyCommand
+
+ApplyCommand -> Model : addJobApplication()
+activate Model
+
+Model --> ApplyCommand
+deactivate Model
+
+create CommandResult
+ApplyCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ApplyCommand
+deactivate CommandResult
+
+ApplyCommand --> LogicManager : result
+deactivate ApplyCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
