@@ -100,7 +100,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to an `AppParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
@@ -110,7 +110,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `AppParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AppParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 How arguments from a raw command input may be obtained by parsers:
@@ -181,6 +181,90 @@ The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id`
 Once done, the UI will display the link as a single line: `from organization (alex_yeoh)`
 
 On the other hand, the Organization class can have links to multiple Recruiters. Hence, a single parent Contact can have multiple children contacts.
+
+### Command Autocompletion
+
+#### Overview
+
+Jobby's Command Autocompletion is designed to provide users with intelligent command suggestions and offer autocompletion by analyzing the existing partial command input and the current application state.
+
+Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match.
+
+It consists of several key components:
+
+- **`AutocompleteSupplier`**:
+  - This class is responsible for generating possible flags and values to be used for suggestions.
+  - It takes an `AutocompleteDataSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
+
+- **`AutocompleteGenerator`**:
+  - This component takes in an `AutocompleteSupplier` or a `Supplier<Stream<String>>` and generates autocomplete results based on a partial command input and the current application model.
+  - Users can invoke `AutocompleteGenerator#generateCompletions(command, model)` to get autocomplete suggestions.
+  - It does the hard work of taking the possible values provided by either supplier, performing subsequence fuzzy match, and then "predict" what the user is typing.
+
+
+#### `AutocompleteConstraint`
+
+The `AutocompleteConstraint` class provides a way to specify rules for autocomplete suggestions. It is a functional interface, so it can be treated as a lambda function.
+
+It offers static factory methods for quickly defining common rulesets. Examples include:
+- `#oneAmongAllOf(items...)`: Specifies that one of the provided items must be present in the command.
+- `#onceForEachOf(items...)`: Ensures that each of the provided items can only appear once in the command.
+- `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
+- `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
+
+#### `AutocompleteDataSet`
+
+The `AutocompleteDataSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+
+This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
+- `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
+- `#onceForEachOf(items...)`: Ensures that each of the provided items can appear only once.
+- `#anyNumberOf(items...)`: Creates a set with the rule that items in the set may appear any number of times.
+
+Additionally, some helper operations are provided in a chainable fashion. For example:
+- `#concat(sets...)`: Combines sets together to create complex combinations of flag rules and flags.
+- `#addDependents(items...)`: Establishes dependencies between flags. This way, flag may require another flag to exist in order to be used.
+- `#addConstraints(constraints...)`: Adds more custom constraints as desired.
+
+Finally, we need a way to compute what items are usable given existing set of items that are present. This class exposes one such method:
+- `#getElementsAfterConsuming(items...)`: Gets the remaining set of elements after "consuming" the given ones.
+
+#### `FlagValueSupplier`
+
+The `FlagValueSupplier` interface is a simple one that behaves like a lambda function with one task: Given a partial command for a flag and the app's **model** generate all possible suggestion results.
+
+By taking in both the command and the app model, it is possible to specify arbitrary suppliers with any data, even from the model itself, like corresponding Id values when using the `--oid` flag for recruiters.
+
+#### `AutocompleteSupplier`
+
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteDataSet` and `FlagValueSupplier`.
+
+Internally, it uses `AutocompleteDataSet` to determine what flags can be added after a given set of flags has been used in a command.
+
+This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
+
+Additionally, it uses `FlagValueSupplier` to provide suggestions for flags with preset values, such as "`--status pending`."
+
+#### `AutocompleteGenerator`
+
+The `AutocompleteGenerator` serves as a wrapper for autocomplete functionality, regardless of it's source.
+
+It takes an `AutocompleteSupplier` or a `Supplier<Stream<String>` and generates autocomplete suggestions.
+
+Once initialized, users can call `AutocompleteGenerator#generateCompletions(command, model)` to receive suggestions from their partial command input.
+
+
+#### Design Considerations
+
+When designing the Autocomplete feature, important considerations include the ability to flexibly define and craft new constraints based on heuristically determined rules.
+
+By abstracting away all operations into simple components like sets and constraints, the current carefully crafted design allows
+Jobby's Command Autocompletion to provide context-aware suggestions to users, while adhering to simple constraints defined on a per command basis.
+
+Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
+Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
+
 
 ### \[Proposed\] Undo/redo feature
 

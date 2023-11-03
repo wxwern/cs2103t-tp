@@ -17,7 +17,7 @@ Class ApplicationListPanel
 Class ApplicationCard
 Class StatusBarFooter
 Class CommandBox
-Class AutoCompleteTextField
+Class AutocompleteTextField
 }
 
 package Model <<Rectangle>> {
@@ -42,7 +42,6 @@ MainWindow --> "0..1" HelpWindow
 
 ContactListPanel -down-> "*" ContactCard
 ApplicationListPanel -down-> "*" ApplicationCard
-CommandBox -down-> "0..1" AutoCompleteTextField
 
 MainWindow --|> UiPart
 
@@ -52,9 +51,10 @@ ContactListPanel --|> UiPart
 ContactCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
-AutoCompleteTextField --|> UiPart
 ApplicationListPanel --|> UiPart
 ApplicationCard --|> UiPart
+
+CommandBox -down--> "1" AutocompleteTextField
 
 ContactCard ..> Model
 ApplicationCard ..> Model
