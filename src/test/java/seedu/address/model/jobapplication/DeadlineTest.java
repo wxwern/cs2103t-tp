@@ -12,7 +12,7 @@ public class DeadlineTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Deadline(null));
+        assertThrows(NullPointerException.class, () -> new Deadline((String) null));
     }
 
     @Test

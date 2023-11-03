@@ -22,8 +22,6 @@ import seedu.address.model.tag.Tag;
  */
 public class AddOrganizationCommand extends AddCommand {
 
-    protected final Status status;
-    protected final Position position;
     protected final Set<Id> rids;
 
     /**
@@ -42,8 +40,6 @@ public class AddOrganizationCommand extends AddCommand {
             Set<Id> rids
     ) {
         super(name, id, phone, email, url, address, tags);
-        this.status = status;
-        this.position = position;
         this.rids = rids;
     }
 
@@ -54,7 +50,7 @@ public class AddOrganizationCommand extends AddCommand {
 
     @Override
     protected Organization createContact() {
-        return new Organization(name, id, phone, email, url, address, tags, status, position, rids);
+        return new Organization(name, id, phone, email, url, address, tags, null, null, rids);
     }
 
     @Override
@@ -76,8 +72,6 @@ public class AddOrganizationCommand extends AddCommand {
                 && Objects.equals(address, otherAddCommand.address)
                 && Objects.equals(url, otherAddCommand.url)
                 && tags.equals(otherAddCommand.tags)
-                && Objects.equals(status, otherAddCommand.status)
-                && Objects.equals(position, otherAddCommand.position)
                 && Objects.equals(rids, otherAddCommand.rids);
     }
 
@@ -91,8 +85,6 @@ public class AddOrganizationCommand extends AddCommand {
                 .add("url", url)
                 .add("address", address)
                 .add("tags", tags)
-                .add("status", status)
-                .add("position", position)
                 .add("rids", rids);
     }
 }

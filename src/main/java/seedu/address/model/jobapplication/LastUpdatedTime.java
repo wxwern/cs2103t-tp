@@ -1,7 +1,9 @@
 package seedu.address.model.jobapplication;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -13,6 +15,12 @@ public class LastUpdatedTime implements Comparable<LastUpdatedTime> {
 
     private static final String INVALID_FORMAT_MESSAGE = "The given last modified datetime is invalid: %s\n Delete "
             + "the last updated time section to reset the last updated time.";
+
+    private static final DateTimeFormatter displayFormat =
+            DateTimeFormatter.ofPattern(
+                    "dd-MM-yyyy h:mma",
+                    Locale.ENGLISH
+            );
 
     public final LocalDateTime lastUpdatedTime;
 
@@ -42,6 +50,10 @@ public class LastUpdatedTime implements Comparable<LastUpdatedTime> {
         } catch (DateTimeParseException e) {
             throw new IllegalValueException(String.format(INVALID_FORMAT_MESSAGE, test));
         }
+    }
+
+    public String toDisplayString() {
+        return lastUpdatedTime.format(displayFormat);
     }
 
     @Override

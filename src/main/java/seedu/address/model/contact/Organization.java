@@ -20,8 +20,6 @@ import seedu.address.model.tag.Tag;
 public class Organization extends Contact {
     // TODO: Override the getChildren method
 
-    private final Optional<Status> status;
-    private final Optional<Position> position;
 
     private final Set<Id> rids = new HashSet<>();
 
@@ -53,8 +51,6 @@ public class Organization extends Contact {
             Set<Id> rids, List<JobApplication> jobApplications
     ) {
         super(name, id, phone, email, url, address, tags, null);
-        this.status = Optional.ofNullable(status);
-        this.position = Optional.ofNullable(position);
         this.jobApplications.addAll(jobApplications);
         // Todo: Likely to deprecate rids completely
         // this.rids.addAll(rids);
@@ -65,12 +61,14 @@ public class Organization extends Contact {
         return Type.ORGANIZATION;
     }
 
+    @Deprecated
     public Optional<Status> getStatus() {
-        return status;
+        return Optional.empty(); // TODO: Remove entirely
     }
 
+    @Deprecated
     public Optional<Position> getPosition() {
-        return position;
+        return Optional.empty(); // TODO: Remove entirely
     }
 
     /**
@@ -78,6 +76,14 @@ public class Organization extends Contact {
      */
     public JobApplication[] getJobApplications() {
         return this.jobApplications.toArray(new JobApplication[]{});
+    }
+
+    /**
+     * Checks if the organization has the given {@code JobApplication}.
+     */
+    public boolean hasJobApplication(JobApplication jobApplication) {
+        return this.jobApplications.stream()
+                .anyMatch(application -> application.isSameApplication(jobApplication));
     }
 
     /**
@@ -132,23 +138,19 @@ public class Organization extends Contact {
                 && getEmail().equals(otherContact.getEmail())
                 && getAddress().equals(otherContact.getAddress())
                 && getUrl().equals(otherContact.getUrl())
-                && getTags().equals(otherContact.getTags())
-                && status.equals(otherContact.status)
-                && position.equals(otherContact.position);
+                && getTags().equals(otherContact.getTags());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags(), status, position
+                getId(), getType(), getName(), getPhone(), getEmail(), getAddress(), getTags()
         );
     }
 
     @Override
     public ToStringBuilder toStringBuilder() {
-        return super.toStringBuilder()
-                .add("status", status)
-                .add("position", position);
+        return super.toStringBuilder();
     }
 
 }

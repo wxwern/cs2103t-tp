@@ -28,42 +28,94 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Usage
+
+This section guides you on understanding and typing commands in the app, like formatting and autocomplete.
+
+If you're instead looking for available commands, check out the [Features](#features) section instead. 
+
+### Command Structure
+
+At a basic level, we write commands in the command box at the top of Jobby's window.
+
+Commands are made up of a few parts: The **command**, **parameter names** and **input values**.
+
+A command like "`edit google --name Google SG --id google-sg`" would refer to:
+* the command `edit`,
+* with a command value `google`,
+* with a parameter `--name`,
+  * which has the parameter value `Google SG`,
+* with a parameter `--id`,
+  * which has the parameter value `google-sg`.
+
+Parameters may be in any order, and are of the form `-a` or `--abc123`.
+
+Any extra values to commands that don't accept them will be ignored (or if ambiguous, throws an error).
+
+### Command Format
+
+Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
+
+* **Words in `UPPER_CASE`**
+  * The parts where you should be typing your parameter values.
+  * e.g., `--name NAME` means inputting names along the lines of `--name Alice`.
+
+* **Terms separated by `/`**
+  * Exactly one of the given options
+  * e.g., `--a/--b` means either `--a` or `--b` but not `--a --b`.
+
+* **Terms surrounded by `[` and `]`**
+  * An optional parameter or option that may be omitted.
+
+* **Terms ending with `...`**
+  * The parameter is multivalued.
+  * e.g., `[--tag TAG]...` means `--tag` can be repeated from 0 to any number of times.
+
+### Command Autocomplete
+
+Command autocompletion allows you to type commands in Jobby at unimaginable speeds.
+
+As you type your command, you may see a list of suggested completions pop up like below. 
+Just press **TAB** or **SPACE** to select the first suggestion to fill in!
+
+![Autocomplete Screenshot](images/autocomplete.png)
+
+To temporarily hide all suggestions, press **ESC**. This temporarily disables autocompletion for the next keystroke. 
+
+If suggestions were hidden or aren't shown when they should, press **TAB** to prompt Jobby to bring it back.
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+**:bulb: Additional tips:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. if the command format is `add --name NAME`, `NAME` is a parameter which can be used like `add --name John Doe`.
+* Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
 
-* Terms prefixed with `--` are used to assign a value to some action or property, or to choose an option out of a few settings.
-  e.g. the `--name` field (which requires a `NAME` supplied after it) may configure the name of a contact, while a switch like `--recursive` (which doesn't accept values) may explicitly activate a recursive mode for an action.
+  * For example, you can type `-nm` to get the autocompletion result of `--name`.
 
-* Items in square brackets are optional.<br>
-  e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
+  * This allows you to quickly choose between parameter names with similar prefixes e.g., by typing
+    `-dsp` to select `--description` instead of `--descending`.
 
-* Items in angled brackets describe what the content should be.<br>
-  e.g. `--date <yyyymmdd formatted DATE>` means the parameter `DATE`, which is supplied after the `--date` flag, should be formated as `yyyymmdd`.
+* If you rather choose from the list instead of typing out the prefix, it is possible to use the **UP** and **DOWN**
+  arrow keys to navigate through the menu, then press **ENTER** to select them.
 
-* Items with `...` after them can be used multiple times including zero times.<br>
-  e.g. `[--tag TAG]...` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
+* Accidentally triggered autocomplete when you didn't intend to? Don't worry, just press **BACKSPACE** to immediately 
+  revert to your previously typed text.
 
-* Items separated by `/` means that only one of them can be used per command.<br>
-  e.g. `--org/--rec` means that either `--org` or `--rec` can be supplied as a flag but not both at the same time.
-
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `--name NAME --phone PHONE_NUMBER`, `--phone PHONE_NUMBER --name NAME` is also acceptable.
-
-* Extraneous values for all commands will be ignored by default.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other value, supplying extra values like `list --org 456` will ignore "456".
-
-* Extraneous parameters for all commands will be rejected with an error.<br>
-  e.g. if `list` only accepts the `--org` or `--rec` options and no other parameters, then supplying `list --org --abc` will result in an error.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+## Features
+
+We can see a list of features available in Jobby here.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**<br>
+
+* If you are using a PDF version of this document, be careful when copying and pasting commands
+  that span multiple lines as space characters surrounding line-breaks may be omitted when copied over
+  to the application.
+
+</div>
 
 ### Viewing help: `help`
 
@@ -87,9 +139,7 @@ Details specifically on organization and recruiter level are specified in the ne
 
 #### Adding an organization contact: `add --org`
 
-_{Work in progress...}_
-
-Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--stat STATUS] [--pos POSITION] [--tag TAG]... `
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
 
 
 Acceptable Parameters:
@@ -123,9 +173,7 @@ Examples:
 
 #### Adding a recruiter contact: `add --rec`
 
-_{Work in progress...}_
-
-Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 
 Acceptable Parameters:
@@ -135,6 +183,7 @@ Acceptable Parameters:
     * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 
 * `ORG_ID` refers to the unique identifier which is used to uniquely identify the organization the recruiter should be tied to. It is subject to the same validation as the ID field.
+The value provided must also be the ID of an existing organization in the address book.
 
 * `NUMBER` should be a valid phone number.
 
@@ -146,7 +195,7 @@ Acceptable Parameters:
 
 
 Examples:
-* `add --rec --name John Doe --oid paypal-sg`
+* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
 
 
 ### Listing all contacts: `list`
@@ -164,34 +213,45 @@ Examples:
 
 ### Editing a contact: `edit`
 
-_{To be updated...}_
+Current: Edit contacts whose names contain any of the given keywords or ids.
+
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* Names, index and id are being searched.
+* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
+* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
+
+Examples:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
 
 
-### Locating contacts by name: `find`
+### Locating contacts by name and id: `find`
 
-_{To be updated...}_
+Current: Finds contacts whose names contain any of the given keywords or ids.
 
-
-Current: Finds contacts whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD/ID...`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Name & ID are searched
+* The partial keyword can be matched with `ha` will match with `hambarger`
+* Partial ID can match with the entire id as well `12345` will match with `id_12345`, however good to be more specific
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
 
 Examples:
 * `find John` returns `john` and `John Doe`
+* `find id_12345` returns `john` and whose id is `id_12345`
+* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
 ### Deleting a contact: `delete`
-
-_{To be updated...}_
 
 Deletes the specified contact from the address book and its associated contacts if specified.
 Format: `delete INDEX/ID [--recursive]`
@@ -207,37 +267,9 @@ Examples:
 
 
 
-
-### Clearing all entries: `clear`
-
-Clears all data from the app.
-
-Format: `clear`
-
-
-### Exiting the program: `exit`
-
-Exits the program.
-
-Format: `exit`
-
-
-### Saving the data
-
-Jobby data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-
-### Editing the data file
-
-Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
-</div>
-
 #### Applying to an Organization: `apply`
 
-Format: `apply INDEX/ID --title TITLE [--desc DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--stat STATUS: pending | offered | accepted | turned down]`
+Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
 
 Acceptable Parameters:
 * `TITLE` can accept any value.
@@ -257,9 +289,9 @@ Examples:
 
 * `apply id_12345_1 --title Unit Tester --by 12-12-2023`
 
-* `apply id_12345_1 --title Unit Tester --desc Unit testing for Google --by 12-12-2023 --stage resume`
+* `apply id_12345_1 --title Unit Tester --description Unit testing for Google --by 12-12-2023 --stage resume`
 
-* `apply id_12345_1 --title Junior Engineer --desc Junir role --by 12-12-2023 --stage resume --stat pending`
+* `apply id_12345_1 --title Junior Engineer --description Junior role --by 12-12-2023 --stage resume --status pending`
 
 
 ### Deleting a job application
@@ -275,7 +307,7 @@ Examples:
 ### Updating/Editing a job application
 Updates the job applications with the input fields.
 
-Format: `edit --application INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stat STATUS] [--stage STAGE]`
+Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
 
 * `INDEX` refers to the index number shown on the list and must be a positive integer.
 * At least one of the optional fields must be specified.
@@ -283,8 +315,8 @@ Format: `edit --application INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEA
 * `STAGE` is one of `resume`, `online assessment`, `interview`
 
 Examples:
-* `edit --application 1 --title SWE --desc Pay: $100 per hour`
-* `edit --application 1 --stat rejected`
+* `edit --application 1 --title SWE --description Pay: $100 per hour`
+* `edit --application 1 --status rejected`
 * `edit --application 1 --stage interview`
 
 ### Sorting contacts/job applications: `sort`
@@ -333,6 +365,37 @@ Specifying `--latest` will list the application deadlines in order of reverse ur
 Examples:
 * `remind --earliest`
 * `remind --latest`
+
+
+
+### Clearing all entries: `clear`
+
+Clears all data from the app.
+
+Format: `clear`
+
+
+### Exiting the program: `exit`
+
+Exits the program.
+
+Format: `exit`
+
+
+### Saving the data
+
+Jobby data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+
+### Editing the data file
+
+Jobby data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If your changes to the data file makes its format invalid, Jobby will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
+</div>
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -352,15 +415,15 @@ Examples:
 
  Action               | Format, Examples                                                                                                                                                                                                                                                                            
 ----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
- **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--addr ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Add Organization** | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
+ **Add Recruiter**    | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
  **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
- **Delete**           | `delete INDEX [--recursive]` or <br> `delete --id ID [--recursive]` <br> e.g., `delete 3`, `delete --id 55tg`                                                                                                                                                                               
+ **Delete**           | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
  **Edit**             | `edit INDEX ...` or <br>`edit ID ...` or <br>`edit --application INDEX ...`                                                                                                                                                                                                                                                                              
  **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
- **Apply**            | `apply INDEX [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` or <br>`apply ID [--title TITLE] [--desc DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--stat STATUS]` 
- **List**             | `list [--FLAG_TO_FILTER]`
- **Sort**             | `sort [--FLAG_TO_SORT]`
+ **Apply**            | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]` 
+ **List**             | `list [--org/--rec]`
+ **Sort**             | `sort --FLAG_TO_SORT`
  **Help**             | `help`                                                                                                                                                                                                                                                                                      
 
 

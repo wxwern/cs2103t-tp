@@ -81,6 +81,9 @@ public class ApplyCommand extends Command {
             + "[" + FLAG_STATUS + " STATUS: pending/offered/accepted/turned down] ";
 
     public static final String MESSAGE_APPLY_SUCCESS = "Added application: %1$s to %2$s";
+
+    public static final String MESSAGE_DUPLICATE_APPLICATION = "This application already exists "
+            + "for the organization you are trying to apply to";
     public static final String MESSAGE_ATTEMPT_TO_ADD_TO_NON_ORG = "Attempted to apply to a non-organization: %1$s";
 
     private static final Logger logger = LogsCenter.getLogger(ApplyCommand.class);
@@ -117,6 +120,9 @@ public class ApplyCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         Organization org = getOrganization(index, oid, model);
         JobApplication ja = new JobApplication(org, title, description, deadline, status, applicationStage);
+        if (org.hasJobApplication(ja)) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPLICATION);
+        }
         org.addJobApplication(ja);
         model.addApplication(ja);
         return new CommandResult(String.format(MESSAGE_APPLY_SUCCESS, ja, org));
