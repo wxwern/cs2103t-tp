@@ -57,24 +57,6 @@ public class OrganizationBuilder extends ContactBuilder {
         return (OrganizationBuilder) super.withUrl(url);
     }
 
-    /**
-     * Sets the {@code Status} of the {@code Contact} that we are building.
-     */
-    @Deprecated
-    public OrganizationBuilder withStatus(String status) {
-        // TODO: Remove entirely
-        return this;
-    }
-
-    /**
-     * Sets the {@code Position} of the {@code Contact} that we are building.
-     */
-    @Deprecated
-    public OrganizationBuilder withPosition(String position) {
-        // TODO: Remove entirely
-        return this;
-    }
-
     @Override
     public Organization build() {
         Contact contact = super.build();
@@ -85,9 +67,7 @@ public class OrganizationBuilder extends ContactBuilder {
                 contact.getEmail().orElse(null),
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
-                contact.getTags(),
-                null,
-                null
+                contact.getTags()
         );
     }
 

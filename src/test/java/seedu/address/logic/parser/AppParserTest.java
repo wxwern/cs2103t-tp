@@ -45,9 +45,7 @@ public class AppParserTest {
                 contact.getEmail().orElse(null),
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
-                contact.getTags(),
-                null,
-                null
+                contact.getTags()
         );
         assertEquals(addCommand, parsedAddCommand);
     }

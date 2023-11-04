@@ -3,7 +3,6 @@ package seedu.address.model.contact;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -27,9 +26,9 @@ public class Organization extends Contact {
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position
+            Address address, Set<Tag> tags
     ) {
-        this(name, id, phone, email, url, address, tags, status, position, new ArrayList<>());
+        this(name, id, phone, email, url, address, tags, new ArrayList<>());
     }
 
     /**
@@ -40,8 +39,7 @@ public class Organization extends Contact {
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position,
-            List<JobApplication> jobApplications
+            Address address, Set<Tag> tags, List<JobApplication> jobApplications
     ) {
         super(name, id, phone, email, url, address, tags, null);
         this.jobApplications.addAll(jobApplications);
@@ -50,16 +48,6 @@ public class Organization extends Contact {
     @Override
     public Type getType() {
         return Type.ORGANIZATION;
-    }
-
-    @Deprecated
-    public Optional<Status> getStatus() {
-        return Optional.empty(); // TODO: Remove entirely
-    }
-
-    @Deprecated
-    public Optional<Position> getPosition() {
-        return Optional.empty(); // TODO: Remove entirely
     }
 
     /**

@@ -10,10 +10,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Id;
-import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 
 /**
@@ -51,10 +49,6 @@ public class ContactCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label status;
-    @FXML
-    private Label position;
-    @FXML
     private Label url;
     @FXML
     private FlowPane tags;
@@ -84,22 +78,6 @@ public class ContactCard extends UiPart<Region> {
                 url, () -> contact.getUrl().map(url -> url.value).orElse(null));
 
         switch (contact.getType()) {
-        case ORGANIZATION: {
-            Organization organization = (Organization) contact;
-            final String statusString = organization.getStatus()
-                    .map(status -> status.applicationStatus).orElse(null);
-            final String positionString = organization.getPosition()
-                    .map(position -> position.jobPosition).orElse(null);
-
-            setVboxInnerLabelText(
-                    status, () ->
-                            StringUtil.formatWithNullFallback("Application Status: %s", statusString));
-            setVboxInnerLabelText(
-                    position, () ->
-                            StringUtil.formatWithNullFallback("Job Position: %s", positionString));
-            cardPaneInnerVbox.getChildren().remove(linkedParentOrganization);
-            break;
-        }
         case RECRUITER: {
             Recruiter recruiter = (Recruiter) contact;
 
@@ -111,11 +89,10 @@ public class ContactCard extends UiPart<Region> {
                                     "from %s (%s)", "organization" /* TODO: Use org name instead */, oid.value))
                             .orElse(null)
             );
-            cardPaneInnerVbox.getChildren().removeAll(status, position);
             break;
         }
         default:
-            cardPaneInnerVbox.getChildren().removeAll(status, position, linkedParentOrganization);
+            cardPaneInnerVbox.getChildren().removeAll(linkedParentOrganization);
             break;
         }
 

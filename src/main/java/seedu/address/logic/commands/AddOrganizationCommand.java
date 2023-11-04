@@ -12,8 +12,6 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
-import seedu.address.model.contact.Position;
-import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
@@ -32,9 +30,7 @@ public class AddOrganizationCommand extends AddCommand {
             Email email,
             Url url,
             Address address,
-            Set<Tag> tags,
-            Status status,
-            Position position
+            Set<Tag> tags
     ) {
         super(name, id, phone, email, url, address, tags);
     }
@@ -46,7 +42,7 @@ public class AddOrganizationCommand extends AddCommand {
 
     @Override
     protected Organization createContact() {
-        return new Organization(name, id, phone, email, url, address, tags, null, null);
+        return new Organization(name, id, phone, email, url, address, tags);
     }
 
     @Override

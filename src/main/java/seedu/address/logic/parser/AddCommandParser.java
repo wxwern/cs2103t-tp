@@ -104,6 +104,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 argMultimap.getValue(FLAG_URL), ParserUtil::parseUrl);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(FLAG_TAG));
 
-        return new AddOrganizationCommand(name, id, phone, email, url, address, tagList, null, null);
+        return new AddOrganizationCommand(name, id, phone, email, url, address, tagList);
     }
 }

@@ -44,9 +44,7 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
-import seedu.address.model.contact.Position;
 import seedu.address.model.contact.Recruiter;
-import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.ApplicationStage;
@@ -256,15 +254,8 @@ public class EditCommand extends Command {
 
         // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
-            Status updatedStatus = editContactDescriptor.getStatus()
-                    .orElse(((Organization) contactToEdit).getStatus().orElse(null));
-
-            Position updatedPosition = editContactDescriptor.getPosition()
-                    .orElse(((Organization) contactToEdit).getPosition().orElse(null));
-
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
-                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition);
-
+                    updatedUrl, updatedAddress, updatedTags);
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()
@@ -341,9 +332,6 @@ public class EditCommand extends Command {
         private Url url;
         private Address address;
         private Set<Tag> tags;
-        private Status status;
-        private Position position;
-
         private Id oid;
 
         public EditContactDescriptor() {}
@@ -360,8 +348,6 @@ public class EditCommand extends Command {
             setUrl(toCopy.url);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
-            setStatus(toCopy.status);
-            setPosition(toCopy.position);
             setOid(toCopy.oid);
         }
 
@@ -369,7 +355,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, id, url, status, position, oid);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, id, url, oid);
         }
 
         public void setName(Name name) {
@@ -424,22 +410,6 @@ public class EditCommand extends Command {
             this.address = address;
         }
 
-        public void setStatus(Status status) {
-            this.status = status;
-        }
-
-        public void setPosition(Position position) {
-            this.position = position;
-        }
-
-        public Optional<Status> getStatus() {
-            return Optional.ofNullable(status);
-        }
-
-        public Optional<Position> getPosition() {
-            return Optional.ofNullable(position);
-        }
-
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
@@ -489,8 +459,6 @@ public class EditCommand extends Command {
                     .add("address", address)
                     .add("tags", tags)
                     .add("url", url)
-                    .add("status", status)
-                    .add("position", position)
                     .toString();
         }
     }

@@ -19,9 +19,7 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
-import seedu.address.model.contact.Position;
 import seedu.address.model.contact.Recruiter;
-import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.JobApplication;
@@ -40,8 +38,6 @@ class JsonAdaptedContact {
     private final String phone;
     private final String email;
     private final String address;
-    private String status;
-    private String position;
     private final String id;
     private final String url;
     private String oid;
@@ -57,7 +53,6 @@ class JsonAdaptedContact {
                               @JsonProperty("name") String name, @JsonProperty("id") String id,
                               @JsonProperty("phone") String phone, @JsonProperty("email") String email,
                               @JsonProperty("url") String url, @JsonProperty("address") String address,
-                              @JsonProperty("status") String status, @JsonProperty("position") String position,
                               @JsonProperty("oid") String oid, @JsonProperty("tags") List<JsonAdaptedTag> tags,
                               @JsonProperty("applications") List<JsonAdaptedApplication> applications) {
         this.type = type;
@@ -67,8 +62,6 @@ class JsonAdaptedContact {
         this.email = email;
         this.url = url;
         this.address = address;
-        this.status = status;
-        this.position = position;
         this.oid = oid;
         if (tags != null) {
             this.tags.addAll(tags);
@@ -83,18 +76,9 @@ class JsonAdaptedContact {
      */
     public JsonAdaptedContact(Contact source) {
         if (source.getType() == Type.ORGANIZATION) {
-            Organization organization = (Organization) source;
-            status = organization.getStatus()
-                    .map(status -> status.applicationStatus)
-                    .orElse(null);
-            position = organization.getPosition()
-                    .map(position -> position.jobPosition)
-                    .orElse(null);
-            oid = "";
+            oid = null;
         } else if (source.getType() == Type.RECRUITER) {
             Recruiter recruiter = (Recruiter) source;
-            status = "";
-            position = "";
             oid = recruiter.getOrganizationId()
                     .map(oid -> oid.value)
                     .orElse(null);
@@ -178,19 +162,9 @@ class JsonAdaptedContact {
 
         switch (modelType) {
         case ORGANIZATION: {
-
-            if (status != null && !Status.isValidStatus(status)) {
-                throw new IllegalValueException(Status.MESSAGE_CONSTRAINTS);
-            }
-            final Status modelStatus = status == null ? new Status() : new Status(status);
-
-            if (position != null && !Position.isValidPosition(position)) {
-                throw new IllegalValueException(Position.MESSAGE_CONSTRAINTS);
-            }
-            final Position modelPosition = position == null ? new Position() : new Position(position);
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition, jobApplications
+                    modelTags, jobApplications
             );
         }
         case RECRUITER: {
