@@ -159,6 +159,29 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Recruiter and Recruiter-Organization Link Feature
+The `Recruiter` class is a `Contact` that can have a link to zero or one `Organization` that exists within the `AddressBook`.
+
+As it extends the `Contact` class, it inherits all the fields present in `Contact` and also accepts an additional `Organization`. The accepted organization represents an immutable link between the recruiter and the given organization.
+
+To represent this relationship within the existing Model, `Contact` was modified to accept another `Contact` which serves as its parent. The parent contact can be retrieved via `Contact#getParent()`.
+
+As this represents a Contact-Contact relationship, `Recruiter` overrides the getter method and cast the parent contact to an `Organization` so that it better represents the Recruiter-Organization relationship.
+
+To store this relationship in a JSON format, the unique `Id` of the linked organization is stored as an oid attribute on the recruiter. Hence, when the application is launched again, the `oid` is used to identify the organization in the `AddressBook`. This means that all organizations must be parsed and added to the `AddressBook` before `Storage` parses the JSON data for the recruiters. Thus, each time `AddressBook` is written to storage, it is sorted, placing all organizations before recruiters. 
+
+Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
+
+Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization with the `Id` that has a value of "alex_yeoh" and no recruiters.
+
+Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. The add command parses the `--rec` flag and knows the user wishes to create a recruiter. It also parses "alex_yeoh" as the `Id of the organization the recruiter will be linked to.
+
+The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id` "alex_yeoh" and pass it into the new `Recruiter` that will be added to the AddressBook
+
+Once done, the UI will display the link as a single line: `from organization (alex_yeoh)`
+
+On the other hand, the Organization class can have links to multiple Recruiters. Hence, a single parent Contact can have multiple children contacts.
+
 ### Command Autocompletion
 
 #### Overview
