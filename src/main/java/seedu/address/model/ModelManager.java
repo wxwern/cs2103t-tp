@@ -235,7 +235,6 @@ public class ModelManager implements Model {
 
     @Override
     public void updateSortedContactList(Comparator<Contact> comparator) {
-        requireNonNull(comparator);
         this.sortedContacts.setComparator(comparator);
     }
 
