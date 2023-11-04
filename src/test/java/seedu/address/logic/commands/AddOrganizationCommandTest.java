@@ -25,8 +25,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 NUS.getPhone().orElse(null), NUS.getEmail().orElse(null),
                 NUS.getUrl().orElse(null), NUS.getAddress().orElse(null),
                 NUS.getTags(),
-                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null),
-                NUS.getRecruiterIds()));
+                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null)));
 
         // null id field
         assertThrows(NullPointerException.class, () -> new AddOrganizationCommand(
@@ -34,8 +33,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 NUS.getPhone().orElse(null), NUS.getEmail().orElse(null),
                 NUS.getUrl().orElse(null), NUS.getAddress().orElse(null),
                 NUS.getTags(),
-                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null),
-                NUS.getRecruiterIds()));
+                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null)));
 
         // null tags fields
         assertThrows(NullPointerException.class, () -> new AddOrganizationCommand(
@@ -43,8 +41,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 NUS.getPhone().orElse(null), NUS.getEmail().orElse(null),
                 NUS.getUrl().orElse(null), NUS.getAddress().orElse(null),
                 null,
-                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null),
-                NUS.getRecruiterIds()));
+                NUS.getStatus().orElse(null), NUS.getPosition().orElse(null)));
     }
 
     @Test
@@ -61,8 +58,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 validOrganization.getAddress().orElse(null),
                 validOrganization.getTags(),
                 validOrganization.getStatus().orElse(null),
-                validOrganization.getPosition().orElse(null),
-                validOrganization.getRecruiterIds()
+                validOrganization.getPosition().orElse(null)
         );
 
         CommandResult commandResult = addCommand.execute(modelStub);
@@ -85,8 +81,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 validOrganization.getAddress().orElse(null),
                 validOrganization.getTags(),
                 validOrganization.getStatus().orElse(null),
-                validOrganization.getPosition().orElse(null),
-                validOrganization.getRecruiterIds()
+                validOrganization.getPosition().orElse(null)
         );
         ModelStub modelStub = new ModelStubWithContact(validOrganization);
 
@@ -107,8 +102,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 nus.getAddress().orElse(null),
                 nus.getTags(),
                 nus.getStatus().orElse(null),
-                nus.getPosition().orElse(null),
-                nus.getRecruiterIds()
+                nus.getPosition().orElse(null)
         );
         AddOrganizationCommand addNtuCommand = new AddOrganizationCommand(
                 ntu.getName(),
@@ -119,8 +113,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 ntu.getAddress().orElse(null),
                 ntu.getTags(),
                 ntu.getStatus().orElse(null),
-                ntu.getPosition().orElse(null),
-                ntu.getRecruiterIds()
+                ntu.getPosition().orElse(null)
         );
 
         // same object -> returns true
@@ -136,8 +129,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 nus.getAddress().orElse(null),
                 nus.getTags(),
                 nus.getStatus().orElse(null),
-                nus.getPosition().orElse(null),
-                nus.getRecruiterIds()
+                nus.getPosition().orElse(null)
         );
         assertTrue(addNusCommand.equals(addNusCommandCopy));
 
@@ -162,8 +154,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 NUS.getAddress().orElse(null),
                 NUS.getTags(),
                 NUS.getStatus().orElse(null),
-                NUS.getPosition().orElse(null),
-                NUS.getRecruiterIds()
+                NUS.getPosition().orElse(null)
         );
         String expected = AddOrganizationCommand.class.getCanonicalName()
                 + "{name=" + NUS.getName()
@@ -172,8 +163,7 @@ public class AddOrganizationCommandTest extends AddCommandTest {
                 + ", email=" + NUS.getEmail().orElse(null)
                 + ", url=" + NUS.getUrl().orElse(null)
                 + ", address=" + NUS.getAddress().orElse(null)
-                + ", tags=" + NUS.getTags()
-                + ", rids=" + NUS.getRecruiterIds() + "}";
+                + ", tags=" + NUS.getTags() + "}";
         assertEquals(expected, addCommand.toString());
     }
 }

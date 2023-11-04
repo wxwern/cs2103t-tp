@@ -52,10 +52,6 @@ public class JsonAdaptedContactTest {
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 
-    private static final List<JsonAdaptedId> VALID_RIDS = NUS.getRecruiterIds().stream()
-            .map(JsonAdaptedId::new)
-            .collect(Collectors.toList());
-
     private static final Organization TEST_ORGANIZATION = NUS;
     private static final Recruiter TEST_RECRUITER = RYAN;
 

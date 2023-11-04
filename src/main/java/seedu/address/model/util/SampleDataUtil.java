@@ -32,7 +32,7 @@ public class SampleDataUtil {
                 new Name("Alex Yeoh Inc"),
                 new Id("alex_yeoh_inc"), new Phone("87438807"),
                 new Email("contact@alexyeoh.example.com"), new Url("alexyeoh.example.com"),
-                null, getTagSet("parttime"), null, null, Set.of()
+                null, getTagSet("parttime"), null, null
         );
 
         Organization google = new Organization(
@@ -42,14 +42,14 @@ public class SampleDataUtil {
                         + "Mapletree Business City, "
                         + "Singapore 117371"),
                 getTagSet("bigtech", "internship", "competitive"),
-                null, null, Set.of()
+                null, null
         );
 
         Organization jobSeekerPlus = new Organization(
                 new Name("Job Seeker Plus"), new Id("job_seeker_plus"), new Phone("93210283"),
                 new Email("jobseekerplus@example.com"), null,
                 new Address("Blk 16 Real Street 128, #08-04"),
-                getTagSet("startup", "internship"), null, null, Set.of()
+                getTagSet("startup", "internship"), null, null
         );
 
         alexYeohInc.addJobApplication(new JobApplication(alexYeohInc, new JobTitle("AI Engineer"),

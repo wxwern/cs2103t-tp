@@ -22,8 +22,6 @@ import seedu.address.model.tag.Tag;
  */
 public class AddOrganizationCommand extends AddCommand {
 
-    protected final Set<Id> rids;
-
     /**
      * Creates an AddCommand to add a {@code Organization} to the address book with the given parameters.
      */
@@ -36,11 +34,9 @@ public class AddOrganizationCommand extends AddCommand {
             Address address,
             Set<Tag> tags,
             Status status,
-            Position position,
-            Set<Id> rids
+            Position position
     ) {
         super(name, id, phone, email, url, address, tags);
-        this.rids = rids;
     }
 
     @Override
@@ -50,7 +46,7 @@ public class AddOrganizationCommand extends AddCommand {
 
     @Override
     protected Organization createContact() {
-        return new Organization(name, id, phone, email, url, address, tags, null, null, rids);
+        return new Organization(name, id, phone, email, url, address, tags, null, null);
     }
 
     @Override
@@ -71,8 +67,7 @@ public class AddOrganizationCommand extends AddCommand {
                 && Objects.equals(email, otherAddCommand.email)
                 && Objects.equals(address, otherAddCommand.address)
                 && Objects.equals(url, otherAddCommand.url)
-                && tags.equals(otherAddCommand.tags)
-                && Objects.equals(rids, otherAddCommand.rids);
+                && tags.equals(otherAddCommand.tags);
     }
 
     @Override
@@ -84,7 +79,6 @@ public class AddOrganizationCommand extends AddCommand {
                 .add("email", email)
                 .add("url", url)
                 .add("address", address)
-                .add("tags", tags)
-                .add("rids", rids);
+                .add("tags", tags);
     }
 }

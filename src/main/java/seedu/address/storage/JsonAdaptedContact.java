@@ -178,7 +178,6 @@ class JsonAdaptedContact {
 
         switch (modelType) {
         case ORGANIZATION: {
-            final Set<Id> modelRids = new HashSet<>();
 
             if (status != null && !Status.isValidStatus(status)) {
                 throw new IllegalValueException(Status.MESSAGE_CONSTRAINTS);
@@ -191,7 +190,7 @@ class JsonAdaptedContact {
             final Position modelPosition = position == null ? new Position() : new Position(position);
             return new Organization(
                     modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, modelStatus, modelPosition, modelRids, jobApplications
+                    modelTags, modelStatus, modelPosition, jobApplications
             );
         }
         case RECRUITER: {

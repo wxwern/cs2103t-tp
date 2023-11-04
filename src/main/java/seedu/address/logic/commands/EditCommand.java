@@ -263,7 +263,7 @@ public class EditCommand extends Command {
                     .orElse(((Organization) contactToEdit).getPosition().orElse(null));
 
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
-                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition);
 
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
