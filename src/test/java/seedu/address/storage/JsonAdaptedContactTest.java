@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedContact.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.BENSON;
 import static seedu.address.testutil.TypicalContacts.NUS;
 import static seedu.address.testutil.TypicalContacts.RYAN;
 
@@ -38,14 +37,14 @@ public class JsonAdaptedContactTest {
 
     private static final String VALID_TYPE_ORG = Type.ORGANIZATION.toString();
     private static final String VALID_TYPE_REC = Type.RECRUITER.toString();
-    private static final String VALID_NAME = BENSON.getName().toString();
+    private static final String VALID_NAME = NUS.getName().toString();
     private static final String VALID_ID = "f8a36caf-6d42-4fd2-a017-7f6a92fa3155";
-    private static final String VALID_PHONE = BENSON.getPhone().get().value;
-    private static final String VALID_EMAIL = BENSON.getEmail().get().value;
-    private static final String VALID_URL = BENSON.getUrl().get().value;
-    private static final String VALID_ADDRESS = BENSON.getAddress().get().value;
+    private static final String VALID_PHONE = NUS.getPhone().get().value;
+    private static final String VALID_EMAIL = NUS.getEmail().get().value;
+    private static final String VALID_URL = NUS.getUrl().get().value;
+    private static final String VALID_ADDRESS = NUS.getAddress().get().value;
     private static final String VALID_OID = NUS.getId().value;
-    private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
+    private static final List<JsonAdaptedTag> VALID_TAGS = NUS.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 

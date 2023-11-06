@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
 
 /**
@@ -59,16 +58,7 @@ public class OrganizationBuilder extends ContactBuilder {
 
     @Override
     public Organization build() {
-        Contact contact = super.build();
-        return new Organization(
-                contact.getName(),
-                contact.getId(),
-                contact.getPhone().orElse(null),
-                contact.getEmail().orElse(null),
-                contact.getUrl().orElse(null),
-                contact.getAddress().orElse(null),
-                contact.getTags()
-        );
+        return new Organization(name, id, phone, email, url, address, tags);
     }
 
 }

@@ -12,8 +12,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.AMY;
 import static seedu.address.testutil.TypicalContacts.NTU;
+import static seedu.address.testutil.TypicalContacts.RACHEL;
 import static seedu.address.testutil.TypicalContacts.RYAN;
 
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ class RecruiterTest {
         assertFalse(RYAN.equals(5));
 
         // different contact -> returns false
-        assertFalse(RYAN.equals(AMY));
+        assertFalse(RYAN.equals(RACHEL));
 
         // different name -> returns false
         Contact editedRyan = new RecruiterBuilder(RYAN).withName(VALID_NAME_AMY).build();

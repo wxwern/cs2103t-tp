@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.ALICE;
+import static seedu.address.testutil.TypicalContacts.NUS;
 import static seedu.address.testutil.TypicalContacts.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -20,8 +20,9 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.exceptions.DuplicatePersonException;
-import seedu.address.testutil.ContactBuilder;
+import seedu.address.testutil.OrganizationBuilder;
 
 public class AddressBookTest {
 
@@ -47,9 +48,9 @@ public class AddressBookTest {
     @Test
     public void resetData_withDuplicateContacts_throwsDuplicateContactException() {
         // Two contacts with the same identity fields
-        Contact editedAlice = new ContactBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
-        List<Contact> newContacts = Arrays.asList(ALICE, editedAlice);
+        Organization editedNus = new OrganizationBuilder(NUS).withAddress(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
+        List<Contact> newContacts = Arrays.asList(NUS, editedNus);
         AddressBookStub newData = new AddressBookStub(newContacts);
 
         assertThrows(DuplicatePersonException.class, () -> addressBook.resetData(newData));
@@ -62,28 +63,28 @@ public class AddressBookTest {
 
     @Test
     public void hasContact_contactNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasContact(ALICE));
+        assertFalse(addressBook.hasContact(NUS));
     }
 
     @Test
     public void hasContact_contactInAddressBook_returnsTrue() {
-        addressBook.addContact(ALICE);
-        assertTrue(addressBook.hasContact(ALICE));
+        addressBook.addContact(NUS);
+        assertTrue(addressBook.hasContact(NUS));
     }
 
     @Test
     public void hasContact_contactWithSameIdInAddressBook_returnsTrue() {
-        addressBook.addContact(ALICE);
-        Contact editedAlice = new ContactBuilder(ALICE).withAddress(VALID_ADDRESS_BOB)
+        addressBook.addContact(NUS);
+        Organization editedNus = new OrganizationBuilder(NUS).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(addressBook.hasContact(editedAlice));
+        assertTrue(addressBook.hasContact(editedNus));
     }
 
     @Test
     public void hasContact_contactWithDifferentIdInAddressBook_returnsFalse() {
-        addressBook.addContact(ALICE);
-        Contact editedAlice = new ContactBuilder(ALICE).withId(VALID_ID_BOB).build();
-        assertFalse(addressBook.hasContact(editedAlice));
+        addressBook.addContact(NUS);
+        Organization editedNus = new OrganizationBuilder(NUS).withId(VALID_ID_BOB).build();
+        assertFalse(addressBook.hasContact(editedNus));
     }
 
     @Test
