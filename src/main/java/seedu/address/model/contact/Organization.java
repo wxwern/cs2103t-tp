@@ -1,13 +1,16 @@
 package seedu.address.model.contact;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import seedu.address.commons.exceptions.IllegalOperationException;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.tag.Tag;
@@ -96,10 +99,13 @@ public class Organization extends Contact {
     /**
      * Replaces the old job application in the list with the new one.
      */
-    public void replaceJobApplication(JobApplication oldApplication, JobApplication newApplication) {
+    public void replaceJobApplication(JobApplication oldApplication, JobApplication newApplication) throws
+            IllegalOperationException {
         assert newApplication.getOrganizationId().equals(this.getId());
         assert newApplication.getOrganizationId().equals(oldApplication.getOrganizationId());
-
+        if (hasApplicationWithSameNameWithExclusion(newApplication, oldApplication)) {
+            throw new IllegalOperationException("Job Application with same name found. Set a different name");
+        }
         this.jobApplications.remove(oldApplication);
         this.jobApplications.add(newApplication);
     }
@@ -151,6 +157,21 @@ public class Organization extends Contact {
     @Override
     public ToStringBuilder toStringBuilder() {
         return super.toStringBuilder();
+    }
+
+    private boolean hasApplicationWithSameNameWithExclusion(JobApplication application,
+                                                    JobApplication... excludedApplications) {
+        List<JobApplication> applicationsExcludedList =
+                Arrays.stream(excludedApplications).collect(Collectors.toList());
+        for (JobApplication a: jobApplications) {
+            if (applicationsExcludedList.contains(a)) {
+                continue;
+            }
+            if (application.getJobTitle().equals(a.getJobTitle())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

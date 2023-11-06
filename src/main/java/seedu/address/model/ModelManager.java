@@ -18,6 +18,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalOperationException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
@@ -184,14 +185,19 @@ public class ModelManager implements Model {
     public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
         JobApplication oldApplication = jobApplicationList.get(index.getZeroBased());
 
-        jobApplicationList.set(index.getZeroBased(), newApplication);
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
-            throw new IllegalValueException("Id field is invalid!");
+            throw new IllegalValueException("Id field is invalid!"); // TODO: Should I change this?
         }
-        Organization organization = (Organization) contact;
-        organization.replaceJobApplication(oldApplication, newApplication);
 
+        Organization organization = (Organization) contact;
+        try {
+            organization.replaceJobApplication(oldApplication, newApplication);
+        } catch (IllegalOperationException e) {
+            throw new IllegalValueException(e.getMessage());
+        }
+
+        jobApplicationList.set(index.getZeroBased(), newApplication);
 
     }
 
