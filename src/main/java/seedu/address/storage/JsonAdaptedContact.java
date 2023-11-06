@@ -190,8 +190,7 @@ class JsonAdaptedContact {
             );
         }
         default:
-            return new Contact(modelName, modelId, modelPhone, modelEmail, modelUrl, modelAddress,
-                    modelTags, null);
+            throw new IllegalValueException(Contact.MESSAGE_MISSING_TYPE);
         }
     }
 
