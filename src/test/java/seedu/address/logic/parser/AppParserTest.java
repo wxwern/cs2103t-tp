@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -46,10 +45,7 @@ public class AppParserTest {
                 contact.getEmail().orElse(null),
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
-                contact.getTags(),
-                null,
-                null,
-                Set.of()
+                contact.getTags()
         );
         assertEquals(addCommand, parsedAddCommand);
     }

@@ -8,8 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -41,7 +39,6 @@ public class OrganizationTest {
         Organization editedNus = new OrganizationBuilder(NUS).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withUrl(VALID_URL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withStatus(VALID_STATUS_BOB).withPosition(VALID_POSITION_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(NUS.isSameContact(editedNus));
 

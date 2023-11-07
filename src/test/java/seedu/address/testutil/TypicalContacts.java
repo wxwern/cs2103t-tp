@@ -84,8 +84,6 @@ public class TypicalContacts {
             .withUrl("www.nus.edu.sg")
             .withAddress("Computing 1, 13 Computing Drive")
             .withTags("computing", "worldClass")
-            .withStatus("Applied")
-            .withPosition("Research Assistant")
             .build();
 
     public static final Organization NTU = new OrganizationBuilder()
@@ -96,8 +94,6 @@ public class TypicalContacts {
             .withUrl("www.ntu.edu.sg")
             .withAddress("Block N4 #02a-32, Nanyang Avenue")
             .withTags("computing", "researchOriented")
-            .withStatus("Rejected")
-            .withPosition("Teaching Assistant")
             .build();
 
     public static final Organization SMU = new OrganizationBuilder()
@@ -107,8 +103,6 @@ public class TypicalContacts {
             .withEmail("scis_ugrad@smu.edu.sg")
             .withUrl("www.smu.edu.sg")
             .withAddress("80 Stamford Rd")
-            .withStatus("Interested")
-            .withPosition("Web Developer")
             .build();
 
     public static final Recruiter RYAN = new RecruiterBuilder()

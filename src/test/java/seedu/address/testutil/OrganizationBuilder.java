@@ -1,26 +1,18 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.address.model.contact.Contact;
-import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Organization;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Organization objects.
  */
 public class OrganizationBuilder extends ContactBuilder {
-    private Set<Id> rids;
-
 
     /**
      * Creates a {@code OrganizationBuilder} with the default details.
      */
     public OrganizationBuilder() {
         super();
-        rids = new HashSet<>();
     }
 
     /**
@@ -28,7 +20,6 @@ public class OrganizationBuilder extends ContactBuilder {
      */
     public OrganizationBuilder(Organization organizationToCopy) {
         super(organizationToCopy);
-        rids = organizationToCopy.getRecruiterIds();
     }
 
     @Override
@@ -66,33 +57,6 @@ public class OrganizationBuilder extends ContactBuilder {
         return (OrganizationBuilder) super.withUrl(url);
     }
 
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Contact} that we are building.
-     */
-    public OrganizationBuilder withRids(String ... rids) {
-        this.rids = SampleDataUtil.getIdSet(rids);
-        return this;
-    }
-
-
-    /**
-     * Sets the {@code Status} of the {@code Contact} that we are building.
-     */
-    @Deprecated
-    public OrganizationBuilder withStatus(String status) {
-        // TODO: Remove entirely
-        return this;
-    }
-
-    /**
-     * Sets the {@code Position} of the {@code Contact} that we are building.
-     */
-    @Deprecated
-    public OrganizationBuilder withPosition(String position) {
-        // TODO: Remove entirely
-        return this;
-    }
-
     @Override
     public Organization build() {
         Contact contact = super.build();
@@ -103,10 +67,7 @@ public class OrganizationBuilder extends ContactBuilder {
                 contact.getEmail().orElse(null),
                 contact.getUrl().orElse(null),
                 contact.getAddress().orElse(null),
-                contact.getTags(),
-                null,
-                null,
-                rids
+                contact.getTags()
         );
     }
 

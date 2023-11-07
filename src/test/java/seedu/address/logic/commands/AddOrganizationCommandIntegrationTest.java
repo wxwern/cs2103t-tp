@@ -40,10 +40,7 @@ public class AddOrganizationCommandIntegrationTest {
                 validOrganization.getEmail().orElse(null),
                 validOrganization.getUrl().orElse(null),
                 validOrganization.getAddress().orElse(null),
-                validOrganization.getTags(),
-                validOrganization.getStatus().orElse(null),
-                validOrganization.getPosition().orElse(null),
-                validOrganization.getRecruiterIds()
+                validOrganization.getTags()
         );
 
         assertCommandSuccess(addCommand, model,
@@ -66,10 +63,7 @@ public class AddOrganizationCommandIntegrationTest {
                 duplicateOrganization.getEmail().orElse(null),
                 duplicateOrganization.getUrl().orElse(null),
                 duplicateOrganization.getAddress().orElse(null),
-                duplicateOrganization.getTags(),
-                duplicateOrganization.getStatus().orElse(null),
-                duplicateOrganization.getPosition().orElse(null),
-                duplicateOrganization.getRecruiterIds()
+                duplicateOrganization.getTags()
         );
         assertCommandFailure(addCommand, model, AddOrganizationCommand.MESSAGE_DUPLICATE_CONTACT);
     }
