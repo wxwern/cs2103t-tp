@@ -296,7 +296,7 @@ public class ModelManager implements Model {
         }
     }
 
-    public List<JobApplication> extractApplicationsFromContacts(List<Contact> contacts) {
+    private List<JobApplication> extractApplicationsFromContacts(List<Contact> contacts) {
         return contacts.stream()
                 .filter(c -> c.getType() == Type.ORGANIZATION)
                 .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
