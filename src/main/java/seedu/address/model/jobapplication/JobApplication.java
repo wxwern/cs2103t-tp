@@ -199,6 +199,14 @@ public class JobApplication {
         return orgName;
     }
 
+    /**
+     * Gives a new job application given change in company details.
+     */
+    public JobApplication changeCompanyDetails(Name orgName, Id oid) {
+        return new JobApplication(oid, orgName, this.jobTitle, this.jobDescription.orElse(null), this.deadline,
+                this.status, this.applicationStage, new LastUpdatedTime());
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(

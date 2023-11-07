@@ -54,7 +54,14 @@ public class Organization extends Contact {
             Set<Id> rids, List<JobApplication> jobApplications
     ) {
         super(name, id, phone, email, url, address, tags, null);
-        this.jobApplications.addAll(jobApplications);
+
+        // Ensure that the new job applications are modified correctly.
+        List<JobApplication> newApplications = jobApplications
+                .stream()
+                .map(a -> a.changeCompanyDetails(name, id))
+                .collect(Collectors.toList());
+
+        this.jobApplications.addAll(newApplications);
         // Todo: Likely to deprecate rids completely
         // this.rids.addAll(rids);
     }
