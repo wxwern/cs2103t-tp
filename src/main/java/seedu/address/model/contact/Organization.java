@@ -175,10 +175,10 @@ public class Organization extends Contact {
                 continue;
             }
             if (application.getJobTitle().equals(a.getJobTitle())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 }
