@@ -15,8 +15,6 @@ import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Phone;
-import seedu.address.model.contact.Position;
-import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.ApplicationStage;
 import seedu.address.model.jobapplication.Deadline;
@@ -92,36 +90,6 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
-    }
-
-    /**
-     * Parses a {@code String status} into a {@code Status}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code status} is invalid.
-     */
-    public static Status parseStatus(String status) throws ParseException {
-        requireNonNull(status);
-        String trimmedStatus = status.trim();
-        if (!Status.isValidStatus(status)) {
-            throw new ParseException(Status.MESSAGE_CONSTRAINTS);
-        }
-        return new Status(trimmedStatus);
-    }
-
-    /**
-     * Parses a {@code String position} into a {@code Position}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code position} is invalid.
-     */
-    public static Position parsePosition(String position) throws ParseException {
-        requireNonNull(position);
-        String trimmedPosition = position.trim();
-        if (!Position.isValidPosition(position)) {
-            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
-        }
-        return new Position(trimmedPosition);
     }
 
     /**
