@@ -119,9 +119,6 @@ class JsonAdaptedContact {
             jobApplications.add(application.toModelType(id, name));
         }
 
-        // Type#fromString implicitly returns UNKNOWN if type is null. May change if UNKNOWN is removed in the future.
-        final Type modelType = Type.fromString(type);
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -159,6 +156,11 @@ class JsonAdaptedContact {
         final Address modelAddress = address == null ? null : new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
+
+        if (type == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
+        }
+        final Type modelType = Type.fromString(type);
 
         switch (modelType) {
         case ORGANIZATION: {
