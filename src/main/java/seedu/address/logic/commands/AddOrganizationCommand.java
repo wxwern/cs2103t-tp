@@ -12,8 +12,6 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
-import seedu.address.model.contact.Position;
-import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Url;
 import seedu.address.model.tag.Tag;
 
@@ -21,8 +19,6 @@ import seedu.address.model.tag.Tag;
  * Adds an organization to the address book.
  */
 public class AddOrganizationCommand extends AddCommand {
-
-    protected final Set<Id> rids;
 
     /**
      * Creates an AddCommand to add a {@code Organization} to the address book with the given parameters.
@@ -34,13 +30,9 @@ public class AddOrganizationCommand extends AddCommand {
             Email email,
             Url url,
             Address address,
-            Set<Tag> tags,
-            Status status,
-            Position position,
-            Set<Id> rids
+            Set<Tag> tags
     ) {
         super(name, id, phone, email, url, address, tags);
-        this.rids = rids;
     }
 
     @Override
@@ -50,7 +42,7 @@ public class AddOrganizationCommand extends AddCommand {
 
     @Override
     protected Organization createContact() {
-        return new Organization(name, id, phone, email, url, address, tags, null, null, rids);
+        return new Organization(name, id, phone, email, url, address, tags);
     }
 
     @Override
@@ -71,8 +63,7 @@ public class AddOrganizationCommand extends AddCommand {
                 && Objects.equals(email, otherAddCommand.email)
                 && Objects.equals(address, otherAddCommand.address)
                 && Objects.equals(url, otherAddCommand.url)
-                && tags.equals(otherAddCommand.tags)
-                && Objects.equals(rids, otherAddCommand.rids);
+                && tags.equals(otherAddCommand.tags);
     }
 
     @Override
@@ -84,7 +75,6 @@ public class AddOrganizationCommand extends AddCommand {
                 .add("email", email)
                 .add("url", url)
                 .add("address", address)
-                .add("tags", tags)
-                .add("rids", rids);
+                .add("tags", tags);
     }
 }

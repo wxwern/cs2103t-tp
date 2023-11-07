@@ -10,7 +10,6 @@ import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Name;
-import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Phone;
 import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Type;
@@ -46,14 +45,9 @@ public class EditContactDescriptorBuilder {
         descriptor.setTags(contact.getTags());
 
         if (contact.getType() == Type.ORGANIZATION) {
-            Organization organization = (Organization) contact;
-            descriptor.setStatus(organization.getStatus().orElse(null));
-            descriptor.setPosition(organization.getPosition().orElse(null));
             descriptor.setOid(null);
         } else if (contact.getType() == Type.RECRUITER) {
             Recruiter recruiter = (Recruiter) contact;
-            descriptor.setStatus(null);
-            descriptor.setPosition(null);
             descriptor.setOid(recruiter.getOrganizationId().orElse(null));
         }
     }

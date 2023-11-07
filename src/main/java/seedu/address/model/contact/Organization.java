@@ -2,11 +2,9 @@ package seedu.address.model.contact;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,11 +21,7 @@ import seedu.address.model.tag.Tag;
 public class Organization extends Contact {
     // TODO: Override the getChildren method
 
-
-    private final Set<Id> rids = new HashSet<>();
-
     private final List<JobApplication> jobApplications = new ArrayList<>();
-
 
     /**
      * Name and id fields must be non-null.
@@ -36,10 +30,9 @@ public class Organization extends Contact {
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position,
-            Set<Id> rids
+            Address address, Set<Tag> tags
     ) {
-        this(name, id, phone, email, url, address, tags, status, position, rids, new ArrayList<>());
+        this(name, id, phone, email, url, address, tags, new ArrayList<>());
     }
 
     /**
@@ -50,11 +43,10 @@ public class Organization extends Contact {
      */
     public Organization(
             Name name, Id id, Phone phone, Email email, Url url,
-            Address address, Set<Tag> tags, Status status, Position position,
-            Set<Id> rids, List<JobApplication> jobApplications
+            Address address, Set<Tag> tags, List<JobApplication> jobApplications
     ) {
+        // TODO: Tech debt - undeprecate super
         super(name, id, phone, email, url, address, tags, null);
-
         // Ensure that the new job applications are modified correctly.
         List<JobApplication> newApplications = jobApplications
                 .stream()
@@ -62,23 +54,11 @@ public class Organization extends Contact {
                 .collect(Collectors.toList());
 
         this.jobApplications.addAll(newApplications);
-        // Todo: Likely to deprecate rids completely
-        // this.rids.addAll(rids);
     }
 
     @Override
     public Type getType() {
         return Type.ORGANIZATION;
-    }
-
-    @Deprecated
-    public Optional<Status> getStatus() {
-        return Optional.empty(); // TODO: Remove entirely
-    }
-
-    @Deprecated
-    public Optional<Position> getPosition() {
-        return Optional.empty(); // TODO: Remove entirely
     }
 
     /**
@@ -122,14 +102,6 @@ public class Organization extends Contact {
      */
     public void deleteJobApplication(JobApplication application) {
         this.jobApplications.remove(application);
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Id> getRecruiterIds() {
-        return Collections.unmodifiableSet(rids);
     }
 
     @Override
