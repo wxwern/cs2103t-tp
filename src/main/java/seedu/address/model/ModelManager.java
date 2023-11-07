@@ -292,8 +292,8 @@ public class ModelManager implements Model {
                 if (!newApplication.looseEquals(oldApplication)) {
                     continue;
                 }
-                int index = filteredApplications.indexOf(oldApplication);
-                filteredApplications.set(index, newApplication);
+                int index = jobApplicationList.indexOf(oldApplication);
+                jobApplicationList.set(index, newApplication);
             }
         }
     }

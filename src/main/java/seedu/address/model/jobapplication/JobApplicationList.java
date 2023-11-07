@@ -51,4 +51,11 @@ public class JobApplicationList {
     public JobApplication get(int index) {
         return applications.get(index);
     }
+
+    /**
+     * Gets the index of the application in the list. Returns -1 if not found.
+     */
+    public int indexOf(JobApplication application) {
+        return applications.indexOf(application);
+    }
 }
