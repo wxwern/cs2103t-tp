@@ -38,12 +38,7 @@ public abstract class Contact {
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
      * The other fields can be null.
-     *
-     * <p>
-     * TODO: This should be changed to an abstract class. Do not use directly externally.
-     * </p>
      */
-    @Deprecated
     public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags,
                    Contact parent) {
         requireAllNonNull(name, id, tags);
