@@ -147,6 +147,18 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedContact);
 
         addressBook.setContact(target, editedContact);
+
+        if (target.getType() != Type.ORGANIZATION || editedContact.getType() != Type.ORGANIZATION) {
+            // guard clause
+            return;
+        }
+        if (target.getName().equals(editedContact.getName()) && target.getId().equals(editedContact.getId())) {
+            // guard clause
+            return;
+        }
+
+        updateApplicationNames((Organization) editedContact, (Organization) target);
+
     }
 
     @Override
@@ -269,6 +281,21 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredContacts.equals(otherModelManager.filteredContacts);
+    }
+
+    private void updateApplicationNames(Organization newOrg, Organization oldOrg) {
+        List<JobApplication> oldApplications = List.of(oldOrg.getJobApplications());
+        List<JobApplication> newApplications = List.of(newOrg.getJobApplications());
+
+        for (JobApplication newApplication: newApplications) {
+            for (JobApplication oldApplication: oldApplications) {
+                if (!newApplication.looseEquals(oldApplication)) {
+                    continue;
+                }
+                int index = filteredApplications.indexOf(oldApplication);
+                filteredApplications.set(index, newApplication);
+            }
+        }
     }
 
 }

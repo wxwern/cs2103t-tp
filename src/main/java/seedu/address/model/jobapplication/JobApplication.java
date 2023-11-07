@@ -200,6 +200,16 @@ public class JobApplication {
     }
 
     /**
+     * Checks if the details of the job application is the same excluding org name and id and last updated time.
+     */
+    public boolean looseEquals(JobApplication other) {
+        return this.jobTitle.equals(other.jobTitle)
+                && this.jobDescription.equals(other.jobDescription)
+                && this.applicationStage.equals(other.applicationStage)
+                && this.status.equals(other.status);
+    }
+
+    /**
      * Gives a new job application given change in company details.
      */
     public JobApplication changeCompanyDetails(Name orgName, Id oid) {

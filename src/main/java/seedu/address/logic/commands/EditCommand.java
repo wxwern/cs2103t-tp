@@ -50,6 +50,7 @@ import seedu.address.model.contact.Status;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.tag.Tag;
 
@@ -256,14 +257,17 @@ public class EditCommand extends Command {
 
         // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
+            Organization org = (Organization) contactToEdit;
+
             Status updatedStatus = editContactDescriptor.getStatus()
-                    .orElse(((Organization) contactToEdit).getStatus().orElse(null));
+                    .orElse(org.getStatus().orElse(null));
 
             Position updatedPosition = editContactDescriptor.getPosition()
-                    .orElse(((Organization) contactToEdit).getPosition().orElse(null));
+                    .orElse(org.getPosition().orElse(null));
+            List<JobApplication> applications = Arrays.asList(org.getJobApplications());
 
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
-                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null);
+                    updatedUrl, updatedAddress, updatedTags, updatedStatus, updatedPosition, null, applications);
 
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
