@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Address;
+import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
@@ -64,6 +65,27 @@ public class JsonAdaptedContactTest {
         addressBook.addContact(TEST_ORGANIZATION);
         JsonAdaptedContact organization = new JsonAdaptedContact(TEST_RECRUITER);
         assertEquals(TEST_RECRUITER, organization.toModelType(addressBook));
+    }
+
+    @Test
+    public void toModelType_invalidType_throwsIllegalValueException() {
+        AddressBook addressBook = new AddressBook();
+        JsonAdaptedContact contact = new JsonAdaptedContact(INVALID_TYPE, VALID_NAME, VALID_ID,
+                VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS,
+                VALID_OID, VALID_TAGS, null
+        );
+        String expectedMessage = Contact.MESSAGE_MISSING_TYPE;
+        assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
+    }
+
+    @Test
+    public void toModelType_nullType_throwsIllegalValueException() {
+        AddressBook addressBook = new AddressBook();
+        JsonAdaptedContact contact = new JsonAdaptedContact(null, VALID_NAME, VALID_ID,
+                VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_OID, VALID_TAGS, null
+        );
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
     }
 
     @Test
