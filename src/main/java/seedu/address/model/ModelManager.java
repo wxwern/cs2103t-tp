@@ -57,11 +57,8 @@ public class ModelManager implements Model {
         this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
         this.filteredContacts = new FilteredList<>(sortedContacts);
         this.displayedContacts = filteredContacts;
-        ObservableList<JobApplication> applicationList = FXCollections.observableArrayList(filteredContacts.stream()
-                .filter(c -> c.getType() == Type.ORGANIZATION)
-                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
-                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
-                .collect(Collectors.toList()));
+        ObservableList<JobApplication> applicationList =
+                FXCollections.observableArrayList(extractApplicationsFromContacts(filteredContacts));
         this.jobApplicationList = new JobApplicationList(applicationList);
         this.sortedApplications = new SortedList<>(applicationList);
         this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
@@ -112,6 +109,7 @@ public class ModelManager implements Model {
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
         this.addressBook.resetData(addressBook);
+        this.jobApplicationList.setAll(extractApplicationsFromContacts(addressBook.getContactList()));
     }
 
     @Override
@@ -296,6 +294,14 @@ public class ModelManager implements Model {
                 jobApplicationList.set(index, newApplication);
             }
         }
+    }
+
+    public List<JobApplication> extractApplicationsFromContacts(List<Contact> contacts) {
+        return contacts.stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
+                .collect(Collectors.toList());
     }
 
 }

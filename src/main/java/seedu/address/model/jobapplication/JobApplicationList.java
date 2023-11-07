@@ -1,6 +1,8 @@
 package seedu.address.model.jobapplication;
 
 
+import java.util.Collection;
+
 import javafx.collections.ObservableList;
 
 /**
@@ -57,5 +59,12 @@ public class JobApplicationList {
      */
     public int indexOf(JobApplication application) {
         return applications.indexOf(application);
+    }
+
+    /**
+     * Replaces all the applications in the list with the new applications
+     */
+    public void setAll(Collection<JobApplication> applications) {
+        this.applications.setAll(applications);
     }
 }
