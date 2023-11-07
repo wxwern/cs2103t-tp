@@ -15,7 +15,6 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -40,7 +39,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds a contact to the address book.
  */
-public class AddCommand extends Command {
+public abstract class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
@@ -140,12 +139,7 @@ public class AddCommand extends Command {
 
     /**
      * Creates an AddCommand to add a {@code Contact} to the address book with the given parameters.
-     *
-     * <p>
-     * TODO: This class should be made abstract.
-     * </p>
      */
-    @Deprecated
     public AddCommand(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
         requireAllNonNull(name, id, tags);
         this.name = name;
@@ -172,30 +166,10 @@ public class AddCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getType(), Messages.format(toAdd)));
     }
 
-    protected Contact createContact() {
-        return new Contact(name, id, phone, email, url, address, tags, null);
-    }
+    protected abstract Contact createContact();
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
-            return false;
-        }
-
-        AddCommand otherAddCommand = (AddCommand) other;
-        return id.equals(otherAddCommand.id)
-                && name.equals(otherAddCommand.name)
-                && Objects.equals(phone, otherAddCommand.phone)
-                && Objects.equals(email, otherAddCommand.email)
-                && Objects.equals(address, otherAddCommand.address)
-                && Objects.equals(url, otherAddCommand.url)
-                && tags.equals(otherAddCommand.tags);
-    }
+    public abstract boolean equals(Object other);
 
     protected ToStringBuilder toStringBuilder() {
         return new ToStringBuilder(this)

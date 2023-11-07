@@ -24,11 +24,11 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.NameContainsKeywordsPredicate;
-import seedu.address.testutil.ContactBuilder;
+import seedu.address.model.contact.Organization;
 import seedu.address.testutil.ContactUtil;
 import seedu.address.testutil.EditContactDescriptorBuilder;
+import seedu.address.testutil.OrganizationBuilder;
 
 public class AppParserTest {
 
@@ -36,16 +36,16 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_addOrganization() throws Exception {
-        Contact contact = new ContactBuilder().build();
-        var parsedAddCommand = (AddOrganizationCommand) parser.parseCommand(ContactUtil.getAddOrgCommand(contact));
+        Organization organization = new OrganizationBuilder().build();
+        var parsedAddCommand = (AddOrganizationCommand) parser.parseCommand(ContactUtil.getAddOrgCommand(organization));
         AddOrganizationCommand addCommand = new AddOrganizationCommand(
-                contact.getName(),
-                contact.getId(),
-                contact.getPhone().orElse(null),
-                contact.getEmail().orElse(null),
-                contact.getUrl().orElse(null),
-                contact.getAddress().orElse(null),
-                contact.getTags()
+                organization.getName(),
+                organization.getId(),
+                organization.getPhone().orElse(null),
+                organization.getEmail().orElse(null),
+                organization.getUrl().orElse(null),
+                organization.getAddress().orElse(null),
+                organization.getTags()
         );
         assertEquals(addCommand, parsedAddCommand);
     }
@@ -65,8 +65,8 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Contact contact = new ContactBuilder().build();
-        EditContactDescriptor descriptor = new EditContactDescriptorBuilder(contact).build();
+        Organization organization = new OrganizationBuilder().build();
+        EditContactDescriptor descriptor = new EditContactDescriptorBuilder(organization).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_CONTACT.getOneBased() + " " + ContactUtil.getEditContactDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_CONTACT, descriptor), command);
