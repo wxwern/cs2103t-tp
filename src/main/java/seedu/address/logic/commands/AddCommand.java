@@ -139,12 +139,7 @@ public abstract class AddCommand extends Command {
 
     /**
      * Creates an AddCommand to add a {@code Contact} to the address book with the given parameters.
-     *
-     * <p>
-     * TODO: This class should be made abstract.
-     * </p>
      */
-    @Deprecated
     public AddCommand(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags) {
         requireAllNonNull(name, id, tags);
         this.name = name;
