@@ -11,51 +11,73 @@
     width: 21px
 }
 
-.beginner-difficulty {
-    background-color: #00FF00;
-    border-radius: 5px;
-    font-family: verdana
+img.emoji {
+    height: 12px;
+    width: 12px;
+    vertical-align: unset;
 }
 
-.intermediate-difficulty {
-    background-color: #FFA500;
-    border-radius: 5px;
-    font-family: verdana
+.beginner-difficulty, .intermediate-difficulty, .expert-difficulty, .learning-outcome,
+.information, .alert-bubble, .warning-bubble,
+/* TODO: Classes above are left here for migration compatibility - should be removed. */
+.pill {
+
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 2px 12px;
+    margin: 0 2px;
+
+    font-family: verdana;
+    font-size: 75%;
+
+    img.emoji {
+        height: 12px;
+        width: 12px;
+        vertical-align: unset;
+        margin: -2px 0;
+    }
+
+    .beginner-difficulty {
+        background-color: #00cc0022;
+        border-color: #00cc00;
+        color: #008800;
+    }
+
+    .intermediate-difficulty {
+        background-color: #ffa50022;
+        border-color: #cc8800;
+        color: #aa5500;
+    }
+
+    .expert-difficulty {
+        background-color: #ff000022;
+        border-color: #cc0000;
+        color: #cc0000;
+    }
+
+    .learning-outcome {
+        background-color: #ffeb99;
+    }
+
+    .information {
+        background-color: #33aaff22;
+        color: #3377aa;
+    }
+
+    .alert-bubble {
+        background-color: #cc3333;
+        color: white;
+    }
+
+    .warning-bubble {
+        background-color: #ffcc99;
+    }
+
 }
 
-.expert-difficulty {
-    background-color: #FF0000;
-    border-radius: 5px;
-    font-family: verdana
-}
-
-.learning-outcome {
-    background-color: #ffeb99;
-    border-radius: 10px;
-    font-family: verdana
-}
-
-.job-application {
-    background-color: #fff2e6;
-    color: #000000;
-    border-radius: 5px;
-    font-family: sans-serif
-}
-
-.information {
-    background-color: #e6ffff;
-    border-radius: 10px;
-    font-family: verdana
-}
-
-.alert-bubble {
-    background-color: #FF5050;
-    border-radius: 10px;
-    font-family: verdana
-}
-
-.warning-bubble {
-    background-color: #ffeb99;
-    border-radius: 10px;
-    font-family: verdana
+.job-application, /* TODO: legacy data class, to be removed */
+.jobby-data-class {
+    background-color: #ff886633;
+    border-radius: 4px;
+    padding: 0 4px;
 }
