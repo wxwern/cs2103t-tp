@@ -46,25 +46,25 @@ _Explanation of how Jobby's commands are structured_
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
 ### Apply command - `apply`
-Applies to: <text class="job-application">Job Application</text>
+Applies to: <span class="job-application">Job Application</span>
 
-<text class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</text>
-<text class="intermediate-difficulty">Intermediate</text>
+<span class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</span>
+<span class="intermediate-difficulty">Intermediate</span>
 
-<text class="information">:information_source: Assumes that you have completed the tutorial</text>
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
 
 Required fields:
-* `INDEX/ID` - The index or the id of the <text class="job-application">Organization</text>
+* `INDEX/ID` - The index or the id of the <span class="job-application">Organization</span>
   in the list to be applied to. Must be a valid and existing index or id.
 * `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric.
 
 Optional fields:
-* `DESCRIPTION` - The description of the <text class="job-application">Job Application</text>. If specified, it should not be empty.
-* `DEADLINE` - The deadline of the current stage of the <text class="job-application">Job Application</text>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
-* `APPLICATION STAGE` - The stage of the <text class="job-application">Job Application</text>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
-* `STATUS` - The status of the <text class="job-application">Job Application</text>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
+* `DESCRIPTION` - The description of the <span class="job-application">Job Application</span>. If specified, it should not be empty.
+* `DEADLINE` - The deadline of the current stage of the <span class="job-application">Job Application</span>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
+* `APPLICATION STAGE` - The stage of the <span class="job-application">Job Application</span>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
+* `STATUS` - The status of the <span class="job-application">Job Application</span>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
 
 Examples of valid use of `apply` command:
 * `apply 1 --title SWE` _Given that the first item in the list of contacts is an organization._
