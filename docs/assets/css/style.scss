@@ -37,45 +37,52 @@ img.emoji {
         margin: -2px 0;
     }
 
-    .beginner-difficulty {
+    &.beginner-difficulty, /* legacy */
+    &.beginner {
         background-color: #00cc0022;
         border-color: #00cc00;
         color: #008800;
     }
 
-    .intermediate-difficulty {
+    &.intermediate-difficulty, /* legacy */
+    &.intermediate {
         background-color: #ffa50022;
         border-color: #cc8800;
         color: #aa5500;
     }
 
-    .expert-difficulty {
+    &.expert-difficulty, /* legacy */
+    &.expert {
         background-color: #ff000022;
         border-color: #cc0000;
         color: #cc0000;
     }
 
-    .learning-outcome {
+    &.learning-outcome {
         background-color: #ffeb99;
+        color: #552800;
     }
 
-    .information {
+    &.information {
         background-color: #33aaff22;
         color: #3377aa;
     }
 
-    .alert-bubble {
+    &.alert-bubble, /* legacy */
+    &.danger {
         background-color: #cc3333;
-        color: white;
+        color: #ffffff;
     }
 
-    .warning-bubble {
+    &.warning-bubble, /* legacy */
+    &.warning {
         background-color: #ffcc99;
+        color: #331800;
     }
 
 }
 
-.job-application, /* TODO: legacy data class, to be removed */
+.job-application, /* legacy */
 .jobby-data-class {
     background-color: #ff886633;
     border-radius: 4px;
