@@ -198,7 +198,7 @@ Optional Fields:
 
 * `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="job-application">Recruiter's</text> physical address.
 
-* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag can be any non-empty value. Multiple tags can also be specified.
+* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag consists of only alphanumeric characters. Multiple tags can also be specified.
 
 Examples of valid use of `add --rec` command:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
