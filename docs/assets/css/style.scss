@@ -97,10 +97,12 @@ img.emoji {
 /* Print formatter */
 @media print {
     @page {
-        margin: 2.5cm;
+        margin: 1.5cm;
     }
 
-    h2, h3:not(:first-of-type) {
+    h2,
+    h3:not(h2 + h3, h2 + p + h3, h2 + .h2-summary + h3),
+    h3:not(h2 + p + p + h3, h2 + p + p + p + h3) {
         page-break-before: always;
     }
 
