@@ -29,9 +29,11 @@ INSERT INTRO TO JOBBY HERE
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
-Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's functionalities that you will use on a daily basis. 
-Through an example workflow of Jobby.
+## Starter Guide
+Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's 
+functionalities that you will use on a daily basis. 
+
+This guide will be done in an example workflow that you will likely experience while using Jobby.
 
 > ### You will learn
 > - How to add contact into Jobby
@@ -40,17 +42,20 @@ Through an example workflow of Jobby.
 > - How to delete files in Jobby
 > - And more...
 
+### GUI Legends
+
+
 ### Adding `Contact`
 Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
 
 Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
 
 You can add the `Organization` into Jobby with a simple command: 
-`add --org --name Woogle --id id_001`.
+```add --org --name Woogle```
 
 SCREENSHOT
 
-You can then add the `Recruiter` into Jobby with to tag onto the `Organization: Woogle` by including Woogle's `oid` (Organization Id): 
+You can then add a **recruiter** that's related to the "Woogle" organization like so:: 
 `add --rec --name John --oid id_001`
 
 SCREENSHOT
@@ -139,6 +144,8 @@ Explanation of how Jobby's commands are structured_
 ## Command documentation
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
