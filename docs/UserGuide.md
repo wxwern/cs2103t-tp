@@ -47,7 +47,7 @@ _Explanation of how Jobby's commands are structured_
 
 ### Add command - `add`
 
-Applies to: <text class="job-application">Organization</text> <text class="job-application">Recruiter</text>.
+Applies to: <text class="job-application">Organization</text> <text class="job-application">Recruiter</text>
 
 Format: `add --org/--rec <additional parameters and values...>`
 
@@ -55,7 +55,7 @@ Adds a contact to the address book of the given class type: <text class="job-app
 
 Supplying `--org` adds an <text class="job-application">Organization</text> while supplying `--rec` adds a <text class="job-application">Recruiter</text> to the address book.
 
-Details specifically on organization and recruiter level are specified in the next sections.
+Details specifically on [organization]() and [recruiter]() level are specified in the next sections.
 
 --------------------------------------------------------------------------------------------------------------------
 
