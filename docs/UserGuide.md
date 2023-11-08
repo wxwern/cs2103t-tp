@@ -84,6 +84,13 @@ Examples of invalid use of `add --rec` command:
 * `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
 * `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
 
+Sample demonstration with the expected visual outcome:
+* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
+
+* Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
+
+![add-recruiter](images/add_recruiter_success.png)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
