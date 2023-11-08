@@ -173,32 +173,32 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 #### Add recruiter command - `add --rec`
 
-Applies to: <text class="job-application">Recruiter</text> <text class="beginner-difficulty">Beginner</text>
+Applies to: <span class="jobby-data-class">Recruiter</span> </span> <span class="beginner pill">Beginner</span>
 
 <span class="learning-outcome">:trophy: Able to add contacts of recruiters into Jobby</span>
 
-<text class="information">:information_source: Assumes that you have completed the tutorial</text>
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 Required Fields:
-* `NAME` - The name of the <text class="job-application">Recruiter</text>. A valid name can be of any value, but must not be blank.
+* `NAME` - The name of the <span class="jobby-data-class">Recruiter</span>. A valid name can be of any value, but must not be blank.
 
 Optional Fields:
-* `ID` - The unique identifier of the <text class="job-application">Recruiter</text>. A valid `ID` consists of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
+* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` consists of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
     * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided.
 
-* `ORG_ID` - The unique identifier of the <text class="job-application">Organization</text> linked to this <text class="job-application">Recruiter</text>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <text class="job-application">Organization</text> in the address book.
+* `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
 
-* `NUMBER` - The phone number of the <text class="job-application">Recruiter</text>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
+* `NUMBER` - The phone number of the <span class="jobby-data-class">Recruiter</span>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
 
-* `EMAIL` - The email of the <text class="job-application">Recruiter</text>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
+* `EMAIL` - The email of the <span class="jobby-data-class">Recruiter</span>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
 
-* `URL` - The url of the <text class="job-application">Recruiter</text>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
+* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
 
-* `ADDRESS` - The address of the <text class="job-application">Recruiter</text>. A valid address can be of any value, but must not be blank. It designates the <text class="job-application">Recruiter's</text> physical address.
+* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be of any value, but must not be blank. It designates the <text class="job-application">Recruiter's</text> physical address.
 
-* `TAG` - The tag(s) of the <text class="job-application">Recruiter</text>. A valid tag can be of any value, but must not be blank. Multiple tags can also be specified.
+* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag can be of any value, but must not be blank. Multiple tags can also be specified.
 
 Examples of valid use of `add --rec` command:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
