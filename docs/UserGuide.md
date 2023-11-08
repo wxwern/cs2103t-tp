@@ -59,7 +59,7 @@ Required fields:
   in the list to be applied to. Must be a valid and existing index or id.
 * `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric.
 
-Optional Fields:
+Optional fields:
 * `DESCRIPTION` - The description of the <code class="job-application">Job Application</code>. If specified, it should not be empty.
 * `DEADLINE` - The deadline of the current stage of the <code class="job-application">Job Application</code>. If specified, it should be in the format *"DD-MM-YYYY"*. If not specified, it is set to 14 days from the current date.
 * `APPLICATION STAGE` - The stage of the <code class="job-application">Job Application</code>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
