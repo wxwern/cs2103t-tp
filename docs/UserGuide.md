@@ -41,8 +41,6 @@ Through an example workflow of Jobby.
 > - And more...
 
 ### Adding `Contact`
-React apps are made out of components. A component is a piece of the UI (user interface) that has its own logic and appearance. A component can be as small as a button, or as large as an entire page.
-
 Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
 
 Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
@@ -69,7 +67,7 @@ SCREENSHOT
 
 `Application` will automatically generates the fields if there are no inputs on your end.
 - `Status: Pending`
-- `Stage: Resume`
+- `Stage: Resume`  vgtyfrrddfrt
 - `Deadline: 22-11-2023`
 
 > You will be able to add different details of `Application` by looking through the (APPLICATION DOCUMENTATION) here.
@@ -89,25 +87,52 @@ After executing the commands,
 `Organization: Woogle`'s number changed to `phone: 12345678`.
 `Recruiter: John`'s email changed to `Email: john@gmail.com`.
 
-> To find more more fields of the `Organization` and `Recruiter` to edit, (LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
+> To find more ways to `edit` `Organization` and `Recruiter`, see the [edit documentation](LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
 
 ### Editing `Application`
-For you `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to 
+For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to 
 the `Interview` stage.
 
 You will be able to do it simply with:
 `edit --application --stage interview `
 
-Screenshot
+SCREENSHOT
 
 This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
-> To find more more fields of the `Application` to edit, (LINK TO EDIT APPLICATION DOCUMENTATION)
+> To find more more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
+
+### Get `Reminder`
+During your internship application process, you might feel that there are many deadlines that you have to keep track of,
+in Jobby, we have a `Remind` command that will help you sort your applications by their `Deadlines`.
+
+You can do so with a simple command:
+`remind --earliest` 
+to see your application deadlines from the earliest to latest.
+
+SCREENSHOT
+
+> To find out more ways to use `remind`, see the [remind documentation](LINK TO REMIND DOCUMENTATION).
+
+### Deleting `Organization` and `Application`
+After you are done with your application, or if you realised that one of the `Contact` in Jobby no longer exists, you can
+feel free to `delete` the `Organization` from Jobby.
+
+In our case, let's delete `Woogle` from Jobby by executing the command:
+`delete id_001`
+
+This will delete `Woogle` along with all of its `Application`. 
+SCREENSHOT
+
+### Next Steps
+By now, you should know the basics of how Jobby works!
+
+Checkout [Understanding Jobby's command syntax](#Understanding-Jobby's-command-syntax).
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Understanding Jobby's command syntax
 
-_Explanation of how Jobby's commands are structured_
+Explanation of how Jobby's commands are structured_
 
 --------------------------------------------------------------------------------------------------------------------
 
