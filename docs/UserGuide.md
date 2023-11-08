@@ -48,7 +48,7 @@ _Explanation of how Jobby's commands are structured_
 ### Apply command - `apply`
 Applies to: <span class="job-application">Job Application</span>
 
-<span class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</span>
+<span class="learning-outcome">:trophy: Able to add job applications associated with an organization in Jobby</span>
 <span class="intermediate-difficulty">Intermediate</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
