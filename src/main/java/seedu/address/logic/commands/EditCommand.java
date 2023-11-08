@@ -48,6 +48,7 @@ import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.tag.Tag;
 
@@ -254,8 +255,12 @@ public class EditCommand extends Command {
 
         // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
+            Organization org = (Organization) contactToEdit;
+            List<JobApplication> applications = Arrays.asList(org.getJobApplications());
+
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
-                    updatedUrl, updatedAddress, updatedTags);
+                    updatedUrl, updatedAddress, updatedTags, applications);
+
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()
@@ -273,8 +278,7 @@ public class EditCommand extends Command {
                     updatedAddress, updatedTags, linkedOrganization);
         }
 
-        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
-                updatedTags, null);
+        throw new IllegalStateException("Contact being edited should be of type Recruiter or Organization");
     }
 
     /**

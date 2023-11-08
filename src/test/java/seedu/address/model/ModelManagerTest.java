@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.ALICE;
-import static seedu.address.testutil.TypicalContacts.BENSON;
+import static seedu.address.testutil.TypicalContacts.NUS;
+import static seedu.address.testutil.TypicalContacts.RICHARD;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -86,13 +86,13 @@ public class ModelManagerTest {
 
     @Test
     public void hasContact_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasContact(ALICE));
+        assertFalse(modelManager.hasContact(NUS));
     }
 
     @Test
     public void hasContact_contactInAddressBook_returnsTrue() {
-        modelManager.addContact(ALICE);
-        assertTrue(modelManager.hasContact(ALICE));
+        modelManager.addContact(NUS);
+        assertTrue(modelManager.hasContact(NUS));
     }
 
     @Test
@@ -102,8 +102,8 @@ public class ModelManagerTest {
 
     @Test
     public void getContactById_getValidId_givesContact() {
-        modelManager.addContact(ALICE);
-        assertEquals(modelManager.getContactById(new Id("test_1-123")), ALICE);
+        modelManager.addContact(NUS);
+        assertEquals(modelManager.getContactById(new Id("nus-soc_sg")), NUS);
     }
 
     @Test
@@ -135,28 +135,28 @@ public class ModelManagerTest {
 
     @Test
     public void getContactByIdXorIndex_validIndex_givesContact() {
-        modelManager.addContact(ALICE);
+        modelManager.addContact(NUS);
         AtomicReference<Contact> c = new AtomicReference<>();
         assertDoesNotThrow(() -> {
             c.set(modelManager.getContactByIdXorIndex(null, Index.fromOneBased(1)));
         });
-        assertEquals(c.get(), ALICE);
+        assertEquals(c.get(), NUS);
 
     }
 
     @Test
     public void getContactByIdXorIndex_validId_givesContact() {
-        modelManager.addContact(ALICE);
+        modelManager.addContact(NUS);
         AtomicReference<Contact> c = new AtomicReference<>();
         assertDoesNotThrow(() -> {
-            c.set(modelManager.getContactByIdXorIndex(new Id("test_1-123"), null));
+            c.set(modelManager.getContactByIdXorIndex(new Id("nus-soc_sg"), null));
         });
-        assertEquals(c.get(), ALICE);
+        assertEquals(c.get(), NUS);
     }
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withContact(ALICE).withContact(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withContact(NUS).withContact(RICHARD).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -178,7 +178,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        String[] keywords = NUS.getName().fullName.split("\\s+");
         modelManager.updateFilteredContactList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

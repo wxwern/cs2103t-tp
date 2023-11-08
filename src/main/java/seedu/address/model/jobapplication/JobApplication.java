@@ -199,6 +199,24 @@ public class JobApplication {
         return orgName;
     }
 
+    /**
+     * Checks if the details of the job application is the same excluding org name and id and last updated time.
+     */
+    public boolean looseEquals(JobApplication other) {
+        return this.jobTitle.equals(other.jobTitle)
+                && this.jobDescription.equals(other.jobDescription)
+                && this.applicationStage.equals(other.applicationStage)
+                && this.status.equals(other.status);
+    }
+
+    /**
+     * Gives a new job application given change in company details.
+     */
+    public JobApplication changeCompanyDetails(Name orgName, Id oid) {
+        return new JobApplication(oid, orgName, this.jobTitle, this.jobDescription.orElse(null), this.deadline,
+                this.status, this.applicationStage, new LastUpdatedTime());
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(
