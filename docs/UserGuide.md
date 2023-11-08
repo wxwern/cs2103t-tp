@@ -30,8 +30,78 @@ INSERT INTRO TO JOBBY HERE
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
+Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's functionalities that you will use on a daily basis. 
+Through an example workflow of Jobby.
 
-1. ... (Go through the basic features like a tutorial)
+> ### You will learn
+> - How to add contact into Jobby
+> - How to edit contact in Jobby
+> - How to add application in Jobby
+> - How to delete files in Jobby
+> - And more...
+
+### Adding `Contact`
+React apps are made out of components. A component is a piece of the UI (user interface) that has its own logic and appearance. A component can be as small as a button, or as large as an entire page.
+
+Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
+
+Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
+
+You can add the `Organization` into Jobby with a simple command: 
+`add --org --name Woogle --id id_001`.
+
+SCREENSHOT
+
+You can then add the `Recruiter` into Jobby with to tag onto the `Organization: Woogle` by including Woogle's `oid` (Organization Id): 
+`add --rec --name John --oid id_001`
+
+SCREENSHOT
+
+> You will be able to add additional deals into `Organization` and `Recruiter` through (ORGANIZATION DOCUMENTATION) and (RECRUITER DOCUMENTATION)
+> respectively.
+
+### Adding `Application`
+Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
+an `Application` for this company with the by including the `Organization ID` in the command: 
+`apply id_001 --title Software Engineer`
+
+SCREENSHOT
+
+`Application` will automatically generates the fields if there are no inputs on your end.
+- `Status: Pending`
+- `Stage: Resume`
+- `Deadline: 22-11-2023`
+
+> You will be able to add different details of `Application` by looking through the (APPLICATION DOCUMENTATION) here.
+
+### Editing `Contact`
+Now that you have both your Contacts and Applications. You received new informations about your `Contacts`, you will have to edit your `Contact` data.
+
+We can do so with the `edit` CLI command with the desired id and input.
+
+Let's say we want to change the phone detail of `Organization: Woogle` and email of `Recruiter: John`.
+We can use the commands:
+`edit id_001 --phone 12345678` and `edit id_john --email john@gmail.com`
+
+SCREENSHOT
+
+After executing the commands,
+`Organization: Woogle`'s number changed to `phone: 12345678`.
+`Recruiter: John`'s email changed to `Email: john@gmail.com`.
+
+> To find more more fields of the `Organization` and `Recruiter` to edit, (LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
+
+### Editing `Application`
+For you `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to 
+the `Interview` stage.
+
+You will be able to do it simply with:
+`edit --application --stage interview `
+
+Screenshot
+
+This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
+> To find more more fields of the `Application` to edit, (LINK TO EDIT APPLICATION DOCUMENTATION)
 
 --------------------------------------------------------------------------------------------------------------------
 
