@@ -157,6 +157,20 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
+### Add command - `add`
+
+Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+
+Format: `add --org/--rec <additional parameters and values...>`
+
+Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
+
+Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
+
+Details on adding an [organization]() contact and a [recruiter]() contact are specified in the next sections
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
