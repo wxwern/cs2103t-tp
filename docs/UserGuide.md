@@ -66,14 +66,13 @@ Optional Fields:
 
 * `NUMBER` - The phone number of the <text class="job-application">Recruiter</text>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
 
-* `EMAIL` The email of the <text class="job-application">Recruiter</text>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
+* `EMAIL` - The email of the <text class="job-application">Recruiter</text>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
 
-* `URL` The url of the <text class="job-application">Recruiter</text>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
+* `URL` - The url of the <text class="job-application">Recruiter</text>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
 
-* `ADDRESS` can accept any value. It designates the <text class="job-application">Recruiter's</text> physical address.
+* `ADDRESS` - The address of the <text class="job-application">Recruiter</text>. A valid address can be of any value, but must not be blank. It designates the <text class="job-application">Recruiter's</text> physical address.
 
-* `TAG` can accept any value and may have multiple inputs.
-
+* `TAG` - The tag(s) of the <text class="job-application">Recruiter</text>. A valid tag can be of any value, but must not be blank. Multiple tags can also be specified.
 
 Examples of valid use of `add --rec` command:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
