@@ -47,15 +47,17 @@ _Explanation of how Jobby's commands are structured_
 
 ### Add command - `add`
 
-Applies to: <text class="job-application">Organization</text> <text class="job-application">Recruiter</text> <text class="beginner-difficulty">Beginner</text>
+Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="learning-outcome">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
 Format: `add --org/--rec <additional parameters and values...>`
 
-Adds a contact to the address book of the given class type: <text class="job-application">Organization</text> or <text class="job-application">Recruiter</text>.
+Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
 
-Supplying `--org` adds an <text class="job-application">Organization</text> while supplying `--rec` adds a <text class="job-application">Recruiter</text> to the address book.
+Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
 
-Details on adding an [organization]() contact and a [recruiter]() contact are specified in the next sections.
+Details on adding an [organization]() contact and a [recruiter]() contact are specified in the next sections
 
 --------------------------------------------------------------------------------------------------------------------
 
