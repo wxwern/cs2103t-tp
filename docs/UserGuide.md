@@ -43,9 +43,7 @@ If you're looking for the list of available commands, check out the [Features](#
 
 ### Command Structure
 
-<span class="learning-outcome">:trophy: How to understand and write Jobby commands</span>
-
-<span class="beginner-difficulty">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to understand and write Jobby commands</span> <span class="beginner pill">Beginner</span>
 
 In Jobby, we write commands in the command box at the top of Jobby's window.
 
@@ -78,9 +76,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 ### Command Explanations
 
-<span class="learning-outcome">:trophy: How to interpret this guide's command explanations</span>
-
-<span class="beginner-difficulty">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to interpret this guide's command explanations</span> <span class="beginner pill">Beginner</span>
 
 Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
 
@@ -111,9 +107,7 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 
 ### Command Autocomplete
 
-<span class="learning-outcome">:trophy: How to use Jobby's command autocompletion</span>
-
-<span class="beginner-difficulty">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to use Jobby's command autocompletion</span> <span class="beginner pill">Beginner</span>
 
 Command autocompletion allows you to type commands in Jobby at unimaginable speeds.
 
@@ -136,7 +130,7 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 * Accidentally triggered autocomplete when you didn't intend to? Don't worry, just press **BACKSPACE** to immediately
   revert to your previously typed text.
 
-* <span class="expert-difficulty">Expert</span> Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
+* <span class="expert pill">Expert</span> Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
 
   * For example, you can type `-nm` to get the autocompletion result of `--name`.
 
