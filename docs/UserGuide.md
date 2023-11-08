@@ -46,9 +46,11 @@ _Explanation of how Jobby's commands are structured_
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
 ### Apply command - `apply`
-Applies to: <text class="job-application">Job Application</text> \
+Applies to: <text class="job-application">Job Application</text>
+
 <text class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</text>
-<text class="intermediate-difficulty">Intermediate</text>\
+<text class="intermediate-difficulty">Intermediate</text>
+
 <text class="information">:information_source: Assumes that you have completed the tutorial</text>
 
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
