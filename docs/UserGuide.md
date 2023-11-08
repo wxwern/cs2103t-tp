@@ -37,11 +37,15 @@ INSERT INTRO TO JOBBY HERE
 
 ## Using Jobby
 
-This section explains how we can understand and input commands in the app, like formatting and autocomplete.
+This section explains the details of how we can interact with Jobby.
 
 If you're looking for the list of available commands, check out the [Features](#features) section instead.
 
 ### Command Structure
+
+<span class="learning-outcome">:trophy: How to understand and write Jobby commands</span>
+
+<span class="beginner-difficulty">Beginner</span>
 
 In Jobby, we write commands in the command box at the top of Jobby's window.
 
@@ -74,6 +78,10 @@ Any extra parameters and values to commands that don't accept them will either b
 
 ### Command Explanations
 
+<span class="learning-outcome">:trophy: How to interpret this guide's command explanations</span>
+
+<span class="beginner-difficulty">Beginner</span>
+
 Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
 
 * **Words in `UPPER_CASE`**
@@ -103,6 +111,10 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 
 ### Command Autocomplete
 
+<span class="learning-outcome">:trophy: How to use Jobby's command autocompletion</span>
+
+<span class="beginner-difficulty">Beginner</span>
+
 Command autocompletion allows you to type commands in Jobby at unimaginable speeds.
 
 As you type your command, you may see a list of suggested completions pop up.
@@ -116,20 +128,20 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 <div markdown="block" class="alert alert-info">
 
-**:bulb: Advanced tips:**<br>
-
-* Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
-
-  * For example, you can type `-nm` to get the autocompletion result of `--name`.
-
-  * This allows you to quickly choose between parameter names with similar prefixes, e.g., by typing
-    `-dsp` to select `--description` instead of `--descending`.
+**:bulb: Additional tips:** <br>
 
 * If you rather choose from the list instead of typing out the prefix, it is possible to use the **UP** and **DOWN**
   arrow keys to navigate through the menu, then press **ENTER** to select them.
 
 * Accidentally triggered autocomplete when you didn't intend to? Don't worry, just press **BACKSPACE** to immediately
   revert to your previously typed text.
+
+* <span class="expert-difficulty">Expert</span> Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
+
+  * For example, you can type `-nm` to get the autocompletion result of `--name`.
+
+  * This allows you to quickly choose between parameter names with similar prefixes, e.g., by typing
+    `-dsp` to select `--description` instead of `--descending`.
 
 </div>
 
