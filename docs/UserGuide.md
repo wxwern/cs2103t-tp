@@ -69,6 +69,8 @@ The value provided must also be the `ID` of an existing <text class="job-applica
 
 * `EMAIL` should be a valid email.
 
+* `URL` should be a valid url where each domain is separated by a dot - *domain.com* or *domain.subdomain.com* are accepted. 
+
 * `ADDRESS` can accept any value. It designates the contact’s physical address.
 
 * `TAG` can accept any value and may have multiple inputs.
