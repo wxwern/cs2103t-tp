@@ -88,6 +88,7 @@ Applies to: <span class="job-application">Job Application</span><span class="job
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
+<span class="warning-bubble">:warning: Any edits made are not reversible.</span>
 
 #### Edit application command - `edit --application`
 <span class="learning-outcome">:trophy: Able to edit job applications associated with an organization in Jobby</span>
@@ -118,6 +119,58 @@ Examples of invalid use of `edit --application` command:
 * `edit --application 1` _One of the fields to edit are not given._
 * `edit --application 1 --title SWE` _Given that the organization of the application being updated already has another application with the title "SWE"._
 * `edit --application 1 --by 31-31-2023` _Invalid date._
+
+
+### Delete command - `delete`
+
+Applies to: <span class="job-application">Job Application</span><span class="job-application">Organization</span><span class="job-application">Recruiter</span><span class="intermediate-difficulty">Intermediate</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+<span class="alert-bubble">:warning: The deletion of data is permanent and there is no way to undo it.<\span>
+
+#### Delete contact command - `delete`
+
+<span class="learning-outcome">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span>
+
+Format: `delete INDEX/ID [--recursive]`
+
+If the contact to delete is an organization, it will delete the job applications associated with it.
+
+Required fields:
+* `INDEX/ID` - The index or the id of the <span class="job-application">Contact</span> in the list
+
+Optional fields:
+* `--recursive` - Deletes the associated recruiter contacts if the contact to delete is an organization.
+
+Examples of valid use of `delete` command
+* `delete 1` _Given that there is at least 1 contact in the list._
+* `delete 1 --recursive` _Given that there is at least 1 contact in the list._
+
+Examples of invalid use of `delete` command
+* `delete 0` _Invalid index._
+
+#### Delete job application command - `delete --application`
+
+<span class="learning-outcome">:trophy: Able to delete job applications in Jobby</span>
+
+Format: `delete --application INDEX`
+
+Required fields:
+* `INDEX` - The index of the <span class="job-application">Job Application</span> in the list.
+
+Examples of valid use of `delete` command
+* `delete --application 1` _Given that there is at least one job application in the list._
+
+Examples of invalid use of `delete` command
+* `delete --application 0` _Invalid index._
+
+Known issues:
+* `delete X --application Y` will delete the y-th application.
+* `delete X --application Y --recursive` also works.
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
