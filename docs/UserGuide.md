@@ -173,11 +173,11 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 #### Add recruiter command - `add --rec`
 
-Applies to: <span class="jobby-data-class">Recruiter</span> </span> <span class="beginner pill">Beginner</span>
+Applies to: <span class="jobby-data-class">Recruiter</span> </span>
 
-<span class="learning-outcome">:trophy: How to add contacts of recruiters into Jobby</span>
+<span class="learning-outcome">:trophy: How to add contacts of recruiters into Jobby</span> <span class="beginner pill">Beginner</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information">:information_source: Assumes that you have completed the tutorial</span> <br>
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
