@@ -45,6 +45,40 @@ _Explanation of how Jobby's commands are structured_
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
+### Apply command - `apply`
+Applies to: <code class="job-application">Job Application</code>\
+<code class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</code>
+<code class="intermediate-difficulty">Intermediate</code>\
+<code class="information">&#9432; Assumes that you have completed the tutorial</code>
+
+
+Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
+
+Required fields:
+* `INDEX/ID` - The index or the id of the <code class="job-application">Organization</code>
+  in the list to be applied to. Must be a valid and existing index or id.
+* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric.
+
+Optional Fields:
+* `DESCRIPTION` - The description of the <code class="job-application">Job Application</code>. If specified, it should not be empty.
+* `DEADLINE` - The deadline of the current stage of the <code class="job-application">Job Application</code>. If specified, it should be in the format *"DD-MM-YYYY"*. If not specified, it is set to 14 days from the current date.
+* `APPLICATION STAGE` - The stage of the <code class="job-application">Job Application</code>. If specified, it must be one of the 3 options: `resume`, `online assessment`, `interview`. If not specified, it is set to `resume`.
+* `STATUS` - The status of the <code class="job-application">Job Application</code>. If specified, it must be one of the 4 options: `pending`, `offered`, `accepted`, `turned down`. If not specified, it is set to `pending`.
+
+Examples of valid use of `apply` command:
+* `apply 1 --title SWE` _Given that the first item in the list of contacts is an organization._
+* `apply id_12345_1 --title Unit Tester --by 12-12-2023` _Given that id_12345_1 is an id belonging to an organization._
+* `apply id_12345_1 --title Level 7 Engineer --description Senior role, Pay: $100 --by 12-12-2023 --stage resume --status pending`
+
+Examples of invalid use of `apply` command:
+* `apply 0 --title SWE` _Invalid index._
+* `apply 10 --title SWE` _Given that there are only 9 contacts in the list and the 10th contact does not exist._
+* `apply 1 --title SWE` _Given that the first contact is a recruiter and not an organization._
+* `apply 1` _Job title not specified._
+* `apply 1 --title SWE --description` _Optional fields were used but not specified._
+* `apply 1 --title SWE --by 31-31-2023` _Invalid date for deadline._
+* `apply 1 --title SWE --by tomorrow` _Invalid format for deadline._
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
