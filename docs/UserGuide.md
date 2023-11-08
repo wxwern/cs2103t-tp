@@ -45,6 +45,16 @@ _Explanation of how Jobby's commands are structured_
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
+### Add command - `add`
+
+Format: `add --org/--rec <additional parameters and values...>`
+
+Adds a contact to the address book of the given class type: <text class="job-application">Organization</text> or <text class="job-application">Recruiter</text>.
+
+Supplying `--org` adds an <text class="job-application">Organization</text> while supplying `--rec` adds a <text class="job-application">Recruiter</text> to the address book.
+
+Details specifically on organization and recruiter level are specified in the next sections.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
