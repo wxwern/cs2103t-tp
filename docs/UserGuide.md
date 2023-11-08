@@ -47,9 +47,7 @@ _Explanation of how Jobby's commands are structured_
 
 ### Add command - `add`
 
-Applies to: <text class="job-application">Organization</text> <text class="job-application">Recruiter</text>
-
-<text class="beginner-difficulty">Beginner</text>
+Applies to: <text class="job-application">Organization</text> <text class="job-application">Recruiter</text> <text class="beginner-difficulty">Beginner</text>
 
 Format: `add --org/--rec <additional parameters and values...>`
 
