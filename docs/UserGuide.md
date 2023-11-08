@@ -45,6 +45,38 @@ _Explanation of how Jobby's commands are structured_
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
+#### Add recruiter command - `add --rec`
+
+Applies to: <text class="job-application">Recruiter</text>
+
+<text class="beginner-difficulty">Beginner</text>
+
+<text class="information">:information_source: Assumes that you have completed the tutorial</text>
+
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+Required Fields:
+* `NAME` can accept any value, but must not be blank.
+
+Optional Fields:
+* `ID` refers to a unique identifier which is used to uniquely identify the recruiter (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
+    * Specifying this sets the `ID`, or one unique one will be derived and generated from the name if not provided.
+
+* `ORG_ID` refers to the unique identifier which is used to uniquely identify the <text class="job-application">Organization</text> the <text class="job-application">Recruiter</text> should be tied to. It is subject to the same validation as the `ID` field.
+The value provided must also be the `ID` of an existing organization in the address book.
+
+* `NUMBER` should be a valid phone number.
+
+* `EMAIL` should be a valid email.
+
+* `ADDRESS` can accept any value. It designates the contact’s physical address.
+
+* `TAG` can accept any value and may have multiple inputs.
+
+
+Examples of valid use of `add --rec` command:
+* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
