@@ -76,6 +76,7 @@ Optional Fields:
 
 Examples of valid use of `add --rec` command:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
+* `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
 * `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
 
 Examples of invalid use of `add --rec` command:
