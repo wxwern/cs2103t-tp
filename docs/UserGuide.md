@@ -55,7 +55,7 @@ Adds a contact to the address book of the given class type: <text class="job-app
 
 Supplying `--org` adds an <text class="job-application">Organization</text> while supplying `--rec` adds a <text class="job-application">Recruiter</text> to the address book.
 
-Details specifically on [organization]() and [recruiter]() level are specified in the next sections.
+Details on adding an [organization]() contact and a [recruiter]() contact are specified in the next sections.
 
 --------------------------------------------------------------------------------------------------------------------
 
