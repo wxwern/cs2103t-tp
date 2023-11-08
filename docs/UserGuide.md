@@ -63,6 +63,7 @@ Required fields:
 Optional fields:
 * `DESCRIPTION` - The description of the <span class="job-application">Job Application</span>. If specified, it should not be empty.
 * `DEADLINE` - The deadline of the current stage of the <span class="job-application">Job Application</span>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
+  * The deadline can be set to before the current date. This is an intended feature.
 * `APPLICATION STAGE` - The stage of the <span class="job-application">Job Application</span>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
 * `STATUS` - The status of the <span class="job-application">Job Application</span>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
 
