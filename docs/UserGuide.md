@@ -62,8 +62,8 @@ Required fields:
 Optional Fields:
 * `DESCRIPTION` - The description of the <code class="job-application">Job Application</code>. If specified, it should not be empty.
 * `DEADLINE` - The deadline of the current stage of the <code class="job-application">Job Application</code>. If specified, it should be in the format *"DD-MM-YYYY"*. If not specified, it is set to 14 days from the current date.
-* `APPLICATION STAGE` - The stage of the <code class="job-application">Job Application</code>. If specified, it must be one of the 3 options: `resume`, `online assessment`, `interview`. If not specified, it is set to `resume`.
-* `STATUS` - The status of the <code class="job-application">Job Application</code>. If specified, it must be one of the 4 options: `pending`, `offered`, `accepted`, `turned down`. If not specified, it is set to `pending`.
+* `APPLICATION STAGE` - The stage of the <code class="job-application">Job Application</code>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
+* `STATUS` - The status of the <code class="job-application">Job Application</code>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
 
 Examples of valid use of `apply` command:
 * `apply 1 --title SWE` _Given that the first item in the list of contacts is an organization._
