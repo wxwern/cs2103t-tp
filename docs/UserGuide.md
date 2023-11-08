@@ -185,7 +185,7 @@ Required Fields:
 * `NAME` - The name of the <span class="jobby-data-class">Recruiter</span>. A valid name can be of any value, but must not be blank.
 
 Optional Fields:
-* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` starts with an alphabet and consists of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
+* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` must start with a letter and can consist of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
     * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
 
 * `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
@@ -194,7 +194,7 @@ Optional Fields:
 
 * `EMAIL` - The email of the <span class="jobby-data-class">Recruiter</span>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
 
-* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
+* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
 
 * `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be of any value, but must not be blank. It designates the <text class="job-application">Recruiter's</text> physical address.
 
