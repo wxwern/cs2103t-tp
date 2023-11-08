@@ -49,7 +49,7 @@ _Explanation of how Jobby's commands are structured_
 Applies to: <code class="job-application">Job Application</code>\
 <code class="learning-outcome">🏆 Able to add job applications associated with an organization in Jobby</code>
 <code class="intermediate-difficulty">Intermediate</code>\
-<code class="information">&#9432; Assumes that you have completed the tutorial</code>
+<code class="information">:information_source: Assumes that you have completed the tutorial</code>
 
 
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
