@@ -165,12 +165,6 @@ Examples of valid use of `delete` command
 Examples of invalid use of `delete` command
 * `delete --application 0` _Invalid index._
 
-Known issues:
-* `delete X --application Y` will delete the y-th application.
-* `delete X --application Y --recursive` also works.
-
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 
