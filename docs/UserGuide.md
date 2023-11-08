@@ -48,12 +48,12 @@ In Jobby, we write commands in the command box at the top of Jobby's window.
 Commands are made up of a few parts: The **command**, **parameter names** and **input values**.
 
 A command like "`edit google --name Google SG --id google-sg`" would refer to:
-* the command `edit`,
-* with a command value `google`,
-* with a parameter `--name`,
-  * which has the parameter value `Google SG`,
-* with a parameter `--id`,
-  * which has the parameter value `google-sg`.
+* the **command** `edit`,
+* with a **command value** `google`,
+* with a **parameter** `--name`,
+  * which has the **parameter value** `Google SG`,
+* with a **parameter** `--id`,
+  * which has the **parameter value** `google-sg`.
 
 Parameters may be in any order, whose names are of the form `-a` or `--abc123`, and must be surrounded by whitespace.
 
@@ -67,6 +67,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
   * Any terms not following this format will be treated as data input, so an input like *"-5 degrees"* will work.
 
+
 * Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
 
 </div>
@@ -78,26 +79,27 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 * **Words in `UPPER_CASE`**
 
   * The parts where you should be typing your parameter values.
-
   * e.g., `--name NAME` means inputting names along the lines of `--name Alice`.
+  <br>
 
 * **Terms separated by `/` or `|`**
 
   * Exactly one of the given options.
-
   * These may be included in the parameter names or value description.
-
   * e.g., `--a/--b` means either `--a` or `--b` but not `--a --b`.
+  <br>
 
 * **Terms surrounded by `[` and `]`**
 
   * An optional parameter or option that may be omitted.
+  <br>
 
 * **Terms ending with `...`**
 
   * The parameter is multivalued.
-
   * e.g., `[--tag TAG]...` means `--tag` and its value can be repeated from 0 to any number of times.
+  <br>
+
 
 ### Command Autocomplete
 
@@ -133,7 +135,7 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 <div markdown="block" class="alert alert-warning">
 
-**:information_source: Limitations:**<br>
+**:warning: Limitations:**<br>
 
 * Autocomplete is not autocorrect. It will not attempt to correct mistyped details.
 
