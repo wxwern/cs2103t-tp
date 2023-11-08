@@ -63,7 +63,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 <div markdown="block" class="alert alert-info">
 
-**:bulb: Advanced tips:**<br>
+**:bulb: Additional information:**<br>
 
 * Parameter names are restricted to the `-`/`--` prefix, contain only letters and numbers, and must begin with a letter.
 
