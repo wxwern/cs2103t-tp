@@ -102,7 +102,7 @@ Required fields:
 
 Optional fields (at least 1 must be provided):
 * `TITLE` - The new job title of the <span class="job-application">Job Application</span>.
-  * The title cannot match a title of another <span class="job-application">Job Application</span> belonging to the same organization that is applied to.
+  * The title cannot match a title of another <span class="job-application">Job Application</span> belonging to the same <span class="job-application">Organization</span> that is being applied to.
 * `DESCRIPTION` - The new description of the <span class="job-application">Job Application</span>.
 * `DEADLINE` - The new deadline of the <span class="job-application">Job Application</span>.
 * `STATUS` - The new application status of the <span class="job-application">Job Application</span>.
