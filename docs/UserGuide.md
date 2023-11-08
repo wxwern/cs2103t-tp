@@ -58,7 +58,8 @@ Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE
 Required fields:
 * `INDEX/ID` - The index or the id of the <span class="job-application">Organization</span>
   in the list to be applied to. Must be a valid and existing index or id.
-* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric.
+* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric. 
+  * You cannot add an application to an <span class="job-application">Organization</span> if that <span class="job-application">Organization</span> already has a job application with the same job title (case-sensitive).
 
 Optional fields:
 * `DESCRIPTION` - The description of the <span class="job-application">Job Application</span>. If specified, it should not be empty.
