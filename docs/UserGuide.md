@@ -67,8 +67,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 * Parameter names are restricted to the `-`/`--` prefix, contain only letters and numbers, and must begin with a letter.
 
-  * Any terms not following this format will be treated as data input, so an input like *"-5 degrees"* will work.
-
+* Any parameter names not following the required format will be treated as data input, so an input like *"-5 degrees"* will work.
 
 * Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
 
@@ -83,26 +82,29 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 * **Words in `UPPER_CASE`**
 
   * The parts where you should be typing your parameter values.
+
   * e.g., `--name NAME` means inputting names along the lines of `--name Alice`.
-  <br>
 
 * **Terms separated by `/` or `|`**
 
   * Exactly one of the given options.
+
   * These may be included in the parameter names or value description.
+
   * e.g., `--a/--b` means either `--a` or `--b` but not `--a --b`.
-  <br>
 
 * **Terms surrounded by `[` and `]`**
 
   * An optional parameter or option that may be omitted.
-  <br>
+
+  * e.g., `[--id ID]` means you may omit setting an ID for the command.
 
 * **Terms ending with `...`**
 
   * The parameter is multivalued.
+
   * e.g., `[--tag TAG]...` means `--tag` and its value can be repeated from 0 to any number of times.
-  <br>
+
 
 
 ### Command Autocomplete
