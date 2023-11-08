@@ -46,10 +46,9 @@ _Explanation of how Jobby's commands are structured_
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
 ### Apply command - `apply`
-Applies to: <span class="job-application">Job Application</span>
+Applies to: <span class="job-application">Job Application</span><span class="intermediate-difficulty">Intermediate</span>
 
 <span class="learning-outcome">:trophy: Able to add job applications associated with an organization in Jobby</span>
-<span class="intermediate-difficulty">Intermediate</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
@@ -80,6 +79,44 @@ Examples of invalid use of `apply` command:
 * `apply 1 --title SWE --description` _Optional fields were used but not specified._
 * `apply 1 --title SWE --by 31-31-2023` _Invalid date for deadline._
 * `apply 1 --title SWE --by tomorrow` _Invalid format for deadline._
+
+
+### Edit command - `edit`
+
+Applies to: <span class="job-application">Job Application</span><span class="job-application">Organization</span><span class="job-application">Recruiter</span><span class="intermediate-difficulty">Intermediate</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+
+#### Edit application command - `edit --application`
+<span class="learning-outcome">:trophy: Able to edit job applications associated with an organization in Jobby</span>
+
+<span class="information">:information_source: Also assumes that you have read the `apply` command documentation.</span>
+
+Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
+
+
+
+Required fields:
+* `INDEX` - The index of the <span class="job-application">Job Application</span> to edit in the list.
+
+Optional fields (at least 1 must be provided):
+* `TITLE` - The new job title of the <span class="job-application">Job Application</span>.
+  * The title cannot match a title of another <span class="job-application">Job Application</span> belonging to the same organization that is applied to.
+* `DESCRIPTION` - The new description of the <span class="job-application">Job Application</span>.
+* `DEADLINE` - The new deadline of the <span class="job-application">Job Application</span>.
+* `STATUS` - The new application status of the <span class="job-application">Job Application</span>.
+* `STAGE` - The new job application stage of the <span class="job-application">Job Application</span>.
+
+Examples of valid use of `edit --application` command:
+* `edit --application 1 --title SRE` _Given that there is at least 1 job application._
+* `edit --application 1 --status pending` _Given that there is at least 1 job application._
+
+Examples of invalid use of `edit --application` command:
+* `edit --application 0 --title SRE` _Invalid index._
+* `edit --application 1` _One of the fields to edit are not given._
+* `edit --application 1 --title SWE` _Given that the organization of the application being updated already has another application with the title "SWE"._
+* `edit --application 1 --by 31-31-2023` _Invalid date._
 
 --------------------------------------------------------------------------------------------------------------------
 
