@@ -175,9 +175,9 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 Applies to: <span class="jobby-data-class">Recruiter</span>
 
-<span class="learning-outcome">:trophy: How to add contacts of recruiters into Jobby</span> <span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span> <br>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <br>
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
