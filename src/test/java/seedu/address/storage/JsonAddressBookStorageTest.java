@@ -3,14 +3,16 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.ALICE;
-import static seedu.address.testutil.TypicalContacts.HOON;
 import static seedu.address.testutil.TypicalContacts.IDA;
+import static seedu.address.testutil.TypicalContacts.SMU;
+import static seedu.address.testutil.TypicalContacts.TIKTOK;
 import static seedu.address.testutil.TypicalContacts.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.io.TempDir;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.contact.Contact;
 
 public class JsonAddressBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
@@ -72,10 +75,13 @@ public class JsonAddressBookStorageTest {
         assertEquals(original, new AddressBook(readBack));
 
         // Modify data, overwrite exiting file, and read back
-        original.addContact(HOON);
-        original.removeContact(ALICE);
+        original.addContact(TIKTOK);
+        original.removeContact(SMU);
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        original.setContacts(original.getContactList().stream()
+                .sorted(Comparator.comparing(Contact::getType))
+                .collect(Collectors.toList()));
         assertEquals(original, new AddressBook(readBack));
 
         // Save and read without specifying file path
