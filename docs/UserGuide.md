@@ -43,7 +43,26 @@ _Explanation of how Jobby's commands are structured_
 
 ## Command documentation
 
-(Detailed information on each command with the constraints, possible errors and feature flaws)
+### Locating contacts by name and id: `find`
+
+Current: Finds contacts whose names contain any of the given keywords or ids.
+
+Format: `find KEYWORD/ID...`
+
+* Name & ID are searched
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
+* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find id_12345` returns `john` and whose id is `id_12345`
+* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
+* `find alex david` returns `Alex Yeoh`, `David Li`
 
 --------------------------------------------------------------------------------------------------------------------
 
