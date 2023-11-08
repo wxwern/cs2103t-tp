@@ -175,7 +175,7 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 Applies to: <span class="jobby-data-class">Recruiter</span> </span> <span class="beginner pill">Beginner</span>
 
-<span class="learning-outcome">:trophy: Able to add contacts of recruiters into Jobby</span>
+<span class="learning-outcome">:trophy: How to add contacts of recruiters into Jobby</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
