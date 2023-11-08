@@ -49,7 +49,7 @@ _Explanation of how Jobby's commands are structured_
 
 Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
 
-<span class="learning-outcome">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
 Format: `add --org/--rec <additional parameters and values...>`
 
