@@ -47,9 +47,9 @@ _Explanation of how Jobby's commands are structured_
 
 #### Add recruiter command - `add --rec`
 
-Applies to: <text class="job-application">Recruiter</text>
+Applies to: <text class="job-application">Recruiter</text> <text class="beginner-difficulty">Beginner</text>
 
-<span class="learning-outcome">:trophy: Able to add contacts of recruiters into Jobby</span> <text class="beginner-difficulty">Beginner</text>
+<span class="learning-outcome">:trophy: Able to add contacts of recruiters into Jobby</span>
 
 <text class="information">:information_source: Assumes that you have completed the tutorial</text>
 
