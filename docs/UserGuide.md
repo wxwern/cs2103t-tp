@@ -56,22 +56,21 @@ Applies to: <text class="job-application">Recruiter</text> <text class="beginner
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
 Required Fields:
-* `NAME` can accept any value, but must not be blank.
+* `NAME` - The name of the <text class="job-application">Recruiter</text>. A valid name can be of any value, but must not be blank.
 
 Optional Fields:
-* `ID` refers to a unique identifier which is used to uniquely identify the recruiter (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
-    * Specifying this sets the `ID`, or a unique one will be derived and generated from the name if not provided.
+* `ID` - The unique identifier of the <text class="job-application">Recruiter</text>. A valid `ID` consists of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
+    * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided.
 
-* `ORG_ID` refers to the unique identifier which is used to uniquely identify the <text class="job-application">Organization</text> the <text class="job-application">Recruiter</text> should be tied to. It is subject to the same validation as the `ID` field.
-The value provided must also be the `ID` of an existing <text class="job-application">Organization</text> in the address book.
+* `ORG_ID` - The unique identifier of the <text class="job-application">Organization</text> linked to this <text class="job-application">Recruiter</text>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <text class="job-application">Organization</text> in the address book.
 
-* `NUMBER` should be a valid phone number.
+* `NUMBER` - The phone number of the <text class="job-application">Recruiter</text>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
 
-* `EMAIL` should be a valid email.
+* `EMAIL` The email of the <text class="job-application">Recruiter</text>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
 
-* `URL` should be a valid url where each domain is separated by a dot - *domain.com* or *domain.subdomain.com* are accepted. 
+* `URL` The url of the <text class="job-application">Recruiter</text>. A valid url consists of at least one _domain_ and one _top level domain_ (tld) which are separated by a dot - *domain.tld* or *domain.subdomain.tld* are accepted. E.g. example.com or example.more.com
 
-* `ADDRESS` can accept any value. It designates the contact’s physical address.
+* `ADDRESS` can accept any value. It designates the <text class="job-application">Recruiter's</text> physical address.
 
 * `TAG` can accept any value and may have multiple inputs.
 
