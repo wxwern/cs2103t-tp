@@ -75,7 +75,13 @@ The value provided must also be the `ID` of an existing organization in the addr
 
 
 Examples of valid use of `add --rec` command:
-* `add --rec --name John Doe --oid paypal-sg` links the recruiter `John Doe` to an organization with the id `paypal-sg`
+* `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
+* `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
+
+Examples of invalid use of `add --rec` command:
+* `add --rec` _Missing a name._
+* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
+* `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
 
 --------------------------------------------------------------------------------------------------------------------
 
