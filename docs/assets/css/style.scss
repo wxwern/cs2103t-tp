@@ -11,51 +11,111 @@
     width: 21px
 }
 
-.beginner-difficulty {
-    background-color: #00FF00;
-    border-radius: 5px;
-    font-family: verdana
+hr {
+    opacity: 0.3;
 }
 
-.intermediate-difficulty {
-    background-color: #FFA500;
-    border-radius: 5px;
-    font-family: verdana
+img.emoji {
+    height: 16px;
+    width: 16px;
+    vertical-align: unset;
 }
 
-.expert-difficulty {
-    background-color: #FF0000;
-    border-radius: 5px;
-    font-family: verdana
+.beginner-difficulty, .intermediate-difficulty, .expert-difficulty, .learning-outcome,
+.information, .alert-bubble, .warning-bubble,
+/* TODO: Classes above are left here for migration compatibility - should be removed. */
+.pill {
+
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 2px 12px;
+    margin: 0 2px;
+
+    font-family: verdana;
+    font-size: 75%;
+
+    img.emoji {
+        height: 12px;
+        width: 12px;
+        vertical-align: unset;
+        margin: -2px 0;
+    }
+
+    &.beginner-difficulty, /* legacy */
+    &.beginner {
+        background-color: #00cc0022;
+        border-color: #00cc00;
+        color: #008800;
+    }
+
+    &.intermediate-difficulty, /* legacy */
+    &.intermediate {
+        background-color: #ffa50022;
+        border-color: #cc8800;
+        color: #aa5500;
+    }
+
+    &.expert-difficulty, /* legacy */
+    &.expert {
+        background-color: #ff000022;
+        border-color: #cc0000;
+        color: #cc0000;
+    }
+
+    &.learning-outcome {
+        background-color: #ffeb99;
+        color: #552800;
+    }
+
+    &.information {
+        background-color: #33aaff22;
+        color: #3377aa;
+    }
+
+    &.alert-bubble, /* legacy */
+    &.danger {
+        background-color: #cc3333;
+        color: #ffffff;
+    }
+
+    &.warning-bubble, /* legacy */
+    &.warning {
+        background-color: #ffcc99;
+        color: #331800;
+    }
+
 }
 
-.learning-outcome {
-    background-color: #ffeb99;
-    border-radius: 10px;
-    font-family: verdana
+.job-application, /* legacy */
+.jobby-data-class {
+    background-color: #ff886633;
+    border-radius: 4px;
+    padding: 0 4px;
 }
 
-.job-application {
-    background-color: #fff2e6;
-    color: #000000;
-    border-radius: 5px;
-    font-family: sans-serif
-}
 
-.information {
-    background-color: #e6ffff;
-    border-radius: 10px;
-    font-family: verdana
-}
+/* Print formatter */
+@media print {
+    @page {
+        margin: 1.5cm;
+    }
 
-.alert-bubble {
-    background-color: #FF5050;
-    border-radius: 10px;
-    font-family: verdana
-}
+    h2,
+    h3:not(h2 + h3, h2 + p + h3, h2 + .h2-summary + h3),
+    h3:not(h2 + p + p + h3, h2 + p + p + p + h3) {
+        page-break-before: always;
+    }
 
-.warning-bubble {
-    background-color: #ffeb99;
-    border-radius: 10px;
-    font-family: verdana
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+
+    img, code, .alert, .pill, .jobby-data-class {
+        page-break-inside: avoid;
+    }
+
+    ul ul, ul ol, ol ul, ol ol {
+        page-break-before: avoid;
+        page-break-inside: avoid;
+    }
 }
