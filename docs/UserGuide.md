@@ -60,10 +60,10 @@ Required Fields:
 
 Optional Fields:
 * `ID` refers to a unique identifier which is used to uniquely identify the recruiter (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
-    * Specifying this sets the `ID`, or one unique one will be derived and generated from the name if not provided.
+    * Specifying this sets the `ID`, or a unique one will be derived and generated from the name if not provided.
 
 * `ORG_ID` refers to the unique identifier which is used to uniquely identify the <text class="job-application">Organization</text> the <text class="job-application">Recruiter</text> should be tied to. It is subject to the same validation as the `ID` field.
-The value provided must also be the `ID` of an existing organization in the address book.
+The value provided must also be the `ID` of an existing <text class="job-application">Organization</text> in the address book.
 
 * `NUMBER` should be a valid phone number.
 
