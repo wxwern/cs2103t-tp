@@ -278,8 +278,7 @@ public class EditCommand extends Command {
                     updatedAddress, updatedTags, linkedOrganization);
         }
 
-        return new Contact(updatedName, updatedId, updatedPhone, updatedEmail, updatedUrl, updatedAddress,
-                updatedTags, null);
+        throw new IllegalStateException("Contact being edited should be of type Recruiter or Organization");
     }
 
     /**
