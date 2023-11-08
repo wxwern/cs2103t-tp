@@ -196,9 +196,9 @@ Optional Fields:
 
 * `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
 
-* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be of any value, but must not be blank. It designates the <text class="job-application">Recruiter's</text> physical address.
+* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="job-application">Recruiter's</text> physical address.
 
-* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag can be of any value, but must not be blank. Multiple tags can also be specified.
+* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag can be any non-empty value. Multiple tags can also be specified.
 
 Examples of valid use of `add --rec` command:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
