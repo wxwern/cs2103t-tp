@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.ALICE;
 import static seedu.address.testutil.TypicalContacts.NUS;
 
 import org.junit.jupiter.api.Test;
@@ -67,7 +66,7 @@ public class ApplyCommandTest {
     @Test
     public void execute_applyToNonOrg_throwsException() {
         Model model = new ModelManager();
-        model.addContact(ALICE);
+        model.addContact(NUS);
         assertThrows(
                 CommandException.class, () -> new ApplyCommand(
                         null, Index.fromOneBased(1), new JobTitle("SWE"),

@@ -16,7 +16,7 @@ import seedu.address.model.util.SampleDataUtil;
 /**
  * A utility class to help with building Contact objects.
  */
-public class ContactBuilder {
+public abstract class ContactBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_ID = "test_1-123";
@@ -25,13 +25,13 @@ public class ContactBuilder {
     public static final String DEFAULT_URL = "www.google.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
-    private Name name;
-    private Id id;
-    private Phone phone;
-    private Email email;
-    private Url url;
-    private Address address;
-    private Set<Tag> tags;
+    protected Name name;
+    protected Id id;
+    protected Phone phone;
+    protected Email email;
+    protected Url url;
+    protected Address address;
+    protected Set<Tag> tags;
 
     /**
      * Creates a {@code ContactBuilder} with the default details.
@@ -75,8 +75,6 @@ public class ContactBuilder {
         return this;
     }
 
-
-
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Contact} that we are building.
      */
@@ -117,8 +115,6 @@ public class ContactBuilder {
         return this;
     }
 
-    public Contact build() {
-        return new Contact(name, id, phone, email, url, address, tags, null);
-    }
+    public abstract Contact build();
 
 }
