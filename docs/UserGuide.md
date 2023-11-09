@@ -401,9 +401,9 @@ Sample demonstration with the expected visual outcome:
 ![add-recruiter](images/add_recruiter_success.png)
 
 #### List contacts - `list`
-<span class="learning-outcome">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
+<span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `list [--org/--rec]`
 
@@ -418,9 +418,9 @@ Examples:
 [SCREENSHOT HERE]
 
 #### Sorting contacts and job applications - `sort`
-<span class="learning-outcome">:trophy: Able to sort contacts and job applications in Jobby</span>
+<span class="learning-outcome pill">:trophy: Able to sort contacts and job applications in Jobby</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `sort --FLAG_TO_SORT [--ascending/--descending]`
 
@@ -428,22 +428,22 @@ Format: `sort --FLAG_TO_SORT [--ascending/--descending]`
 Supported flags (only 1 must be provided): [This should be a title font, I think]
 
 Flags for contacts:
-* `--address` - The address of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--email` - The email address of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--id` - The identification string of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--name` - The name of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--phone` - The phone number of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--url` - The web address of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--name` - The name of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 
 Flags for job applications:
-* `--by` - The deadline of the <span class="job-application">Job Application</span>. Will sort chronologically.
-* `--stage` - The stage of the <span class="job-application">Job Application</span>. Will sort by stage order.
-* `--stale` - The time of last update of the <span class="job-application">Job Application</span>. Will sort chronologically.
-* `--status` - The status of the <span class="job-application">Job Application</span>. Will sort by status order.
-* `--title` - The title of the <span class="job-application">Job Application</span>. Will sort alphabetically.
+* `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
+* `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
+* `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
+* `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
+* `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
 
 Flags for resetting the sort order:
-* `--none` - Will reset the sorting order of <span class="job-application">Contacts</span> and <span class="job-application">Job Applications</span>.
+* `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
 
 Flags for specifying the sort order:
 * `--ascending` - The specified flag will sort in ascending order.
@@ -453,7 +453,7 @@ If neither `--ascending` or `--descending` are provided, the list will be sorted
 
 Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
 
-`Sort` will work even if no <span class="job-application">Contacts</span> or <span class="job-application">Job Applications</span> exist.
+`Sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
 
 [SCREENSHOT HERE]
 
@@ -485,9 +485,9 @@ Examples:
 ### Apply command - `apply`
 Applies to: <span class="jobby-data-class">Job Application</span>
 
-<span class="learning-outcome">:trophy: Able to add detailed job applications associated with an organization in Jobby</span> <span class="intermediate pill">Intermediate</span>
+<span class="learning-outcome pill">:trophy: Able to add detailed job applications associated with an organization in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
 
@@ -523,14 +523,14 @@ Examples of invalid use of `apply` command:
 
 Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span> <span class="intermediate pill">Intermediate</span>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <span class="intermediate pill">Intermediate</span>
 
-<span class="warning-bubble">:warning: Any edits made are not reversible.</span>
+<span class="warning pill">:warning: Any edits made are not reversible.</span>
 
 #### Edit application command - `edit --application`
-<span class="learning-outcome">:trophy: Able to edit job applications associated with an organization in Jobby</span>
+<span class="learning-outcome pill">:trophy: Able to edit job applications associated with an organization in Jobby</span>
 
-<span class="information">:information_source: Also assumes that you have read the `apply` command documentation.</span>
+<span class="information pill">:information_source: Also assumes that you have read the `apply` command documentation.</span>
 
 Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
 
@@ -562,13 +562,13 @@ Examples of invalid use of `edit --application` command:
 
 Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
 
-<span class="alert-bubble">:warning: The deletion of data is permanent and there is no way to undo it.</span>
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
 #### Delete contact command - `delete`
 
-<span class="learning-outcome">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span> <span class="intermediate pill">Intermediate</span>
+<span class="learning-outcome pill">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 Format: `delete INDEX/ID [--recursive]`
 
@@ -589,7 +589,7 @@ Examples of invalid use of `delete` command
 
 #### Delete job application command - `delete --application`
 
-<span class="learning-outcome">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+<span class="learning-outcome pill">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 Format: `delete --application INDEX`
 

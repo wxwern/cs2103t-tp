@@ -21,15 +21,14 @@ img.emoji {
     vertical-align: unset;
 }
 
-.beginner-difficulty, .intermediate-difficulty, .expert-difficulty, .learning-outcome,
-.information, .alert-bubble, .warning-bubble,
-/* TODO: Classes above are left here for migration compatibility - should be removed. */
 .pill {
 
     border: 1px solid transparent;
     border-radius: 16px;
     padding: 2px 12px;
     margin: 0 2px;
+
+    background-color: #88888822;
 
     font-family: verdana;
     font-size: 75%;
@@ -41,21 +40,18 @@ img.emoji {
         margin: -2px 0;
     }
 
-    &.beginner-difficulty, /* legacy */
     &.beginner {
         background-color: #00cc0022;
         border-color: #00cc00;
         color: #008800;
     }
 
-    &.intermediate-difficulty, /* legacy */
     &.intermediate {
         background-color: #ffa50022;
         border-color: #cc8800;
         color: #aa5500;
     }
 
-    &.expert-difficulty, /* legacy */
     &.expert {
         background-color: #ff000022;
         border-color: #cc0000;
@@ -72,13 +68,11 @@ img.emoji {
         color: #3377aa;
     }
 
-    &.alert-bubble, /* legacy */
     &.danger {
         background-color: #cc3333;
         color: #ffffff;
     }
 
-    &.warning-bubble, /* legacy */
     &.warning {
         background-color: #ffcc99;
         color: #331800;
@@ -86,7 +80,6 @@ img.emoji {
 
 }
 
-.job-application, /* legacy */
 .jobby-data-class {
     background-color: #ff886633;
     border-radius: 4px;
