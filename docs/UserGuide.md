@@ -217,53 +217,24 @@ Sample demonstration with the expected visual outcome:
 
 ![add-recruiter](images/add_recruiter_success.png)
 
-#### List command - `list`
+#### List contacts - `list`
 <span class="learning-outcome">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
 Format: `list [--org/--rec]`
 
-Flags for contacts:
-* `--address` - The address of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--email` - The email address of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--id` - The identification string of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--name` - The name of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--phone` - The phone number of the <span class="job-application">Contact</span>. Will sort alphabetically.
-* `--url` - The web address of the <span class="job-application">Contact</span>. Will sort alphabetically.
+Shows a list of all contacts in the address book.
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
 
-Flags for job applications:
-* `--by` - The deadline of the <span class="job-application">Job Application</span>. Will sort chronologically.
-* `--stage` - The stage of the <span class="job-application">Job Application</span>. Will sort by stage order.
-* `--stale` - The time of last update of the <span class="job-application">Job Application</span>. Will sort chronologically.
-* `--status` - The status of the <span class="job-application">Job Application</span>. Will sort by status order.
-* `--title` - The title of the <span class="job-application">Job Application</span>. Will sort alphabetically.
-
-Flags for resetting the sort order:
-* `--none` - Will reset the sorting order of <span class="job-application">Contacts</span> and <span class="job-application">Job Applications</span>.
-
-Flags for specifying the sort order:
-* `--ascending` - The specified flag will sort in ascending order.
-* `--descending` - The specified flag will sort in descending order.
-
-If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
-Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
-`Sort` will work even if no <span class="job-application">Contacts</span> or <span class="job-application">Job Applications</span> exist.
+Examples:
+* `list`
+* `list --org`
+* `list --rec`
 
 [SCREENSHOT HERE]
 
-Examples of valid use of `sort` command:
-* `sort --title --ascending`
-* `sort --url`
-* `sort --stale --descending`
-* `sort --none`
-
-Examples of invalid use of `edit --application` command:
-* `sort` _No flag provided._
-* `sort --organization` _Invalid flag._
-* `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
-
-#### Sort command - `sort`
+#### Sorting contacts and job applications - `sort`
 <span class="learning-outcome">:trophy: Able to sort contacts and job applications in Jobby</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
@@ -307,10 +278,23 @@ Examples of valid use of `sort` command:
 * `sort --stale --descending`
 * `sort --none`
 
-Examples of invalid use of `edit --application` command:
+Examples of invalid use of `sort` command:
 * `sort` _No flag provided._
 * `sort --organization` _Invalid flag._
 * `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
+
+
+### Reminding about deadlines: `remind`
+Reminds the user of upcoming deadlines for job applications.
+
+Format: `remind --earliest/--latest`
+
+Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
+Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
+
+Examples:
+* `remind --earliest`
+* `remind --latest`
 
 --------------------------------------------------------------------------------------------------------------------
 
