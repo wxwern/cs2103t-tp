@@ -618,7 +618,7 @@ Examples of invalid use of `delete` command
  **List**              | `list [--org/--rec]`
  **Sort Contacts**     | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`
 
-### Commands for Handling Recruiters
+### Commands for Handling Job Applications
 
  Action                | Format, Examples                                                                                                                                                                                                                                                                            
 -----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
