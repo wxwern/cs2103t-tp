@@ -196,7 +196,7 @@ Optional Fields:
 
 * `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
 
-* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="job-application">Recruiter's</text> physical address.
+* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="jobby-data-class">Recruiter's</text> physical address.
 
 * `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag consists of only alphanumeric characters. Multiple tags can also be specified.
 
@@ -218,7 +218,7 @@ Sample demonstration with the expected visual outcome:
 ![add-recruiter](images/add_recruiter_success.png)
 
 ### Apply command - `apply`
-Applies to: <span class="job-application">Job Application</span><span class="intermediate-difficulty">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span><span class="intermediate pill">Intermediate</span>
 
 <span class="learning-outcome">:trophy: Able to add job applications associated with an organization in Jobby</span>
 
@@ -227,17 +227,17 @@ Applies to: <span class="job-application">Job Application</span><span class="int
 Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
 
 Required fields:
-* `INDEX/ID` - The index or the id of the <span class="job-application">Organization</span>
+* `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Organization</span>
   in the list to be applied to. Must be a valid and existing index or id.
 * `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric. 
-  * You cannot add an application to an <span class="job-application">Organization</span> if that <span class="job-application">Organization</span> already has a job application with the same job title (case-sensitive).
+  * You cannot add an application to an <span class="jobby-data-class">Organization</span> if that <span class="jobby-data-class">Organization</span> already has a job application with the same job title (case-sensitive).
 
 Optional fields:
-* `DESCRIPTION` - The description of the <span class="job-application">Job Application</span>. If specified, it should not be empty.
-* `DEADLINE` - The deadline of the current stage of the <span class="job-application">Job Application</span>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
+* `DESCRIPTION` - The description of the <span class="jobby-data-class">Job Application</span>. If specified, it should not be empty.
+* `DEADLINE` - The deadline of the current stage of the <span class="jobby-data-class">Job Application</span>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
   * The deadline can be set to before the current date. This is an intended feature.
-* `APPLICATION STAGE` - The stage of the <span class="job-application">Job Application</span>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
-* `STATUS` - The status of the <span class="job-application">Job Application</span>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
+* `APPLICATION STAGE` - The stage of the <span class="jobby-data-class">Job Application</span>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
+* `STATUS` - The status of the <span class="jobby-data-class">Job Application</span>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
 
 Examples of valid use of `apply` command:
 * `apply 1 --title SWE` _Given that the first item in the list of contacts is an organization._
@@ -256,7 +256,7 @@ Examples of invalid use of `apply` command:
 
 ### Edit command - `edit`
 
-Applies to: <span class="job-application">Job Application</span><span class="job-application">Organization</span><span class="job-application">Recruiter</span><span class="intermediate-difficulty">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span><span class="jobby-data-class">Organization</span><span class="jobby-data-class">Recruiter</span><span class="intermediate pill">Intermediate</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
@@ -272,15 +272,15 @@ Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [-
 
 
 Required fields:
-* `INDEX` - The index of the <span class="job-application">Job Application</span> to edit in the list.
+* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> to edit in the list.
 
 Optional fields (at least 1 must be provided):
-* `TITLE` - The new job title of the <span class="job-application">Job Application</span>.
-  * The title cannot match a title of another <span class="job-application">Job Application</span> belonging to the same <span class="job-application">Organization</span> that is being applied to.
-* `DESCRIPTION` - The new description of the <span class="job-application">Job Application</span>.
-* `DEADLINE` - The new deadline of the <span class="job-application">Job Application</span>.
-* `STATUS` - The new application status of the <span class="job-application">Job Application</span>.
-* `STAGE` - The new job application stage of the <span class="job-application">Job Application</span>.
+* `TITLE` - The new job title of the <span class="jobby-data-class">Job Application</span>.
+  * The title cannot match a title of another <span class="jobby-data-class">Job Application</span> belonging to the same <span class="jobby-data-class">Organization</span> that is being applied to.
+* `DESCRIPTION` - The new description of the <span class="jobby-data-class">Job Application</span>.
+* `DEADLINE` - The new deadline of the <span class="jobby-data-class">Job Application</span>.
+* `STATUS` - The new application status of the <span class="jobby-data-class">Job Application</span>.
+* `STAGE` - The new job application stage of the <span class="jobby-data-class">Job Application</span>.
 
 Examples of valid use of `edit --application` command:
 * `edit --application 1 --title SRE` _Given that there is at least 1 job application._
@@ -295,7 +295,7 @@ Examples of invalid use of `edit --application` command:
 
 ### Delete command - `delete`
 
-Applies to: <span class="job-application">Job Application</span><span class="job-application">Organization</span><span class="job-application">Recruiter</span><span class="intermediate-difficulty">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span><span class="jobby-data-class">Organization</span><span class="jobby-data-class">Recruiter</span><span class="intermediate pill">Intermediate</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
@@ -310,7 +310,7 @@ Format: `delete INDEX/ID [--recursive]`
 If the contact to delete is an organization, it will delete the job applications associated with it.
 
 Required fields:
-* `INDEX/ID` - The index or the id of the <span class="job-application">Contact</span> in the list
+* `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Contact</span> in the list
 
 Optional fields:
 * `--recursive` - Deletes the associated recruiter contacts if the contact to delete is an organization.
@@ -329,7 +329,7 @@ Examples of invalid use of `delete` command
 Format: `delete --application INDEX`
 
 Required fields:
-* `INDEX` - The index of the <span class="job-application">Job Application</span> in the list.
+* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> in the list.
 
 Examples of valid use of `delete` command
 * `delete --application 1` _Given that there is at least one job application in the list._
