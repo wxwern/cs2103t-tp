@@ -121,6 +121,7 @@ public class SortCommand extends Command {
             return otherSortCommand.isReset;
         }
         return Objects.equals(comparatorContact, otherSortCommand.comparatorContact)
-                && Objects.equals(comparatorApplication, otherSortCommand.comparatorApplication);
+                && Objects.equals(comparatorApplication, otherSortCommand.comparatorApplication)
+                && !otherSortCommand.isReset;
     }
 }
