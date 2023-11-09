@@ -115,7 +115,7 @@ public class DeleteWithChildrenCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showContactAtIndex(model, INDEX_FIRST_CONTACT);
+        showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
 
         Contact contactToDelete = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         DeleteWithChildrenCommand deleteCommand = new DeleteWithChildrenCommand(INDEX_FIRST_CONTACT);

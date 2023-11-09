@@ -1,22 +1,6 @@
 {
   "_comment": "AddressBook save file which contains the same Contact values as in TypicalContacts#getTypicalAddressBook()",
   "persons" : [ {
-    "name" : "Alice Pauline",
-    "id" : "test_1-123",
-    "phone" : "94351253",
-    "email" : "alice@example.com",
-    "url": "www.google.com",
-    "address" : "123, Jurong West Ave 6, #08-111",
-    "tags" : [ "friends" ]
-  }, {
-    "name" : "Benson Meier",
-    "id" : "test_2-123",
-    "phone" : "98765432",
-    "email" : "johnd@example.com",
-    "url": "www.google.com",
-    "address" : "311, Clementi Ave 2, #02-25",
-    "tags" : [ "owesMoney", "friends" ]
-  }, {
     "name" : "NUS SoC",
     "type": "organization",
     "id" : "nus-soc_sg",

@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-**Jobby** is a **desktop app for managing job applications and contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
+**Jobby** is a **desktop app for job seekers to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -161,16 +161,307 @@ Checkout [Understanding Jobby's command syntax](#Understanding-Jobby's-command-s
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Understanding Jobby's command syntax
+## Using Jobby
 
-Explanation of how Jobby's commands are structured_
+This section explains the details of how we can interact with Jobby.
 
---------------------------------------------------------------------------------------------------------------------
+If you're looking for the list of available commands, check out the [Features](#features) section instead.
 
-## Command documentation
+### Command Structure
+
+<span class="learning-outcome pill">:trophy: How to understand and write Jobby commands</span> <span class="beginner pill">Beginner</span>
+
+In Jobby, we write commands in the command box at the top of Jobby's window.
+
+Commands are made up of a few parts: The **command**, **parameter names** and **input values**.
+
+A command like "`edit google --name Google SG --id google-sg`" would refer to:
+* the **command** `edit`,
+* with a **command value** `google`,
+* with a **parameter** `--name`,
+  * which has the **parameter value** `Google SG`,
+* with a **parameter** `--id`,
+  * which has the **parameter value** `google-sg`.
+
+Parameters may be in any order, whose names are of the form `-a` or `--abc123`, and must be surrounded by whitespace.
+
+Any extra parameters and values to commands that don't accept them will either be ignored or throw an error.
+
+<div markdown="block" class="alert alert-info">
+
+**:bulb: Additional information:**<br>
+
+* Parameter names are restricted to the `-`/`--` prefix, contain only letters and numbers, and must begin with a letter.
+
+* Any parameter names not following the required format will be treated as data input, so an input like *"-5 degrees"* will work.
+
+* Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
+
+</div>
+
+### Command Explanations
+
+<span class="learning-outcome pill">:trophy: How to interpret this guide's command explanations</span> <span class="beginner pill">Beginner</span>
+
+Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
+
+* **Words in `UPPER_CASE`**
+
+  * The parts where you should be typing your parameter values.
+
+  * e.g., `--name NAME` means inputting names along the lines of `--name Alice`.
+
+* **Terms separated by `/` or `|`**
+
+  * Exactly one of the given options.
+
+  * These may be included in the parameter names or value description.
+
+  * e.g., `--a/--b` means either `--a` or `--b` but not `--a --b`.
+
+* **Terms surrounded by `[` and `]`**
+
+  * An optional parameter or option that may be omitted.
+
+  * e.g., `[--id ID]` means you may omit setting an ID for the command.
+
+* **Terms ending with `...`**
+
+  * The parameter is multivalued.
+
+  * e.g., `[--tag TAG]...` means `--tag` and its value can be repeated from 0 to any number of times.
+
+
+
+### Command Autocomplete
+
+<span class="learning-outcome pill">:trophy: How to use Jobby's command autocompletion</span> <span class="beginner pill">Beginner</span>
+
+Command autocompletion allows you to type commands in Jobby at unimaginable speeds.
+
+As you type your command, you may see a list of suggested completions pop up.
+Just press **TAB** or **SPACE** to select the first suggestion to fill in that text!
+
+![Autocomplete Screenshot](images/autocomplete.png)
+
+To temporarily hide all suggestions, press **ESC**. This temporarily disables autocompletion for the next keystroke.
+
+If suggestions were hidden or aren't shown when they should, press **TAB** to prompt Jobby to bring it back.
+
+<div markdown="block" class="alert alert-info">
+
+**:bulb: Additional tips:** <br>
+
+* If you rather choose from the list instead of typing out the prefix, it is possible to use the **UP** and **DOWN**
+  arrow keys to navigate through the menu, then press **ENTER** to select them.
+
+* Accidentally triggered autocomplete when you didn't intend to? Don't worry, just press **BACKSPACE** to immediately
+  revert to your previously typed text.
+
+* <span class="expert pill">Expert</span> Autocomplete checks for fuzzy matches - it sorts by the best *subsequence* prefix match first.
+
+  * For example, you can type `-nm` to get the autocompletion result of `--name`.
+
+  * This allows you to quickly choose between parameter names with similar prefixes, e.g., by typing
+    `-dsp` to select `--description` instead of `--descending`.
+
+</div>
+
+<div markdown="block" class="alert alert-warning">
+
+**:warning: Limitations:**<br>
+
+* Autocomplete is not autocorrect. It will not attempt to correct mistyped details.
+
+* Autocomplete suggests plausible values you may want to add onto your partially typed command. It does not verify that the command will run.
+
+</div>
+
+-------------------------------------------------------------------------------------------------
+
+## Features
 
 (Detailed information on each command with the constraints, possible errors and feature flaws)
 
+### Add command - `add`
+
+Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+
+Format: `add --org/--rec <additional parameters and values...>`
+
+Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
+
+Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
+
+Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
+
+#### Add recruiter command - `add --rec`
+
+Applies to: <span class="jobby-data-class">Recruiter</span>
+
+<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+
+<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <br>
+
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+Required Fields:
+* `NAME` - The name of the <span class="jobby-data-class">Recruiter</span>. A valid name can be of any value, but must not be blank.
+
+Optional Fields:
+* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` must start with a letter and can consist of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
+    * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
+
+* `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
+
+* `NUMBER` - The phone number of the <span class="jobby-data-class">Recruiter</span>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
+
+* `EMAIL` - The email of the <span class="jobby-data-class">Recruiter</span>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
+
+* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
+
+* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="jobby-data-class">Recruiter's</text> physical address.
+
+* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag consists of only alphanumeric characters. Multiple tags can also be specified.
+
+Examples of valid use of `add --rec` command:
+* `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
+* `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
+* `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
+
+Examples of invalid use of `add --rec` command:
+* `add --rec` _Missing a name._
+* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
+* `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
+
+Sample demonstration with the expected visual outcome:
+* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
+
+* Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
+
+![add-recruiter](images/add_recruiter_success.png)
+
+### Apply command - `apply`
+Applies to: <span class="jobby-data-class">Job Application</span>
+
+<span class="learning-outcome">:trophy: Able to add detailed job applications associated with an organization in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]`
+
+Required fields:
+* `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Organization</span>
+  in the list to be applied to. Must be a valid and existing index or id.
+* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric. 
+  * You cannot add an application to an <span class="jobby-data-class">Organization</span> if that <span class="jobby-data-class">Organization</span> already has a job application with the same job title (case-sensitive).
+
+Optional fields:
+* `DESCRIPTION` - The description of the <span class="jobby-data-class">Job Application</span>. If specified, it should not be empty.
+* `DEADLINE` - The deadline of the current stage of the <span class="jobby-data-class">Job Application</span>. If specified, it should be in the format **DD-MM-YYYY**. If not specified, it is set to 14 days from the current date.
+  * The deadline can be set to before the current date. This is an intended feature.
+* `APPLICATION STAGE` - The stage of the <span class="jobby-data-class">Job Application</span>. If specified, it must be one of the 3 options: **resume, online assessment, interview**. If not specified, it is set to **resume**.
+* `STATUS` - The status of the <span class="jobby-data-class">Job Application</span>. If specified, it must be one of the 4 options: **pending, offered, accepted, turned down**. If not specified, it is set to **pending**.
+
+Examples of valid use of `apply` command:
+* `apply 1 --title SWE` _Given that the first item in the list of contacts is an organization._
+* `apply id_12345_1 --title Unit Tester --by 12-12-2023` _Given that id_12345_1 is an id belonging to an organization._
+* `apply id_12345_1 --title Level 7 Engineer --description Senior role, Pay: $100 --by 12-12-2023 --stage resume --status pending`
+
+Examples of invalid use of `apply` command:
+* `apply 0 --title SWE` _Invalid index._
+* `apply 10 --title SWE` _Given that there are only 9 contacts in the list and the 10th contact does not exist._
+* `apply 1 --title SWE` _Given that the first contact is a recruiter and not an organization._
+* `apply 1` _Job title not specified._
+* `apply 1 --title SWE --description` _Optional fields were used but not specified._
+* `apply 1 --title SWE --by 31-31-2023` _Invalid date for deadline._
+* `apply 1 --title SWE --by tomorrow` _Invalid format for deadline._
+
+
+### Edit command - `edit`
+
+Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="warning-bubble">:warning: Any edits made are not reversible.</span>
+
+#### Edit application command - `edit --application`
+<span class="learning-outcome">:trophy: Able to edit job applications associated with an organization in Jobby</span>
+
+<span class="information">:information_source: Also assumes that you have read the `apply` command documentation.</span>
+
+Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
+
+
+
+Required fields:
+* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> to edit in the list.
+
+Optional fields (at least 1 must be provided):
+* `TITLE` - The new job title of the <span class="jobby-data-class">Job Application</span>.
+  * The title cannot match a title of another <span class="jobby-data-class">Job Application</span> belonging to the same <span class="jobby-data-class">Organization</span> that is being applied to.
+* `DESCRIPTION` - The new description of the <span class="jobby-data-class">Job Application</span>.
+* `DEADLINE` - The new deadline of the <span class="jobby-data-class">Job Application</span>.
+* `STATUS` - The new application status of the <span class="jobby-data-class">Job Application</span>.
+* `STAGE` - The new job application stage of the <span class="jobby-data-class">Job Application</span>.
+
+Examples of valid use of `edit --application` command:
+* `edit --application 1 --title SRE` _Given that there is at least 1 job application._
+* `edit --application 1 --status pending` _Given that there is at least 1 job application._
+
+Examples of invalid use of `edit --application` command:
+* `edit --application 0 --title SRE` _Invalid index._
+* `edit --application 1` _One of the fields to edit are not given._
+* `edit --application 1 --title SWE` _Given that the organization of the application being updated already has another application with the title "SWE"._
+* `edit --application 1 --by 31-31-2023` _Invalid date._
+
+
+### Delete command - `delete`
+
+Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+<span class="alert-bubble">:warning: The deletion of data is permanent and there is no way to undo it.</span>
+
+#### Delete contact command - `delete`
+
+<span class="learning-outcome">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+Format: `delete INDEX/ID [--recursive]`
+
+If the contact to delete is an organization, it will delete the job applications associated with it.
+
+Required fields:
+* `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Contact</span> in the list
+
+Optional fields:
+* `--recursive` - Deletes the associated recruiter contacts if the contact to delete is an organization.
+
+Examples of valid use of `delete` command
+* `delete 1` _Given that there is at least 1 contact in the list._
+* `delete 1 --recursive` _Given that there is at least 1 contact in the list._
+
+Examples of invalid use of `delete` command
+* `delete 0` _Invalid index._
+
+#### Delete job application command - `delete --application`
+
+<span class="learning-outcome">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+Format: `delete --application INDEX`
+
+Required fields:
+* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> in the list.
+
+Examples of valid use of `delete` command
+* `delete --application 1` _Given that there is at least one job application in the list._
+
+Examples of invalid use of `delete` command
+* `delete --application 0` _Invalid index._
 
 
 --------------------------------------------------------------------------------------------------------------------

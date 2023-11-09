@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedContact.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalContacts.BENSON;
 import static seedu.address.testutil.TypicalContacts.NUS;
 import static seedu.address.testutil.TypicalContacts.RYAN;
 
@@ -17,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Address;
+import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
@@ -38,14 +38,14 @@ public class JsonAdaptedContactTest {
 
     private static final String VALID_TYPE_ORG = Type.ORGANIZATION.toString();
     private static final String VALID_TYPE_REC = Type.RECRUITER.toString();
-    private static final String VALID_NAME = BENSON.getName().toString();
+    private static final String VALID_NAME = NUS.getName().toString();
     private static final String VALID_ID = "f8a36caf-6d42-4fd2-a017-7f6a92fa3155";
-    private static final String VALID_PHONE = BENSON.getPhone().get().value;
-    private static final String VALID_EMAIL = BENSON.getEmail().get().value;
-    private static final String VALID_URL = BENSON.getUrl().get().value;
-    private static final String VALID_ADDRESS = BENSON.getAddress().get().value;
+    private static final String VALID_PHONE = NUS.getPhone().get().value;
+    private static final String VALID_EMAIL = NUS.getEmail().get().value;
+    private static final String VALID_URL = NUS.getUrl().get().value;
+    private static final String VALID_ADDRESS = NUS.getAddress().get().value;
     private static final String VALID_OID = NUS.getId().value;
-    private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
+    private static final List<JsonAdaptedTag> VALID_TAGS = NUS.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 
@@ -65,6 +65,27 @@ public class JsonAdaptedContactTest {
         addressBook.addContact(TEST_ORGANIZATION);
         JsonAdaptedContact organization = new JsonAdaptedContact(TEST_RECRUITER);
         assertEquals(TEST_RECRUITER, organization.toModelType(addressBook));
+    }
+
+    @Test
+    public void toModelType_invalidType_throwsIllegalValueException() {
+        AddressBook addressBook = new AddressBook();
+        JsonAdaptedContact contact = new JsonAdaptedContact(INVALID_TYPE, VALID_NAME, VALID_ID,
+                VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS,
+                VALID_OID, VALID_TAGS, null
+        );
+        String expectedMessage = Contact.MESSAGE_MISSING_TYPE;
+        assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
+    }
+
+    @Test
+    public void toModelType_nullType_throwsIllegalValueException() {
+        AddressBook addressBook = new AddressBook();
+        JsonAdaptedContact contact = new JsonAdaptedContact(null, VALID_NAME, VALID_ID,
+                VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS, VALID_OID, VALID_TAGS, null
+        );
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
     }
 
     @Test

@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalContacts.NUS;
 
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 
@@ -76,16 +75,6 @@ public class RecruiterBuilder extends ContactBuilder {
 
     @Override
     public Recruiter build() {
-        Contact contact = super.build();
-        return new Recruiter(
-                contact.getName(),
-                contact.getId(),
-                contact.getPhone().orElse(null),
-                contact.getEmail().orElse(null),
-                contact.getUrl().orElse(null),
-                contact.getAddress().orElse(null),
-                contact.getTags(),
-                organization
-        );
+        return new Recruiter(name, id, phone, email, url, address, tags, organization);
     }
 }
