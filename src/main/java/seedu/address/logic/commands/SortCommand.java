@@ -17,6 +17,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_TITLE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_URL;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
 import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
@@ -119,8 +120,8 @@ public class SortCommand extends Command {
         if (this.isReset) {
             return otherSortCommand.isReset;
         }
-        Boolean equalsContact = comparatorContact.equals(otherSortCommand.comparatorContact);
-        Boolean equalsApplication = comparatorApplication.equals(otherSortCommand.comparatorApplication);
-        return (equalsContact && equalsApplication && !otherSortCommand.isReset);
+        return Objects.equals(comparatorContact, otherSortCommand.comparatorContact)
+                && Objects.equals(comparatorApplication, otherSortCommand.comparatorApplication)
+                && !otherSortCommand.isReset;
     }
 }
