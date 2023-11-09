@@ -281,7 +281,64 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 ## Features
 
-(Detailed information on each command with the constraints, possible errors and feature flaws)
+#### Adding an organization contact: `add --org`
+
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
+
+Acceptable Parameters:
+* `NAME` can accept any value, but must not be blank.
+* `ID` refers to a unique identifier which is used to uniquely identify the organization (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
+    * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
+* `NUMBER` should be a valid phone number.
+* `EMAIL` should be a valid email.
+* `URL` should be a valid url-like format.
+* `ADDRESS` can accept any value. It designates the contact’s physical address.
+* `TAG` can accept any value and may have multiple inputs.
+
+
+Examples:
+* `add --org --name J&J`
+* `add --org --name Google --id g-sg --phone 98765432 `
+* `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
+* `add --org --name Example --url www.organization.org --tag freelance`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
+
+### Editing a contact: `edit`
+
+Current: Edit contacts whose names contain any of the given keywords or ids.
+
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* Names, index and id are being searched.
+* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
+* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
+
+Examples:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
+
+### Locating contacts by name and id: `find`
+
+Current: Finds contacts whose names contain any of the given keywords or ids.
+
+Format: `find KEYWORD/ID...`
+
+* Name & ID are searched
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
+* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find id_12345` returns `john` and whose id is `id_12345`
+* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
+* `find alex david` returns `Alex Yeoh`, `David Li`
 
 ### Add command - `add`
 
