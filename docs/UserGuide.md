@@ -607,7 +607,23 @@ Examples of invalid use of `delete` command
 
 ## Glossary
 
-(Terms that may be difficult to understand here.)
+### Appendix A: Acceptable values for parameters
+
+Parameter | Requirements | Examples
+----------|--------------|---------
+`INDEX` | A valid index can be any non-negative integer. | <ul><li>`1`</li><li>`30`</li></ul>
+`NAME` | A valid name can accept any non-empty value. | <ul><li>`Ryan Koh`</li><li>`小明`</li></ul>
+`ID` | A valid ID has to start with a letter.<br><br>It can include alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | <ul><li>`woogle123`</li><li>`ryan_soc-rec`</li></ul>
+`NUMBER` | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits. | <ul><li>`999`</li><li>`91824137`</li></ul>
+`EMAIL` | A valid email should be in the form of `local-part@domain` where `local-part` and `domain` must be separated by a single `@`.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can consist of multiple `domain` labels separated by a period. Each label can consist of any character except whitespace. The *last* `domain` label must be at least 2 characters long. | <ul><li>`ryankoh@nus`</li><li>`ryan-koh@nus.edu.sg`</li></ul>
+`URL` | A valid url should be in the form of `domain.tld` where `domain` and `tld` must be separated by a period.<br><br> The `domain` name can consist of multiple `domain` labels. Each label can consist of any character. | <ul><li>`example.com`</li><li>`example.more.com`</li><li>`https://example.com`</li></ul>
+`ADDRESS` | A valid address can accept any non-empty value.<br><br>It designates the physical address. | <ul><li>`21 Lower Kent Ridge Rd`</li></ul> 
+`TAG` | A valid tag can consist of any character except whitespace. | <ul><li>`internship`</li><li>`network`</li><li>`parttime`</li><li>`jobPortal`</li></ul> 
+`OID` | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an organization contact in the address book. | <ul><li>`woogle123`</li><li>`meta_sg-1`</li></ul>
+`DESCRIPTION` | A valid description can accept any non-empty value. | <ul><li>`Senior Role`</li><li>`Hourly rate: $25`</li></ul>
+`DEADLINE` | A valid deadline should be in the form *DD-MM-YYYY*.<br><br>The day `DD` and month `MM` can be either single or double digits. | <ul><li>`09-02-2022`</li><li>`9-2-2022`</li><li>`09-2-2022`</li><li>`9-02-2022`</li><li>`19-11-2022`</li></ul>
+`APPLICATION STAGE` | A valid application stage can only accept one of the three values: *resume, online assessment, interview*. | <ul><li>`resume`</li><li>`online assessment`</li><li>`interview`</li></ul>
+`STATUS` | A valid status can only accept one of the four values: *pending, offered, accepted, turned down*. | <ul><li>`pending`</li><li>`offered`</li><li>`accepted`</li><li>`turned down`</li></ul>
 
 --------------------------------------------------------------------------------------------------------------------
 
