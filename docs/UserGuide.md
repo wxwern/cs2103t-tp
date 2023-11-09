@@ -3,8 +3,7 @@ layout: page
 title: User Guide
 ---
 
-INSERT INTRO TO JOBBY HERE
-**Jobby** is a **desktop app for managing job applications and contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
+**Jobby** is a **desktop app for job seekers to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -29,9 +28,136 @@ INSERT INTRO TO JOBBY HERE
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## Starter Guide
+Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's 
+functionalities that you will use on a daily basis. 
 
-1. ... (Go through the basic features like a tutorial)
+This guide will be done in an example workflow that you will likely experience while using Jobby to get you accustomed to all of Jobby's commands.
+
+> ### You will learn
+> - How to add contact into Jobby
+> - How to edit contact in Jobby
+> - How to add application in Jobby
+> - How to use core features like find, remove
+> - How to delete data in Jobby
+> - And more...
+
+### GUI Legends
+
+Below is a labelled diagram of our GUI
+
+![Label](images/starter-guide/initial-ui.jpg)
+
+
+### Adding `Contact`
+Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
+
+Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
+
+You can add the `Organization` into Jobby with a simple command: 
+```add --org --name Woogle --id woogle_id```
+
+![Add Organization](images/starter-guide/add-woogle.jpg)
+
+
+You can then add a **recruiter** that's related to the "Woogle" organization like so:: 
+```add --rec --name John --id john_id --oid woogle_id```
+
+![Add Recruiter](images/starter-guide/add-john.jpg)
+
+
+> To find out all of `Organization` and `Recruiter`'s flags, go [organization documentation]()
+> and [recruiter documentation]()
+
+### Adding `Application`
+Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
+an `Application` for this company with the by including the `Organization ID` in the command: 
+`apply woogle_id --title Software Engineer --by 22-11-2023`
+
+![Add Application](images/starter-guide/add-application.jpg)
+
+`Application` will automatically generates the fields if there are no inputs on your end.
+- `Status: Pending`
+- `Stage: Resume`
+
+> You will be able to add different details of `Application`, see the [applcation documentation]() here.
+
+### Editing `Contact`
+Now that you have both your Contacts and Applications. You received new informations about your `Contacts`, you will have to edit your `Contact` data.
+
+We can do so with the `edit` CLI command with the desired id and input.
+
+Let's say we want to change the phone detail of `Organization: Woogle` and email of `Recruiter: John`.
+We can use the commands:
+`edit woogle_id --phone 12345678` and `edit john_id --email john@gmail.com`
+
+![Edit Contact](images/starter-guide/edit-john.jpg)
+
+
+After executing the commands,
+`Organization: Woogle`'s number changed to `phone: 12345678`.
+`Recruiter: John`'s email changed to `Email: john@gmail.com`.
+
+> To find more ways to `edit` `Organization` and `Recruiter`, see the [edit documentation](LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
+
+### Editing `Application`
+For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to 
+the `Interview` stage.
+
+You will be able to do it simply with:
+`edit --application 5 --stage interview`
+
+![edit application](images/starter-guide/edit-application.jpg)
+
+
+This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
+> To find more more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
+
+### Get `Reminder`
+During your internship application process, you might feel that there are many deadlines that you have to keep track of,
+in Jobby, we have a `Remind` command that will help you sort your applications by their `Deadlines`.
+
+You can do so with a simple command:
+`remind --earliest` 
+to see your application deadlines from the earliest to latest.
+
+![Remind Earliest](images/starter-guide/remind-earliest.jpg)
+
+
+> To find out more ways to use `remind`, see the [remind documentation](LINK TO REMIND DOCUMENTATION).
+
+### Finding `Organization` and its related `Applications
+Let's say there is a specific organization application you are looking for, like **Woogle**, you will be able to easily find it via
+this command: ```find woogle```
+
+SCREENSHOT
+
+> To find out more ways to use `find`, see the [find documentation](LINK TO find DOCUMENTATION).
+
+
+### List everything back
+After filtering, you want to get back the entire list of organizations and applications in Jobby. You can simply use
+the `list` command.
+
+![List](images/starter-guide/list.jpg)
+
+
+### Deleting data
+After you are done with your application, or if you realised that one of the `Contact` in Jobby no longer exists, you can
+feel free to `delete` the `Organization` from Jobby.
+
+In our case, let's delete `Woogle` from Jobby by executing the command:
+`delete woogle_id --recursive`
+
+This will delete `Woogle` along with all of its **applications** and **recruiters**. 
+
+![Delete](images/starter-guide/delete-recursive.jpg)
+
+
+### Next Steps
+By now, you should know the basics of how Jobby works!
+
+Checkout [Understanding Jobby's command syntax](#Understanding-Jobby's-command-syntax).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -155,7 +281,64 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 ## Features
 
-(Detailed information on each command with the constraints, possible errors and feature flaws)
+#### Adding an organization contact: `add --org`
+
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
+
+Acceptable Parameters:
+* `NAME` can accept any value, but must not be blank.
+* `ID` refers to a unique identifier which is used to uniquely identify the organization (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
+    * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
+* `NUMBER` should be a valid phone number.
+* `EMAIL` should be a valid email.
+* `URL` should be a valid url-like format.
+* `ADDRESS` can accept any value. It designates the contact’s physical address.
+* `TAG` can accept any value and may have multiple inputs.
+
+
+Examples:
+* `add --org --name J&J`
+* `add --org --name Google --id g-sg --phone 98765432 `
+* `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
+* `add --org --name Example --url www.organization.org --tag freelance`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
+
+### Editing a contact: `edit`
+
+Current: Edit contacts whose names contain any of the given keywords or ids.
+
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* Names, index and id are being searched.
+* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
+* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
+
+Examples:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
+
+### Locating contacts by name and id: `find`
+
+Current: Finds contacts whose names contain any of the given keywords or ids.
+
+Format: `find KEYWORD/ID...`
+
+* Name & ID are searched
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
+* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find id_12345` returns `john` and whose id is `id_12345`
+* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
+* `find alex david` returns `Alex Yeoh`, `David Li`
 
 ### Add command - `add`
 
@@ -216,6 +399,88 @@ Sample demonstration with the expected visual outcome:
 * Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
 
 ![add-recruiter](images/add_recruiter_success.png)
+
+#### List contacts - `list`
+<span class="learning-outcome">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+Format: `list [--org/--rec]`
+
+Shows a list of all contacts in the address book.
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
+
+Examples:
+* `list`
+* `list --org`
+* `list --rec`
+
+[SCREENSHOT HERE]
+
+#### Sorting contacts and job applications - `sort`
+<span class="learning-outcome">:trophy: Able to sort contacts and job applications in Jobby</span>
+
+<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+
+Format: `sort --FLAG_TO_SORT [--ascending/--descending]`
+
+
+Supported flags (only 1 must be provided): [This should be a title font, I think]
+
+Flags for contacts:
+* `--address` - The address of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--email` - The email address of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--id` - The identification string of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--name` - The name of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--phone` - The phone number of the <span class="job-application">Contact</span>. Will sort alphabetically.
+* `--url` - The web address of the <span class="job-application">Contact</span>. Will sort alphabetically.
+
+Flags for job applications:
+* `--by` - The deadline of the <span class="job-application">Job Application</span>. Will sort chronologically.
+* `--stage` - The stage of the <span class="job-application">Job Application</span>. Will sort by stage order.
+* `--stale` - The time of last update of the <span class="job-application">Job Application</span>. Will sort chronologically.
+* `--status` - The status of the <span class="job-application">Job Application</span>. Will sort by status order.
+* `--title` - The title of the <span class="job-application">Job Application</span>. Will sort alphabetically.
+
+Flags for resetting the sort order:
+* `--none` - Will reset the sorting order of <span class="job-application">Contacts</span> and <span class="job-application">Job Applications</span>.
+
+Flags for specifying the sort order:
+* `--ascending` - The specified flag will sort in ascending order.
+* `--descending` - The specified flag will sort in descending order.
+
+If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
+Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
+`Sort` will work even if no <span class="job-application">Contacts</span> or <span class="job-application">Job Applications</span> exist.
+
+[SCREENSHOT HERE]
+
+Examples of valid use of `sort` command:
+* `sort --title --ascending`
+* `sort --url`
+* `sort --stale --descending`
+* `sort --none`
+
+Examples of invalid use of `sort` command:
+* `sort` _No flag provided._
+* `sort --organization` _Invalid flag._
+* `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
+
+
+### Reminding about deadlines: `remind`
+Reminds the user of upcoming deadlines for job applications.
+
+Format: `remind --earliest/--latest`
+
+Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
+
+Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
+
+Examples:
+* `remind --earliest`
+* `remind --latest`
 
 ### Apply command - `apply`
 Applies to: <span class="jobby-data-class">Job Application</span>
