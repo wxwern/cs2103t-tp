@@ -43,6 +43,44 @@ _Explanation of how Jobby's commands are structured_
 
 ## Command documentation
 
+#### Adding an organization contact: `add --org`
+
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
+
+Acceptable Parameters:
+* `NAME` can accept any value, but must not be blank.
+* `ID` refers to a unique identifier which is used to uniquely identify the organization (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
+    * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
+* `NUMBER` should be a valid phone number.
+* `EMAIL` should be a valid email.
+* `URL` should be a valid url-like format.
+* `ADDRESS` can accept any value. It designates the contact’s physical address.
+* `TAG` can accept any value and may have multiple inputs.
+
+
+Examples:
+* `add --org --name J&J`
+* `add --org --name Google --id g-sg --phone 98765432 `
+* `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
+* `add --org --name Example --url www.organization.org --tag freelance`
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
+
+### Editing a contact: `edit`
+
+Current: Edit contacts whose names contain any of the given keywords or ids.
+
+Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* Names, index and id are being searched.
+* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
+* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
+
+Examples:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
+
 ### Locating contacts by name and id: `find`
 
 Current: Finds contacts whose names contain any of the given keywords or ids.
