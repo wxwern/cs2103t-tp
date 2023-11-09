@@ -6,7 +6,7 @@ title: User Guide
 **Jobby** is a **desktop app for job seekers to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -29,8 +29,8 @@ title: User Guide
 --------------------------------------------------------------------------------------------------------------------
 
 ## Starter Guide
-Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's 
-functionalities that you will use on a daily basis. 
+Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's
+functionalities that you will use on a daily basis.
 
 This guide will be done in an example workflow that you will likely experience while using Jobby to get you accustomed to all of Jobby's commands.
 
@@ -54,13 +54,13 @@ Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, whic
 
 Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
 
-You can add the `Organization` into Jobby with a simple command: 
+You can add the `Organization` into Jobby with a simple command:
 ```add --org --name Woogle --id woogle_id```
 
 ![Add Organization](images/starter-guide/add-woogle.jpg)
 
 
-You can then add a **recruiter** that's related to the "Woogle" organization like so:: 
+You can then add a **recruiter** that's related to the "Woogle" organization like so::
 ```add --rec --name John --id john_id --oid woogle_id```
 
 ![Add Recruiter](images/starter-guide/add-john.jpg)
@@ -71,7 +71,7 @@ You can then add a **recruiter** that's related to the "Woogle" organization lik
 
 ### Adding `Application`
 Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
-an `Application` for this company with the by including the `Organization ID` in the command: 
+an `Application` for this company with the by including the `Organization ID` in the command:
 `apply woogle_id --title Software Engineer --by 22-11-2023`
 
 ![Add Application](images/starter-guide/add-application.jpg)
@@ -101,7 +101,7 @@ After executing the commands,
 > To find more ways to `edit` `Organization` and `Recruiter`, see the [edit documentation](LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
 
 ### Editing `Application`
-For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to 
+For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to
 the `Interview` stage.
 
 You will be able to do it simply with:
@@ -118,7 +118,7 @@ During your internship application process, you might feel that there are many d
 in Jobby, we have a `Remind` command that will help you sort your applications by their `Deadlines`.
 
 You can do so with a simple command:
-`remind --earliest` 
+`remind --earliest`
 to see your application deadlines from the earliest to latest.
 
 ![Remind Earliest](images/starter-guide/remind-earliest.jpg)
@@ -149,7 +149,7 @@ feel free to `delete` the `Organization` from Jobby.
 In our case, let's delete `Woogle` from Jobby by executing the command:
 `delete woogle_id --recursive`
 
-This will delete `Woogle` along with all of its **applications** and **recruiters**. 
+This will delete `Woogle` along with all of its **applications** and **recruiters**.
 
 ![Delete](images/starter-guide/delete-recursive.jpg)
 
@@ -288,7 +288,7 @@ Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url
 Acceptable Parameters:
 * `NAME` can accept any value, but must not be blank.
 * `ID` refers to a unique identifier which is used to uniquely identify the organization (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
-    * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
+  * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
 * `NUMBER` should be a valid phone number.
 * `EMAIL` should be a valid email.
 * `URL` should be a valid url-like format.
@@ -369,7 +369,7 @@ Required Fields:
 
 Optional Fields:
 * `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` must start with a letter and can consist of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
-    * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
+  * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
 
 * `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
 
@@ -494,7 +494,7 @@ Format: `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE
 Required fields:
 * `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Organization</span>
   in the list to be applied to. Must be a valid and existing index or id.
-* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric. 
+* `TITLE` - The job title of the position. Accepts multiple words separated with spaces, as long as characters are alphanumeric.
   * You cannot add an application to an <span class="jobby-data-class">Organization</span> if that <span class="jobby-data-class">Organization</span> already has a job application with the same job title (case-sensitive).
 
 Optional fields:
@@ -614,4 +614,3 @@ Examples of invalid use of `delete` command
 ## Issues
 
 (Where to report issues and what bugs currently exist)
-
