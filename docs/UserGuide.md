@@ -301,6 +301,38 @@ Examples:
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Command Summary
+
+### Commands for Handling Contacts
+
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Add Organization**  | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
+ **Add Recruiter**     | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Delete Contact**    | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
+ **Edit Contact**      | `edit INDEX ...` or <br>`edit ID ...`                                                                                                                                                                                                                                                                              
+ **List**              | `list [--org/--rec]`
+ **Sort Contacts**     | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`
+
+### Commands for Handling Recruiters
+
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Delete Application**| `delete --application INDEX/ID` <br> e.g., `delete --application 2`                                                                                                                                                                              
+ **Edit Application**  | `edit --application INDEX ...` <br> e.g., `edit --application 2 --title Analyst`                                                                                                                                                                                                                                                                             
+ **Apply**             | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]`
+ **Sort Applications** | `sort --by/--stage/--stale/--status/--title [--ascending/--descending]`
+
+### Other Commands
+
+ Action               | Format, Examples                                                                                                                                                                                                                                                                            
+----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
+ **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+ **Help**             | `help`
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Glossary
 
 (Terms that may be difficult to understand here.)
