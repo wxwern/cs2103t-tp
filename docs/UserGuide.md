@@ -611,19 +611,19 @@ Examples of invalid use of `delete` command
 
 Parameter | Requirements | Examples
 ----------|--------------|---------
-`INDEX` | A valid index can be any non-negative integer. | `1`<br>`30`
+`INDEX` | A valid index can accept any non-negative integer. | `1`<br>`30`
 `NAME` | A valid name can accept any non-empty value. | `Ryan Koh`<br>`小明`
-`ID` | A valid ID has to start with a letter.<br><br>It can include alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | `woogle123`<br>`ryan_soc-rec`
+`ID` | A valid ID has to start with a letter.<br><br>It can consists of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | `woogle123`<br>`ryan_soc-rec`
 `NUMBER` | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits. | `999`<br>`91824137`
-`EMAIL` | A valid email should be in the form of `local-part@domain` where `local-part` and `domain` must be separated by a single `@`.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can consist of multiple `domain` labels separated by a period. Each label can consist of any character except whitespace. The **last** `domain` label must be at least 2 characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`
-`URL` | A valid url should be in the form of `domain.tld` where `domain` and `tld` must be separated by a period.<br><br> The `domain` name can consist of multiple `domain` labels. Each label can consist of any character. | `example.com`<br>`example.more.com`<br>`https://example.com`
-`ADDRESS` | A valid address can accept any non-empty value.<br><br>It designates the physical address. | `21 Lower Kent Ridge Rd` 
+`EMAIL` | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`
+`URL` | A valid url should be in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period.<br><br> The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. | `example.com`<br>`example.more.com`<br>`https://example.com`
+`ADDRESS` | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address. | `21 Lower Kent Ridge Rd` 
 `TAG` | A valid tag can consist of any character except whitespace. | `internship`<br>`network`<br>`parttime`<br>`jobPortal` 
-`OID` | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an organization contact in the address book. | `woogle123`<br>`meta_sg-1`
+`OID` | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book. | `woogle123`<br>`meta_sg-1`
 `DESCRIPTION` | A valid description can accept any non-empty value. | `Senior Role`<br>`Hourly rate: $25`
-`DEADLINE` | A valid deadline should be a date in the form of **DD-MM-YYYY**.<br><br>The day (**DD**) and month (**MM**) can be either single or double digits. | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`
-`APPLICATION STAGE` | A valid application stage can only be one of the three values: **resume, online assessment, interview**. | `resume`<br>`online assessment`<br>`interview`
-`STATUS` | A valid status can only be one of the four values: **pending, offered, accepted, turned down**. | `pending`<br>`offered`<br>`accepted`<br>`turned down`
+`DEADLINE` | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits. | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`
+`APPLICATION STAGE` | A valid application stage can accept only one of the three values: `resume`, `online assessment`, `interview`. | `resume`<br>`online assessment`<br>`interview`
+`STATUS` | A valid status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`. | `pending`<br>`offered`<br>`accepted`<br>`turned down`
 
 --------------------------------------------------------------------------------------------------------------------
 
