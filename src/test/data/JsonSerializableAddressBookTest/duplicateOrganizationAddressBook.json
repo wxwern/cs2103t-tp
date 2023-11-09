@@ -1,0 +1,20 @@
+{
+  "persons": [ {
+    "name": "Alice Pauline",
+    "type": "organization",
+    "id": "a8dfa74c-2229-4f4f-99a5-336c25e6783e",
+    "phone": "94351253",
+    "email": "alice@example.com",
+    "url": "www.google.com",
+    "address": "123, Jurong West Ave 6, #08-111",
+    "tags": [ "friends" ]
+  }, {
+    "name": "Alice Pauline 2",
+    "type": "organization",
+    "id": "a8dfa74c-2229-4f4f-99a5-336c25e6783e",
+    "phone": "94351253",
+    "email": "pauline@example.com",
+    "url": "www.facebook.com",
+    "address": "4th street"
+  } ]
+}

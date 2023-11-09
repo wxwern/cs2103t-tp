@@ -18,7 +18,8 @@ import seedu.address.model.tag.Tag;
  * Represents a Contact in the address book.
  * Guarantees: name and id are present and not null, field values are immutable and if present, are validated.
  */
-public class Contact {
+public abstract class Contact {
+    public static final String MESSAGE_MISSING_TYPE = "There is no type specified for this Contact";
 
     // Identity fields
     private final Name name;
@@ -37,12 +38,7 @@ public class Contact {
      * Name and id fields must be non-null.
      * Tags must be non-null but can be empty as well.
      * The other fields can be null.
-     *
-     * <p>
-     * TODO: This should be changed to an abstract class. Do not use directly externally.
-     * </p>
      */
-    @Deprecated
     public Contact(Name name, Id id, Phone phone, Email email, Url url, Address address, Set<Tag> tags,
                    Contact parent) {
         requireAllNonNull(name, id, tags);
@@ -56,10 +52,7 @@ public class Contact {
         this.parent = Optional.ofNullable(parent);
     }
 
-    public Type getType() {
-        // TODO: This should be an abstract method.
-        return Type.UNKNOWN;
-    }
+    public abstract Type getType();
 
     public Name getName() {
         return name;
@@ -130,35 +123,7 @@ public class Contact {
      * This defines a stronger notion of equality between two contacts.
      */
     @Override
-    public boolean equals(Object other) {
-        // TODO: This should be an abstract method.
-
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls implicitly
-        if (!(other instanceof Contact)) {
-            return false;
-        }
-
-        Contact otherContact = (Contact) other;
-        if (this.getType() != otherContact.getType()) {
-            return false;
-        }
-
-        if (this.getType() == Type.UNKNOWN) {
-            return id.equals(otherContact.id)
-                    && name.equals(otherContact.name)
-                    && phone.equals(otherContact.phone)
-                    && email.equals(otherContact.email)
-                    && address.equals(otherContact.address)
-                    && url.equals(otherContact.url)
-                    && tags.equals(otherContact.tags);
-        }
-
-        throw new IllegalStateException("The equality comparison should be overriden by a subclass.");
-    }
+    public abstract boolean equals(Object other);
 
     @Override
     public int hashCode() {

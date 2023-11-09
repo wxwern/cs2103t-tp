@@ -37,7 +37,6 @@ import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Type;
-import seedu.address.testutil.ContactBuilder;
 import seedu.address.testutil.EditContactDescriptorBuilder;
 import seedu.address.testutil.OrganizationBuilder;
 import seedu.address.testutil.RecruiterBuilder;
@@ -52,10 +51,13 @@ public class EditCommandTest {
 
     @Test
     public void execute_editCommandByTargetId_success() {
-        showContactAtIndex(model, INDEX_FIRST_CONTACT);
+        showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
 
-        Contact contactInFilteredList = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
-        Contact editedContact = new ContactBuilder(contactInFilteredList).withName(VALID_NAME_BOB).build();
+        // Guaranteed to be an Organization per TypicalContacts
+        Organization contactInFilteredList =
+                (Organization) model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Organization editedContact = new OrganizationBuilder(contactInFilteredList)
+                .withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(contactInFilteredList.getId(),
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
@@ -292,10 +294,11 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        showContactAtIndex(model, INDEX_FIRST_CONTACT);
+        showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
 
-        Contact contactInFilteredList = model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
-        Contact editedContact = new ContactBuilder(contactInFilteredList).withName(VALID_NAME_BOB).build();
+        Organization contactInFilteredList =
+                (Organization) model.getDisplayedContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        Organization editedContact = new OrganizationBuilder(contactInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_CONTACT,
                 new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
