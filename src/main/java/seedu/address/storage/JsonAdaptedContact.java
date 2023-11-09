@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Contact}.
  */
-class JsonAdaptedContact {
+class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Contact's %s field is missing!";
 
@@ -196,4 +197,8 @@ class JsonAdaptedContact {
         }
     }
 
+    @Override
+    public int compareTo(JsonAdaptedContact o) {
+        return Type.fromString(this.type).compareTo(Type.fromString(o.type));
+    }
 }
