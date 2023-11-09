@@ -354,46 +354,25 @@ Supplying `--org` adds an <span class="jobby-data-class">Organization</span> whi
 
 Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
 
-#### Add recruiter command - `add --rec`
+### Add a recruiter contact - `add --rec`
 
-Applies to: <span class="jobby-data-class">Recruiter</span>
-
-<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
-
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <br>
+<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Intermediate</span>
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
-Required Fields:
-* `NAME` - The name of the <span class="jobby-data-class">Recruiter</span>. A valid name can be of any value, but must not be blank.
+Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
 
-Optional Fields:
-* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` must start with a letter and can consist of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
-    * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
-
-* `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
-
-* `NUMBER` - The phone number of the <span class="jobby-data-class">Recruiter</span>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
-
-* `EMAIL` - The email of the <span class="jobby-data-class">Recruiter</span>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
-
-* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
-
-* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="jobby-data-class">Recruiter's</text> physical address.
-
-* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag consists of only alphanumeric characters. Multiple tags can also be specified.
-
-Examples of valid use of `add --rec` command:
+#### Examples of valid use:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
 * `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
 * `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
 
-Examples of invalid use of `add --rec` command:
+#### Examples of invalid use:
 * `add --rec` _Missing a name._
 * `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
 * `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
 
-Sample demonstration with the expected visual outcome:
+#### Sample demonstration with the expected visual outcome:
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
 
 * Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
