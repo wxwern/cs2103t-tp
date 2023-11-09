@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,18 +39,10 @@ class JsonSerializableAddressBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(
-                source.getContactList().stream()
-                        .sorted((c1, c2) -> {
-                            // TODO: Identified tech debt: Enums have natural ordering.
-                            if (c1.getType() == Type.RECRUITER && c2.getType() == Type.ORGANIZATION) {
-                                return 1;
-                            } else if (c1.getType() == Type.ORGANIZATION && c2.getType() == Type.RECRUITER) {
-                                return -1;
-                            }
-                            return 0;
-                        })
-                .map(JsonAdaptedContact::new).collect(Collectors.toList()));
+        persons.addAll(source.getContactList().stream()
+                .map(JsonAdaptedContact::new)
+                .sorted()
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -59,6 +52,7 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        Collections.sort(persons);
         for (JsonAdaptedContact jsonAdaptedContact : persons) {
             Contact contact = jsonAdaptedContact.toModelType(addressBook);
             if (addressBook.getContactById(contact.getId()) != null) {
