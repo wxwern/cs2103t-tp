@@ -38,7 +38,8 @@ This guide will be done in an example workflow that you will likely experience w
 > - How to add contact into Jobby
 > - How to edit contact in Jobby
 > - How to add application in Jobby
-> - How to delete files in Jobby
+> - How to use core features like find, remove
+> - How to delete data in Jobby
 > - And more...
 
 ### GUI Legends
@@ -65,8 +66,8 @@ You can then add a **recruiter** that's related to the "Woogle" organization lik
 ![Add Recruiter](images/starter-guide/add-john.jpg)
 
 
-> You will be able to add additional deals into `Organization` and `Recruiter` through (ORGANIZATION DOCUMENTATION) and (RECRUITER DOCUMENTATION)
-> respectively.
+> To find out all of `Organization` and `Recruiter`'s flags, go [organization documentation]()
+> and [recruiter documentation]()
 
 ### Adding `Application`
 Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
@@ -79,7 +80,7 @@ an `Application` for this company with the by including the `Organization ID` in
 - `Status: Pending`
 - `Stage: Resume`
 
-> You will be able to add different details of `Application` by looking through the (APPLICATION DOCUMENTATION) here.
+> You will be able to add different details of `Application`, see the [applcation documentation]() here.
 
 ### Editing `Contact`
 Now that you have both your Contacts and Applications. You received new informations about your `Contacts`, you will have to edit your `Contact` data.
