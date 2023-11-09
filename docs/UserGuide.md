@@ -267,7 +267,9 @@ Flags for specifying the sort order:
 * `--descending` - The specified flag will sort in descending order.
 
 If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
 Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
 `Sort` will work even if no <span class="job-application">Contacts</span> or <span class="job-application">Job Applications</span> exist.
 
 [SCREENSHOT HERE]
@@ -290,6 +292,7 @@ Reminds the user of upcoming deadlines for job applications.
 Format: `remind --earliest/--latest`
 
 Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
+
 Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
 
 Examples:
