@@ -607,6 +607,12 @@ Examples of invalid use of `delete` command
 
 ## Glossary
 
+### Definition of certain terms
+
+Term | Definition
+-----|-----------
+**Top Level Domain** | A Top-Level Domain (TLD) is the highest level in the hierarchical domain naming system of the internet. It's the part of a domain name that comes after the last dot, such as ".com," ".org," or ".net."
+
 ### Appendix A: Acceptable values for parameters
 
 Parameter | Requirements | Examples
