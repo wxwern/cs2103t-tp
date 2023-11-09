@@ -218,9 +218,9 @@ Sample demonstration with the expected visual outcome:
 ![add-recruiter](images/add_recruiter_success.png)
 
 ### Apply command - `apply`
-Applies to: <span class="jobby-data-class">Job Application</span><span class="intermediate pill">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span>
 
-<span class="learning-outcome">:trophy: Able to add job applications associated with an organization in Jobby</span>
+<span class="learning-outcome">:trophy: Able to add detailed job applications associated with an organization in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
@@ -256,9 +256,9 @@ Examples of invalid use of `apply` command:
 
 ### Edit command - `edit`
 
-Applies to: <span class="jobby-data-class">Job Application</span><span class="jobby-data-class">Organization</span><span class="jobby-data-class">Recruiter</span><span class="intermediate pill">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
 
-<span class="information">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information">:information_source: Assumes that you have completed the tutorial</span> <span class="intermediate pill">Intermediate</span>
 
 <span class="warning-bubble">:warning: Any edits made are not reversible.</span>
 
@@ -295,15 +295,15 @@ Examples of invalid use of `edit --application` command:
 
 ### Delete command - `delete`
 
-Applies to: <span class="jobby-data-class">Job Application</span><span class="jobby-data-class">Organization</span><span class="jobby-data-class">Recruiter</span><span class="intermediate pill">Intermediate</span>
+Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
 
 <span class="information">:information_source: Assumes that you have completed the tutorial</span>
 
-<span class="alert-bubble">:warning: The deletion of data is permanent and there is no way to undo it.<\span>
+<span class="alert-bubble">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
 #### Delete contact command - `delete`
 
-<span class="learning-outcome">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span>
+<span class="learning-outcome">:trophy: Able to delete contacts in Jobby, and in particular deleting organizations and its associated recruiters and job applications from Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 Format: `delete INDEX/ID [--recursive]`
 
@@ -324,7 +324,7 @@ Examples of invalid use of `delete` command
 
 #### Delete job application command - `delete --application`
 
-<span class="learning-outcome">:trophy: Able to delete job applications in Jobby</span>
+<span class="learning-outcome">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 Format: `delete --application INDEX`
 
