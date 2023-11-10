@@ -3,6 +3,8 @@ layout: page
 title: Wern's Project Portfolio Page
 ---
 
+<div class="allow-page-break" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop application used for tracking job applications.
@@ -27,3 +29,5 @@ Given below are my contributions to the project.
 
 * **Community**:
   * To be added...
+
+</div>
