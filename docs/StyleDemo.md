@@ -115,7 +115,7 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 ### Adding contacts - `add`
 
-**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span>
+<div class="applies-to pill">**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
 <span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
@@ -132,7 +132,7 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 #### Adding recruiters - `add --rec`
 
-**Applies to:** <span class="jobby-data-class pill">Recruiter</span>
+<div class="applies-to pill">**Applies to:** <span class="jobby-data-class pill">Recruiter</span></div>
 
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
@@ -179,7 +179,7 @@ Supplying `--org` lists only Organizations while supplying `--rec` lists only Re
 [SCREENSHOT HERE]
 
 ### Sorting - `sort`
-**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span>
+<div class="applies-to pill">**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 <span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
@@ -237,7 +237,7 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 ### Deleting - `delete`
 
-**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span>
+<div class="applies-to pill">**Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 #### Deleting contacts - `delete`
 
