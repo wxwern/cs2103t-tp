@@ -51,7 +51,15 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args,
                         EditCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
-        if (argMultimap.getValue(FLAG_APPLICATION).isPresent()) {
+        boolean hasApplicationFlag = argMultimap.getValue(FLAG_APPLICATION).isPresent();
+        boolean hasContactIdOrIndex = !argMultimap.getPreamble().isEmpty();
+
+        if (hasApplicationFlag && hasContactIdOrIndex) {
+            // example: edit 1 --application 1
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        if (hasApplicationFlag) {
             return handleEditApplication(argMultimap);
         }
 
@@ -60,6 +68,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         try {
             String preambleStr = argMultimap.getPreamble();
+
+            // TODO: Tech debt - Create a wrapper that will parse indexXorId
             Object indexXorId = ParserUtil.parseIndexXorId(preambleStr);
 
             if (indexXorId instanceof Id) {
@@ -115,10 +125,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (targetId == null) {
             return new EditCommand(index, editContactDescriptor);
-
         } else {
             return new EditCommand(targetId, editContactDescriptor);
-
         }
 
     }
