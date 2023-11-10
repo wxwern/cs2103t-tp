@@ -117,22 +117,17 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 <div class="applies-to pill"><b>Applies to</b> <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
-<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+
+#### Adding organizations - `add --org`
+
+<span class="learning-outcome pill">:trophy: How to add organization contacts into Jobby</span> <span class="beginner pill">Beginner</span>
+
 
 ##### Format
-```
-add --org/--rec <additional parameters and values...>
-```
+...
 
-Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
-
-Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
-
-Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
 
 #### Adding recruiters - `add --rec`
-
-<div class="applies-to pill"><b>Applies to</b> <span class="jobby-data-class pill">Recruiter</span></div>
 
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
