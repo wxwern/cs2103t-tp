@@ -60,7 +60,8 @@ class JsonAdaptedApplicationTest {
         assertThrows(IllegalValueException.class,
                 JobDescription.MESSAGE_CONSTRAINTS, () -> application3.toModelType(VALID_OID, VALID_ORG_NAME));
 
-        // invalid last update time, special cuz this one doesn't have a planned err msg yet. TODO: make err msg
+        // invalid last update time, special cuz this one doesn't have a planned err msg yet.
+        // TODO: make err msg. Low priority since the last updated time can only be directly edited in the json.
         JsonAdaptedApplication application4 = new JsonAdaptedApplication(VALID_TITLE, VALID_DESCRIPTION,
                 INVALID_UPDATED_TIME, VALID_DEADLINE, VALID_STATUS, VALID_STAGE
         );

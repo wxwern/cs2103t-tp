@@ -125,10 +125,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (targetId == null) {
             return new EditCommand(index, editContactDescriptor);
-
         } else {
             return new EditCommand(targetId, editContactDescriptor);
-
         }
 
     }
