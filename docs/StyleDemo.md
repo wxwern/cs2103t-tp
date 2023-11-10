@@ -179,9 +179,8 @@ Supplying `--org` lists only Organizations while supplying `--rec` lists only Re
 ### Sorting - `sort`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
-<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-<span class="information pill">:information_source: You need to have contacts or job applications to make use of sorting.</span>
+<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
+<span class="information pill">:information_source: You should have contacts or job applications present to make full use of sorting functions.</span>
 
 
 ##### Format
@@ -239,8 +238,7 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 #### Deleting contacts - `delete`
 
-<span class="learning-outcome pill">:trophy: How to delete organizations and recruiters in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
+<span class="learning-outcome pill">:trophy: How to delete organizations and recruiters in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
 <span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
@@ -262,8 +260,7 @@ If `--recursive` is specified, deletes the associated recruiter contacts if the 
 
 #### Deleting job applications - `delete --application`
 
-<span class="learning-outcome pill">:trophy: How to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
+<span class="learning-outcome pill">:trophy: How to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
 <span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
