@@ -281,6 +281,10 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 ## Features
 
+### Adding contacts - `add`
+
+The `add` command allows you to create contacts to track details about the organizations and recruiters related to your job application process. To learn more about creating each type of contact, check out the sections below.
+
 #### Adding an organization contact: `add --org`
 
 Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
@@ -303,7 +307,7 @@ Examples:
 * `add --org --name Example --url www.organization.org --tag freelance`
 * `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
 
-### Add a recruiter contact - `add --rec`
+#### Adding a recruiter - `add --rec`
 
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="intermediate pill">Intermediate</span>
 
@@ -370,20 +374,6 @@ Examples:
 * `find id_12345` returns `john` and whose id is `id_12345`
 * `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
 * `find alex david` returns `Alex Yeoh`, `David Li`
-
-### Add command - `add`
-
-Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
-
-<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
-
-Format: `add --org/--rec <additional parameters and values...>`
-
-Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
-
-Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
-
-Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
 
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
