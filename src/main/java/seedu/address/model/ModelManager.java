@@ -192,7 +192,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void replaceApplication(JobApplication oldApplication, JobApplication newApplication) throws IllegalValueException {
+    public void replaceApplication(JobApplication oldApplication,
+                                   JobApplication newApplication) throws IllegalValueException {
 
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
