@@ -737,9 +737,7 @@ In this case, it would be easy to address this problem, by using
 optionalField.map(OptionalFieldClass::toString).orElse("None")
 ```
 
-As for the class name, the Contact class can use a protected abstract `getClassName` method and have the Organization and Recruiter classes extending it to implement it.
-
-Then, the Contact class can use the `getClassName` method to get the type of the contact. Alternatively, it can use the `getType` method and use it for the class name, since the `getType` method matches the class name.
+The Contact class can use the `Contact.getClass().getSimpleName()` method to get the type of the contact. Alternatively, it can use the `getType` method and use it for the class name, since the `getType` method matches the class name.
 
 ### Disallow values in fields where values are not required
 
