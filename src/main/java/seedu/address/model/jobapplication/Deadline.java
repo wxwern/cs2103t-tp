@@ -6,11 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import seedu.address.commons.core.index.Index;
 
 /**
  * Represents the various job application deadlines.
@@ -52,6 +49,9 @@ public class Deadline implements Comparable<Deadline> {
         this.deadline = LocalDate.now().plusDays(14);
     }
 
+    /**
+     * Checks if the given string is strictly a valid date.
+     */
     public static boolean isValidDeadline(String test) {
         if (!test.matches(VALIDATION_REGEX)) {
             return false;
