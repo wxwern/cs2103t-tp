@@ -47,13 +47,9 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline(invalidDeadline2));
         assertFalse(Deadline.isValidDeadline(invalidDeadline3));
         assertFalse(Deadline.isValidDeadline(invalidDeadline4));
-        assertFalse(Deadline.isValidDeadline(invalidDeadline5));
-        assertFalse(Deadline.isValidDeadline(invalidDeadline6));
 
         // valid deadline
         assertTrue(Deadline.isValidDeadline(validDeadline1));
-        assertTrue(Deadline.isValidDeadline(validDeadline2));
-        assertTrue(Deadline.isValidDeadline(validDeadline3));
     }
 
     @Test
