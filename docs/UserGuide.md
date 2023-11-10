@@ -403,31 +403,31 @@ Sample demonstration with the expected visual outcome:
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+Shows a list of all contacts in the address book.
 
 Format: `list [--org/--rec]`
 
-Shows a list of all contacts in the address book.
+[TIP - not sure about this format]
 Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
+Supplying extraneous parameters will allow the command to work, but will have no effect 
+(should this be in known issues instead?)
 
-Examples:
+[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
+
+##### Examples of valid uses:
 * `list`
 * `list --org`
 * `list --rec`
 
-[SCREENSHOT HERE]
-
 #### Sorting contacts and job applications - `sort`
 <span class="learning-outcome pill">:trophy: Able to sort contacts and job applications in Jobby</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+Sorts contacts or job applications by the specified field.
 
 Format: `sort --FLAG_TO_SORT [--ascending/--descending]`
 
-
-Supported flags (only 1 must be provided): [This should be a title font, I think]
-
-Flags for contacts:
+Supported fields (only 1 must be provided): [This should be a title font, I think]
+Fields for contacts:
 * `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
@@ -435,17 +435,17 @@ Flags for contacts:
 * `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 
-Flags for job applications:
+Fields for job applications:
 * `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
 * `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
 * `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
 
-Flags for resetting the sort order:
+To reset the sort order:
 * `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
 
-Flags for specifying the sort order:
+Additional specification for sort order:
 * `--ascending` - The specified flag will sort in ascending order.
 * `--descending` - The specified flag will sort in descending order.
 
@@ -457,13 +457,13 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 [SCREENSHOT HERE]
 
-Examples of valid use of `sort` command:
+##### Examples of valid use of `sort` command:
 * `sort --title --ascending`
 * `sort --url`
 * `sort --stale --descending`
 * `sort --none`
 
-Examples of invalid use of `sort` command:
+##### Examples of invalid use of `sort` command:
 * `sort` _No flag provided._
 * `sort --organization` _Invalid flag._
 * `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
@@ -478,9 +478,13 @@ Specifying `--earliest` will list the application deadlines in order of urgency,
 
 Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
 
-Examples:
+Supplying extraneous parameters will allow the command to work, but will have no effect
+(should this be in known issues instead?)
+
+##### Examples of valid use:
 * `remind --earliest`
 * `remind --latest`
+
 
 ### Apply command - `apply`
 Applies to: <span class="jobby-data-class">Job Application</span>
