@@ -306,7 +306,7 @@
     margin: 1.5cm;
   }
 
-  h2:not(:first-child), h3::not(:first-child):not(
+  h2:not(:first-child), h3:not(:first-child):not(
     h2 + h3,
     h2 + p + h3,
     h2 + p + p + h3,
