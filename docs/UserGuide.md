@@ -309,7 +309,7 @@ Examples:
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
-#### Sample demonstration with the expected visual outcome:
+##### Sample demonstration with the expected visual outcome:
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
 
 * Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
@@ -318,12 +318,12 @@ Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email
 
 Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
 
-#### Examples of valid use:
+##### Examples of valid use:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
 * `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
 * `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
 
-#### Examples of invalid use:
+##### Examples of invalid use:
 * `add --rec` _Missing a name._
 * `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
 * `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
