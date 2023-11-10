@@ -122,14 +122,3 @@ img.emoji {
     }
 }
 
-/* Hide headers h5 and beyond in ToC */
-/* TODO: Find out how to configure in Jekyll instead. */
-ul#markdown-toc > li
-> ul > li
-> ul > li
-> ul > li
-> ul {
-    display: none;
-}
-
-
