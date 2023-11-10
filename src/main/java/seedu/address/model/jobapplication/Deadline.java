@@ -6,6 +6,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.commons.core.index.Index;
 
 /**
  * Represents the various job application deadlines.
@@ -48,7 +53,20 @@ public class Deadline implements Comparable<Deadline> {
     }
 
     public static boolean isValidDeadline(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (!test.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+
+        String[] arr = test.split("-");
+        if (arr.length != 3) {
+            return false;
+        }
+
+        int day = Integer.parseInt(arr[0]);
+        int month = Integer.parseInt(arr[1]);
+        int year = Integer.parseInt(arr[2]);
+
+        return isValidDate(day, month, year);
     }
 
     @Override
@@ -74,4 +92,46 @@ public class Deadline implements Comparable<Deadline> {
     public String toString() {
         return FORMATTER.format(deadline);
     }
+
+    private static boolean isValidDate(int day, int month, int year) {
+
+        List<Integer> monthsWithThirtyDays = Arrays.asList(4, 6, 9, 11);
+
+        // these are completely invalid
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0) {
+            return false;
+        }
+
+        // these are for months with 30 days
+        if (monthsWithThirtyDays.contains(month)) {
+            return day < 31;
+        }
+
+        // these are for months with 31 days
+        if (month != 2) {
+            return true;
+        }
+
+        // remaining here is february
+        if (isLeapYear(year)) {
+            return day < 30;
+        }
+
+        return day < 29;
+
+
+    }
+
+    private static boolean isLeapYear(int year) {
+        if (year % 400 == 0) {
+            return true;
+        }
+
+        if (year % 100 == 0) {
+            return false;
+        }
+
+        return year % 4 == 0;
+    }
+
 }
