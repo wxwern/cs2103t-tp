@@ -63,6 +63,9 @@ Below is a labelled diagram of our GUI
 
 <span class="danger pill">:warning: A danger pill</span>
 
+<div class="applies-to pill">Applies to <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+
 ### Jobby class labelling
 
 #### Adding contacts
@@ -115,7 +118,7 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 ### Adding contacts - `add`
 
-<div class="applies-to pill"><b>Applies to</b> <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+<div class="applies-to pill">Applies to <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
 
 #### Adding organizations - `add --org`
@@ -174,7 +177,7 @@ Supplying `--org` lists only Organizations while supplying `--rec` lists only Re
 [SCREENSHOT HERE]
 
 ### Sorting - `sort`
-<div class="applies-to pill"><b>Applies to</b> <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+<div class="applies-to pill">Applies to <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 <span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
@@ -232,7 +235,7 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 ### Deleting - `delete`
 
-<div class="applies-to pill"><b>Applies to</b> <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+<div class="applies-to pill">Applies to <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 #### Deleting contacts - `delete`
 
