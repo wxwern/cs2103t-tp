@@ -305,7 +305,7 @@ Examples:
 
 ### Add a recruiter contact - `add --rec`
 
-<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Intermediate</span>
+<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
 
