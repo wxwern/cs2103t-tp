@@ -51,15 +51,15 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
                     ApplyCommand.MESSAGE_USAGE));
         }
 
-        // TODO: Tech debt - Use Parserutil.parseOptionally
+        // TODO: Tech debt - Use some wrapper for indexXorId
         return new ApplyCommand(
                 indexXorId instanceof Id ? (Id) indexXorId : null,
                 indexXorId instanceof Index ? (Index) indexXorId : null,
                 ParserUtil.parseJobTitle(title.get()),
-                description.isPresent() ? ParserUtil.parseJobDescription(description.get()) : null,
-                deadline.isPresent() ? ParserUtil.parseDeadline(deadline.get()) : null,
-                status.isPresent() ? ParserUtil.parseJobStatus(status.get()) : null,
-                stage.isPresent() ? ParserUtil.parseApplicationStage(stage.get()) : null
+                ParserUtil.parseOptionally(description, ParserUtil::parseJobDescription),
+                ParserUtil.parseOptionally(deadline, ParserUtil::parseDeadline),
+                ParserUtil.parseOptionally(status, ParserUtil::parseJobStatus),
+                ParserUtil.parseOptionally(stage, ParserUtil::parseApplicationStage)
             );
     }
 
