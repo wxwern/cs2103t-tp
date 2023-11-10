@@ -612,9 +612,9 @@ Term | Definition
 **Top Level Domain** | A Top Level Domain (TLD) is the part of the website address where it comes after the last dot (i.e. ".com", ".org", ".net") and before the first slash. (E.g. www.example.**com**/path)
 **Whitespace** | In the context of this application, a whitespace is any number of spaces or tabs that is in the input.
 
-### Appendices
+## Appendices
 
-#### Appendix A: Acceptable values for parameters
+### Appendix A: Acceptable values for parameters
 
 Parameter | Requirements | Examples
 ----------|--------------|---------
