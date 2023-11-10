@@ -3,14 +3,16 @@ layout: page
 title: Style Demo
 ---
 
-WARNING: TEXT HERE IS NOT A USER GUIDE. IT SERVES TO DEMONSTRATE STYLES.
+**WARNING: TEXT HERE IS NOT A USER GUIDE. IT SERVES TO DEMONSTRATE STYLES.**
+
+**Lorem ipsum** dolor _sit amet_, `consectetur` adipiscing ~~elit~~, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 * Table of Contents
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Basic markdown formatting
+## Installation formatting example
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
@@ -24,17 +26,14 @@ WARNING: TEXT HERE IS NOT A USER GUIDE. IT SERVES TO DEMONSTRATE STYLES.
 
 1. Type a **command** in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
 
-1. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [Features](#) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Custom formatting
+## Advanced formatting
 
-<div class="h2-summary">
-Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's
-functionalities that you will use on a daily basis.
-
-This guide will be done in an example workflow that you will likely experience while using Jobby to get you accustomed to all of Jobby's commands.
+<div class="h2-summary" markdown="1">
+Welcome to Jobby's documentation!
 
 > ### You will learn
 > - How to add contact into Jobby
@@ -66,12 +65,10 @@ Below is a labelled diagram of our GUI
 
 ### Jobby class labelling
 
-<span class="danger pill">:warning: A danger pill</span>
-
 #### Adding contacts
 Jobby can create contacts in the form of <span class="jobby-data-class">Organization</span> and <span class="jobby-data-class">Recruiter</span>, which you can add into your database with simple CLI commands.
 
-For example, to add an <span class="jobby-data-class">Organization</span> "Woogle" with the ID "woogle_id" into Jobby, simply do so by typing a simple command:
+For example, to add an <span class="jobby-data-class">Organization</span> **"Woogle"** with the ID **"woogle_id"** into Jobby, simply do so by typing a simple command:
 
 ```
 add --org --name Woogle --id woogle_id
@@ -139,7 +136,6 @@ Details on adding an [organization]() contact and a [recruiter](#add-recruiter-c
 
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <br>
 
 ##### Format
 ```
@@ -164,9 +160,7 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 ![add-recruiter](images/add_recruiter_success.png)
 
 ### List contacts - `list`
-<span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
-
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+<span class="learning-outcome pill">:trophy: How to choose contacts to list in Jobby</span>
 
 ##### Format
 ```
@@ -189,10 +183,8 @@ Supplying `--org` lists only Organizations while supplying `--rec` lists only Re
 
 <span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+<span class="information pill">:information_source: You need to have contacts or job applications to make use of sorting.</span>
 
-
-<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> 
 
 ##### Format
 ```
@@ -247,11 +239,11 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 **Applies to:** <span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span>
 
-<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
-
 #### Deleting contacts - `delete`
 
 <span class="learning-outcome pill">:trophy: How to delete organizations and recruiters in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
 ```
@@ -273,6 +265,8 @@ If `--recursive` is specified, deletes the associated recruiter contacts if the 
 #### Deleting job applications - `delete --application`
 
 <span class="learning-outcome pill">:trophy: How to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
 ```
