@@ -10,6 +10,8 @@ It saves organisations and recruiters as contacts in an addressbook.
 
 Given below are my contributions to the project.
 
+<div class="allow-page-break" markdown="1">
+
 * **New Feature**: To be added soon
     * What it does: To be added soon
     * Justification: To be added soon
@@ -35,3 +37,5 @@ Given below are my contributions to the project.
 
 * **Tools**:
     * To be added soon
+
+</div>

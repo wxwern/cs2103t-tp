@@ -4,6 +4,8 @@ Jobby is a desktop address book and job application tracking tool. The user inte
 
 Given below are my contributions to the project.
 
+<div class="allow-page-break" markdown="1">
+
 * **New Feature**:
     * What it does:
     * Justification:
@@ -34,3 +36,5 @@ Given below are my contributions to the project.
     *
 
 * _{you can add/remove categories in the list above}_
+
+</div>

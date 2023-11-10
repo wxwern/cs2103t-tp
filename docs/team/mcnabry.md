@@ -3,6 +3,8 @@ layout: page
 title: Bryan's Project Portfolio Page
 ---
 
+<div class="allow-page-break" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop app for managing job applications and contacts,
@@ -33,3 +35,5 @@ Given below are my contributions to the project.
 
 * **Tools**:
   * To be added soon.
+
+</div>

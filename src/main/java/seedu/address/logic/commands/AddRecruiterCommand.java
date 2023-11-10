@@ -49,14 +49,18 @@ public class AddRecruiterCommand extends AddCommand {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        if (oid != null) {
-            Contact contact = model.getContactById(oid);
-            if (contact == null || contact.getType() != Type.ORGANIZATION) {
-                throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
-            }
-            organization = (Organization) contact;
-            assert organization.getId().equals(oid);
+        if (oid == null) {
+            return super.execute(model);
         }
+
+        Contact contact = model.getContactById(oid);
+        if (contact == null || contact.getType() != Type.ORGANIZATION) {
+            throw new CommandException(MESSAGE_INVALID_ORGANIZATION);
+        }
+
+        organization = (Organization) contact;
+        assert organization.getId().equals(oid);
+
         return super.execute(model);
     }
 
