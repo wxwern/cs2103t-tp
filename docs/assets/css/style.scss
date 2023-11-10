@@ -84,7 +84,10 @@ img.emoji {
 
 .jobby-data-class {
     background-color: #ff886633;
-    border-radius: 4px;
-    padding: 0 4px;
+
+    &:not(.pill) {
+        border-radius: 4px;
+        padding: 0 4px;
+    }
 }
 
