@@ -44,7 +44,6 @@ public class Organization extends Contact {
             Name name, Id id, Phone phone, Email email, Url url,
             Address address, Set<Tag> tags, List<JobApplication> jobApplications
     ) {
-        // TODO: Tech debt - undeprecate super
         super(name, id, phone, email, url, address, tags, null);
         // Ensure that the new job applications are modified correctly.
         List<JobApplication> newApplications = jobApplications
