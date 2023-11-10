@@ -35,6 +35,10 @@ img.emoji {
     font-family: verdana;
     font-size: 75%;
 
+    .pill {
+        font-size: 100%; /* so nesting pills won't keep shrinking the text */
+    }
+
     img.emoji {
         height: 12px;
         width: 12px;
@@ -80,6 +84,12 @@ img.emoji {
         color: #331800;
     }
 
+    &.applies-to {
+        padding: 4px 12px;
+        padding-right: 2px;
+        margin: 4px 2px;
+        display: inline-block;
+    }
 }
 
 .jobby-data-class {
