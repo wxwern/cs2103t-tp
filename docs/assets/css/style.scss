@@ -37,7 +37,9 @@ img.emoji {
     vertical-align: text-bottom;
 
     .pill {
-        font-size: 100%; /* so nesting pills won't keep shrinking the text */
+        /* so nesting pills will look the same */
+        font-size: 100%;
+        vertical-align: baseline;
     }
 
     img.emoji {
@@ -81,13 +83,15 @@ img.emoji {
     }
 
     &.warning {
-        background-color: #ffcc99;
+        background-color: #fdcc99;
         color: #331800;
     }
 
     &.applies-to {
         background-color: #fdfbf9;
-        color: #e8e8e8;
+        border-color: #e8e6e5;
+        color: #444444;
+
         padding: 4px 12px;
         padding-right: 2px;
         margin: 4px 2px;
@@ -95,6 +99,10 @@ img.emoji {
 
         &.jobby-data-class:not(:first-child) {
             margin-left: 0;
+        }
+
+        &::before {
+            content: "Applies to ";
         }
     }
 
