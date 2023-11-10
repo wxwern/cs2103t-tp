@@ -630,8 +630,8 @@ Parameter | Requirements | Examples
 `TITLE` | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric. | `Software Engineer`<br>`Level 3 Engineer`
 `DESCRIPTION` | A valid description can accept any non-empty value. | `Senior Role`<br>`Hourly rate: $25`
 `DEADLINE` | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits. | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`
-`APPLICATION STAGE` | A valid application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown. | `resume`<br>`online assessment`<br>`interview`
-`STATUS` | A valid status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown. | `pending`<br>`offered`<br>`accepted`<br>`turned down`
+`STAGE` | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown. | `resume`<br>`online assessment`<br>`interview`
+`STATUS` | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown. | `pending`<br>`offered`<br>`accepted`<br>`turned down`
 `KEYWORD` | A valid keyword is a single word that can accept any non-empty value. | `software`<br>`Ryan`
 
 --------------------------------------------------------------------------------------------------------------------
