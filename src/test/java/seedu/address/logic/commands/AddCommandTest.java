@@ -105,7 +105,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
+        public void replaceApplication(JobApplication oldApplication, JobApplication newApplication) throws IllegalValueException {
             throw new AssertionError("This method should not be called.");
 
         }
