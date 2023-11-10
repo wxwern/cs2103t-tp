@@ -34,10 +34,10 @@ public class ContactListPanel extends UiPart<Region> {
      */
     class ContactListViewCell extends ListCell<Contact> {
         @Override
-        protected void updateItem(Contact contact, boolean empty) {
-            super.updateItem(contact, empty);
+        protected void updateItem(Contact contact, boolean isEmpty) {
+            super.updateItem(contact, isEmpty);
 
-            if (empty || contact == null) {
+            if (isEmpty || contact == null) {
                 setGraphic(null);
                 setText(null);
             } else {
