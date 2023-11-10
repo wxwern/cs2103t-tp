@@ -302,32 +302,47 @@
  * Advanced print formatting
  */
 @media print {
-    @page {
-        margin: 1.5cm;
-    }
+  @page {
+    margin: 1.5cm;
+  }
 
-    h2, h3:not(
-        h2 + h3,
-        h2 + p + h3,
-        h2 + p + p + h3,
-        h2 + p + p + p + h3,
-        h2 + p + p + p + p + h3,
-        h2 + p + p + p + p + p + h3,
-        h2 + .h2-summary + h3
-    ) {
-        page-break-before: always;
-    }
+  h2:not(:first-child), h3::not(:first-child):not(
+    h2 + h3,
+    h2 + p + h3,
+    h2 + p + p + h3,
+    h2 + p + p + p + h3,
+    h2 + p + p + p + p + h3,
+    h2 + p + p + p + p + p + h3,
+    h2 + .h2-summary + h3
+  ) {
+    page-break-before: always;
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-        page-break-after: avoid;
-    }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
 
-    img, code, .alert, .pill, .jobby-data-class {
-        page-break-inside: avoid;
+  img, code, .alert, .pill, .jobby-data-class {
+    &:not(.allow-page-break) {
+      page-break-inside: avoid;
     }
+  }
 
-    ul ul, ul ol, ol ul, ol ol {
-        page-break-before: avoid;
-        page-break-inside: avoid;
+  ul ul, ul ol, ol ul, ol ol {
+    page-break-before: avoid;
+    page-break-inside: avoid;
+  }
+
+  .allow-page-break {
+    &, & * {
+      page-break-before: auto !important;
+      page-break-inside: auto !important;
+      page-break-after: auto !important;
     }
+  }
+
+  .page-break {
+    page-break-after: always !important;
+  }
+
 }
