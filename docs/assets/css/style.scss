@@ -6,6 +6,8 @@
   "minima/skins/{{ site.minima.skin | default: 'classic' }}",
   "minima/initialize";
 
+
+/* Custom formatting elements and overrides */
 .icon {
     height: 21px;
     width: 21px
@@ -86,35 +88,3 @@ img.emoji {
     padding: 0 4px;
 }
 
-
-/* Print formatter */
-@media print {
-    @page {
-        margin: 1.5cm;
-    }
-
-    h2, h3:not(
-        h2 + h3,
-        h2 + p + h3,
-        h2 + p + p + h3,
-        h2 + p + p + p + h3,
-        h2 + p + p + p + p + h3,
-        h2 + p + p + p + p + p + h3,
-        h2 + .h2-summary + h3
-    ) {
-        page-break-before: always;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        page-break-after: avoid;
-    }
-
-    img, code, .alert, .pill, .jobby-data-class {
-        page-break-inside: avoid;
-    }
-
-    ul ul, ul ol, ol ul, ol ol {
-        page-break-before: avoid;
-        page-break-inside: avoid;
-    }
-}
