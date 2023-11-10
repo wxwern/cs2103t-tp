@@ -305,27 +305,30 @@ Examples:
 
 ### Add a recruiter contact - `add --rec`
 
+Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
+
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Intermediate</span>
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
-##### Sample demonstration with the expected visual outcome:
-* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
+:tip: To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to. 
 
-* Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
+##### Sample demonstration:
+* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
+
+* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is linked to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
 
 ![add-recruiter](images/add_recruiter_success.png)
-
-Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
 
 ##### Examples of valid use:
 * `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
 * `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
-* `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
+* `add --rec --name John Doe --oid job_seeker_plus` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "job\_seeker\_plus."_
+* `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` _Adds a recruiter will all the possible fields._
 
 ##### Examples of invalid use:
 * `add --rec` _Missing a name._
-* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
+* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified._
 * `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
 
 ### Editing a contact: `edit`
