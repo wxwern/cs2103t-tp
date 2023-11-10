@@ -3,10 +3,14 @@ layout: page
 title: Jobby
 ---
 
+<div style="text-align: center;">
+
 [![CI Status](https://github.com/AY2324S1-CS2103T-W08-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2324S1-CS2103T-W08-3/tp/actions)
 [![codecov](https://codecov.io/gh/AY2324S1-CS2103T-W08-3/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2324S1-CS2103T-W08-3/tp)
 
-![Ui](images/Ui.png)
+<img src="images/Ui.png" alt="Ui" width="800"/>
+
+</div>
 
 **Jobby is a desktop application for managing your job application details, specifically organization and recruiter contacts, plus application info and status.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
