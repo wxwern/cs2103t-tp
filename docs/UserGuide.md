@@ -628,7 +628,7 @@ Examples of invalid use of `delete` command
  **Delete Contact**    | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
  **Edit Contact**      | `edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`                                                                                                                                                                                                                                                                              
  **Find**              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
- **List**              | `list [--org/--rec]`
+ **List**              | `list [--org/--rec/--toapply]`
  **Sort Contacts**     | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`
 
 ### Commands for Handling Job Applications
