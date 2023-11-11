@@ -403,13 +403,13 @@ Sample demonstration with the expected visual outcome:
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
 
-Shows a list of all contacts in the address book.
+Shows a list of the specified contacts in the address book.
 
 Format: `list [--org/--rec]`
 
 [TIP - not sure about this format]
-Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
-Supplying extraneous parameters will allow the command to work, but will have no effect 
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters. Specifying neither will list all contacts.
+Supplying extraneous parameters will allow the command to work, but will have no effect.
 (should this be in known issues instead?)
 
 [SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
@@ -419,7 +419,8 @@ Supplying extraneous parameters will allow the command to work, but will have no
 * `list --org`
 * `list --rec`
 
-#### Sorting contacts and job applications - `sort`
+
+### Sorting contacts and job applications - `sort`
 <span class="learning-outcome pill">:trophy: Able to sort contacts and job applications in Jobby</span>
 
 Sorts contacts or job applications by the specified field.
@@ -455,6 +456,8 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 `Sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
 
+##### Sample demonstration:
+
 [SCREENSHOT HERE]
 
 ##### Examples of valid use of `sort` command:
@@ -480,6 +483,11 @@ Specifying `--latest` will list the application deadlines in order of reverse ur
 
 Supplying extraneous parameters will allow the command to work, but will have no effect
 (should this be in known issues instead?)
+
+##### Sample demonstration:
+* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
+
+![Remind Earliest](images/starter-guide/remind-earliest.jpg)
 
 ##### Examples of valid use:
 * `remind --earliest`
@@ -615,10 +623,11 @@ Examples of invalid use of `delete` command
 
  Action                | Format, Examples                                                                                                                                                                                                                                                                            
 -----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Add Organization**  | `add --org --name <NAME> [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
- **Add Recruiter**     | `add --rec --name <NAME> [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Add Organization**  | `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
+ **Add Recruiter**     | `add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
  **Delete Contact**    | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
- **Edit Contact**      | `edit INDEX ...` or <br>`edit ID ...`                                                                                                                                                                                                                                                                              
+ **Edit Contact**      | `edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`                                                                                                                                                                                                                                                                              
+ **Find**              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
  **List**              | `list [--org/--rec]`
  **Sort Contacts**     | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`
 
@@ -626,18 +635,17 @@ Examples of invalid use of `delete` command
 
  Action                | Format, Examples                                                                                                                                                                                                                                                                            
 -----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Delete Application**| `delete --application INDEX/ID` <br> e.g., `delete --application 2`                                                                                                                                                                              
- **Edit Application**  | `edit --application INDEX ...` <br> e.g., `edit --application 2 --title Analyst`                                                                                                                                                                                                                                                                             
+ **Delete Application**| `delete --application INDEX` <br> e.g., `delete --application 2`                                                                                                                                                                              
+ **Edit Application**  | `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]` <br> e.g., `edit --application 2 --title Analyst`                                                                                                                                                                                                                                                                             
  **Apply**             | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]`
  **Sort Applications** | `sort --by/--stage/--stale/--status/--title [--ascending/--descending]`
 
 ### Other Commands
 
- Action               | Format, Examples                                                                                                                                                                                                                                                                            
-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- **Clear**            | `clear`                                                                                                                                                                                                                                                                                     
- **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
- **Help**             | `help`
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Clear**             | `clear`                                                                                                                                                                                                                                                                                     
+ **Help**              | `help`
 
 --------------------------------------------------------------------------------------------------------------------
 
