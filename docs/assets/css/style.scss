@@ -107,14 +107,13 @@ img.emoji {
     }
 
     &.jobby-data-class {
-        background-color: #ff886633;
         border-color: #a8583333;
-        color: #633412;
     }
 }
 
 .jobby-data-class {
     background-color: #ff886633;
+    color: #633412;
 
     &:not(.pill) {
         border-radius: 4px;
