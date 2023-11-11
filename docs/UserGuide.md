@@ -285,7 +285,7 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 ## Features
 
 ### Adding contacts - `add`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div><br>
 
 The `add` command allows you to create contacts to track details about the organizations and recruiters related to your job application process. To learn more about creating each type of contact, check out the sections below.
 
