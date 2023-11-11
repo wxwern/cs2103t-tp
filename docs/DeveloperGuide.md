@@ -194,19 +194,24 @@ Once done, the UI will display the link as a label within the `ContactCard`: **f
 
 #### Editing the `Recruiter`-`Organization` link
 
-_To be added later_
+Editing the link can only be done from the `Recruiter`. This is achieved by executing `edit INDEX/ID --oid <id of new organization>` 
 
 #### Deleting the `Recruiter`-`Organization` link
 
-There are two ways to remove the link.
+There are three ways to remove the link.
 
 Deleting the parent `Organization`:
   * Deleting the `Organization` via the `delete` command will remove the `Contact` from the `AddressBook`
 
-  * However as linked `Recruiter` contacts still have a direct link to it, each contact must be replaced via `AddressBook#setContact()` where parent is set to null.
+  * However as linked `Recruiter` contacts still have a direct link to it, each contact must be replaced via `AddressBook#setContact()` where its parent is set to null.
 
 Deleting the child `Recruiter`:
   * Deleting the `Recruiter` via the `delete` command requires no additional steps as the `Organization` retrieves its children dynamically from the model.
+
+Editing the child `Recruiter`:
+  * Setting optional fields of a `Contact` to be empty can be done by passing in its corresponding flag without any value. (E.g. `edit 1 --phone` effectively removes the first contact's phone number).
+
+  * Hence, removing the link can be done by passing in the `--oid` flag without any value. The `EditCommand` replaces the old `Recruiter` with the new one where its parent is set to null.
 
 #### Storing the `Recruiter`-`Organization` link
 
