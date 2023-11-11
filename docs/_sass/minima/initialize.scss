@@ -13,6 +13,8 @@ $spacing-unit:     30px !default;
 
 $table-text-align: left !default;
 
+$print-scale:      0.8 !default;
+
 // Width of the content area
 $content-width:    1024px !default;
 
@@ -21,6 +23,9 @@ $on-laptop:        840px !default;
 
 $on-medium:        $on-palm !default;
 $on-large:         $on-laptop !default;
+
+// Paper styling on large screens
+$paper-box-shadow: 0 2px 6px 1px #00000018;
 
 // Use media queries like this:
 // @include media-query($on-palm) {
