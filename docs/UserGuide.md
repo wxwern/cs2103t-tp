@@ -403,31 +403,32 @@ Sample demonstration with the expected visual outcome:
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+Shows a list of the specified contacts in the address book.
 
 Format: `list [--org/--rec]`
 
-Shows a list of all contacts in the address book.
-Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
+[TIP - not sure about this format]
+Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters. Specifying neither will list all contacts.
+Supplying extraneous parameters will allow the command to work, but will have no effect.
+(should this be in known issues instead?)
 
-Examples:
+[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
+
+##### Examples of valid uses:
 * `list`
 * `list --org`
 * `list --rec`
 
-[SCREENSHOT HERE]
 
-#### Sorting contacts and job applications - `sort`
+### Sorting contacts and job applications - `sort`
 <span class="learning-outcome pill">:trophy: Able to sort contacts and job applications in Jobby</span>
 
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span>
+Sorts contacts or job applications by the specified field.
 
 Format: `sort --FLAG_TO_SORT [--ascending/--descending]`
 
-
-Supported flags (only 1 must be provided): [This should be a title font, I think]
-
-Flags for contacts:
+Supported fields (only 1 must be provided): [This should be a title font, I think]
+Fields for contacts:
 * `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
@@ -435,17 +436,17 @@ Flags for contacts:
 * `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 
-Flags for job applications:
+Fields for job applications:
 * `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
 * `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
 * `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
 
-Flags for resetting the sort order:
+To reset the sort order:
 * `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
 
-Flags for specifying the sort order:
+Additional specification for sort order:
 * `--ascending` - The specified flag will sort in ascending order.
 * `--descending` - The specified flag will sort in descending order.
 
@@ -455,15 +456,17 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 
 `Sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
 
+##### Sample demonstration:
+
 [SCREENSHOT HERE]
 
-Examples of valid use of `sort` command:
+##### Examples of valid use of `sort` command:
 * `sort --title --ascending`
 * `sort --url`
 * `sort --stale --descending`
 * `sort --none`
 
-Examples of invalid use of `sort` command:
+##### Examples of invalid use of `sort` command:
 * `sort` _No flag provided._
 * `sort --organization` _Invalid flag._
 * `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
@@ -478,9 +481,18 @@ Specifying `--earliest` will list the application deadlines in order of urgency,
 
 Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
 
-Examples:
+Supplying extraneous parameters will allow the command to work, but will have no effect
+(should this be in known issues instead?)
+
+##### Sample demonstration:
+* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
+
+![Remind Earliest](images/starter-guide/remind-earliest.jpg)
+
+##### Examples of valid use:
 * `remind --earliest`
 * `remind --latest`
+
 
 ### Apply command - `apply`
 Applies to: <span class="jobby-data-class">Job Application</span>
@@ -605,9 +617,66 @@ Examples of invalid use of `delete` command
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Command Summary
+
+### Commands for Handling Contacts
+
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Add Organization**  | `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --org --name NUS --phone 0123456789 --email example@nus.edu.sg --url https://www.nus.edu.sg/` 
+ **Add Recruiter**     | `add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`<br> e.g., `add --rec --name John Doe --oid paypal-sg`                                                                                                       
+ **Delete Contact**    | `delete INDEX/ID [--recursive]` <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                                               
+ **Edit Contact**      | `edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`                                                                                                                                                                                                                                                                              
+ **Find**              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+ **List**              | `list [--org/--rec/--toapply]`
+ **Sort Contacts**     | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`
+
+### Commands for Handling Job Applications
+
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Delete Application**| `delete --application INDEX` <br> e.g., `delete --application 2`                                                                                                                                                                              
+ **Edit Application**  | `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]` <br> e.g., `edit --application 2 --title Analyst`                                                                                                                                                                                                                                                                             
+ **Apply**             | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]`
+ **Sort Applications** | `sort --by/--stage/--stale/--status/--title [--ascending/--descending]`
+
+### Other Commands
+
+ Action                | Format, Examples                                                                                                                                                                                                                                                                            
+-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ **Clear**             | `clear`                                                                                                                                                                                                                                                                                     
+ **Help**              | `help`
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Glossary
 
-(Terms that may be difficult to understand here.)
+Term | Definition
+-----|-----------
+**Top Level Domain** | A Top Level Domain (TLD) is the part of the website address where it comes after the last dot (i.e. ".com", ".org", ".net") and before the first slash. (E.g. www.example.**com**/path)
+**Whitespace** | In the context of this application, a whitespace is any number of spaces or tabs that is in the input.
+
+## Appendices
+
+### Appendix A: Acceptable values for parameters
+
+Parameter | Requirements | Examples
+----------|--------------|---------
+`INDEX` | A valid index can accept any positive integer up to the number of items in the contact or job application list where applicable. | `1`<br>`10`
+`NAME` | A valid name can accept any non-empty value. | `Ryan Koh`<br>`小明`
+`ID` | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | `woogle123`<br>`ryan_soc-rec`
+`NUMBER` | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits. | `999`<br>`91824137`
+`EMAIL` | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`
+`URL` | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period. | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more`
+`ADDRESS` | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address. | `21 Lower Kent Ridge Rd` 
+`TAG` | A valid tag can consist of only alphanumeric characters. | `internship`<br>`network`<br>`parttime`<br>`jobPortal` 
+`ORG_ID` | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book. | `woogle123`<br>`meta_sg-1`
+`TITLE` | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric. | `Software Engineer`<br>`Level 3 Engineer`
+`DESCRIPTION` | A valid description can accept any non-empty value. | `Senior Role`<br>`Hourly rate: $25`
+`DEADLINE` | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits. | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`
+`STAGE` | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown. | `resume`<br>`online assessment`<br>`interview`
+`STATUS` | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown. | `pending`<br>`offered`<br>`accepted`<br>`turned down`
+`KEYWORD` | A valid keyword is a single word that can accept any non-empty value. | `software`<br>`Ryan`
 
 --------------------------------------------------------------------------------------------------------------------
 
