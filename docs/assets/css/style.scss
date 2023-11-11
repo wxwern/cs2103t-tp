@@ -23,6 +23,13 @@ img.emoji {
     vertical-align: baseline;
 }
 
+.language-sh, .language-bash, .language-shell {
+    .highlight code .nt {
+        /* Do not wrap --flags */
+        white-space: nowrap;
+    }
+}
+
 .pill {
 
     border: 1px solid transparent;
