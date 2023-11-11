@@ -327,16 +327,20 @@ Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email
 
 ![add-recruiter](images/add_recruiter_success.png)
 
-##### Examples of valid use:
-* `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
-* `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
-* `add --rec --name John Doe --oid job_seeker_plus` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "job\_seeker\_plus."_
-* `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` _Adds a recruiter will all the possible fields._
+##### Valid examples:
+Command | Reason
+--------|-------
+`add --rec --name John Doe` | Adds a recruiter that is not linked to any organization.
+`add --rec --name John Doe --tag friendly --tag woogle` | Adds a recruiter with two tags - friendly and woogle.
+`add --rec --name John Doe --oid job_seeker_plus` | Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "job\_seeker\_plus."
+`add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.
 
-##### Examples of invalid use:
-* `add --rec` _Missing a name._
-* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified._
-* `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
+##### Invalid examples:
+Command | Reason
+--------|-------
+`add --rec` | Missing a name.
+`add --rec --name John Doe --phone` | Optional fields (in this case `--phone`) were used but not specified.
+`add --rec --name John Doe --oid bogus-org` | Given that no organization with the id "bogus-org" exists in the address book.
 
 ### Editing a contact: `edit`
 
