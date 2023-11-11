@@ -124,17 +124,25 @@
 .page-content {
   padding: $spacing-unit 0;
   flex: 1 0 auto;
+}
 
-  @media screen and (min-width: $on-large) {
-    /* Paper styling on larger screens */
+@media screen and (min-width: $on-large) {
+  /* Paper styling on larger screens */
+  .page-content {
     background: #fafafa;
 
-    .wrapper {
+    & > .wrapper {
       padding-top: 48px;
       padding-bottom: 48px;
       background-color: white;
-      box-shadow: 0 2px 6px 1px #00000018;
+      box-shadow: $paper-box-shadow;
     }
+  }
+
+  .site-header {
+    border-bottom: none;
+    background-color: white;
+    box-shadow: $paper-box-shadow;
   }
 }
 
