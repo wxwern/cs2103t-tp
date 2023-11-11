@@ -3,6 +3,8 @@ layout: page
 title: Bryan's Project Portfolio Page
 ---
 
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop app for managing job applications and contacts,
@@ -42,3 +44,5 @@ Given below are my contributions to the project.
 * **Community**:
   * PRs reviewed (with non-trivial review comments): 
   * Reported [bugs and suggestions](https://github.com/McNaBry/ped/issues) for other teams
+
+</div>

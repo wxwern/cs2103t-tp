@@ -3,6 +3,8 @@ layout: page
 title: Wern's Project Portfolio Page
 ---
 
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop application used for tracking job applications.
@@ -89,13 +91,11 @@ Given below are my contributions to the project.
 
       * Tweaking the page-break rules for different elements, such as preventing page breaks on crucial boxes or enforcing page breaks immediately after certain headers.
 
-      * Styling custom unified UG elements for readability, like the following:\
-<span class="learning-outcome pill">:trophy: How to perform a task</span>\
-<span class="information pill">:information_source: An info message pill</span>\
-<span class="warning pill">:warning: A warning message pill</span>\
-<span class="danger pill">:warning: A danger message pill</span>\
-<span class="beginner pill">Beginner</span> <span class="intermediate pill">Intermediate</span> <span class="expert pill">Expert</span>\
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+      * Styling custom unified UG elements for readability, like the following:
+        * <span class="learning-outcome pill">:trophy: How to perform a task</span> <span class="information pill">:information_source: An info message pill</span>
+        * <span class="warning pill">:warning: A warning message pill</span> <span class="danger pill">:warning: A danger message pill</span>
+        * <span class="beginner pill">Beginner</span> <span class="intermediate pill">Intermediate</span> <span class="expert pill">Expert</span>
+        * <span class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></span>
 
   * Developer Guide:
 
@@ -106,3 +106,4 @@ Given below are my contributions to the project.
 * **Community**:
   * To be added...
 
+</div>

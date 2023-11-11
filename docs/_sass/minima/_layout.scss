@@ -126,6 +126,26 @@
   flex: 1 0 auto;
 }
 
+@media screen and (min-width: $on-large) {
+  /* Paper styling on larger screens */
+  .page-content {
+    background: #fafafa;
+
+    & > .wrapper {
+      padding-top: 48px;
+      padding-bottom: 48px;
+      background-color: white;
+      box-shadow: $paper-box-shadow;
+    }
+  }
+
+  .site-header {
+    border-bottom: none;
+    background-color: white;
+    box-shadow: $paper-box-shadow;
+  }
+}
+
 .page-heading {
   @include relative-font-size(2);
 }
@@ -176,8 +196,37 @@
 .post-content {
   margin-bottom: $spacing-unit;
 
-  h1, h2, h3 { margin-top: $spacing-unit * 2 }
-  h4, h5, h6 { margin-top: $spacing-unit }
+  h1, h2, h3 {
+    margin-top: $spacing-unit * 2.25;
+    margin-bottom: $spacing-unit * 0.5;
+    font-weight: 600;
+  }
+
+  h4 {
+    margin-top: $spacing-unit * 1.75;
+    margin-bottom: $spacing-unit * 0.25;
+    font-weight: 500;
+  }
+
+  h5 {
+    margin-top: $spacing-unit * 1.25;
+    margin-bottom: $spacing-unit * 0.2;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  h6 {
+    margin-top: $spacing-unit * 1.2;
+    margin-bottom: $spacing-unit * 0.1;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    code {
+      font-weight: 400;
+    }
+  }
 
   h2 {
     @include relative-font-size(1.75);
@@ -202,6 +251,7 @@
   h5 {
     @include relative-font-size(1.125);
   }
+
   h6 {
     @include relative-font-size(1.0625);
   }
@@ -260,4 +310,62 @@
   .one-half {
     width: calc(50% - (#{$spacing-unit} / 2));
   }
+}
+
+
+/**
+ * Advanced print formatting
+ */
+@media print {
+  @page {
+    margin: 1.5cm;
+  }
+
+  body {
+    zoom: $print-scale;
+  }
+
+  h2:not(:first-child), h3:not(:first-child):not(
+    h2 + h3,
+    h2 + p + h3,
+    h2 + p + p + h3,
+    h2 + p + p + p + h3,
+    h2 + p + p + p + p + h3,
+    h2 + p + p + p + p + p + h3,
+    h2 + .h2-summary + h3
+  ) {
+    page-break-before: always;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  img, code, .alert, .pill, .jobby-data-class {
+    page-break-inside: avoid;
+  }
+
+  ul ul, ul ol, ol ul, ol ol {
+    page-break-before: avoid;
+    page-break-inside: avoid;
+  }
+
+  .reset-page-break-defaults, .h2-summary {
+    &, & * {
+      page-break-before: auto !important;
+      page-break-inside: auto !important;
+      page-break-after: auto !important;
+    }
+  }
+
+  .page-break, .page-break-after {
+    page-break-after: always !important;
+  }
+
+  .page-break-before {
+    page-break-before: always !important;
+  }
+
+
+
 }
