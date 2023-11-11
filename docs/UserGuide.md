@@ -311,14 +311,13 @@ Examples:
 
 <span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="intermediate pill">Intermediate</span>
 
-Adds a <span class="jobby-data-class">Recruiter</span> contact with the given parameters into Jobby.
+Adds a <span class="jobby-data-class">Recruiter</span> contact into Jobby.
 
 Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
 
-<div markdown="block" class="alert alert-info">
-
-**:bulb: Tip:** To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
-</div>
+* When adding in parameters, be aware of the [accepted parameters](#appendix-a-acceptable-values-for-parameters).
+* If an `ID` is not specified, one will be automatically generated.
+* To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
 
 ##### Sample demonstration:
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
