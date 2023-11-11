@@ -25,17 +25,26 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 ArgumentTokenizer.tokenize(args,
                         DeleteCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
-        if (argumentMultimap.getValue(FLAG_APPLICATION).isPresent()) {
+        boolean hasApplicationFlag = argumentMultimap.getValue(FLAG_APPLICATION).isPresent();
+        boolean hasContactIdOrIndex = !argumentMultimap.getPreamble().isEmpty();
+        boolean isRecursive = argumentMultimap.getValue(FLAG_RECURSIVE).isPresent();
+
+        if (hasApplicationFlag && hasContactIdOrIndex) {
+            // example: delete 1 --application 1
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+        if (hasApplicationFlag) {
             return handleDeleteApplication(argumentMultimap);
         }
 
-        if (argumentMultimap.getPreamble().isEmpty()) {
+        if (!hasContactIdOrIndex) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
         Object indexXorId = ParserUtil.parseIndexXorId(argumentMultimap.getPreamble());
-        boolean isRecursive = argumentMultimap.getValue(FLAG_RECURSIVE).isPresent();
 
         if (indexXorId instanceof Index) {
             return DeleteCommand.selectIndex((Index) indexXorId, isRecursive);
