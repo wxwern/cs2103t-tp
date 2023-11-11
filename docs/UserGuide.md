@@ -3,10 +3,19 @@ layout: page
 title: User Guide
 ---
 
-**Jobby** is a **desktop app for job seekers to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
   {:toc}
+
+--------------------------------------------------------------------------------------------------------------------
+## Introduction
+Welcome to the **Jobby** User Guide!
+
+**Jobby** is a **desktop app designed for Computer Science students looking for a systematic way to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
+
+The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding an contacts into the application for tracking to how our application can assist you in tracking every steps of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
+
+To begin using this guide, ensure you meet the [Minimum System Requirements](). Once this is done, go to the Quick Start section to get the app up and running. Once you have done so, please feel free to go through the features sections to find out what features Jobby has installed. We recommend going through it in the order of this guide but any order works as well! You may check out our table of contents to jump to any section of your choice.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -25,6 +34,11 @@ title: User Guide
 1. Type a command in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
 
 1. Refer to the [Features](#features) below for details of each command.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Navigating the Guide
+
 
 --------------------------------------------------------------------------------------------------------------------
 
