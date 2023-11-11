@@ -7,6 +7,8 @@ title: Style Demo
 
 **Lorem ipsum** dolor _sit amet_, `consectetur` adipiscing ~~elit~~, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+**Table of Contents**
+
 * Table of Contents
 {:toc}
 
@@ -20,7 +22,7 @@ title: Style Demo
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Jobby Application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar jobby.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar jobby.jar` command to run the application.<br><br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -33,40 +35,130 @@ title: Style Demo
 ## Advanced formatting
 
 <div class="h2-summary" markdown="1">
-Welcome to Jobby's documentation!
+Welcome to fancy formatting.
 
-> ### You will learn
-> - How to add contact into Jobby
-> - How to edit contact in Jobby
-> - How to add application in Jobby
-> - How to use core features like find, remove
-> - How to delete data in Jobby
+### You will learn
+{: .no_toc}
+> - How to omit a header from kramdown (like this "You will learn" heading)
+> - How to ensure the `h2` before this entire summary and the next `h3` header is not forced to auto break (using `h2-summary`)
+> - How to use classes and style elements
 > - And more...
 </div>
 
-### GUI Legends
+### 3rd-level headings for subtopics
 
-Below is a labelled diagram of our GUI
+High level topics here
 
-![Label](images/starter-guide/initial-ui.jpg)
+#### 4th-level headings for subtopics within subtopics
+
+This should still be part of an important topic
+
+##### Format
+```
+triple-backtick code block for format stuff
+```
+##### Examples
+
+* Whitespace will be appropriately auto-added above headings for visual split
+* More lines...
+
+##### 5th-level headings for intra-subtopic organization
+
+These are automatically omitted from the Table of Contents, and should be just there for organization.
+
+Use them for better visual separation and styling consistency
+
+
+### Another sub-subtopic
+
+##### Format
+```
+...
+```
+
+### Class Overrides
+{: .allow-page-break}
+
+#### Page breaking
+
+* `allow-page-break` resets the page breaking rules, like for **Class Overrides** heading here.
+
+```md
+### Class Overrides
+{: .allow-page-break}
+```
+
+* `no-toc` removes a header from table of contents.
+
+```md
+### Header to hide
+{: .no_toc}
+```
+
+* To ensure the h2-summary-h3 stays in one page during printing, wrap class `h2-summary` for the summary segment
+
+```md
+## h2 header
+
+<div class="h2-summary" markdown="1">
+Pretend this is a long summary with lots of elements
+
+> ### You will learn
+{: .no_toc}
+> - something...
+</div>
+
+### h3 header
+```
+
+* `page-break` forces a page break:
+
+```md
+<div class="page-break"></div>
+```
+<div class="page-break"></div>
+
 
 
 ### Pill Demo
-
+Use the pills appropriately.
+```md
+<span class="learning-outcome pill">:trophy: How to perform a task</span>
+```
 <span class="learning-outcome pill">:trophy: How to perform a task</span>
 
+```md
+<span class="beginner pill">Beginner</span> <span class="intermediate pill">Intermediate</span> <span class="expert pill">Expert</span>
+```
 <span class="beginner pill">Beginner</span> <span class="intermediate pill">Intermediate</span> <span class="expert pill">Expert</span>
 
+```md
+<span class="information pill">:information_source: An info pill</span>
+```
 <span class="information pill">:information_source: An info pill</span>
 
+```md
+<span class="warning pill">:warning: A warning pill</span>
+```
 <span class="warning pill">:warning: A warning pill</span>
 
+```md
+<span class="danger pill">:warning: A danger pill</span>
+```
 <span class="danger pill">:warning: A danger pill</span>
 
+```md
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+```
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 
 ### Jobby class labelling
+
+Just use
+```md
+<span class="jobby-data-class">Jobby class</span>
+```
 
 #### Adding contacts
 Jobby can create contacts in the form of <span class="jobby-data-class">Organization</span> and <span class="jobby-data-class">Recruiter</span>, which you can add into your database with simple CLI commands.
@@ -76,6 +168,12 @@ For example, to add an <span class="jobby-data-class">Organization</span> **"Woo
 ```
 add --org --name Woogle --id woogle_id
 ```
+
+#### Testing
+```sh
+add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
+```
+
 
 ![Add Organization](images/starter-guide/add-woogle.jpg)
 
@@ -91,6 +189,11 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 ![Autocomplete Screenshot](images/autocomplete.png)
 
+```md
+<div markdown="block" class="alert alert-info">
+...
+</div>
+```
 <div markdown="block" class="alert alert-info">
 
 **:bulb: Additional tips:** <br>
@@ -101,6 +204,11 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 </div>
 
+```md
+<div markdown="block" class="alert alert-warning">
+...
+</div>
+```
 <div markdown="block" class="alert alert-warning">
 
 **:warning: Limitations:**<br>
@@ -137,7 +245,7 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 ##### Format
 ```
-add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
+add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
 
 ##### Valid use examples
@@ -158,21 +266,25 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 ![add-recruiter](images/add_recruiter_success.png)
 
 ### List contacts - `list`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 <span class="learning-outcome pill">:trophy: How to choose contacts to list in Jobby</span>
 
 ##### Format
 ```
-list [--org/--rec]
+list [--org/--rec/--toapply]
 ```
 
 Shows a list of all contacts in the address book.
 
 Supplying `--org` lists only Organizations while supplying `--rec` lists only Recruiters.
 
+Supplying `--toapply` lists Organizations you have not applied to.
+
 ##### Examples
 * `list`
 * `list --org`
 * `list --rec`
+* `list --toapply`
 
 [SCREENSHOT HERE]
 
