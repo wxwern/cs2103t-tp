@@ -295,64 +295,6 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 ## Features
 
-#### Adding an organization contact: `add --org`
-
-Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
-
-Acceptable Parameters:
-* `NAME` can accept any value, but must not be blank.
-* `ID` refers to a unique identifier which is used to uniquely identify the organization (alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`).
-  * Specifying this sets the ID, or one unique one will be derived and generated from the name if not provided.
-* `NUMBER` should be a valid phone number.
-* `EMAIL` should be a valid email.
-* `URL` should be a valid url-like format.
-* `ADDRESS` can accept any value. It designates the contact’s physical address.
-* `TAG` can accept any value and may have multiple inputs.
-
-
-Examples:
-* `add --org --name J&J`
-* `add --org --name Google --id g-sg --phone 98765432 `
-* `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
-* `add --org --name Example --url www.organization.org --tag freelance`
-* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
-
-### Editing a contact: `edit`
-
-Current: Edit contacts whose names contain any of the given keywords or ids.
-
-Format: `INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
-
-* Names, index and id are being searched.
-* For id, the search is case-insensitive, e.g. `hans` will match `Hans`
-* For Index, the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
-* You can change the parameter of any of the `[--variable NEW VALUE]`, e.g. `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact
-
-Examples:
-* `edit google --phone 91292951` changes the phone number of google to `91292951`
-* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
-* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
-
-### Locating contacts by name and id: `find`
-
-Current: Finds contacts whose names contain any of the given keywords or ids.
-
-Format: `find KEYWORD/ID...`
-
-* Name & ID are searched
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
-* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find id_12345` returns `john` and whose id is `id_12345`
-* `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
-* `find alex david` returns `Alex Yeoh`, `David Li`
 
 ### Add command - `add`
 
@@ -367,6 +309,24 @@ Adds a contact to the address book of the given class type: <span class="jobby-d
 Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
 
 Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
+
+#### Add organization contact: `add --org`
+
+Adding an **Organization** contact into Jobby.
+
+Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]`
+
+* When adding in parameters, be aware of the [accepted parameters]().
+* If **id** is not specified, one will be automatically generated.
+
+Valid Examples:
+* `add --org --name J&J`
+* `add --org --name Google --id g-sg --phone 98765432 `
+* `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
+
+Invalid Examples: 
+* `add --org --name` did not specify **name** despite having **name** flag.
+* `add --org --name Google --phone 1231*&&@` has an invalid parameter for **phone** flag.
 
 #### Add recruiter command - `add --rec`
 
@@ -413,6 +373,26 @@ Sample demonstration with the expected visual outcome:
 * Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
 
 ![add-recruiter](images/add_recruiter_success.png)
+
+### Locating contacts by name and id: `find`
+Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
+
+<span class="learning-outcome pill">:trophy: How to find contacts in Jobby</span> <span class="beginner pill">Beginner</span>
+
+Finds the `contact` by specifying the [KEYWORD/ID]().
+
+Format: `find KEYWORD/ID [KEYWORD/ID] ...`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match [substring]() for both **keyword and id**. e.g. searching for `ha` will match with `hamburger`.
+* Persons matching at least one keyword or id will be returned
+  e.g. `Hans Bo` will find `Hans Gruber`, `Bo Yang`
+
+Valid examples:
+* `find John` displays anyone whose name or id that contains the substring **John**.
+* `find 12345` displays anyone whose id contains the substring **12345**.
+* `find jo 1231 waseda` displays anyone whose name or id that contains the substring **jo** or **1231** or **waseda**.
 
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
@@ -532,7 +512,6 @@ Examples of invalid use of `apply` command:
 * `apply 1 --title SWE --by 31-31-2023` _Invalid date for deadline._
 * `apply 1 --title SWE --by tomorrow` _Invalid format for deadline._
 
-
 ### Edit command - `edit`
 
 Applies to: <span class="jobby-data-class">Job Application</span> <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
@@ -541,35 +520,39 @@ Applies to: <span class="jobby-data-class">Job Application</span> <span class="j
 
 <span class="warning pill">:warning: Any edits made are not reversible.</span>
 
-#### Edit application command - `edit --application`
-<span class="learning-outcome pill">:trophy: Able to edit job applications associated with an organization in Jobby</span>
+#### Editing a contact: `edit index/id`
+Edit [contact]() information whose **names** contain any of the given [index/ id]().
 
-<span class="information pill">:information_source: Also assumes that you have read the `apply` command documentation.</span>
+Format: `edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]`
+
+* Edit variables in Contact
+* For [id](), the search is case-insensitive, e.g. `hans` will match `Hans`
+* For [index](), the search will match with the index as listed on the GUI e.g. `1` will match with the first item in the GUI.
+
+Valid Example:
+* `edit google --phone 91292951` changes the phone number of google to `91292951`
+* `edit 1 --name Jane Street` changes the name of the contact at index 1 in the GUI to `Jane Street`
+* `edit 1 --name Google --phone 91241412 --email google@gmail.sg`, which changes the name, phone number and email of the contact to `Google`, `91241412` and `google@gmail.sg` respectively.
+
+Invalid Example:
+* `edit google --phone 8124!@#$` as the input for **phone** is [invalid parameter]().
+
+#### Edit application command - `edit --application`
+Edit [job applications]() associated with an organization in Jobby
 
 Format: `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`
 
-
-
-Required fields:
-* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> to edit in the list.
-
-Optional fields (at least 1 must be provided):
-* `TITLE` - The new job title of the <span class="jobby-data-class">Job Application</span>.
-  * The title cannot match a title of another <span class="jobby-data-class">Job Application</span> belonging to the same <span class="jobby-data-class">Organization</span> that is being applied to.
-* `DESCRIPTION` - The new description of the <span class="jobby-data-class">Job Application</span>.
-* `DEADLINE` - The new deadline of the <span class="jobby-data-class">Job Application</span>.
-* `STATUS` - The new application status of the <span class="jobby-data-class">Job Application</span>.
-* `STAGE` - The new job application stage of the <span class="jobby-data-class">Job Application</span>.
+* [index]() will match with the index as listed on the GUI.
 
 Examples of valid use of `edit --application` command:
-* `edit --application 1 --title SRE` _Given that there is at least 1 job application._
-* `edit --application 1 --status pending` _Given that there is at least 1 job application._
+* `edit --application 1 --title SRE` will change the title of application at index 1 to **SRE**.
+* `edit --application 1 --status pending` will change status of application at index 1 to **pending**.
 
 Examples of invalid use of `edit --application` command:
-* `edit --application 0 --title SRE` _Invalid index._
-* `edit --application 1` _One of the fields to edit are not given._
-* `edit --application 1 --title SWE` _Given that the organization of the application being updated already has another application with the title "SWE"._
-* `edit --application 1 --by 31-31-2023` _Invalid date._
+* `edit --application 0 --title SRE` [Invalid index]().
+* `edit --application 1` One of the fields to edit are not given.
+* `edit --application 1 --title SWE`  If there is [duplicate]() data in another application.
+* `edit --application 1 --by 31-31-2023` [Invalid date]().
 
 
 ### Delete command - `delete`
@@ -586,20 +569,15 @@ Applies to: <span class="jobby-data-class">Job Application</span> <span class="j
 
 Format: `delete INDEX/ID [--recursive]`
 
-If the contact to delete is an organization, it will delete the job applications associated with it.
+* If the contact to delete is an organization, it will delete the job applications associated with it.
 
-Required fields:
-* `INDEX/ID` - The index or the id of the <span class="jobby-data-class">Contact</span> in the list
+Valid Example:
+* `delete 1` This will delete the contact at index 1.
+* `delete josh` This will delete the contact with the **id** of **josh**.
+* `delete 1 --recursive` This will delete a contact and all its associated [applications]().
 
-Optional fields:
-* `--recursive` - Deletes the associated recruiter contacts if the contact to delete is an organization.
-
-Examples of valid use of `delete` command
-* `delete 1` _Given that there is at least 1 contact in the list._
-* `delete 1 --recursive` _Given that there is at least 1 contact in the list._
-
-Examples of invalid use of `delete` command
-* `delete 0` _Invalid index._
+Invalid Example:
+* `delete 0` Not allowed due to invalid index.
 
 #### Delete job application command - `delete --application`
 
@@ -607,14 +585,13 @@ Examples of invalid use of `delete` command
 
 Format: `delete --application INDEX`
 
-Required fields:
-* `INDEX` - The index of the <span class="jobby-data-class">Job Application</span> in the list.
+* This will delete the job application in the specified GUI.
 
-Examples of valid use of `delete` command
-* `delete --application 1` _Given that there is at least one job application in the list._
+Valid Example:
+* `delete --application 1` This will delete the application at index 1.
 
-Examples of invalid use of `delete` command
-* `delete --application 0` _Invalid index._
+Invalid Example:
+* `delete --application 0` Not allowed due to invalid index.
 
 
 --------------------------------------------------------------------------------------------------------------------
