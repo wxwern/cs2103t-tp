@@ -48,6 +48,7 @@ import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Type;
 import seedu.address.model.contact.Url;
 import seedu.address.model.jobapplication.ApplicationStage;
+import seedu.address.model.jobapplication.JobApplication;
 import seedu.address.model.jobapplication.JobStatus;
 import seedu.address.model.tag.Tag;
 
@@ -200,7 +201,7 @@ public class EditCommand extends Command {
         requireNonNull(model);
         if (this.targetId != null) {
             Contact contactToEdit = model.getContactById(targetId);
-            return getCommandResult(model, contactToEdit);
+            return updateModelAndGetCommandResult(model, contactToEdit);
         }
 
         List<Contact> lastShownList = model.getDisplayedContactList();
@@ -210,12 +211,12 @@ public class EditCommand extends Command {
         }
 
         Contact contactToEdit = lastShownList.get(index.getZeroBased());
-        return getCommandResult(model, contactToEdit);
+        return updateModelAndGetCommandResult(model, contactToEdit);
     }
 
-    // TODO: Tech debt - Method name does not really reflect what it does
-    private CommandResult getCommandResult(Model model, Contact contactToEdit) throws CommandException {
+    private CommandResult updateModelAndGetCommandResult(Model model, Contact contactToEdit) throws CommandException {
         Contact editedContact = createEditedContact(model, contactToEdit, editContactDescriptor);
+
         if (!contactToEdit.isSameContact(editedContact) && model.hasContact(editedContact)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
@@ -223,6 +224,7 @@ public class EditCommand extends Command {
         if (editedContact.getType() == Type.ORGANIZATION) {
             updateLinkedRecruiters(model, (Organization) contactToEdit, (Organization) editedContact);
         }
+
         model.setContact(contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS,
@@ -254,8 +256,12 @@ public class EditCommand extends Command {
 
         // TODO: Refactor into two methods to handle the two cases.
         if (contactToEdit.getType() == Type.ORGANIZATION) {
+            Organization org = (Organization) contactToEdit;
+            List<JobApplication> applications = Arrays.asList(org.getJobApplications());
+
             return new Organization(updatedName, updatedId, updatedPhone, updatedEmail,
-                    updatedUrl, updatedAddress, updatedTags);
+                    updatedUrl, updatedAddress, updatedTags, applications);
+
         } else if (contactToEdit.getType() == Type.RECRUITER) {
             Optional<Id> updatedOid = editContactDescriptor
                     .getOrganizationId()

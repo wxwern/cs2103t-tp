@@ -18,6 +18,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalOperationException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Messages;
 import seedu.address.model.contact.Contact;
@@ -56,11 +57,8 @@ public class ModelManager implements Model {
         this.sortedContacts = new SortedList<>(this.addressBook.getContactList());
         this.filteredContacts = new FilteredList<>(sortedContacts);
         this.displayedContacts = filteredContacts;
-        ObservableList<JobApplication> applicationList = FXCollections.observableArrayList(filteredContacts.stream()
-                .filter(c -> c.getType() == Type.ORGANIZATION)
-                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
-                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
-                .collect(Collectors.toList()));
+        ObservableList<JobApplication> applicationList =
+                FXCollections.observableArrayList(extractApplicationsFromContacts(filteredContacts));
         this.jobApplicationList = new JobApplicationList(applicationList);
         this.sortedApplications = new SortedList<>(applicationList);
         this.filteredApplications = new FilteredList<>(this.sortedApplications, s->true);
@@ -111,6 +109,7 @@ public class ModelManager implements Model {
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
         this.addressBook.resetData(addressBook);
+        this.jobApplicationList.setAll(extractApplicationsFromContacts(addressBook.getContactList()));
     }
 
     @Override
@@ -146,6 +145,18 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedContact);
 
         addressBook.setContact(target, editedContact);
+
+        if (target.getType() != Type.ORGANIZATION || editedContact.getType() != Type.ORGANIZATION) {
+            // guard clause
+            return;
+        }
+        if (target.getName().equals(editedContact.getName()) && target.getId().equals(editedContact.getId())) {
+            // guard clause
+            return;
+        }
+
+        updateApplicationNames((Organization) editedContact, (Organization) target);
+
     }
 
     @Override
@@ -184,14 +195,19 @@ public class ModelManager implements Model {
     public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
         JobApplication oldApplication = jobApplicationList.get(index.getZeroBased());
 
-        jobApplicationList.set(index.getZeroBased(), newApplication);
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
-            throw new IllegalValueException("Id field is invalid!");
+            throw new IllegalValueException("Id field is invalid!"); // TODO: Should I change this?
         }
-        Organization organization = (Organization) contact;
-        organization.replaceJobApplication(oldApplication, newApplication);
 
+        Organization organization = (Organization) contact;
+        try {
+            organization.replaceJobApplication(oldApplication, newApplication);
+        } catch (IllegalOperationException e) {
+            throw new IllegalValueException(e.getMessage());
+        }
+
+        jobApplicationList.set(index.getZeroBased(), newApplication);
 
     }
 
@@ -229,7 +245,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredContacts.setPredicate(predicate);
         // TODO: Tech debt - inefficient?
-        // TODO: Bug - does not show the thing.
         filteredApplications.setPredicate(a -> predicate.test(getContactById(a.getOrganizationId())));
     }
 
@@ -263,6 +278,29 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredContacts.equals(otherModelManager.filteredContacts);
+    }
+
+    private void updateApplicationNames(Organization newOrg, Organization oldOrg) {
+        List<JobApplication> oldApplications = List.of(oldOrg.getJobApplications());
+        List<JobApplication> newApplications = List.of(newOrg.getJobApplications());
+
+        for (JobApplication newApplication: newApplications) {
+            for (JobApplication oldApplication: oldApplications) {
+                if (!newApplication.looseEquals(oldApplication)) {
+                    continue;
+                }
+                int index = jobApplicationList.indexOf(oldApplication);
+                jobApplicationList.set(index, newApplication);
+            }
+        }
+    }
+
+    private List<JobApplication> extractApplicationsFromContacts(List<Contact> contacts) {
+        return contacts.stream()
+                .filter(c -> c.getType() == Type.ORGANIZATION)
+                .flatMap(c -> Arrays.stream(((Organization) c).getJobApplications()))
+                .sorted(JobApplication.LAST_UPDATED_COMPARATOR)
+                .collect(Collectors.toList());
     }
 
 }

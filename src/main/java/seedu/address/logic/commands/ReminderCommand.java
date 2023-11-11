@@ -64,10 +64,6 @@ public class ReminderCommand extends Command {
         }
 
         ReminderCommand otherReminderCommand = (ReminderCommand) other;
-        if (this.isUrgent) {
-            return otherReminderCommand.isUrgent;
-        } else {
-            return !otherReminderCommand.isUrgent;
-        }
+        return this.isUrgent.equals(otherReminderCommand.isUrgent);
     }
 }

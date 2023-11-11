@@ -35,10 +35,10 @@ public class ApplicationListPanel extends UiPart<Region> {
      */
     class ApplicationListViewCell extends ListCell<JobApplication> {
         @Override
-        protected void updateItem(JobApplication application, boolean empty) {
-            super.updateItem(application, empty);
+        protected void updateItem(JobApplication application, boolean isEmpty) {
+            super.updateItem(application, isEmpty);
 
-            if (empty || application == null) {
+            if (isEmpty || application == null) {
                 setGraphic(null);
                 setText(null);
             } else {
