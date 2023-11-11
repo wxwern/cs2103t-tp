@@ -281,6 +281,10 @@ If suggestions were hidden or aren't shown when they should, press **TAB** to pr
 
 ## Features
 
+### Adding contacts - `add`
+
+The `add` command allows you to create contacts to track details about the organizations and recruiters related to your job application process. To learn more about creating each type of contact, check out the sections below.
+
 #### Adding an organization contact: `add --org`
 
 Format: `add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]... `
@@ -302,6 +306,42 @@ Examples:
 * `add --org --name Hoyoverse --email mihoyo@example.com --tag example1 --tag example2`
 * `add --org --name Example --url www.organization.org --tag freelance`
 * `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`
+
+#### Adding a recruiter - `add --rec`
+
+<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+Adds a <span class="jobby-data-class">Recruiter</span> contact into Jobby.
+
+Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
+
+* When adding in parameters, be aware of the [accepted parameters](#appendix-a-acceptable-values-for-parameters).
+* If an `ID` is not specified, one will be automatically generated.
+* To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
+
+##### Sample demonstration:
+* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
+
+* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is linked to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
+
+![add-recruiter](images/add_recruiter_success.png)
+
+##### Valid examples:
+
+Command | Reason
+--------|-------
+`add --rec --name John Doe` | Adds a recruiter that is not linked to any organization.
+`add --rec --name John Doe --tag friendly --tag woogle` | Adds a recruiter with two tags - friendly and woogle.
+`add --rec --name John Doe --oid job_seeker_plus` | Adds a recruiter that is linked to an organization (if it exists in the address book) with the id **job_seeker_plus**.
+`add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.
+
+##### Invalid examples:
+
+Command | Reason
+--------|-------
+`add --rec` | Missing a name.
+`add --rec --name John Doe --phone` | Optional fields (in this case `--phone`) were used but not specified.
+`add --rec --name John Doe --oid bogus-org` | Given that no organization with the id "bogus-org" exists in the address book.
 
 ### Editing a contact: `edit`
 
@@ -339,66 +379,6 @@ Examples:
 * `find id_12345` returns `john` and whose id is `id_12345`
 * `find Jo` returns `john`, `John Doe`, `Josh` and every other keyword with `jo` in its substring
 * `find alex david` returns `Alex Yeoh`, `David Li`
-
-### Add command - `add`
-
-Applies to: <span class="jobby-data-class">Organization</span> <span class="jobby-data-class">Recruiter</span>
-
-<span class="learning-outcome pill">:trophy: How to add contacts into Jobby</span> <span class="beginner pill">Beginner</span>
-
-Format: `add --org/--rec <additional parameters and values...>`
-
-Adds a contact to the address book of the given class type: <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span>.
-
-Supplying `--org` adds an <span class="jobby-data-class">Organization</span> while supplying `--rec` adds a <span class="jobby-data-class">Recruiter</span> to the address book.
-
-Details on adding an [organization]() contact and a [recruiter](#add-recruiter-command---add---rec) contact are specified in the next sections
-
-#### Add recruiter command - `add --rec`
-
-Applies to: <span class="jobby-data-class">Recruiter</span>
-
-<span class="learning-outcome pill">:trophy: How to add recruiter contacts into Jobby</span> <span class="beginner pill">Beginner</span>
-
-<span class="information pill">:information_source: Assumes that you have completed the tutorial</span> <br>
-
-Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`
-
-Required Fields:
-* `NAME` - The name of the <span class="jobby-data-class">Recruiter</span>. A valid name can be of any value, but must not be blank.
-
-Optional Fields:
-* `ID` - The unique identifier of the <span class="jobby-data-class">Recruiter</span>. A valid `ID` must start with a letter and can consist of alphanumeric and basic symbols, i.e. should only be `a-z`, `A-Z`, `0-9`, `-`, `_`.
-    * Specifying this sets the `ID`, or a unique one will be derived and generated from the `NAME` if not provided. <br>
-
-* `ORG_ID` - The unique identifier of the <span class="jobby-data-class">Organization</span> linked to this <span class="jobby-data-class">Recruiter</span>. It is subjected to the same validation as the `ID` field. The value provided must be the `ID` of an existing <span class="jobby-data-class">Organization</span> in the address book.
-
-* `NUMBER` - The phone number of the <span class="jobby-data-class">Recruiter</span>. A valid phone number contains only numbers and must be at least 3 digits long. E.g. 999 or 87263614
-
-* `EMAIL` - The email of the <span class="jobby-data-class">Recruiter</span>. A valid email consists of a _local-part_ and _domain_ and should be in the form of *local-part@domain*. E.g. johndoe@example.com
-
-* `URL` - The url of the <span class="jobby-data-class">Recruiter</span>. A valid url should be a path that contains _domain.tld_. E.g. example.com, subdomain.example.com/path, https://example.com
-
-* `ADDRESS` - The address of the <span class="jobby-data-class">Recruiter</span>. A valid address can be any non-empty value. It designates the <text class="jobby-data-class">Recruiter's</text> physical address.
-
-* `TAG` - The tag(s) of the <span class="jobby-data-class">Recruiter</span>. A valid tag consists of only alphanumeric characters. Multiple tags can also be specified.
-
-Examples of valid use of `add --rec` command:
-* `add --rec --name John Doe` _Adds a recruiter that is not linked to any organization._
-* `add --rec --name John Doe --tag friendly --tag woogle` _Adds a recruiter with two tags - friendly and woogle._
-* `add --rec --name John Doe --oid paypal-sg` _Adds a recruiter that is linked to an organization (if it exists in the address book) with the id "paypal-sg"_
-
-Examples of invalid use of `add --rec` command:
-* `add --rec` _Missing a name._
-* `add --rec --name John Doe --phone` _Optional fields (in this case `--phone`) were used but not specified_
-* `add --rec --name John Doe --oid bogus-org` _Given that no organization with the id "bogus-org" exists in the address book._
-
-Sample demonstration with the expected visual outcome:
-* If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new contact being added to the list of contacts on the left panel.
-
-* Since the `--oid` flag was provided, the newly added recruiter contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the recruiter is linked to the organization with that particular id.
-
-![add-recruiter](images/add_recruiter_success.png)
 
 #### List contacts - `list`
 <span class="learning-outcome pill">:trophy: Able to list contacts, organizations, and recruiters in Jobby</span>
