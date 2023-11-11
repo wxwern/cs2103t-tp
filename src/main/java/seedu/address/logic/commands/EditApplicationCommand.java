@@ -57,7 +57,7 @@ public class EditApplicationCommand extends EditCommand {
         JobApplication newApplication = createApplication(jobApplication, editApplicationDescriptor);
 
         try {
-            model.replaceApplication(targetIndex, newApplication);
+            model.replaceApplication(jobApplication, newApplication);
         } catch (IllegalValueException e) {
             throw new CommandException(e.getMessage());
         }
