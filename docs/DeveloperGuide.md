@@ -169,28 +169,28 @@ Each `Recruiter` can only be linked to zero or one `Organization` while an `Orga
 
 #### Implementing the parent-child relationship
 
-For the `Contact` class: <br>
-* In order to incorporate this two-way relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+For the `Contact` class:
+  * In order to incorporate this two-way relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
 
-For the `Recruiter` class: <br>
-* Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
+For the `Recruiter` class:
+  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
 
-* The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
+  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
 
-For the `Organization` class: <br>
-* The `Organization` class does not maintain a direct list of the `Recruiter` contacts linked to it.
+For the `Organization` class:
+  * The `Organization` class does not maintain a direct list of the `Recruiter` contacts linked to it.
 
-* Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the `Organization`.
+  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the `Organization`.
 
 Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
 
 Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization with the `Id` that has a value of "alex_yeoh" and no recruiters.
 
-Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. The add command parses the `--rec` flag and knows the user wishes to create a recruiter. It also parses "alex_yeoh" as the `Id of the organization the recruiter will be linked to.
+Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. The add command parses the `--rec` flag and knows the user wishes to create a recruiter. It also parses **alex_yeoh** as the `Id` of the organization the recruiter will be linked to.
 
-The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id` "alex_yeoh" and pass it into the new `Recruiter` that will be added to the AddressBook
+The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id` **alex_yeoh** and pass it into the new `Recruiter` that will be added to the `AddressBook`
 
-Once done, the UI will display the link as a single line: `from organization (alex_yeoh)`
+Once done, the UI will display the link as a label within the `ContactCard`: **from organization (alex_yeoh)**
 
 #### Editing the `Recruiter`-`Organization` link
 
@@ -198,7 +198,15 @@ _To be added later_
 
 #### Deleting the `Recruiter`-`Organization` link
 
-_To be added later_
+There are two ways to remove the link.
+
+Deleting the parent `Organization`:
+  * Deleting the `Organization` via the `delete` command will remove the `Contact` from the `AddressBook`
+
+  * However as linked `Recruiter` contacts still have a direct link to it, each contact must be replaced via `AddressBook#setContact()` where parent is set to null.
+
+Deleting the child `Recruiter`:
+  * Deleting the `Recruiter` via the `delete` command requires no additional steps as the `Organization` retrieves its children dynamically from the model.
 
 #### Storing the `Recruiter`-`Organization` link
 
