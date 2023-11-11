@@ -169,14 +169,13 @@ For example, to add an <span class="jobby-data-class">Organization</span> **"Woo
 add --org --name Woogle --id woogle_id
 ```
 
-#### Testing
+![Add Organization](images/starter-guide/add-woogle.jpg)
+
+
+### Use the `sh` formatter for syntax highlighting
 ```sh
 add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
-
-
-![Add Organization](images/starter-guide/add-woogle.jpg)
-
 
 ### Popup boxes
 
@@ -244,7 +243,7 @@ Just press **TAB** or **SPACE** to select the first suggestion to fill in that t
 
 
 ##### Format
-```
+```sh
 add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
 
@@ -270,7 +269,7 @@ add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] 
 <span class="learning-outcome pill">:trophy: How to choose contacts to list in Jobby</span>
 
 ##### Format
-```
+```sh
 list [--org/--rec/--toapply]
 ```
 
@@ -296,7 +295,7 @@ Supplying `--toapply` lists Organizations you have not applied to.
 
 
 ##### Format
-```
+```sh
 sort --FLAG_TO_SORT [--ascending/--descending]
 ```
 
@@ -354,7 +353,7 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 <span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
-```
+```sh
 delete INDEX/ID [--recursive]
 ```
 
@@ -376,7 +375,7 @@ If `--recursive` is specified, deletes the associated recruiter contacts if the 
 <span class="danger pill">:warning: Deletion is permanent and there is no way to undo it.</span>
 
 ##### Format
-```
+```sh
 delete --application INDEX
 ```
 
