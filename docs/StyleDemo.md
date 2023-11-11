@@ -77,15 +77,15 @@ Use them for better visual separation and styling consistency
 ```
 
 ### Class Overrides
-{: .allow-page-break}
+{: .reset-page-break-defaults}
 
 #### Page breaking
 
-* `allow-page-break` resets the page breaking rules, like for **Class Overrides** heading here.
+* `reset-page-break-defaults` resets the page breaking rules, like for **Class Overrides** heading here.
 
 ```md
 ### Class Overrides
-{: .allow-page-break}
+{: .reset-page-break-defaults}
 ```
 
 * `no-toc` removes a header from table of contents.
