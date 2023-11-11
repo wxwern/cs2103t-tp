@@ -3,14 +3,14 @@ layout: page
 title: Juanpa's Project Portfolio Page
 ---
 
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop app for tracking job applications.
 It saves organisations and recruiters as contacts in an addressbook.
 
 Given below are my contributions to the project.
-
-<div class="allow-page-break" markdown="1">
 
 * **New Feature**: To be added soon
     * What it does: To be added soon
