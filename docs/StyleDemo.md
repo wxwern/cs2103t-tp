@@ -301,7 +301,7 @@ sort --FLAG_TO_SORT [--ascending / --descending]
 
 ##### Supported flags <sub>(only 1 must be provided)</sub>
 
-**Flags for contacts:**
+###### Flags for contacts:
 * `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
@@ -309,25 +309,31 @@ sort --FLAG_TO_SORT [--ascending / --descending]
 * `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 * `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
 
-**Flags for job applications:**
+###### Flags for job applications:
 * `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
 * `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
 * `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
 * `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
 
-**Flags for resetting the sort order:**
+###### Flags for resetting the sort order:
 * `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
 
-**Flags for specifying the sort order:**
+###### Flags for specifying the sort order:
 * `--ascending` - The specified flag will sort in ascending order.
 * `--descending` - The specified flag will sort in descending order.
 
-If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+<div markdown="block" class="alert alert-info">
 
-Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+**:information_source: Note that:** <br>
 
-`sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
+* If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
+* Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
+* `sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
+
+</div>
 
 [SCREENSHOT HERE]
 
