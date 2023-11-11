@@ -779,3 +779,18 @@ Step 5. The user confirms to continue with the command, which the `LogicManager`
 An alternative implementation from the above diagram is to allow the `AppParser` to store the destructive command in the `AppParser` instead, and when parsing the confirmation command it will give the destructive command.
 
 <img src="images/enhancements/warn_alt.png">
+
+
+### Add the find job applications feature
+
+Currently, Jobby does not implement the find function for applications. 
+
+The biggest reason is due to the complexity: The list of job applications is dependent on the list of contacts. If a job application is in the list of job applications, then the organization associated with it should also be in the list of contacts. The converse is also true. This ensures that there is no confusion when using Jobby - it would be weird to have a job application associated to a company that does not exist in the list, and even weirder to see an organization in the list but the applications made to it are not shown!
+
+However, the find feature for applications may need to change that behavior, since the find feature will look through every job application shown and not shown in the list. Currently, the method to keep the behavior consistent would be:
+1. Get a list of job applications that contains the keyword.
+2. Filter out the list of contacts by checking if it is associated to any of the job applications from step 1.
+
+This can be made possible by making `JobApplication` searchable, by providing a method to check if the keyword matches any of its fields, such as title and description. 
+This will allow a list of job applications that have a match to be generated, and therefore now the `Model` can filter the contact list based on whether the contact is associated to the job application.
+
