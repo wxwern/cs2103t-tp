@@ -24,9 +24,15 @@ img.emoji {
 }
 
 .language-sh, .language-bash, .language-shell {
-    .highlight code .nt {
-        /* Do not wrap --flags */
-        white-space: nowrap;
+    .highlight code {
+        .nb {
+            /* parsing of this seems inconsistent */
+            color: unset;
+        }
+        .nt {
+            /* do not wrap --flags */
+            white-space: nowrap;
+        }
     }
 }
 
