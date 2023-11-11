@@ -40,8 +40,6 @@ public class JsonAdaptedApplication {
                               @JsonProperty("deadline") String deadline,
                               @JsonProperty("status") String status,
                               @JsonProperty("stage") String stage) {
-        // TODO: remove oid and orgname and make it dependent on the contact by changing the toModelType signature
-        // TODO: pass name and oid during creation
         this.title = title;
         this.description = description;
         this.lastUpdatedTime = lastUpdatedTime;
