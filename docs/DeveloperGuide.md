@@ -476,17 +476,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add an application
-2.  Jobby adds the application into the specified organization
-3.  Jobby shows that the application has been added
+1.  User requests to add an application.
+2.  Jobby adds the application into the specified organization.
+3.  Jobby shows that the application has been added.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given application does not match to any Organization
+* 1a. The given application does not match to any Organization.
     * 1a1. Jobby shows an error message.
     Use case ends.
+
+
+**Use case: Delete an application**
+
+**MSS**
+
+1.  User requests to delete an application
+2.  Jobby deletes the application
+3.  Jobby shows that the application has been deleted
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given application does not exist
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+
+**Use case: Edit an application**
+
+**MSS**
+
+1.  User requests to edit an application
+2.  Jobby edits the applications.
+3.  Jobby shows that the application has been edited
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No details are given for which aspect of the application to edit.
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+* 1b. The application does not exist.
+    * 1b1. Jobby shows an error message.
+      Use case ends.
+
 
 
 **Use case: Edit a contact**
