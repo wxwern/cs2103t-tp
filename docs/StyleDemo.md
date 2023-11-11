@@ -270,7 +270,7 @@ add --rec --name NAME [--id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] 
 
 ##### Format
 ```sh
-list [--org/--rec/--toapply]
+list [--org / --rec / --toapply]
 ```
 
 Shows a list of all contacts in the address book.
@@ -296,7 +296,7 @@ Supplying `--toapply` lists Organizations you have not applied to.
 
 ##### Format
 ```sh
-sort --FLAG_TO_SORT [--ascending/--descending]
+sort --FLAG_TO_SORT [--ascending / --descending]
 ```
 
 ##### Supported flags <sub>(only 1 must be provided)</sub>
