@@ -224,7 +224,11 @@ Since the parent `Organization` has to be added to the `AddressBook` before its 
 
 #### Design Considerations
 
-_To be added later_
+To ensure that the `Recruiter` is linked to an existing `Organization`, a direct reference to the `Organization`'s object should exist in the `Recruiter`. This allows other classes (such as the `UI`) to retrieve the correct `Organization`. 
+
+Hence, the greatest obstacle was AB3's existing design which enforces the immutability of the `Contact` class by making each field `final`.
+
+To adhere to the existing design, each time the parent `Organization` was modified or removed (as discussed earlier), the linked `Recruiter` would be replaced with a new `Recruiter` which contains the link to either the new `Organization` or set to null if the parent was removed.
 
 ### Command Autocompletion
 
