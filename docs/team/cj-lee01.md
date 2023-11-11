@@ -1,10 +1,10 @@
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop address book and job application tracking tool. The user interacts with it using a CLI, and it has a GUI created in JavaFX. It is written in Java.
 
 Given below are my contributions to the project.
-
-<div class="allow-page-break" markdown="1">
 
 * **New Feature**:
     * What it does:

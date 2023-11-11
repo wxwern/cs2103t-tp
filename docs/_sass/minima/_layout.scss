@@ -323,9 +323,7 @@
   }
 
   img, code, .alert, .pill, .jobby-data-class {
-    &:not(.allow-page-break) {
-      page-break-inside: avoid;
-    }
+    page-break-inside: avoid;
   }
 
   ul ul, ul ol, ol ul, ol ol {
@@ -333,7 +331,7 @@
     page-break-inside: avoid;
   }
 
-  .allow-page-break {
+  .reset-page-break-defaults, .h2-summary {
     &, & * {
       page-break-before: auto !important;
       page-break-inside: auto !important;
@@ -341,8 +339,14 @@
     }
   }
 
-  .page-break {
+  .page-break, .page-break-after {
     page-break-after: always !important;
   }
+
+  .page-break-before {
+    page-break-before: always !important;
+  }
+
+
 
 }

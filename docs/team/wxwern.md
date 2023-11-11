@@ -3,7 +3,7 @@ layout: page
 title: Wern's Project Portfolio Page
 ---
 
-<div class="allow-page-break" markdown="1">
+<div class="reset-page-break-defaults" markdown="1">
 
 ### Project: Jobby
 
