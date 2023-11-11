@@ -143,7 +143,7 @@ public interface Model {
     /**
      * Replaces the old {@code JobApplication} with the new {@code JobApplication}
      */
-    void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException;
+    void replaceApplication(JobApplication oldApplication, JobApplication newApplication) throws IllegalValueException;
 
     /**
      * Removes the application from the list.

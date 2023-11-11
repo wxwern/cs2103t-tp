@@ -30,10 +30,15 @@ public class DeadlineTest {
     @Test
     public void isValidDeadline() {
         String invalidDeadline1 = "";
-        String invalidDeadline2 = "None";
+        String invalidDeadline2 = "None-None-2022";
         String invalidDeadline3 = "1-222-456";
         String invalidDeadline4 = "11-22-2022";
-        String validDeadline = "23-02-2022";
+        String invalidDeadline5 = "29-02-2022";
+        String invalidDeadline6 = "31-04-2022";
+
+        String validDeadline1 = "23-02-2022";
+        String validDeadline2 = "29-02-2020";
+        String validDeadline3 = "30-04-2022";
 
         // null deadline
         assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
@@ -43,9 +48,13 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline(invalidDeadline2));
         assertFalse(Deadline.isValidDeadline(invalidDeadline3));
         assertFalse(Deadline.isValidDeadline(invalidDeadline4));
+        assertFalse(Deadline.isValidDeadline(invalidDeadline5));
+        assertFalse(Deadline.isValidDeadline(invalidDeadline6));
 
         // valid deadline
-        assertTrue(Deadline.isValidDeadline(validDeadline));
+        assertTrue(Deadline.isValidDeadline(validDeadline1));
+        assertTrue(Deadline.isValidDeadline(validDeadline2));
+        assertTrue(Deadline.isValidDeadline(validDeadline3));
     }
 
     @Test
