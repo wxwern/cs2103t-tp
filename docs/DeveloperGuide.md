@@ -220,11 +220,11 @@ Since only the recruiter stores a direct link to its parent organization, it is 
 
 As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
 
-Since the organization has to be added to the `AddressBook` before its linked recruiter can add it, the data is sorted before writing and after reading from the json data file.
+Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
 
 #### Design Considerations
 
-To ensure that the recruiter is linked to an existing organization, a direct reference to the organization's object should exist in the recruiter. This allows other classes (such as the `UI`) to retrieve the correct organization. 
+To ensure that the recruiter is linked to an existing organization, a direct reference to the organization's object should exist in the recruiter. This allows other components (such as the `UI`) to retrieve the correct organization and its corresponding details. 
 
 Hence, the greatest obstacle was AB3's existing design which enforces the immutability of the `Contact` class by making each field `final`.
 
