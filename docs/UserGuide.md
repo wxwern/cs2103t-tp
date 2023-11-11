@@ -327,6 +327,7 @@ Format: `add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email
 ![add-recruiter](images/add_recruiter_success.png)
 
 ##### Valid examples:
+
 Command | Reason
 --------|-------
 `add --rec --name John Doe` | Adds a recruiter that is not linked to any organization.
@@ -335,6 +336,7 @@ Command | Reason
 `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.
 
 ##### Invalid examples:
+
 Command | Reason
 --------|-------
 `add --rec` | Missing a name.
