@@ -159,16 +159,28 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add Recruiter and Recruiter-Organization Link Feature
-The `Recruiter` class is a `Contact` that can have a link to zero or one `Organization` that exists within the `AddressBook`.
+### `Recruiter`-`Organization` link
 
-As it extends the `Contact` class, it inherits all the fields present in `Contact` and also accepts an additional `Organization`. The accepted organization represents an immutable link between the recruiter and the given organization.
+#### Overview
 
-To represent this relationship within the existing Model, `Contact` was modified to accept another `Contact` which serves as its parent. The parent contact can be retrieved via `Contact#getParent()`.
+There are two types of `Contacts` in the Jobby's `AddressBook` - `Recruiter` and `Organization`.
 
-As this represents a Contact-Contact relationship, `Recruiter` overrides the getter method and cast the parent contact to an `Organization` so that it better represents the Recruiter-Organization relationship.
+Each `Recruiter` can only be linked to zero or one `Organization` while an `Organization` can be linked to multiple `Recruiter` contacts. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
 
-To store this relationship in a JSON format, the unique `Id` of the linked organization is stored as an oid attribute on the recruiter. Hence, when the application is launched again, the `oid` is used to identify the organization in the `AddressBook`. This means that all organizations must be parsed and added to the `AddressBook` before `Storage` parses the JSON data for the recruiters. Thus, each time `AddressBook` is written to storage, it is sorted, placing all organizations before recruiters. 
+#### Implementing the parent-child relationship
+
+For the `Contact` class: <br>
+* In order to incorporate this two-way relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+
+For the `Recruiter` class: <br>
+* Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
+
+* The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
+
+For the `Organization` class: <br>
+* The `Organization` class does not maintain a direct list of the `Recruiter` contacts linked to it.
+
+* Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the `Organization`.
 
 Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
 
@@ -180,7 +192,25 @@ The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id`
 
 Once done, the UI will display the link as a single line: `from organization (alex_yeoh)`
 
-On the other hand, the Organization class can have links to multiple Recruiters. Hence, a single parent Contact can have multiple children contacts.
+#### Editing the `Recruiter`-`Organization` link
+
+_To be added later_
+
+#### Deleting the `Recruiter`-`Organization` link
+
+_To be added later_
+
+#### Storing the `Recruiter`-`Organization` link
+
+Since only the `Recruiter` stores a direct link to its parent `Organization`, it is sufficient to store this link in the `JsonAdaptedContact` of a `Recruiter`.
+
+As the `Id` field can uniquely identify the `Organization`, an additional `oid` field is added to the `JsonAdaptedContact` which records the `Id` of the parent `Organization`. 
+
+Since the parent `Organization` has to be added to the `AddressBook` before its child `Recruiter` can add it, the data is sorted before writing and after reading from the json data file.
+
+#### Design Considerations
+
+_To be added later_
 
 ### Command Autocompletion
 
