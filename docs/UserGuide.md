@@ -366,7 +366,7 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 ### Searching contacts - `find`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
-<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="intermediate pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
@@ -396,9 +396,7 @@ This will return any <span class="jobby-data-class">Organization</span> or <span
 ### Listing data - `list`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
-<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by condition</span> <span class="intermediate pill">Intermediate</span>
-
-Shows a list of the specified contacts in the address book.
+<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by conditions</span> <span class="intermediate pill">Intermediate</span>
 
 ##### Format
 ```sh
@@ -430,7 +428,7 @@ sort --FLAG_TO_SORT [--ascending / --descending]
 
 This sorts contacts or job applications by the specified field.
 
-##### Supported fields <sub>(only 1 must be provided)</sub>
+##### Supported fields <sub>(only 1 may be provided)</sub>
 
 ###### Fields for Contacts
 * `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
@@ -458,7 +456,7 @@ If neither `--ascending` or `--descending` are provided, the list will be sorted
 
 Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
 
-`Sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
+`sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
 
 ##### Sample demonstration
 
