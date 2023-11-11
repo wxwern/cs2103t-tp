@@ -619,22 +619,29 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
+
 ### Launch and shutdown
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+    1. Re-launch the app by double-clicking the jar file.<br>
+   Expected: The most recent window size and location is retained. // TODO: Check if it is valid.
 
 1. _{ more test cases …​ }_
+
+### Resetting to default data for Jobby
+
+1. Go to the folder where jobby.jar is located at
+2. Delete the data directory.
+3. Run jobby.jar
 
 ### Deleting a contact
 
@@ -660,3 +667,112 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+### Do checks to ensure that old data is not the same as new data when editing data.
+
+Currently, Jobby sometimes allow editing of data such that the old data to be replaced with has the same contents as the new data.
+
+For example, `edit --application 1 --title SWE` on a job application with title "SWE" works, even though nothing is effectively changed.
+
+This can be done with a simple fix. The execute method for the editing of job applications is as follows:
+
+```java
+    public CommandResult execute(Model model) throws CommandException {
+        if (!editApplicationDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_EDITED);
+        }
+        List<JobApplication> lastShownList = model.getDisplayedApplicationList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_APPLICATION_DISPLAYED_INDEX);
+        }
+
+        JobApplication jobApplication = lastShownList.get(targetIndex.getZeroBased());
+        JobApplication newApplication = createApplication(jobApplication, editApplicationDescriptor);
+
+        try {
+            model.replaceApplication(targetIndex, newApplication);
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
+        }
+
+        return new CommandResult(String.format(MESSAGE_EDIT_APPLICATION_SUCCESS, newApplication));
+    }
+```
+
+We can easily add a new line to check if the all the contents of the new application is the same as the old one, and throw a CommandException if it is.
+
+This can also be easily done for editing contacts.
+
+### Make commands only take in arguments that are applicable to them and reject other extra arguments.
+
+Currently, some commands with multiple modes share parameters between modes.
+
+Example: The edit command has a contact mode and job application mode. In contact mode, `--name` is used to edit the name of the contact. However, there is no such thing for job application mode.
+
+Yet, `edit --application 1 --name John --title SWE` works as long as a valid field that is used for job application is used, and ignores the extra arguments.
+
+This can be done with a simple fix. Every command alreadly has a list of flags that are accepted. 
+
+At the command parsing level, add additional checks against the list of flags provided by the command to ensure that every flag present in the command is applicable to the command used.
+
+<img src="images/enhancements/FlagChecker.png">
+
+Note: Due to the limitations of PlantUML, `--application 1 --name Jay --title SWE` is interpreted as: ~~application 1~~ name Jay --title SWE
+
+### Better Formatting for Contacts
+
+Currently, the contacts are not nicely formatted and exposes some internal but non-critical implementation details.
+
+<img src="images/enhancements/formatting.png">
+
+This is due to there not being a proper string conversion for the fields in the Contact class, especially when the fields which used to be compulsory are now optional.
+
+In this case, it would be easy to address this problem, by using 
+```java
+optionalField.map(OptionalFieldClass::toString).orElse("None")
+```
+
+The Contact class can use the `Contact.getClass().getSimpleName()` method to get the type of the contact. Alternatively, it can use the `getType` method and use it for the class name, since the `getType` method matches the class name.
+
+### Disallow values in fields where values are not required
+
+Currently, Jobby accepts values for fields which do not require values. For example, `delete X --recursive` works as the command parser does not check if there is a value associated to the flag, but only checks if the flag exists.
+
+In this case, it is simple to add a checker similar to [validating that only the allowed flags are present](#make-commands-only-take-in-arguments-that-are-applicable-to-them-and-reject-other-extra-arguments)
+
+
+### Add confirmation to run destructive commands
+
+Currently, Jobby does not warn users if they run a destructive command that cannot be undone, such as "clear", "delete" and "edit".
+
+Users may then destroy their data by accident.
+
+#### Proposed implementation
+
+One way to implement warnings is to have the user input 2 commands for destructive commands:
+* The actual command
+* The confirmation command
+
+Therefore, Jobby needs to be able to save the previous command to be able to execute it. One way is to store the command inside `LogicManager` and execute the command if the user enters a confirmation.
+
+
+<img src="images/enhancements/warn.png">
+
+Step 1. The user executes a destructive command, such as `clear` to clear the data.
+
+Step 2. The parser will check if the command is a valid command as usual, and creates the command to be executed later.
+
+Step 3. The `LogicManager` checks that it is a destructive command (e.g. have commands implement a `isDestructive` method)
+
+Step 4. If it is destructive, it will generate a warning message to the user, otherwise it will execute the command normally.
+
+Step 5. The user confirms to continue with the command, which the `LogicManager` will execute the stored command. Otherwise, the `LogicManager` will not execute the command and removes the command.
+
+An alternative implementation from the above diagram is to allow the `AppParser` to store the destructive command in the `AppParser` instead, and when parsing the confirmation command it will give the destructive command.
+
+<img src="images/enhancements/warn_alt.png">
