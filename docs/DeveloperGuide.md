@@ -184,40 +184,41 @@ For the `Organization` class:
 
 Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
 
-Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization with the `Id` that has a value of "alex_yeoh" and no recruiters.
+Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id **alex_yeoh** and no recruiters.
 
-Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. The add command parses the `--rec` flag and knows the user wishes to create a recruiter. It also parses **alex_yeoh** as the `Id` of the organization the recruiter will be linked to.
+Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. 
 
-The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id` **alex_yeoh** and pass it into the new `Recruiter` that will be added to the `AddressBook`
+It also parses **alex_yeoh** as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
 
-Once done, the UI will display the link as a label within the `ContactCard`: **from organization (alex_yeoh)**
+Step 3: During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id **alex_yeoh** and pass it into the new `Recruiter` that will be added to the `AddressBook`.
 
-#### Editing the `Recruiter`-`Organization` link
+Step 4: Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. 
 
-Editing the link can only be done from the `Recruiter`. This is achieved by executing `edit INDEX/ID --oid <id of new organization>` 
+The link will be displayed as a label within the `ContactCard`: **from organization (alex_yeoh)**
 
-#### Deleting the `Recruiter`-`Organization` link
+#### Editing and deleting the linked contacts
 
-There are three ways to remove the link.
+Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
 
-Deleting the parent `Organization`:
-  * Deleting the `Organization` via the `delete` command will remove the `Contact` from the `AddressBook`
+As each field in the `Contact` is `final`, editing the `Contact` would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
 
-  * However as linked `Recruiter` contacts still have a direct link to it, each contact must be replaced via `AddressBook#setContact()` where its parent is set to null.
+In the case of **editing** the `Organization`:
+  * As each `Recruiter` maintains an immutable link to the object of its parent `Organization`, editing the `Organization` would require replacing every linked `Recruiter` with a new `Recruiter` that has its parent set to the edited `Organization`.
 
-Deleting the child `Recruiter`:
-  * Deleting the `Recruiter` via the `delete` command requires no additional steps as the `Organization` retrieves its children dynamically from the model.
+In the case of **editing** the `Recruiter`:
+  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked `Recruiter` does not require any edits to itself.
 
-Editing the child `Recruiter`:
-  * Setting optional fields of a `Contact` to be empty can be done by passing in its corresponding flag without any value. (E.g. `edit 1 --phone` effectively removes the first contact's phone number).
+  * Changing the `Organization` the `Recruiter` is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
 
-  * Hence, removing the link can be done by passing in the `--oid` flag without any value. The `EditCommand` replaces the old `Recruiter` with the new one where its parent is set to null.
+  * If the value matches the id of an `Organization` within the `AddressBook`, the `Organization` contact retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited `Recruiter`.
+
+The same principle applies when deleting the linked contacts without recursion. Deleting the parent `Organization` requires replacing every `Recruiter` linked to it, setting their parent to null while deleting its linked `Recruiter` requires no additional replacement.
 
 #### Storing the `Recruiter`-`Organization` link
 
 Since only the `Recruiter` stores a direct link to its parent `Organization`, it is sufficient to store this link in the `JsonAdaptedContact` of a `Recruiter`.
 
-As the `Id` field can uniquely identify the `Organization`, an additional `oid` field is added to the `JsonAdaptedContact` which records the `Id` of the parent `Organization`. 
+As the id field can uniquely identify the `Organization`, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent `Organization`. 
 
 Since the parent `Organization` has to be added to the `AddressBook` before its child `Recruiter` can add it, the data is sorted before writing and after reading from the json data file.
 
