@@ -450,15 +450,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a(n) ...    | I want to ...                                                | So that I can ...                                                          |
 |----------|----------------|--------------------------------------------------------------|----------------------------------------------------------------------------|
 | `* * *`  | new user       | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
-| `* * *`  | user           | find the relevant application data                           | see what I did for for my application to specific companies                |
 | `* * *`  | user           | adding a job application                                     | keep track which organization I am applying to                             |
+| `* * *`  | user           | delete a job application                                     | remove job applications that I no longer need to track                     |
 | `* * *`  | user           | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
 | `* * *`  | user           | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user           | edit my contacts via index, id and name                      | be up to date with changes in organization and recruiter details           |
+| `* * *`  | user           | edit my job application via index                            | be up to date with changes in the job application                          |
+| `* *`    | user           | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
 | `* *`    | user           | find contacts by saved details                               | locate a contact without going through the entire list                     |
-| `* *`    | user           | store recruiters and job application to organizations        | I can see where the recruiter comes from and where I am applying to        |
-| `* *`    | user           | sort the application deadlines                               | be able to which application deadline ends first                           |
-| `* *`    | user           | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user           | find job applications by details                             | locate a job application without going through the entire list             |
+| `* *`    | user           | link recruiters and job application to organizations         | see where the recruiter comes from and where I am applying to              |
+| `* *`    | user           | sort job applications by deadlines                           | be able to which job application is most urgent                            |
+| `* *`    | user           | sort job applications by last updated time                   | be able to see which job applications have gone cold                       |
+| `* *`    | user           | find organizations which have no job applications            | get a summary of the organizations that I should apply to                  |
 | `* *`    | user           | tag contacts                                                 | organize my contact list for more efficient access of different categories |
 | `* *`    | efficient user | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
 | `*`      | user           | import and export contacts                                   | share my list of contacts with my peers                                    |
