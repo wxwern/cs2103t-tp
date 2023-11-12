@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.data;
+package seedu.address.logic.autocomplete.components;
 
 import java.util.Collection;
 import java.util.Set;
@@ -11,7 +11,11 @@ import java.util.Set;
 @FunctionalInterface
 public interface AutocompleteConstraint<T> {
 
+    /**
+     * Returns whether {@code input} can be added to the set of {@code existingElements}.
+     */
     boolean isAllowed(T input, Set<? extends T> existingElements);
+
 
     // Constraint operators
 

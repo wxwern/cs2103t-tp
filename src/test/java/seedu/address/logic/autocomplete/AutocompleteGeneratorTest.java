@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.logic.parser.Flag;
 
 public class AutocompleteGeneratorTest {
@@ -58,9 +58,9 @@ public class AutocompleteGeneratorTest {
         Flag flagC2 = new Flag("code");
 
         AutocompleteSupplier supplier = new AutocompleteSupplier(
-                AutocompleteDataSet.concat(
-                        AutocompleteDataSet.onceForEachOf(flagA1, flagA2, flagA3),
-                        AutocompleteDataSet.anyNumberOf(flagB, flagC1, flagC2)
+                AutocompleteItemSet.concat(
+                        AutocompleteItemSet.onceForEachOf(flagA1, flagA2, flagA3),
+                        AutocompleteItemSet.anyNumberOf(flagB, flagC1, flagC2)
                 ).addConstraint(
                         AutocompleteConstraint.oneAmongAllOf(flagA1, flagA2)
                 ),
