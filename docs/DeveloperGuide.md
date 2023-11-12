@@ -192,7 +192,9 @@ It also parses **alex_yeoh** as the id of the organization the recruiter will be
 
 Step 3: During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id **alex_yeoh** and pass it into the new `Recruiter` that will be added to the `AddressBook`.
 
-![AddRecruiter](images/AddRecruiterActivityDiagram.png)
+This step can be summarized with the activity diagram below:
+
+<img src="images/AddRecruiterActivityDiagram.png" width=450 />
 
 Step 4: Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. 
 
