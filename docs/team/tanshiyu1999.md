@@ -1,3 +1,5 @@
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop address book and job application tracking tool. The user interacts with it using a CLI, and it has a GUI created in JavaFX. It is written in Java.
@@ -34,3 +36,5 @@ Given below are my contributions to the project.
     *
 
 * _{you can add/remove categories in the list above}_
+
+</div>
