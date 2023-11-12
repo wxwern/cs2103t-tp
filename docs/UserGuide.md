@@ -63,7 +63,14 @@ This guide will be done in an example workflow that you will likely experience w
 
 Below is a labelled diagram of our GUI
 
-![Label](images/starter-guide/initial-ui.jpg)
+![ui overview](images/ug-images/labelled-gui.png)
+
+| Component           | Description                                                                                                |
+|---------------------|------------------------------------------------------------------------------------------------------------|
+| Command Box         | You will enter your [commands](#glossary) along with its input here.                                       |
+| Result Display      | Displays the results of your commands.<br/>Any error messages will also be displayed here.                 |
+| Contact Details     | Contains information related to the [contact](#glossary) like name, phone number, email etc.               |
+| Application Details | Contains information related to the [internship application](#glossary) details like status, deadline etc. |
 
 
 ### Adding `Contact`
@@ -128,7 +135,7 @@ You will be able to do it simply with:
 
 
 This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
-> To find more more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
+> To find more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
 
 ### Get `Reminder`
 During your internship application process, you might feel that there are many deadlines that you have to keep track of,
@@ -152,29 +159,12 @@ SCREENSHOT
 > To find out more ways to use `find`, see the [find documentation](LINK TO find DOCUMENTATION).
 
 
-### List everything back
-After filtering, you want to get back the entire list of organizations and applications in Jobby. You can simply use
-the `list` command.
+
 
 ![List](images/starter-guide/list.jpg)
 
 
-### Deleting data
-After you are done with your application, or if you realised that one of the `Contact` in Jobby no longer exists, you can
-feel free to `delete` the `Organization` from Jobby.
 
-In our case, let's delete `Woogle` from Jobby by executing the command:
-`delete woogle_id --recursive`
-
-This will delete `Woogle` along with all of its **applications** and **recruiters**.
-
-![Delete](images/starter-guide/delete-recursive.jpg)
-
-
-### Next Steps
-By now, you should know the basics of how Jobby works!
-
-Checkout [Understanding Jobby's command syntax](#Understanding-Jobby's-command-syntax).
 
 --------------------------------------------------------------------------------------------------------------------
 
