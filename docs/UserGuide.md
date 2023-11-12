@@ -60,7 +60,7 @@ Jobby comes equipped with a [GUI]() interface that provides visual feedback to y
 --------------------------------------------------------------------------------------------------------------------
 ## Jobby Tutorial (for new users)
 
-Hello and welcoem to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
+Hello and welcome to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
 
 Before we begin, please ensure that you have viewed the following sections of the guide:
 * [Quick Start]() to help you get Jobby up and running
