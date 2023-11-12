@@ -364,7 +364,7 @@ public class AutocompleteTextField extends TextField {
     }
 
     /**
-     * Update undo history tracked state based on the change for text field old values to new values.
+     * Updates undo history tracked state based on the change for text field old values to new values.
      */
     protected void updateUndoHistoryState(String previousValue, String currentValue) {
 

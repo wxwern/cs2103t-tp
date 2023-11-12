@@ -83,7 +83,7 @@ public class ArgumentTokenizer {
     /**
      * Splits an arguments string into individual words, separated by space.
      *
-     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
+     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}.
      * @return The terms formed after splitting the arguments string by the space character.
      */
     private static String[] splitByWords(String argsString) {

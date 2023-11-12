@@ -110,8 +110,7 @@ public class AutocompleteSupplier {
      *
      * @param flag The flag to check against. This may be null to represent the preamble.
      * @param currentCommand The current command structure. This should not be null.
-     * @param model The model to be supplied for generation. This may be null if model-data is not essential
-     *              for any purpose.
+     * @param model The model to be supplied for generation. This may be null if the model is unavailable.
      */
     public Optional<Stream<String>> getValidValues(Flag flag, PartitionedCommand currentCommand, Model model) {
         try {
