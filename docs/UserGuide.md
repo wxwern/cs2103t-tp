@@ -28,16 +28,18 @@ title: User Guide
 
 ## Installation
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have _Java 11_ or above installed in your computer.
+   * Download Java [here](https://www.oracle.com/java/technologies/downloads/)
+   * How to check your Java version on [Windows](https://www.howtogeek.com/717330/how-to-check-your-java-version-on-windows-10/) and [macOS](https://www.wikihow.com/Check-Java-Version-on-a-Mac) 
 
 1. Download the latest `jobby.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Jobby Application.
 
-1. Open a command terminal, navigate into the folder you put the jar file in, and enter the `java -jar jobby.jar` command to run the application.<br>
+1. Open a command terminal, navigate into the folder you put the jar file in, and enter `java -jar jobby.jar` in the terminal to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
-   * If you do not know how to navigate to your folder, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/) and [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/).
+   * If you do not know how to navigate to your folder in the terminal, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/) and [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/).
+  ![Ui](images/Ui.png)
 
 1. Type a command in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
 
