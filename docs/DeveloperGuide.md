@@ -450,15 +450,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a(n) ...    | I want to ...                                                | So that I can ...                                                          |
 |----------|----------------|--------------------------------------------------------------|----------------------------------------------------------------------------|
 | `* * *`  | new user       | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
-| `* * *`  | user           | find the relevant application data                           | see what I did for for my application to specific companies                |
 | `* * *`  | user           | adding a job application                                     | keep track which organization I am applying to                             |
+| `* * *`  | user           | delete a job application                                     | remove job applications that I no longer need to track                     |
 | `* * *`  | user           | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
 | `* * *`  | user           | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user           | edit my contacts via index, id and name                      | be up to date with changes in organization and recruiter details           |
+| `* * *`  | user           | edit my job application via index                            | be up to date with changes in the job application                          |
+| `* *`    | user           | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
 | `* *`    | user           | find contacts by saved details                               | locate a contact without going through the entire list                     |
-| `* *`    | user           | store recruiters and job application to organizations        | I can see where the recruiter comes from and where I am applying to        |
-| `* *`    | user           | sort the application deadlines                               | be able to which application deadline ends first                           |
-| `* *`    | user           | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user           | find job applications by details                             | locate a job application without going through the entire list             |
+| `* *`    | user           | link recruiters and job application to organizations         | see where the recruiter comes from and where I am applying to              |
+| `* *`    | user           | sort job applications by deadlines                           | be able to which job application is most urgent                            |
+| `* *`    | user           | sort job applications by last updated time                   | be able to see which job applications have gone cold                       |
+| `* *`    | user           | find organizations which have no job applications            | get a summary of the organizations that I should apply to                  |
 | `* *`    | user           | tag contacts                                                 | organize my contact list for more efficient access of different categories |
 | `* *`    | efficient user | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
 | `*`      | user           | import and export contacts                                   | share my list of contacts with my peers                                    |
@@ -473,17 +476,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add an application
-2.  Jobby adds the application into the specified organization
-3.  Jobby shows that the application has been added
+1.  User requests to add an application.
+2.  Jobby adds the application into the specified organization.
+3.  Jobby shows that the application has been added.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given application does not match to any Organization
+* 1a. The given application does not match to any Organization.
     * 1a1. Jobby shows an error message.
     Use case ends.
+
+
+**Use case: Delete an application**
+
+**MSS**
+
+1.  User requests to delete an application
+2.  Jobby deletes the application
+3.  Jobby shows that the application has been deleted
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given application does not exist
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+
+**Use case: Edit an application**
+
+**MSS**
+
+1.  User requests to edit an application
+2.  Jobby edits the applications.
+3.  Jobby shows that the application has been edited
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No details are given for which aspect of the application to edit.
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+* 1b. The application does not exist.
+    * 1b1. Jobby shows an error message.
+      Use case ends.
+
 
 
 **Use case: Edit a contact**
@@ -619,39 +659,103 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
+
 ### Launch and shutdown
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
-
-### Deleting a contact
-
-1. Deleting a contact while all contacts are being shown
-
-   1. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
-
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. Re-launch the app by double-clicking the jar file.<br>
+   Expected: The most recent window size and location is retained. // TODO: Check if it is valid.
 
 1. _{ more test cases …​ }_
+
+### Resetting to default data for Jobby
+
+1. Go to the folder where jobby.jar is located at
+2. Delete the data directory.
+3. Launch jobby.jar
+
+
+### Adding an organization
+1. Adding an organization
+    1. Prerequisites: None
+
+    2. Test case: `add --org --name Woogle --id woogle-1`<br>
+       Expected: Organization named Woogle is added to the list.
+
+    3. Test case: `add --org --tag GoodPay`<br>
+       Expected: No organization is added. Error details shown in the status message.
+
+### Adding a recruiter
+1. Adding a recruiter not linked to any organization
+    1. Prerequisites: None
+
+    2. Test case: `add --rec --name Joe`<br>
+       Expected: Recruiter named Joe is added to the list.
+
+    3. Test case: `add --rec --name`<br>
+       Expected: No recruiter is added. Error details shown in the status message.
+
+2. Adding a recruiter linked to an organization
+
+    1. Prerequisites: Added an organization with the id `woogle-1`
+
+    2. Test case: `add --rec --name Joe --oid woogle-1`<br>
+       Expected: Recruiter named Joe is added to the list with association to organization with id woogle-1.
+
+### Adding a job application
+
+1. Adding an application associated with an organization
+
+   1. Prerequisites: The list has an organization at index 1.
+
+   2. Test case: `apply 1 --title SWE`<br>
+      Expected: Job applications associated with the first organization is added to the list. The stage is at resume and the status is pending with a deadline of 14 days from the current date.
+   
+   3. Test case: `apply 1 --status pending`<br>
+      Expected: No job application is added. Error details shown in the status bar.
+
+### Editing organization and recruiter details
+
+1. Editing organization and recruiter details
+   1. Prerequisite: The list has contact at index 1.
+
+   2. Test case: `edit 1 --name Foogle`<br>
+      Expected: Shows that the name of the organization or recruiter has been changed to Foogle.
+   3. Test case `edit 1`<br>
+      Expected: Does not edit the organization or recruiter details. Error details shown in status bar.
+
+### Editing job application details
+1. Editing job application details
+   1. Prerequisite: The list of job applications has at least 1 application.
+   2. Test case: `edit --application 1 --status offered`<br>
+      Expected: Edits the status of the application to offered.
+   3. Test case: `edit --application 1 --by None-None-2022`<br>
+      Expected: Does not edit the status of the application. Error details shown in the status bar.
+
+### Deleting recruiters and organizations
+
+1. Deleting an organization.
+   1. Prerequisite: Have an organization at index 1 with job applications and recruiters associated to it.
+   2. Test case: `delete 1`<br>
+      Expected: Deletes the organization along with the job applications linked to it. Delinks the recruiters from the organization.
+   3. Test case: `delete 1 --recursive`<br>
+      Expected: Deletes the organization along with both the job applications and the recruiters linked to it.
+
+2. Deleting a recruiter 
+   1. Prerequisite: Have a recruiter at index 1 of the list.
+   2. Test case: `delete 1`<br>
+      Expected: The first recruiter is deleted from the list. Details of the deleted contact is shown in the status message.
+   3. Test case: `delete 0` <br>
+      Expected: No recruiter is deleted. Error details shown in the status message.
 
 ### Saving data
 
@@ -660,3 +764,127 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+### Do checks to ensure that old data is not the same as new data when editing data.
+
+Currently, Jobby sometimes allow editing of data such that the old data to be replaced with has the same contents as the new data.
+
+For example, `edit --application 1 --title SWE` on a job application with title "SWE" works, even though nothing is effectively changed.
+
+This can be done with a simple fix. The execute method for the editing of job applications is as follows:
+
+```java
+    public CommandResult execute(Model model) throws CommandException {
+        if (!editApplicationDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_EDITED);
+        }
+        List<JobApplication> lastShownList = model.getDisplayedApplicationList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_APPLICATION_DISPLAYED_INDEX);
+        }
+
+        JobApplication jobApplication = lastShownList.get(targetIndex.getZeroBased());
+        JobApplication newApplication = createApplication(jobApplication, editApplicationDescriptor);
+
+        try {
+            model.replaceApplication(targetIndex, newApplication);
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
+        }
+
+        return new CommandResult(String.format(MESSAGE_EDIT_APPLICATION_SUCCESS, newApplication));
+    }
+```
+
+We can easily add a new line to check if the all the contents of the new application is the same as the old one, and throw a CommandException if it is.
+
+This can also be easily done for editing contacts.
+
+### Make commands only take in arguments that are applicable to them and reject other extra arguments.
+
+Currently, some commands with multiple modes share parameters between modes.
+
+Example: The edit command has a contact mode and job application mode. In contact mode, `--name` is used to edit the name of the contact. However, there is no such thing for job application mode.
+
+Yet, `edit --application 1 --name John --title SWE` works as long as a valid field that is used for job application is used, and ignores the extra arguments.
+
+This can be done with a simple fix. Every command alreadly has a list of flags that are accepted. 
+
+At the command parsing level, add additional checks against the list of flags provided by the command to ensure that every flag present in the command is applicable to the command used.
+
+<img src="images/enhancements/FlagChecker.png">
+
+Note: Due to the limitations of PlantUML, `--application 1 --name Jay --title SWE` is interpreted as: ~~application 1~~ name Jay --title SWE
+
+### Better Formatting for Contacts
+
+Currently, the contacts are not nicely formatted and exposes some internal but non-critical implementation details.
+
+<img src="images/enhancements/formatting.png">
+
+This is due to there not being a proper string conversion for the fields in the Contact class, especially when the fields which used to be compulsory are now optional.
+
+In this case, it would be easy to address this problem, by using 
+```java
+optionalField.map(OptionalFieldClass::toString).orElse("None")
+```
+
+The Contact class can use the `Contact.getClass().getSimpleName()` method to get the type of the contact. Alternatively, it can use the `getType` method and use it for the class name, since the `getType` method matches the class name.
+
+### Disallow values in fields where values are not required
+
+Currently, Jobby accepts values for fields which do not require values. For example, `delete X --recursive` works as the command parser does not check if there is a value associated to the flag, but only checks if the flag exists.
+
+In this case, it is simple to add a checker similar to [validating that only the allowed flags are present](#make-commands-only-take-in-arguments-that-are-applicable-to-them-and-reject-other-extra-arguments)
+
+
+### Add confirmation to run destructive commands
+
+Currently, Jobby does not warn users if they run a destructive command that cannot be undone, such as "clear", "delete" and "edit".
+
+Users may then destroy their data by accident.
+
+#### Proposed implementation
+
+One way to implement warnings is to have the user input 2 commands for destructive commands:
+* The actual command
+* The confirmation command
+
+Therefore, Jobby needs to be able to save the previous command to be able to execute it. One way is to store the command inside `LogicManager` and execute the command if the user enters a confirmation.
+
+
+<img src="images/enhancements/warn.png">
+
+Step 1. The user executes a destructive command, such as `clear` to clear the data.
+
+Step 2. The parser will check if the command is a valid command as usual, and creates the command to be executed later.
+
+Step 3. The `LogicManager` checks that it is a destructive command (e.g. have commands implement a `isDestructive` method)
+
+Step 4. If it is destructive, it will generate a warning message to the user, otherwise it will execute the command normally.
+
+Step 5. The user confirms to continue with the command, which the `LogicManager` will execute the stored command. Otherwise, the `LogicManager` will not execute the command and removes the command.
+
+An alternative implementation from the above diagram is to allow the `AppParser` to store the destructive command in the `AppParser` instead, and when parsing the confirmation command it will give the destructive command.
+
+<img src="images/enhancements/warn_alt.png">
+
+
+### Add the find job applications feature
+
+Currently, Jobby does not implement the find function for applications. 
+
+The biggest reason is due to the complexity: The list of job applications is dependent on the list of contacts. If a job application is in the list of job applications, then the organization associated with it should also be in the list of contacts. The converse is also true. This ensures that there is no confusion when using Jobby - it would be weird to have a job application associated to a company that does not exist in the list, and even weirder to see an organization in the list but the applications made to it are not shown!
+
+However, the find feature for applications may need to change that behavior, since the find feature will look through every job application shown and not shown in the list. Currently, the method to keep the behavior consistent would be:
+1. Get a list of job applications that contains the keyword.
+2. Filter out the list of contacts by checking if it is associated to any of the job applications from step 1.
+
+This can be made possible by making `JobApplication` searchable, by providing a method to check if the keyword matches any of its fields, such as title and description. 
+This will allow a list of job applications that have a match to be generated, and therefore now the `Model` can filter the contact list based on whether the contact is associated to the job application.
+
