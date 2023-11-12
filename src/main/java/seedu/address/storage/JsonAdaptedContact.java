@@ -211,6 +211,16 @@ class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
 
     @Override
     public int compareTo(JsonAdaptedContact o) {
+        boolean isThisTypeValid = Type.isValidType(this.type);
+        boolean isOtherTypeValid = Type.isValidType(o.type);
+
+        if (!isThisTypeValid) {
+            return isOtherTypeValid ? 1 : 0;
+        }
+        if (!isOtherTypeValid) {
+            return -1;
+        }
+
         return Type.fromString(this.type).compareTo(Type.fromString(o.type));
     }
 }
