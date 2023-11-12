@@ -103,6 +103,12 @@ class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
         }
     }
 
+    /**
+     * Returns the id string stored in this {@code JsonAdaptedContact}
+     */
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * Converts this Jackson-friendly adapted contact object into the model's {@code Contact} object.
