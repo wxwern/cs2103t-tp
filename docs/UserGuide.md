@@ -73,7 +73,7 @@ title: User Guide
 
 ### Block for entering commands
 
-<code> </code> denotes a command or a part of a command that can be entered in Jobby. For example, `add --org` is a command. `add` is also part of a command.
+<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org` is a command. `add` is also part of a command.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
