@@ -3,12 +3,14 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalContacts.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -34,6 +36,16 @@ class DeleteApplicationCommandTest {
         assertDoesNotThrow(() -> expectedModel.deleteApplication(applicationToDelete));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndex_deletesApplication() {
+
+        DeleteApplicationCommand command = new DeleteApplicationCommand(Index.fromZeroBased(20));
+
+        String expectedMessage = Messages.MESSAGE_INVALID_APPLICATION_DISPLAYED_INDEX;
+
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
