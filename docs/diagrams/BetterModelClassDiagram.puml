@@ -14,7 +14,7 @@ UniqueContactList -right-> Contact
 
 Contact -up-> "*" Tag
 
-Organization .up.|> Contact
-Recruiter .up.|> Contact
+Organization -up-|> Contact
+Recruiter -up-|> Contact
 
 @enduml

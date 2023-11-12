@@ -13,7 +13,7 @@ Class ModelManager
 Class UserPrefs
 
 Class UniqueContactList
-Class Contact
+Class "{abstract}\nContact" as Contact
 Class Organization
 Class Recruiter
 
@@ -42,10 +42,9 @@ ModelManager *-down-> "1" JobApplicationList
 JobApplicationList -down-> "*" JobApplication
 
 Contact -[hidden]up--> I
-UniqueContactList -[hidden]right-> I
 
-Organization .up.|> Contact
-Recruiter .up.|> Contact
+Organization -up-|> Contact
+Recruiter -up-|> Contact
 
 ModelManager --> "~* filtered" Contact
 @enduml
