@@ -502,15 +502,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a(n) ...    | I want to ...                                                | So that I can ...                                                          |
 |----------|----------------|--------------------------------------------------------------|----------------------------------------------------------------------------|
 | `* * *`  | new user       | see usage instructions                                       | refer to instructions when I forget how to use the app                     |
-| `* * *`  | user           | find the relevant application data                           | see what I did for for my application to specific companies                |
 | `* * *`  | user           | adding a job application                                     | keep track which organization I am applying to                             |
+| `* * *`  | user           | delete a job application                                     | remove job applications that I no longer need to track                     |
 | `* * *`  | user           | add a new contact                                            | keep track of organizations and recruiters I'm interested in               |
 | `* * *`  | user           | delete contacts                                              | remove organizations and recruiters that I no longer need                  |
-| `* *`    | user           | edit my contacts via index, id and name                      | be up to date with changes in organization and recruiter details           |
+| `* * *`  | user           | edit my job application via index                            | be up to date with changes in the job application                          |
+| `* *`    | user           | edit my contacts via index and id                            | be up to date with changes in organization and recruiter details           |
 | `* *`    | user           | find contacts by saved details                               | locate a contact without going through the entire list                     |
-| `* *`    | user           | store recruiters and job application to organizations        | I can see where the recruiter comes from and where I am applying to        |
-| `* *`    | user           | sort the application deadlines                               | be able to which application deadline ends first                           |
-| `* *`    | user           | filter organizations by job application status               | get a summary of the statuses of what I've applied to                      |
+| `* *`    | user           | find job applications by details                             | locate a job application without going through the entire list             |
+| `* *`    | user           | link recruiters and job application to organizations         | see where the recruiter comes from and where I am applying to              |
+| `* *`    | user           | sort job applications by deadlines                           | be able to which job application is most urgent                            |
+| `* *`    | user           | sort job applications by last updated time                   | be able to see which job applications have gone cold                       |
+| `* *`    | user           | find organizations which have no job applications            | get a summary of the organizations that I should apply to                  |
 | `* *`    | user           | tag contacts                                                 | organize my contact list for more efficient access of different categories |
 | `* *`    | efficient user | type shorter arguments and known values with auto-completion | type my command even more quickly                                          |
 | `*`      | user           | import and export contacts                                   | share my list of contacts with my peers                                    |
@@ -525,17 +528,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add an application
-2.  Jobby adds the application into the specified organization
-3.  Jobby shows that the application has been added
+1.  User requests to add an application.
+2.  Jobby adds the application into the specified organization.
+3.  Jobby shows that the application has been added.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given application does not match to any Organization
+* 1a. The given application does not match to any Organization.
     * 1a1. Jobby shows an error message.
     Use case ends.
+
+
+**Use case: Delete an application**
+
+**MSS**
+
+1.  User requests to delete an application
+2.  Jobby deletes the application
+3.  Jobby shows that the application has been deleted
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given application does not exist
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+
+**Use case: Edit an application**
+
+**MSS**
+
+1.  User requests to edit an application
+2.  Jobby edits the applications.
+3.  Jobby shows that the application has been edited
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No details are given for which aspect of the application to edit.
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+* 1b. The application does not exist.
+    * 1b1. Jobby shows an error message.
+      Use case ends.
+
 
 
 **Use case: Edit a contact**
@@ -693,24 +733,81 @@ testers are expected to do more *exploratory* testing.
 
 1. Go to the folder where jobby.jar is located at
 2. Delete the data directory.
-3. Run jobby.jar
+3. Launch jobby.jar
 
-### Deleting a contact
 
-1. Deleting a contact while all contacts are being shown
+### Adding an organization
+1. Adding an organization
+    1. Prerequisites: None
 
-   1. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+    2. Test case: `add --org --name Woogle --id woogle-1`<br>
+       Expected: Organization named Woogle is added to the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    3. Test case: `add --org --tag GoodPay`<br>
+       Expected: No organization is added. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
+### Adding a recruiter
+1. Adding a recruiter not linked to any organization
+    1. Prerequisites: None
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    2. Test case: `add --rec --name Joe`<br>
+       Expected: Recruiter named Joe is added to the list.
 
-1. _{ more test cases …​ }_
+    3. Test case: `add --rec --name`<br>
+       Expected: No recruiter is added. Error details shown in the status message.
+
+2. Adding a recruiter linked to an organization
+
+    1. Prerequisites: Added an organization with the id `woogle-1`
+
+    2. Test case: `add --rec --name Joe --oid woogle-1`<br>
+       Expected: Recruiter named Joe is added to the list with association to organization with id woogle-1.
+
+### Adding a job application
+
+1. Adding an application associated with an organization
+
+   1. Prerequisites: The list has an organization at index 1.
+
+   2. Test case: `apply 1 --title SWE`<br>
+      Expected: Job applications associated with the first organization is added to the list. The stage is at resume and the status is pending with a deadline of 14 days from the current date.
+   
+   3. Test case: `apply 1 --status pending`<br>
+      Expected: No job application is added. Error details shown in the status bar.
+
+### Editing organization and recruiter details
+
+1. Editing organization and recruiter details
+   1. Prerequisite: The list has contact at index 1.
+
+   2. Test case: `edit 1 --name Foogle`<br>
+      Expected: Shows that the name of the organization or recruiter has been changed to Foogle.
+   3. Test case `edit 1`<br>
+      Expected: Does not edit the organization or recruiter details. Error details shown in status bar.
+
+### Editing job application details
+1. Editing job application details
+   1. Prerequisite: The list of job applications has at least 1 application.
+   2. Test case: `edit --application 1 --status offered`<br>
+      Expected: Edits the status of the application to offered.
+   3. Test case: `edit --application 1 --by None-None-2022`<br>
+      Expected: Does not edit the status of the application. Error details shown in the status bar.
+
+### Deleting recruiters and organizations
+
+1. Deleting an organization.
+   1. Prerequisite: Have an organization at index 1 with job applications and recruiters associated to it.
+   2. Test case: `delete 1`<br>
+      Expected: Deletes the organization along with the job applications linked to it. Delinks the recruiters from the organization.
+   3. Test case: `delete 1 --recursive`<br>
+      Expected: Deletes the organization along with both the job applications and the recruiters linked to it.
+
+2. Deleting a recruiter 
+   1. Prerequisite: Have a recruiter at index 1 of the list.
+   2. Test case: `delete 1`<br>
+      Expected: The first recruiter is deleted from the list. Details of the deleted contact is shown in the status message.
+   3. Test case: `delete 0` <br>
+      Expected: No recruiter is deleted. Error details shown in the status message.
 
 ### Saving data
 
@@ -828,3 +925,18 @@ Step 5. The user confirms to continue with the command, which the `LogicManager`
 An alternative implementation from the above diagram is to allow the `AppParser` to store the destructive command in the `AppParser` instead, and when parsing the confirmation command it will give the destructive command.
 
 <img src="images/enhancements/warn_alt.png">
+
+
+### Add the find job applications feature
+
+Currently, Jobby does not implement the find function for applications. 
+
+The biggest reason is due to the complexity: The list of job applications is dependent on the list of contacts. If a job application is in the list of job applications, then the organization associated with it should also be in the list of contacts. The converse is also true. This ensures that there is no confusion when using Jobby - it would be weird to have a job application associated to a company that does not exist in the list, and even weirder to see an organization in the list but the applications made to it are not shown!
+
+However, the find feature for applications may need to change that behavior, since the find feature will look through every job application shown and not shown in the list. Currently, the method to keep the behavior consistent would be:
+1. Get a list of job applications that contains the keyword.
+2. Filter out the list of contacts by checking if it is associated to any of the job applications from step 1.
+
+This can be made possible by making `JobApplication` searchable, by providing a method to check if the keyword matches any of its fields, such as title and description. 
+This will allow a list of job applications that have a match to be generated, and therefore now the `Model` can filter the contact list based on whether the contact is associated to the job application.
+

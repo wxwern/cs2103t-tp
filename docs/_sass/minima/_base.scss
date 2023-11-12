@@ -179,6 +179,8 @@ pre {
     border: 0;
     padding-right: 0;
     padding-left: 0;
+
+    white-space: pre-wrap;
   }
 }
 
@@ -203,15 +205,15 @@ pre {
   margin-left: auto;
   padding-right: $spacing-unit / 2;
   padding-left: $spacing-unit / 2;
+  background-color: white;
   @extend %clearfix;
 
   @media screen and (min-width: $on-large) {
-    max-width: calc(#{$content-width} - (#{$spacing-unit} * 2));
-    padding-right: $spacing-unit;
-    padding-left: $spacing-unit;
+    max-width: calc(#{$content-width} - (#{$spacing-unit} * 3));
+    padding-right: $spacing-unit * 1.5;
+    padding-left: $spacing-unit * 1.5;
   }
 }
-
 
 
 /**
