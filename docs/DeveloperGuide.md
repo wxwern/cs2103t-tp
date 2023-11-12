@@ -170,35 +170,35 @@ Each recruiter can only be linked to zero or one organization while an organizat
 #### Implementing the parent-child relationship
 
 For the `Contact` class:
-  * In order to incorporate this two-way relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+
+<br>
 
 For the `Recruiter` class:
   * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
 
   * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
 
+<br>
+
 For the `Organization` class:
   * The organization does not maintain a direct list of recruiters linked to it.
 
   * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
 
+<br>
+
 Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
 
-Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id **alex_yeoh** and no recruiters.
+**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
 
-Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. 
+**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
 
-It also parses **alex_yeoh** as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
-
-Step 3: During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id **alex_yeoh** and pass it into the new `Recruiter` that will be added to the `AddressBook`.
-
-This step can be summarized with the activity diagram below:
+**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
 
 <img src="images/AddRecruiterActivityDiagram.png" width=450 />
 
-Step 4: Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. 
-
-The link will be displayed as a label within the `ContactCard`: **from organization (alex_yeoh)**
+**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
 
 #### Editing and deleting the linked contacts
 
@@ -206,15 +206,19 @@ Now that the basic implementation has been discussed, the next concern is about 
 
 As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
 
-In the case of **editing** the `Organization`:
+When **editing** the `Organization`:
   * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
 
-In the case of **editing** the `Recruiter`:
+<br>
+
+When **editing** the `Recruiter`:
   * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
 
   * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
 
   * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
+
+<br>
 
 The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
 
