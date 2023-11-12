@@ -239,7 +239,7 @@ Since the organization has to be added to the `AddressBook` before any recruiter
     * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
   * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
     * Pros: Computationally less expensive and easier to deal with.
-    * Cons: Careless mistakes can cause `Recruiter` contacts to be added or removed from the list when not allowed.
+    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
 
 ### Command Autocompletion
 
