@@ -5,12 +5,10 @@ title: User Guide
 
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 ## Introduction
-
-Purpose of the guide + target audience.
 
 Welcome to the **Jobby** User Guide!
 
