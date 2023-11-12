@@ -1,6 +1,6 @@
 {
   "_comment": "AddressBook save file which contains the same Contact values as in TypicalContacts#getTypicalAddressBook()",
-  "persons" : [ {
+  "contacts" : [ {
     "name" : "NUS SoC",
     "type": "organization",
     "id" : "nus-soc_sg",
