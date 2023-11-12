@@ -3,6 +3,8 @@ layout: page
 title: Juanpa's Project Portfolio Page
 ---
 
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop app for tracking job applications.
@@ -35,3 +37,5 @@ Given below are my contributions to the project.
 
 * **Tools**:
     * To be added soon
+
+</div>

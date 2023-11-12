@@ -1,14 +1,15 @@
+<div class="reset-page-break-defaults" markdown="1">
+
 ### Project: Jobby
 
 Jobby is a desktop address book and job application tracking tool. The user interacts with it using a CLI, and it has a GUI created in JavaFX. It is written in Java.
 
 Given below are my contributions to the project.
 
-* **New Feature**:
-    * What it does:
-    * Justification:
-    * Highlights:
-    * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
+* **New Feature**: Apply command
+    * What it does: Allows users to add, edit and delete job applications.
+    * Justification: For job application tracking, since one person can apply to multiple positions within a company, a separate class is required for job applications.
+    * Highlights: Restructured the UI to show job applications alongside contacts. 
 
 * **New Feature**:
 
@@ -16,21 +17,18 @@ Given below are my contributions to the project.
 
 * **Project management**:
 
-* **Enhancements to existing features**:
+* **Enhancements to existing features**: Delete recursive
+  * Allows users to delete recruiters linked to an organization when deleting the organization.
+  * This is due to the parent-child relationship between recruiters and organization.
 
 
 * **Documentation**:
     * User Guide:
-        *
+        * Apply, Edit applications and delete command.
     * Developer Guide:
-        *
+        * Implementation details for apply command, added planned enhancements  
 
 * **Community**:
-    * PRs reviewed (with non-trivial review comments):
-    * Contributed to forum discussions (examples: )
-    * Reported bugs and suggestions for other teams in the class (examples: )
+    * Contributed to forum discussions (examples: #371)
 
-* **Tools**:
-    *
-
-* _{you can add/remove categories in the list above}_
+</div>

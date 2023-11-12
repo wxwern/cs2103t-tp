@@ -30,7 +30,7 @@ public class DeadlineTest {
     @Test
     public void isValidDeadline() {
         String invalidDeadline1 = "";
-        String invalidDeadline2 = "None";
+        String invalidDeadline2 = "None-None-2022";
         String invalidDeadline3 = "1-222-456";
         String invalidDeadline4 = "11-22-2022";
         String invalidDeadline5 = "29-02-2022";
@@ -47,6 +47,8 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline(invalidDeadline2));
         assertFalse(Deadline.isValidDeadline(invalidDeadline3));
         assertFalse(Deadline.isValidDeadline(invalidDeadline4));
+        assertFalse(Deadline.isValidDeadline(invalidDeadline5));
+        assertFalse(Deadline.isValidDeadline(invalidDeadline6));
 
         // valid deadline
         assertTrue(Deadline.isValidDeadline(validDeadline1));
