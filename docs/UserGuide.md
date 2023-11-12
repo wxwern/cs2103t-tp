@@ -20,10 +20,11 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always"></div>
+Table of contents
 * Table of Contents
 {:toc}
-<div style="page-break-after: always;"></div>
+<div style="page-break-after: always"></div>
 
 ## Installation
 
