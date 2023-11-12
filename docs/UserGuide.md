@@ -49,6 +49,10 @@ title: User Guide
 
 ## Navigating the Guide
 
+### Code blocks for entering commands
+
+<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org --name Woogle` is a command. `add` is also part of a command.
+
 ### Small information pills
 
 | Component                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
@@ -71,9 +75,6 @@ title: User Guide
 :warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
 </div>
 
-### Block for entering commands
-
-<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org --name Woogle` is a command. `add` is also part of a command.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
