@@ -29,7 +29,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Contact}.
  */
-class JsonAdaptedContact {
+class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Contact's %s field is missing!";
 
@@ -103,6 +103,12 @@ class JsonAdaptedContact {
         }
     }
 
+    /**
+     * Returns the id string stored in this {@code JsonAdaptedContact}
+     */
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * Converts this Jackson-friendly adapted contact object into the model's {@code Contact} object.
@@ -203,4 +209,8 @@ class JsonAdaptedContact {
         }
     }
 
+    @Override
+    public int compareTo(JsonAdaptedContact o) {
+        return Type.fromString(this.type).compareTo(Type.fromString(o.type));
+    }
 }
