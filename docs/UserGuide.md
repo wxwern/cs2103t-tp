@@ -32,12 +32,12 @@ title: User Guide
    * Download Java [here](https://www.oracle.com/java/technologies/downloads/)
    * How to check your Java version on [Windows](https://www.howtogeek.com/717330/how-to-check-your-java-version-on-windows-10/) and [macOS](https://www.wikihow.com/Check-Java-Version-on-a-Mac) 
 
-1. Download the latest `jobby.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
+1. Download the latest _jobby.jar_ from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Jobby Application.
 
 1. Open a command terminal, navigate into the folder you put the jar file in, and enter `java -jar jobby.jar` in the terminal to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A window similar to the below should appear in a few seconds. Notice that the app contains some sample data.<br>
    * If you do not know how to navigate to your folder in the terminal, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/) and [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/).
   ![Ui](images/Ui.png)
 
@@ -48,6 +48,12 @@ title: User Guide
 --------------------------------------------------------------------------------------------------------------------
 
 ## Navigating the Guide
+
+| Component                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
+|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <span class="learning-outcome pill">:trophy: How to perform a task</span>                                                                     | The learning outcome of the section.                                                                                                                                                                                                                                                                                  |
+| <span class="beginner pill">Beginner</span><br><span class="intermediate pill">Intermediate</span><br><span class="expert pill">Expert</span> | The difficulty level of the section, with <span class="beginner pill">Beginner</span> for new users, <span class="intermediate pill">Intermediate</span> for users who have completed the tutorial, and <span class="expert pill">Expert</span> for users who have completed and used the features in the User Guide. |
+| <span class="information pill">:information_source: An info pill</span>                                                                       | Contains some additional information, such as assumptions and useful information.                                                                                                                                                                                                                                     |
 
 
 --------------------------------------------------------------------------------------------------------------------
