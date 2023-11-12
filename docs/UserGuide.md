@@ -49,7 +49,9 @@ title: User Guide
 
 ## Navigating the Guide
 
-| Component &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;                   | Description                                                                                                                                                                                                                                                                                                           |
+### Small information pills
+
+| Component                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <span class="learning-outcome pill">:trophy: Learning outcomes</span>                                                                                                         | The learning outcome of the section.                                                                                                                                                                                                                                                                                  |
 | <span class="beginner pill">Beginner</span><br><span class="intermediate pill">Intermediate</span><br><span class="expert pill">Expert</span>                                 | The difficulty level of the section, with <span class="beginner pill">Beginner</span> for new users, <span class="intermediate pill">Intermediate</span> for users who have completed the tutorial, and <span class="expert pill">Expert</span> for users who have completed and used the features in the User Guide. |
@@ -59,6 +61,19 @@ title: User Guide
 | <span class="jobby-data-class pill">Organization</span><br><span class="jobby-data-class pill">Recruiter</span><br><span class="jobby-data-class pill">Job Application</span> | The different objects of interest in Jobby: Organizations, Recruiters and Job Applications.                                                                                                                                                                                                                           |
 | <span class="applies-to pill"><span class="jobby-data-class pill">Organization</span></span>                                                                                  | Contains information on which objects of interest in Jobby the feature can be used on.                                                                                                                                                                                                                                |
 
+### Large information sections
+
+<div markdown="block" class="alert alert-info">
+This is a blue box. It can be used for additional tips or more useful information.
+</div>
+
+<div markdown="block" class="alert alert-warning">
+This is a warning box. It can be used to give more details on the warnings and limitations of features.
+</div>
+
+### Block for entering commands
+
+` ` denotes a command or a part of a command that can be entered in Jobby. For example, `add --org` is a command. `add` is also part of a command.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
