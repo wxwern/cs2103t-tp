@@ -192,12 +192,18 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void replaceApplication(Index index, JobApplication newApplication) throws IllegalValueException {
-        JobApplication oldApplication = jobApplicationList.get(index.getZeroBased());
+    public void replaceApplication(JobApplication oldApplication,
+                                   JobApplication newApplication) throws IllegalValueException {
 
         Contact contact = getContactById(newApplication.getOrganizationId());
         if (contact == null || contact.getType() != Type.ORGANIZATION) {
             throw new IllegalValueException("Id field is invalid!"); // TODO: Should I change this?
+        }
+
+        int index = jobApplicationList.indexOf(oldApplication);
+
+        if (index < 0) {
+            throw new IllegalValueException("Job application does not exist."); // should never reach here.
         }
 
         Organization organization = (Organization) contact;
@@ -207,7 +213,7 @@ public class ModelManager implements Model {
             throw new IllegalValueException(e.getMessage());
         }
 
-        jobApplicationList.set(index.getZeroBased(), newApplication);
+        jobApplicationList.set(index, newApplication);
 
     }
 
@@ -245,7 +251,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredContacts.setPredicate(predicate);
         // TODO: Tech debt - inefficient?
-        // TODO: Bug - does not show the thing.
         filteredApplications.setPredicate(a -> predicate.test(getContactById(a.getOrganizationId())));
     }
 
