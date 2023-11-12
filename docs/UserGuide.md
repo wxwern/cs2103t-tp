@@ -64,16 +64,16 @@ title: User Guide
 ### Large information sections
 
 <div markdown="block" class="alert alert-info">
-This is a blue box. It can be used for additional tips or more useful information.
+:bulb: This is a blue box. It can be used for additional tips or more useful information.
 </div>
 
 <div markdown="block" class="alert alert-warning">
-This is a warning box. It can be used to give more details on the warnings and limitations of features.
+:warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
 </div>
 
 ### Block for entering commands
 
-` ` denotes a command or a part of a command that can be entered in Jobby. For example, `add --org` is a command. `add` is also part of a command.
+<code> </code> denotes a command or a part of a command that can be entered in Jobby. For example, `add --org` is a command. `add` is also part of a command.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
