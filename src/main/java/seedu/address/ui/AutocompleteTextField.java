@@ -43,9 +43,7 @@ import javafx.scene.layout.HBox;
  */
 public class AutocompleteTextField extends TextField {
 
-    /**
-     * A snapshot of a text-change due to autocompletion.
-     */
+    /** A snapshot of a text-change due to autocompletion. */
     protected static class AutocompleteSnapshot {
         public final String partialValue;
         public final String completedValue;
@@ -61,9 +59,7 @@ public class AutocompleteTextField extends TextField {
         }
     }
 
-    /**
-     * An enum of execution status.
-     */
+    /** An enum of execution status. */
     public enum ActionResult {
         EXECUTED, NOT_EXECUTED;
     }
@@ -75,7 +71,7 @@ public class AutocompleteTextField extends TextField {
     @FunctionalInterface
     public interface CompletionGenerator extends Function<String, Stream<String>> { }
 
-    // Internal JavaFX ID values
+    /** Internal ID prefix to note the exact menu item per index. */
     private static final String AUTOCOMPLETE_MENU_ITEM_ID_PREFIX = "autocomplete-completion-item-";
 
     // GUI elements
@@ -321,7 +317,7 @@ public class AutocompleteTextField extends TextField {
             HBox completionBox = new HBox(completionLabelFront, completionLabelBack);
             completionBox.getStyleClass().add("autocomplete-box");
             completionBox.setPadding(new Insets(0, 8, 0, 8));
-            completionBox.setAlignment(Pos.BASELINE_CENTER);
+            completionBox.setAlignment(Pos.BASELINE_LEFT);
 
             // Create the context menu item
             CustomMenuItem item = new CustomMenuItem(completionBox, false);
