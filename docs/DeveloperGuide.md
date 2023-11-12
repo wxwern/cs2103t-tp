@@ -681,24 +681,81 @@ testers are expected to do more *exploratory* testing.
 
 1. Go to the folder where jobby.jar is located at
 2. Delete the data directory.
-3. Run jobby.jar
+3. Launch jobby.jar
 
-### Deleting a contact
 
-1. Deleting a contact while all contacts are being shown
+### Adding an organization
+1. Adding an organization
+    1. Prerequisites: None
 
-   1. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+    2. Test case: `add --org --name Woogle --id woogle-1`<br>
+       Expected: Organization named Woogle is added to the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    3. Test case: `add --org --tag GoodPay`<br>
+       Expected: No organization is added. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
+### Adding a recruiter
+1. Adding a recruiter not linked to any organization
+    1. Prerequisites: None
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    2. Test case: `add --rec --name Joe`<br>
+       Expected: Recruiter named Joe is added to the list.
 
-1. _{ more test cases …​ }_
+    3. Test case: `add --rec --name`<br>
+       Expected: No recruiter is added. Error details shown in the status message.
+
+2. Adding a recruiter linked to an organization
+
+    1. Prerequisites: Added an organization with the id `woogle-1`
+
+    2. Test case: `add --rec --name Joe --oid woogle-1`<br>
+       Expected: Recruiter named Joe is added to the list with association to organization with id woogle-1.
+
+### Adding a job application
+
+1. Adding an application associated with an organization
+
+   1. Prerequisites: The list has an organization at index 1.
+
+   2. Test case: `apply 1 --title SWE`<br>
+      Expected: Job applications associated with the first organization is added to the list. The stage is at resume and the status is pending with a deadline of 14 days from the current date.
+   
+   3. Test case: `apply 1 --status pending`<br>
+      Expected: No job application is added. Error details shown in the status bar.
+
+### Editing organization and recruiter details
+
+1. Editing organization and recruiter details
+   1. Prerequisite: The list has contact at index 1.
+
+   2. Test case: `edit 1 --name Foogle`<br>
+      Expected: Shows that the name of the organization or recruiter has been changed to Foogle.
+   3. Test case `edit 1`<br>
+      Expected: Does not edit the organization or recruiter details. Error details shown in status bar.
+
+### Editing job application details
+1. Editing job application details
+   1. Prerequisite: The list of job applications has at least 1 application.
+   2. Test case: `edit --application 1 --status offered`<br>
+      Expected: Edits the status of the application to offered.
+   3. Test case: `edit --application 1 --by None-None-2022`<br>
+      Expected: Does not edit the status of the application. Error details shown in the status bar.
+
+### Deleting recruiters and organizations
+
+1. Deleting an organization.
+   1. Prerequisite: Have an organization at index 1 with job applications and recruiters associated to it.
+   2. Test case: `delete 1`<br>
+      Expected: Deletes the organization along with the job applications linked to it. Delinks the recruiters from the organization.
+   3. Test case: `delete 1 --recursive`<br>
+      Expected: Deletes the organization along with both the job applications and the recruiters linked to it.
+
+2. Deleting a recruiter 
+   1. Prerequisite: Have a recruiter at index 1 of the list.
+   2. Test case: `delete 1`<br>
+      Expected: The first recruiter is deleted from the list. Details of the deleted contact is shown in the status message.
+   3. Test case: `delete 0` <br>
+      Expected: No recruiter is deleted. Error details shown in the status message.
 
 ### Saving data
 
