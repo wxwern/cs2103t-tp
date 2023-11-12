@@ -12,6 +12,8 @@ title: User Guide
 
   **Jobby** is a **desktop app designed for Computer Science students looking for a systematic way to manage their job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
+  It is assumed that you know how the job application process is like, and that you know how to look for job applications.
+
 ### Purpose of this guide
 
   The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding an contacts into the application for tracking to how our application can assist you in tracking every steps of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
