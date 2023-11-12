@@ -196,7 +196,7 @@ Given below is an example usage scenario and how a recruiter can be linked to an
 
 **Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
 
-<img src="images/AddRecruiterActivityDiagram.png" width=450 />
+<img src="images/AddRecruiterActivityDiagram.png" width=600 />
 
 **Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
 
