@@ -36,7 +36,7 @@ public class ArgumentTokenizer {
      *
      * <p>
      * Unlike {@link #autoTokenize(String, Flag...)}, this <b>will throw an error</b> when unspecified flags
-     * are found. This means you must provide all the necessary flags you intend to us via the {@code flags}
+     * are found. This means you must provide all the necessary flags you intend to use via the {@code flags}
      * parameter.
      * </p>
      *
@@ -46,12 +46,12 @@ public class ArgumentTokenizer {
      * {@link ArgumentMultimap#verifyNoExtraneousFlagsOnTopOf(Flag...)}.
      * </p>
      *
-     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
-     * @param flags      Flags to tokenize the arguments string with
-     * @return           ArgumentMultimap object that maps flag to their arguments
+     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}.
+     * @param flags      Flags to tokenize the arguments string with.
+     * @return ArgumentMultimap object that maps flag to their arguments.
      * @throws ParseException if there are extraneous flags detected on top of the provided flags.
      *
-     * @see #autoTokenize tokenize(String, Flag...)
+     * @see #autoTokenize(String, Flag...)
      */
     public static ArgumentMultimap tokenize(String argsString, Flag... flags) throws ParseException {
         ArgumentMultimap multimap = autoTokenize(argsString, flags);
@@ -66,13 +66,12 @@ public class ArgumentTokenizer {
      *
      * <p>
      * Unlike {@link #tokenize(String, Flag...)}, this will not throw an error when unspecified flags are
-     * found. In other words, an unknown flag not present in {@code mainFlags} is always accepted, albeit with
-     * no information about name-alias mapping and so on, so it may be hard to match against flags you expect.
+     * found. In other words, an unknown flag not present in {@code mainFlags} is always accepted.
      * </p>
      *
-     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}
-     * @param mainFlags  Optional set of primary flags to prioritize tokenizing the arguments string with
-     * @return           ArgumentMultimap object that maps flag to their arguments
+     * @param argsString Arguments string of the form: {@code preamble <flag> value <flag> value ...}.
+     * @param mainFlags  Optional set of primary flags to prioritize tokenizing the arguments string with.
+     * @return ArgumentMultimap object that maps flag to their arguments.
      *
      * @see #tokenize(String, Flag...)
      */
@@ -92,7 +91,7 @@ public class ArgumentTokenizer {
     }
 
     /**
-     * Locate all the locations in the words list that represent flags.
+     * Locates all the locations in the words list that represent flags.
      *
      * @param wordsArray An array of words.
      * @param targetedFlags An array of flags should be checked explicitly.
