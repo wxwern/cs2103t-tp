@@ -1,0 +1,27 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+
+:AddRecruiterCommand is executed;
+
+if () then ([oid value was passed in])
+
+    if () then ([id belongs to an organization])
+        :Create new Recruiter with parent;
+    else ([else])
+        :throw CommandException;
+        stop
+    endif
+
+else ([else])
+    :Create new Recruiter with no parent;
+endif
+
+:Add Recruiter to AddressBook;
+:return CommandResult;
+
+stop
+
+@enduml
