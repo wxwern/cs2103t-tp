@@ -638,6 +638,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
 
 
 *{More to be added}*
