@@ -44,24 +44,9 @@ To begin using this guide, ensure you meet the [Minimum System Requirements](). 
 
 
 --------------------------------------------------------------------------------------------------------------------
+## Navigating the Interface
 
-## Starter Guide
-Welcome to Jobby's documentation! This quick start guide will give you an introduction of 80% of Jobby's
-functionalities that you will use on a daily basis.
-
-This guide will be done in an example workflow that you will likely experience while using Jobby to get you accustomed to all of Jobby's commands.
-
-> ### You will learn
-> - How to add contact into Jobby
-> - How to edit contact in Jobby
-> - How to add application in Jobby
-> - How to use core features like find, remove
-> - How to delete data in Jobby
-> - And more...
-
-### GUI Legends
-
-Below is a labelled diagram of our GUI
+Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
 
 ![ui overview](images/ug-images/labelled-gui.png)
 
@@ -72,6 +57,27 @@ Below is a labelled diagram of our GUI
 | Contact Details     | Contains information related to the [contact](#glossary) like name, phone number, email etc.               |
 | Application Details | Contains information related to the [internship application](#glossary) details like status, deadline etc. |
 
+
+--------------------------------------------------------------------------------------------------------------------
+## Jobby Tutorial (for new users)
+
+Hello and welcoem to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
+
+Before we begin, please ensure that you have viewed the following sections of the guide:
+* [Quick Start]() to help you get Jobby up and running
+* [Navigating the Interface]() to get you familiarised with navigating Jobby
+
+This tutorial aims to guide you through the most essential features and functionalities of Jobby that you will use on a day-to-day
+basis. In this guide, you will learn how to add your first tutor and corresponding schedule!
+
+Click on any of the hyperlinks below to jump to respective sections of the tutorial!
+* Beginning
+* Adding your first contact
+* Adding your first application
+
+Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+
+![ui overview](images/ug-images/labelled-gui.png)
 
 ### Adding `Contact`
 Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
@@ -312,6 +318,7 @@ Applies to: <span class="jobby-data-class">Organization</span>
 ```add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]```
 
 ##### Valid use examples
+
 | Valid use Examples                                                                                                     | Reason                                                       |
 |------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | `add --org --name J&J`                                                                                                 | Adding an organization **J&J**.                              |
@@ -320,6 +327,7 @@ Applies to: <span class="jobby-data-class">Organization</span>
 
 
 ##### Invalid use examples
+
 | Invalid use Examples                                                                                                   | Reason                                        |
 |------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
 | `add --org --name`                                                                                                     | Command did not specify **NAME**.             |
