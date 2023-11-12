@@ -132,8 +132,8 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandAutocompleted(KeyEvent keyEvent) {
         logger.fine("User invoked auto-completion!");
 
-        boolean hasAutocompletedResult = commandTextField.triggerImmediateAutocompletion();
-        if (hasAutocompletedResult) {
+        var actionResult = commandTextField.triggerImmediateAutocompletion();
+        if (actionResult == AutocompleteTextField.ActionResult.EXECUTED) {
             keyEvent.consume();
 
             commandTextField.requestFocus();
@@ -147,8 +147,8 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandUndoAutocomplete(KeyEvent keyEvent) {
         logger.fine("User invoked undo auto-completion!");
 
-        boolean hasUndoneCompletion = commandTextField.undoLastImmediateAutocompletion();
-        if (hasUndoneCompletion) {
+        var actionResult = commandTextField.undoLastImmediateAutocompletion();
+        if (actionResult == AutocompleteTextField.ActionResult.EXECUTED) {
             keyEvent.consume();
 
             commandTextField.requestFocus();
