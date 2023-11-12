@@ -232,11 +232,14 @@ Since the organization has to be added to the `AddressBook` before any recruiter
 
 #### Design Considerations
 
-To ensure that the recruiter is linked to an existing organization, a direct reference to the organization's object should exist in the recruiter. This allows other components (such as the `UI`) to retrieve the correct organization and its corresponding details. 
+**Aspect: How `Recruiter` and `Organization` are being linked**
 
-Hence, the greatest obstacle was AB3's existing design which enforces the immutability of the `Contact` class by making each field `final`.
-
-To adhere to the existing design, each time the parent organization was modified or removed (as discussed earlier), the linked recruiter would be replaced with a new recruiter which contains the link to either the new organization or set to null if the parent was removed.
+  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
+    * Pros: Adheres to AB3's immutability of contacts.
+    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
+  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
+    * Pros: Computationally less expensive and easier to deal with.
+    * Cons: Careless mistakes can cause `Recruiter` contacts to be added or removed from the list when not allowed.
 
 ### Command Autocompletion
 
