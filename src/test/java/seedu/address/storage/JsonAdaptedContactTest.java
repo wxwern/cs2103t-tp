@@ -74,7 +74,7 @@ public class JsonAdaptedContactTest {
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS,
                 VALID_OID, VALID_TAGS, null
         );
-        String expectedMessage = Contact.MESSAGE_MISSING_TYPE;
+        String expectedMessage = Type.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
     }
 

@@ -160,6 +160,10 @@ class JsonAdaptedContact {
         if (type == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
         }
+        if (!Type.isValidType(type)) {
+            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
+        }
+
         final Type modelType = Type.fromString(type);
 
         switch (modelType) {
@@ -192,7 +196,10 @@ class JsonAdaptedContact {
             );
         }
         default:
-            throw new IllegalValueException(Contact.MESSAGE_MISSING_TYPE);
+            assert false : "We should not reach this stage - there is a developer error and the contact type "
+                    + modelType + "is not handled!";
+
+            throw new IllegalStateException();
         }
     }
 
