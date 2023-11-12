@@ -201,6 +201,9 @@ public class EditCommand extends Command {
         requireNonNull(model);
         if (this.targetId != null) {
             Contact contactToEdit = model.getContactById(targetId);
+            if (contactToEdit == null) {
+                throw new CommandException(Messages.MESSAGE_NO_SUCH_CONTACT);
+            }
             return updateModelAndGetCommandResult(model, contactToEdit);
         }
 
