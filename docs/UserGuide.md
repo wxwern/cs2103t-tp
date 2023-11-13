@@ -147,10 +147,10 @@ Solid! Now it's time to get started with Jobby!
 
 ### Adding your first Organization
 
-Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**. 
+Let's say you are interested to apply to **Google** as your internship destination, and you found their email **google@gmail.com**. 
 (This is not their real email, of course)
 
-You can use [`add --org`{:.language-sh}](#adding-organizations---add---org) command here to add Google into your organization:
+You can use [`add --org`{:.language-sh}](#adding-organizations---add---org) to add the Google organization in Jobby:
 1. Type `add --org --name Google --id google_id --email google@gmail.com`{:.language-sh} into the command box
 2. Press **ENTER**
 
@@ -163,19 +163,19 @@ You have successfully added **Google**, with the email **google@gmail.com** into
 In a job fair, you managed to meet a **Google** internship recruiter, **Josh Mao**, and he provided you with his number
 **91219121**.
 
-Here is how you can use [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
+Here is how you can use [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) to record the recruiter in Jobby:
 1. Type `add --rec --name Josh Mao --oid google_id --phone 91219121`{:.language-sh} into the command box
 2. Press **ENTER**
 
 ![Adding Recruiter](images/ug-images/rec-added.png)
 
-You have successfully added **Josh Mao**, who is a **recruiter** from Google, whose number is **91219121**.
+You have successfully added **Josh Mao** - a **recruiter** from Google with the phone number **91219121**.
 
 ### Adding your first Application
 
 After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **22-11-2023**.
 
-Here is how you can use [`apply`](#applying-to-organizations---apply) command to track your application in Jobby:
+Here is how you can use [`apply`](#applying-to-organizations---apply) to track your application in Jobby:
 1. Type `apply google_id --title Software Engineer --by 22-11-2023`{:.language-sh} into the command box
 2. Press **ENTER**
 
@@ -183,9 +183,9 @@ Here is how you can use [`apply`](#applying-to-organizations---apply) command to
 
 You have successfully added your job application to **Google**!
 
-**Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
-basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby](#using-jobby) section to understand
-Jobby's command structures, or visit the [Features](#features) section to see the full capabilities of Jobby!
+**Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of a basic workflow in Jobby.
+However, there are still many features that we have yet to introduce. Please refer to the [Using Jobby](#using-jobby) section to understand how to interpret
+command structures and formats, or visit the [Features](#features) section to see the full capabilities of Jobby!
 
 --------------------------------------------------------------------------------------------------------------------
 
