@@ -429,11 +429,6 @@ Step 3. When the user want decide to add more information regarding the Organiza
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
 
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
 
