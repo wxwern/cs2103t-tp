@@ -361,25 +361,27 @@ Adds a recruiter contact with the details given to the command.
 ##### Sample demonstration
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
 
-* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is linked to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
+* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is associated to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
 
-![add-recruiter](images/add_recruiter_success.png)
+<div style="text-align: center;">
+<img src="images/add_recruiter_success.png" width=500 />
+</div>
 
 ##### Valid examples
 
-| Command                                                                                                                                                                     | Reason                                                                                                                 |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| `add --rec --name John Doe`                                                                                                                                                 | Adds a recruiter that is not linked to any organization.                                                               |
-| `add --rec --name John Doe --tag friendly --tag woogle`                                                                                                                     | Adds a recruiter with two tags - friendly and woogle.                                                                  |
-| `add --rec --name John Doe --oid job_seeker_plus`                                                                                                                           | Adds a recruiter that is linked to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
-| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.                                                                         |
+| Command | Reason |
+|-------|----------|
+| `add --rec --name John Doe` | Adds a recruiter that is not associated to any organization. |
+| `add --rec --name John Doe --tag friendly --tag woogle` | Adds a recruiter with two tags - friendly and woogle. |
+| `add --rec --name John Doe --oid job_seeker_plus` | Adds a recruiter that is associated to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
+| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields. |
 
 ##### Invalid examples
 
-| Command                                     | Reason                                                                         |
-|---------------------------------------------|--------------------------------------------------------------------------------|
-| `add --rec`                                 | Missing a name.                                                                |
-| `add --rec --name John Doe --phone`         | Optional fields (in this case `--phone`) were used but not specified.          |
+| Command | Reason |
+|---------|--------|
+| `add --rec` | Missing a name. |
+| `add --rec --name John Doe --phone` | Optional fields (in this case `--phone`) were used but not specified. |
 | `add --rec --name John Doe --oid bogus-org` | Given that no organization with the id "bogus-org" exists in the address book. |
 
 
