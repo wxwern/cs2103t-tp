@@ -784,6 +784,10 @@ Exits the program.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Issues
+## Known Issues
 
-(Where to report issues and what bugs currently exist)
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the _preferences.json_ file created by the application before running the application again.
+
+2. **When requesting to sort applications after a call to `list --rec`**, the command will succeed but display nothing, since no organizations are currently listed, and so no linked applications will display. The remedy is to call `list` before sorting applications and calling the sort command once more.
+
+3. Parameter names use either the `-` or `--` prefix, but **all commands as of the current version only use the `--` prefix.** The `-` prefix is currently unused, but in future updates it may become relevant.
