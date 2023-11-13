@@ -5,9 +5,9 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div class="reset-page-break-defaults" markdown="1">
-
 ## Introduction
+
+<div class="reset-page-break-defaults" markdown="1">
 
   Welcome to the **Jobby** User Guide!
 
@@ -38,11 +38,11 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always"></div>
 ## Table of contents
+<div class="reset-page-break-defaults" markdown="1">
 * Table of Contents
 {:toc}
-<div style="page-break-after: always"></div>
+</div>
 
 ## Installation
 
