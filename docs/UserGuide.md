@@ -1,15 +1,11 @@
-<div class="reset-page-break-defaults" markdown="1">
-
-
 ---
 layout: page
 title: User Guide
 ---
 
-
-
---------------------------------------------------------------------------------------------------------------------
 ## Introduction
+
+<div class="reset-page-break-defaults" markdown="1">
 
   Welcome to the **Jobby** User Guide!
 
@@ -41,10 +37,10 @@ title: User Guide
 --------------------------------------------------------------------------------------------------------------------
 
 ## Table of contents
-<div style="page-break-after: always"></div>
+<div class="reset-page-break-defaults" markdown="1">
 * Table of Contents
 {:toc}
-<div style="page-break-after: always"></div>
+</div>
 
 ## Installation
 
@@ -67,8 +63,10 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
+
 ## Navigating the Guide
 
+<div class="reset-page-break-defaults" markdown="1">
 
 ### Code blocks for entering commands
 
@@ -96,10 +94,12 @@ title: User Guide
 :warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
 </div>
 
+</div>
+
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
 
-Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+Jobby comes equipped with a user interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
 
 ![ui overview](images/ug-images/labelled-gui.png)
 
@@ -114,119 +114,78 @@ Jobby comes equipped with a [GUI]() interface that provides visual feedback to y
 --------------------------------------------------------------------------------------------------------------------
 ## Jobby Tutorial (for new users)
 
-Hello and welcome to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
+<div class="reset-page-break-defaults" markdown="1">
+
+
+Hello and welcome to Jobby! We are delighted that you've chosen our platform to track your internship application process!
 
 Before we begin, please ensure that you have viewed the following sections of the guide:
-* [Quick Start]() to help you get Jobby up and running
-* [Navigating the Interface]() to get you familiarised with navigating Jobby
+* [Installation](#installation) to help you get Jobby up and running.
+* [Navigating the Interface](#navigating-the-interface) to get you familiarised with Jobby's User Interface.
 
-This tutorial aims to guide you through the most essential features and functionalities of Jobby that you will use on a day-to-day
-basis. In this guide, you will learn how to add your first tutor and corresponding schedule!
+Following this tutorial will guide you through the basic workflow and functionalities of Jobby. 
+Here, you will learn how to add your first **Organization**, **Recruiter** and **Application**!
 
-Click on any of the hyperlinks below to jump to respective sections of the tutorial!
-* Beginning
-* Adding your first contact
-* Adding your first application
+Click on any of the hyperlinks below to jump to respective sections of the guide!
+* [The Beginning](#the-beginning)
+* [Adding your first Organization](#adding-your-first-organization)
+* [Adding your first Recruiter](#adding-your-first-recruiter)
+* [Adding your first Application](#adding-your-first-application)
 
-Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+### The Beginning
 
-![ui overview](images/ug-images/labelled-gui.png)
+When you first launch Jobby, you will notice that it comes preloaded with sample data for you to play with. You may use 
+the sample data to familiarise yourself with the various features that Jobby provides straightaway!
 
-### Adding `Contact`
-Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
+If you wish to continue following our guide to learn the basic operations of Jobby, you can easily remove the sample data by:
+1. Type `clear` into the command box
+2. press **ENTER**
 
-Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
+Solid! Now it's time to get started with Jobby!
 
-You can add the `Organization` into Jobby with a simple command:
-```add --org --name Woogle --id woogle_id```
+</div>
 
-![Add Organization](images/starter-guide/add-woogle.jpg)
+### Adding your first Organization
 
+Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**. 
+(This is not their real email, of course)
 
-You can then add a **recruiter** that's related to the "Woogle" organization like so::
-```add --rec --name John --id john_id --oid woogle_id```
+You can use [`add --org`](#adding-organizations---add---org) command here to add Google into your organization:
+1. Type `add --org --name Google --id google_id --email google@gmail.com` into the command box
+2. Press **ENTER**
 
-![Add Recruiter](images/starter-guide/add-john.jpg)
+![Adding Organization](images/ug-images/org-added.png)
 
+You have successfully added **Google**, with the email **google@gmail.com** into your **organization contact**!
 
-> To find out all of `Organization` and `Recruiter`'s flags, go [organization documentation]()
-> and [recruiter documentation]()
+### Adding your first Recruiter
 
-### Adding `Application`
-Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
-an `Application` for this company with the by including the `Organization ID` in the command:
-`apply woogle_id --title Software Engineer --by 22-11-2023`
+In a job fair, you managed to meet a **Google** internship recruiter, **Josh Mao**, and he provided you with his number
+**91219121**.
 
-![Add Application](images/starter-guide/add-application.jpg)
+Here is how you can use [`add --rec`](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
+1. Type `add --rec --name Josh Mao --oid google_id --phone 91219121` into the command box
+2. Press **ENTER**
 
-`Application` will automatically generates the fields if there are no inputs on your end.
-- `Status: Pending`
-- `Stage: Resume`
+![Adding Recruiter](images/ug-images/rec-added.png)
 
-> You will be able to add different details of `Application`, see the [applcation documentation]() here.
+You have successfully added **Josh Mao**, who is a **recruiter** from Google, whose number is **91219121**.
 
-### Editing `Contact`
-Now that you have both your Contacts and Applications. You received new informations about your `Contacts`, you will have to edit your `Contact` data.
+### Adding your first Application
 
-We can do so with the `edit` CLI command with the desired id and input.
+After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **22-11-2023**.
 
-Let's say we want to change the phone detail of `Organization: Woogle` and email of `Recruiter: John`.
-We can use the commands:
-`edit woogle_id --phone 12345678` and `edit john_id --email john@gmail.com`
+Here is how you can use [`apply`](#applying-to-organizations---apply) command to track your application in Jobby:
+1. Type `apply google_id --title Software Engineer --by 22-11-2023` into the command box
+2. Press **ENTER**
 
-![Edit Contact](images/starter-guide/edit-john.jpg)
+![Adding Application](images/ug-images/app-added.png)
 
+You have successfully added your job application to **Google**!
 
-After executing the commands,
-`Organization: Woogle`'s number changed to `phone: 12345678`.
-`Recruiter: John`'s email changed to `Email: john@gmail.com`.
-
-> To find more ways to `edit` `Organization` and `Recruiter`, see the [edit documentation](LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
-
-### Editing `Application`
-For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to
-the `Interview` stage.
-
-You will be able to do it simply with:
-`edit --application 5 --stage interview`
-
-![edit application](images/starter-guide/edit-application.jpg)
-
-
-This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
-> To find more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
-
-### Get `Reminder`
-During your internship application process, you might feel that there are many deadlines that you have to keep track of,
-in Jobby, we have a `Remind` command that will help you sort your applications by their `Deadlines`.
-
-You can do so with a simple command:
-`remind --earliest`
-to see your application deadlines from the earliest to latest.
-
-![Remind Earliest](images/starter-guide/remind-earliest.jpg)
-
-
-> To find out more ways to use `remind`, see the [remind documentation](LINK TO REMIND DOCUMENTATION).
-
-### Finding `Organization` and its related `Applications
-Let's say there is a specific organization application you are looking for, like **Woogle**, you will be able to easily find it via
-this command:
-```
-find woogle
-```
-
-SCREENSHOT
-
-> To find out more ways to use `find`, see the [find documentation](LINK TO find DOCUMENTATION).
-
-
-
-
-![List](images/starter-guide/list.jpg)
-
-
-
+**Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
+basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby Section](#using-jobby) to understand
+the command structure of Jobby, or visit [Features Section](#features) to see the full capabilities of Jobby!
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -264,7 +223,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 * Any parameter names not following the required format will be treated as data input, so an input like *"-5 degrees"* will work.
 
-* Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
+* <span class="expert pill">Expert</span> Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
 
 </div>
 
@@ -441,10 +400,9 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 
 ##### Invalid examples
 
-| Command                                 | Reason                                  |
-|-----------------------------------------|-----------------------------------------|
-| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter]()  |
-
+| Command                                 | Reason                                                                              |
+|-----------------------------------------|-------------------------------------------------------------------------------------|
+| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](appendix-a--acceptable-values-for-parameters)  |
 
 ### Searching contacts - `find`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
@@ -490,8 +448,6 @@ list [--org / --rec / --toapply]
 * Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
 
 * Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
-
-[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
 
 ##### Valid examples
 * `list`
@@ -707,6 +663,9 @@ delete --application INDEX
 
 ### Commands for Handling Job Applications
 
+<div class="reset-page-break-defaults" markdown="1">
+
+
 | Action                 | Format, Examples                                                                                                                                                           |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Delete Application** | `delete --application INDEX` <br> e.g., `delete --application 2`                                                                                                           |
@@ -720,6 +679,8 @@ delete --application INDEX
 |-----------|------------------|
 | **Clear** | `clear`          |
 | **Help**  | `help`           |
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
