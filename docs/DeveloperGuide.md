@@ -9,7 +9,12 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* UI rendering via: [JavaFX](https://openjfx.io/)
+* Testing suite via: [JUnit5](https://github.com/junit-team/junit5)
+* JSON data saving and loading via: [Jackson](https://github.com/FasterXML/jackson)
+
+* Jobby base UI adapted from: [AddressBook Level-3](https://se-education.org/addressbook-level3/)
+* Autocompletion base UI adapted from: [@floralvikings's AutoCompleteTextBox.java](https://gist.github.com/floralvikings/10290131)
 
 --------------------------------------------------------------------------------------------------------------------
 
