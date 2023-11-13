@@ -13,14 +13,9 @@ Class ModelManager
 Class UserPrefs
 
 Class UniqueContactList
-Class Contact
-Class Address
-Class Email
-Class Name
-Class Id
-Class Url
-Class Phone
-Class Tag
+Class "{abstract}\nContact" as Contact
+Class Organization
+Class Recruiter
 
 Class JobApplicationList
 Class JobApplication
@@ -42,25 +37,14 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniqueContactList
 UniqueContactList --> "~* all" Contact
-Contact *--> Name
-Contact *--> Id
-Contact *--> Phone
-Contact *--> Email
-Contact *--> Url
-Contact *--> Address
-Contact *--> "*" Tag
 
 ModelManager *-down-> "1" JobApplicationList
 JobApplicationList -down-> "*" JobApplication
 
 Contact -[hidden]up--> I
-UniqueContactList -[hidden]right-> I
 
-Name -[hidden]right-> Id
-Id -[hidden]right-> Phone
-Phone -[hidden]right-> Email
-Email -[hidden]right-> Url
-Url -[hidden]right-> Address
+Organization -up-|> Contact
+Recruiter -up-|> Contact
 
 ModelManager --> "~* filtered" Contact
 @enduml
