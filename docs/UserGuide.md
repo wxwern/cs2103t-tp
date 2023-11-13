@@ -747,7 +747,7 @@ Reminds you of upcoming deadlines for job applications.
 
 ##### _How do I transfer my data to another device?_ 
 * Jobby currently does not directly support data transfer. 
-  You can transfer your contact data and job application data by copying the data folder in the folder where you have place _jobby.jar_ to a folder that you are using for Jobby.
+  You can transfer your contact data and job application data by copying the data folder in your old _jobby.jar_ home folder to the new home folder for _jobby.jar_.
 
 ##### _I want to try out Jobby with some sample data. How can I do so?_
 * You can delete the data folder in the home folder of _jobby.jar_, and launch Jobby again. 
