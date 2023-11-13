@@ -794,8 +794,6 @@ At the command parsing level, add additional checks against the list of flags pr
 
 <img src="images/enhancements/FlagChecker.png">
 
-Note: Due to the limitations of PlantUML, `--application 1 --name Jay --title SWE` is interpreted as: ~~application 1~~ name Jay --title SWE
-
 ### Better Formatting for Contacts
 
 Currently, the contacts are not nicely formatted and exposes some internal but non-critical implementation details.
