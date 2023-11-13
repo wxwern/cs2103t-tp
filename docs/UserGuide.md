@@ -225,7 +225,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 * Any parameter names not following the required format will be treated as data input, so an input like *"-5 degrees"* will work.
 
-* Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
+* <span class="expert pill">Expert</span> Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
 
 </div>
 
@@ -665,6 +665,9 @@ delete --application INDEX
 
 ### Commands for Handling Job Applications
 
+<div class="reset-page-break-defaults" markdown="1">
+
+
 | Action                 | Format, Examples                                                                                                                                                           |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Delete Application** | `delete --application INDEX` <br> e.g., `delete --application 2`                                                                                                           |
@@ -678,6 +681,8 @@ delete --application INDEX
 |-----------|------------------|
 | **Clear** | `clear`          |
 | **Help**  | `help`           |
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
