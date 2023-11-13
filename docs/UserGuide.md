@@ -690,6 +690,47 @@ Reminds you of upcoming deadlines for job applications.
 | `remind`                              | No urgency level specified.                         |
 
 
+### Viewing help - `help`
+
+<span class="learning-outcome pill">:trophy: How to find help on Jobby's commands</span>  <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+help
+```
+
+Shows a message explaining how to access the help page.
+
+![Help Message](images/helpMessage.png)
+
+
+### Clearing all data - `clear`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="danger pill">:warning: The deletion of all data is permanent and there is no way to undo it.</span>
+
+<span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+clear
+```
+
+Clears all <span class="jobby-data-class">Contact</span> and <span class="jobby-data-class">Job Application</span> data from Jobby.
+
+
+### Exiting the program - `exit`
+
+<span class="learning-outcome pill">:trophy: How to exit Jobby</span> <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+exit
+```
+
+Exits the program.
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
@@ -786,4 +827,8 @@ Reminds you of upcoming deadlines for job applications.
 --------------------------------------------------------------------------------------------------------------------
 ## Issues
 
-(Where to report issues and what bugs currently exist)
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the _preferences.json_ file created by the application before running the application again.
+
+2. **When requesting to sort applications after a call to `list --rec`**, the command will succeed but display nothing, since no organizations are currently listed, and so no linked applications will display. The remedy is to call `list` before sorting applications and calling the sort command once more.
+
+3. Parameter names use either the `-` or `--` prefix, but **all commands as of the current version only use the `--` prefix.** The `-` prefix is currently unused, but in future updates it may become relevant.
