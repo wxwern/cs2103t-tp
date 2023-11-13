@@ -781,6 +781,7 @@ Jobby's data are saved automatically as a JSON file `[JAR file location]/data/jo
 |-----------|------------------|
 | **Clear** | `clear`          |
 | **Help**  | `help`           |
+| **Exit**  | `exit`           |
 
 </div>
 
