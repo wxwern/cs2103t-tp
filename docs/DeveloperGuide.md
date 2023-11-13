@@ -159,88 +159,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### `Recruiter`-`Organization` link
-
-#### Overview
-
-There are two types of contacts in Jobby - `Recruiter` and `Organization`.
-
-Each recruiter can only be linked to zero or one organization while an organization can be linked to multiple recruiters. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
-
-#### Implementing the parent-child relationship
-
-For the `Contact` class:
-  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
-
-<br>
-
-For the `Recruiter` class:
-  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
-
-  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
-
-<br>
-
-For the `Organization` class:
-  * The organization does not maintain a direct list of recruiters linked to it.
-
-  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
-
-<br>
-
-Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
-
-**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
-
-**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
-
-**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
-
-<img src="images/AddRecruiterActivityDiagram.png" width=600 />
-
-**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
-
-#### Editing and deleting the linked contacts
-
-Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
-
-As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
-
-When **editing** the `Organization`:
-  * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
-
-<br>
-
-When **editing** the `Recruiter`:
-  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
-
-  * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
-
-  * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
-
-<br>
-
-The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
-
-#### Storing the `Recruiter`-`Organization` link
-
-Since only the recruiter stores a direct link to its parent organization, it is sufficient to store this link in the `JsonAdaptedContact` of a recruiter.
-
-As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
-
-Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
-
-#### Design Considerations
-
-**Aspect: How `Recruiter` and `Organization` are being linked**
-
-  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
-    * Pros: Adheres to AB3's immutability of contacts.
-    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
-  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
-    * Pros: Computationally less expensive and easier to deal with.
-    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
-
 ### Command Autocompletion
 
 #### Overview
@@ -348,6 +266,88 @@ Step 3. When the user want decide to add more information regarding the Organiza
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
 
+### `Recruiter`-`Organization` link
+
+#### Overview
+
+There are two types of contacts in Jobby - `Recruiter` and `Organization`.
+
+Each recruiter can only be linked to zero or one organization while an organization can be linked to multiple recruiters. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
+
+#### Implementing the parent-child relationship
+
+For the `Contact` class:
+  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+
+<br>
+
+For the `Recruiter` class:
+  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
+
+  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
+
+<br>
+
+For the `Organization` class:
+  * The organization does not maintain a direct list of recruiters linked to it.
+
+  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
+
+<br>
+
+Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
+
+**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
+
+**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
+
+**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
+
+<img src="images/AddRecruiterActivityDiagram.png" width=600 />
+
+**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
+
+#### Editing and deleting the linked contacts
+
+Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
+
+As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
+
+When **editing** the `Organization`:
+  * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
+
+<br>
+
+When **editing** the `Recruiter`:
+  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
+
+  * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
+
+  * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
+
+<br>
+
+The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
+
+#### Storing the `Recruiter`-`Organization` link
+
+Since only the recruiter stores a direct link to its parent organization, it is sufficient to store this link in the `JsonAdaptedContact` of a recruiter.
+
+As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
+
+Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
+
+#### Design Considerations
+
+**Aspect: How `Recruiter` and `Organization` are being linked**
+
+  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
+    * Pros: Adheres to AB3's immutability of contacts.
+    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
+  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
+    * Pros: Computationally less expensive and easier to deal with.
+    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
+    
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
 
