@@ -561,9 +561,9 @@ list [--org / --rec / --toapply]
 ```
 Lists all contacts. If you provide a parameter, the contacts listed will be only those that fit the given parameter.
 
-Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
+* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
 
-Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
+* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
 
 ##### Valid examples
 
@@ -645,14 +645,17 @@ Sorts contacts or job applications for you by the specified flag.
 * `--ascending` - The specified flag will sort in ascending order.
 * `--descending` - The specified flag will sort in descending order.
 
-If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
 
-Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
 
-Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
+* If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
+* Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
+* Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
 
 ##### Sample demonstration
 * To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
+* In the Application Details section of Jobby, you should see your <span class="jobby-data-class">Job Applications</span> now ordered by most urgent deadline.
 
 ![Sort Deadline](images/sort_deadline.png)
 
@@ -680,12 +683,12 @@ Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <
 
 <span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
-Reminds you of upcoming deadlines for job applications.
-
 ##### Format
 ```sh
 remind --earliest / --latest
 ```
+
+Reminds you of upcoming deadlines for job applications.
 
 ##### Sample demonstration
 * To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
