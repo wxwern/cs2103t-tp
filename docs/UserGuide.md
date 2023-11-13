@@ -20,42 +20,16 @@ title: User Guide
 
 ### How to use this guide
 
-  (For users who just want to see the table of contents, click [here](#table-of-contents))  
+  _(For users who just want to see the table of contents, click [here](#table-of-contents).)_  
 
   To begin using this guide, ensure you have [installed Jobby](#installation). 
   Once this is done, go to the [tutorial](#jobby-tutorial--for-new-users-) section to get started on the basic features of Jobby. 
   
-  When you become more familiar with the basic features, you can move on to understand [how our commands are structured and how to use autocomplete to your advantage](#using-jobby). 
+  When you become more familiar with the basic features, you can move on to understand [how Jobby's commands are structured and how to use autocomplete to your advantage](#using-jobby). 
   
   Afterwards, please feel free to go through the [features section](#features) to find out what features Jobby has installed. We recommend going through it in the order of this guide but any order works as well! You may check out our table of contents to jump to any section of your choice.
 
-### Formatting used in this guide
-#### Code blocks for entering commands
-
-<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org --name Woogle` is a command. `add` is also part of a command.
-
-#### Small information pills
-
-| Component                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <span class="learning-outcome pill">:trophy: Learning outcomes</span>                                                                                                         | The learning outcome of the section.                                                                                                                                                                                                                                                                                  |
-| <span class="beginner pill">Beginner</span><br><span class="intermediate pill">Intermediate</span><br><span class="expert pill">Expert</span>                                 | The difficulty level of the section, with <span class="beginner pill">Beginner</span> for new users, <span class="intermediate pill">Intermediate</span> for users who have completed the tutorial, and <span class="expert pill">Expert</span> for users who have completed and used the features in the User Guide. |
-| <span class="information pill">:information_source: An info pill</span>                                                                                                       | Contains some additional information, such as assumptions and useful information.                                                                                                                                                                                                                                     |
-| <span class="warning pill">:warning: Some warning</span>                                                                                                                      | Contains a short warning regarding the use of a feature.                                                                                                                                                                                                                                                              |
-| <span class="danger pill">:warning: A danger pill</span>                                                                                                                      | Contains a short danger message regarding the use of a feature.                                                                                                                                                                                                                                                       |
-| <span class="jobby-data-class pill">Organization</span><br><span class="jobby-data-class pill">Recruiter</span><br><span class="jobby-data-class pill">Job Application</span> | The different objects of interest in Jobby: Organizations, Recruiters and Job Applications.                                                                                                                                                                                                                           |
-| <span class="applies-to pill"><span class="jobby-data-class pill">Organization</span></span>                                                                                  | Contains information on which objects of interest in Jobby the feature can be used on.                                                                                                                                                                                                                                |
-
-#### Large information sections
-
-<div markdown="block" class="alert alert-info">
-:bulb: This is a blue box. It can be used for additional tips or more useful information.
-</div>
-
-<div markdown="block" class="alert alert-warning">
-:warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
-</div>
-
+  _The different symbols and formats used are explained in [this section](#navigating-the-guide)._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -89,6 +63,31 @@ title: User Guide
 ## Navigating the Guide
 
 
+### Code blocks for entering commands
+
+<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org --name Woogle` is a command. `add` is also part of a command.
+
+### Small information pills
+
+| Component                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <span class="learning-outcome pill">:trophy: Learning outcomes</span>                                                                                                         | The learning outcome of the section.                                                                                                                                                                                                                                                                                  |
+| <span class="beginner pill">Beginner</span><br><span class="intermediate pill">Intermediate</span><br><span class="expert pill">Expert</span>                                 | The difficulty level of the section, with <span class="beginner pill">Beginner</span> for new users, <span class="intermediate pill">Intermediate</span> for users who have completed the tutorial, and <span class="expert pill">Expert</span> for users who have completed and used the features in the User Guide. |
+| <span class="information pill">:information_source: An info pill</span>                                                                                                       | Contains some additional information, such as assumptions and useful information.                                                                                                                                                                                                                                     |
+| <span class="warning pill">:warning: Some warning</span>                                                                                                                      | Contains a short warning regarding the use of a feature.                                                                                                                                                                                                                                                              |
+| <span class="danger pill">:warning: A danger pill</span>                                                                                                                      | Contains a short danger message regarding the use of a feature.                                                                                                                                                                                                                                                       |
+| <span class="jobby-data-class pill">Organization</span><br><span class="jobby-data-class pill">Recruiter</span><br><span class="jobby-data-class pill">Job Application</span> | The different objects of interest in Jobby: Organizations, Recruiters and Job Applications.                                                                                                                                                                                                                           |
+| <span class="applies-to pill"><span class="jobby-data-class pill">Organization</span></span>                                                                                  | Contains information on which objects of interest in Jobby the feature can be used on.                                                                                                                                                                                                                                |
+
+### Large information sections
+
+<div markdown="block" class="alert alert-info">
+:bulb: This is a blue box. It can be used for additional tips or more useful information.
+</div>
+
+<div markdown="block" class="alert alert-warning">
+:warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
