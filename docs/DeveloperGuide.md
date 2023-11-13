@@ -424,7 +424,7 @@ Internally, whenever requested, the `AutocompleteGenerator`:
 4. ranks them based on their relevance, 
 5. and finally returns a stream of autocompleted commands.
 
-### Design Considerations
+#### Design Considerations
 
 When designing the Autocomplete feature, important considerations include the ability to flexibly define and craft new constraints based on heuristically determined rules.
 
@@ -433,15 +433,15 @@ By abstracting away all operations into simple components like sets and constrai
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
 
-#### Alternatives Considered
+##### Alternatives Considered
 
-##### Alternative 1: Using Hardcoded Rules in Java
+###### Alternative 1: Using Hardcoded Rules in Java
 
 One obvious alternative is to simply the possible autocompletion results for each command in standard Java. We may achieve this by manually checking against a command string for each command type, and using existing tokenization classes like `ArgumentTokenizer` and `ArgumentMultimap`. 
 
 While this would incur less overhead in initial development time, more explicit coding is required - it is neither quick to write nor scalable to tons of commands. This is especially important as autocomplete was developed in parallel with other new features being added to Jobby, which would require constant changes to the autocomplete rules.
 
-##### Alternative 2: Using a Graph-based Approach
+###### Alternative 2: Using a Graph-based Approach
 
 A graph based approach, e.g., having a tree structure to define constraints and dependencies, may be more efficient than the current solution (which has to check against _all_ known rules every single time). 
 
