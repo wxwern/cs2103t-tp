@@ -420,6 +420,35 @@ Edits the given contact according to the parameters given.
 |-----------------------------------------|-------------------------------------------------------------------------------------|
 | `edit google --phone 8124!@#$`{:.language-sh}          | `--phone`{:.language-sh} has an [invalid parameter](#appendix-a-acceptable-values-for-parameters)  |
 
+### Deleting contacts - `delete`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+
+<span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
+
+##### Format
+```sh
+delete INDEX/ID [--recursive]
+```
+Deletes the contact at the given `INDEX` or `ID`.
+* `--recursive`{:.language-sh} flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
+
+##### Valid examples
+
+| Command                | Reason                                                                                 |
+|------------------------|----------------------------------------------------------------------------------------|
+| `delete 1`             | Deletes the contact at index 1.                                               |
+| `delete josh`          | Deletes the contact with the **ID** of **josh**.                              |
+| `delete 1 --recursive`{:.language-sh} | Deletes a contact and all its associated recruiter contacts and applications. |
+
+##### Invalid examples
+
+| Command                | Reason                                                              |
+|------------------------|---------------------------------------------------------------------|
+| `delete 0`             | Invalid index, as index starts from 1.                              |
+
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
 
@@ -477,35 +506,6 @@ Edits the given job application according to the parameters given.
 | `edit --application 0 --title SRE`{:.language-sh}           | Invalid index.                        |
 | `edit --application 1`{:.language-sh}                       | None of the fields to edit are given. |
 | `edit --application 1 --by 31-31-2023`{:.language-sh}       | The date is invalid.                  |
-
-### Deleting contacts - `delete`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
-
-<span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
-
-##### Format
-```sh
-delete INDEX/ID [--recursive]
-```
-Deletes the contact at the given `INDEX` or `ID`.
-* `--recursive`{:.language-sh} flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
-* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
-
-##### Valid examples
-
-| Command                | Reason                                                                                 |
-|------------------------|----------------------------------------------------------------------------------------|
-| `delete 1`             | Deletes the contact at index 1.                                               |
-| `delete josh`          | Deletes the contact with the **ID** of **josh**.                              |
-| `delete 1 --recursive`{:.language-sh} | Deletes a contact and all its associated recruiter contacts and applications. |
-
-##### Invalid examples
-
-| Command                | Reason                                                              |
-|------------------------|---------------------------------------------------------------------|
-| `delete 0`             | Invalid index, as index starts from 1.                              |
 
 ### Deleting job applications - `delete --application`{:.language-sh}
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
