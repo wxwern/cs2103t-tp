@@ -559,7 +559,7 @@ delete --application INDEX
 ```sh
 list [--org / --rec / --toapply]
 ```
-Lists all contacts. If a parameter is provided, the contacts listed will be only those that fit the given parameter.
+Lists all contacts. If you provide a parameter, the contacts listed will be only those that fit the given parameter.
 
 Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
 
@@ -616,7 +616,7 @@ find KEYWORD/ID...
 sort --FLAG_TO_SORT [--ascending / --descending]
 ```
 
-Sorts contacts or job applications by the specified flag.
+Sorts contacts or job applications for you by the specified flag.
 `--FLAG_TO_SORT` represents a parameter of the contact or job application (i.e. `--phone` represents the phone number of a contact).
 
 ##### Supported primary parameters <sub>(only 1 may be provided)</sub>
@@ -654,7 +654,7 @@ Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <
 ##### Sample demonstration
 * To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
 
-[SCREENSHOT HERE]
+![Sort Deadline](images/sort_deadline.png)
 
 ##### Valid examples
 
@@ -680,7 +680,7 @@ Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <
 
 <span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
-Reminds the user of upcoming deadlines for job applications.
+Reminds you of upcoming deadlines for job applications.
 
 ##### Format
 ```sh
