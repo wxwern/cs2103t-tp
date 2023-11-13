@@ -839,4 +839,4 @@ Exits the program.
 
 2. **When requesting to sort applications after a call to `list --rec`{:.language-sh}**, the command will succeed but display nothing, since no organizations are currently listed, and so no linked applications will display. The remedy is to call `list` before sorting applications and calling the sort command once more.
 
-3. Parameter names use either the `-` or `--` prefix, but **all commands as of the current version only use the `--` prefix.** The `-` prefix is currently unused, but in future updates it may become relevant.
+3. Parameter names use either the `-` or `--` prefix, but **all commands as of the current version only use the `--` prefix.** While the `-` prefix is currently unused, it is reserved (so user input cannot take that format), and it will be relevant in future updates.
