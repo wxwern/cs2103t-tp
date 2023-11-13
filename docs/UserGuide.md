@@ -393,7 +393,8 @@ Adds a recruiter contact with the details given to the command.
 
 
 ### Editing contacts - `edit`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div> <br>
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+
 <span class="learning-outcome pill">:trophy: How to edit organization or recruiter info in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
 <span class="information pill">:information_source: Assumes that you have read the `add` command documentation for contacts.</span> <br>
 
@@ -714,9 +715,8 @@ Shows a message explaining how to access the help page.
 ### Clearing all data - `clear`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
+<span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
 <span class="danger pill">:warning: The deletion of all data is permanent and there is no way to undo it.</span>
-
-<span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
 
 ##### Format
 ```sh
