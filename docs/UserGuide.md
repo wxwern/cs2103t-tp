@@ -669,6 +669,43 @@ Reminds you of upcoming deadlines for job applications.
 | `remind`                              | No urgency level specified.                         |
 
 
+### Viewing help - `help`
+
+##### Format
+```sh
+help
+```
+
+Shows a message explaining how to access the help page.
+
+![Help Message](images/helpMessage.png)
+
+
+### Clearing all data - `clear`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="danger pill">:warning: The deletion of all data is permanent and there is no way to undo it.</span>
+
+<span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+clear
+```
+
+Clears all data from your <span class="jobby-data-class pill">Contacts</span> and <span class="jobby-data-class pill">Job Applications</span>.
+
+
+### Exiting the program - `exit`
+
+##### Format
+```sh
+exit
+```
+
+Exits the program.
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
