@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
@@ -41,9 +43,7 @@ import javafx.scene.layout.HBox;
  */
 public class AutocompleteTextField extends TextField {
 
-    /**
-     * A snapshot of a text-change due to autocompletion.
-     */
+    /** A snapshot of a text-change due to autocompletion. */
     protected static class AutocompleteSnapshot {
         public final String partialValue;
         public final String completedValue;
@@ -59,6 +59,11 @@ public class AutocompleteTextField extends TextField {
         }
     }
 
+    /** An enum of execution status. */
+    public enum ActionResult {
+        EXECUTED, NOT_EXECUTED;
+    }
+
     /**
      * A functional interface that generates a stream of auto-completion results
      * based on the given partial input.
@@ -66,13 +71,18 @@ public class AutocompleteTextField extends TextField {
     @FunctionalInterface
     public interface CompletionGenerator extends Function<String, Stream<String>> { }
 
+    /** Internal ID prefix to note the exact menu item per index. */
+    private static final String AUTOCOMPLETE_MENU_ITEM_ID_PREFIX = "autocomplete-completion-item-";
+
     // GUI elements
     private final ContextMenu autocompletePopup;
+
 
     // Configuration variables
     private CompletionGenerator completionGenerator = s -> Stream.empty();
     private String autocompleteHintString = "[Select to autocomplete]";
     private int popupLimit = 10;
+
 
     // History tracking for autocomplete undo operations
     private final Stack<AutocompleteSnapshot> autocompleteHistory = new Stack<>();
@@ -93,6 +103,37 @@ public class AutocompleteTextField extends TextField {
                 // SPACE dismisses the popup if none is selected via tab focus.
                 // We disallow this by intercepting it before it does.
                 e.consume();
+            }
+
+            if (e.getCode() == KeyCode.ENTER) {
+                // The default behaviour of ENTER seems buggy.
+                // We will intercept it and do our own processing.
+                // This uses JavaFX private APIs to locate the focused element, as found here:
+                // https://stackoverflow.com/questions/27332981/contextmenu-and-programmatically-selecting-an-item
+                e.consume();
+
+                int highlightedIndex = 0;
+
+                Set<Node> items = autocompletePopup.getSkin().getNode().lookupAll(".menu-item");
+                for (Node item : items) {
+                    if (!item.isFocused() && !item.isHover()) {
+                        continue;
+                    }
+
+                    if (!item.getId().startsWith(AUTOCOMPLETE_MENU_ITEM_ID_PREFIX)) {
+                        continue;
+                    }
+
+                    try {
+                        String indexPart = item.getId().substring(AUTOCOMPLETE_MENU_ITEM_ID_PREFIX.length());
+                        highlightedIndex = Integer.parseInt(indexPart, 10);
+                        break;
+                    } catch (NumberFormatException exception) {
+                        // Ignore...
+                    }
+                }
+
+                this.triggerImmediateAutocompletion(highlightedIndex);
             }
         });
 
@@ -129,18 +170,23 @@ public class AutocompleteTextField extends TextField {
 
     /**
      * Triggers autocompletion immediately using the first suggested value, if any.
-     *
-     * @return true if an autocompleted result has been filled in, false otherwise.
      */
-    public boolean triggerImmediateAutocompletion() {
+    public ActionResult triggerImmediateAutocompletion() {
+        return triggerImmediateAutocompletion(0);
+    }
+
+    /**
+     * Triggers autocompletion immediately using the given suggested value index, if any.
+     */
+    public ActionResult triggerImmediateAutocompletion(int index) {
         ObservableList<MenuItem> menuItems = autocompletePopup.getItems();
 
-        if (!isPopupVisible() || menuItems.isEmpty()) {
-            return false;
+        if (!isPopupVisible() || menuItems.size() <= index || index < 0) {
+            return ActionResult.NOT_EXECUTED;
         }
 
-        menuItems.get(0).fire();
-        return true;
+        menuItems.get(index).fire();
+        return ActionResult.EXECUTED;
     }
 
     /**
@@ -168,16 +214,16 @@ public class AutocompleteTextField extends TextField {
      * This only does something when invoked at a stage where the current text matches
      * a previously autocompleted result.
      */
-    public boolean undoLastImmediateAutocompletion() {
+    public ActionResult undoLastImmediateAutocompletion() {
         if (autocompleteHistory.isEmpty()) {
-            return false;
+            return ActionResult.NOT_EXECUTED;
         }
 
         AutocompleteSnapshot snapshot = autocompleteHistory.peek();
 
         // Verify that the current text correctly matches the latest snapshot
         if (!this.getText().trim().equals(snapshot.completedValue)) {
-            return false;
+            return ActionResult.NOT_EXECUTED;
         }
 
         // Pop the result
@@ -190,7 +236,8 @@ public class AutocompleteTextField extends TextField {
         this.requestFocus();
         this.end();
         this.refreshPopupState();
-        return true;
+
+        return ActionResult.EXECUTED;
     }
 
     /**
@@ -270,11 +317,12 @@ public class AutocompleteTextField extends TextField {
             HBox completionBox = new HBox(completionLabelFront, completionLabelBack);
             completionBox.getStyleClass().add("autocomplete-box");
             completionBox.setPadding(new Insets(0, 8, 0, 8));
-            completionBox.setAlignment(Pos.BASELINE_CENTER);
+            completionBox.setAlignment(Pos.BASELINE_LEFT);
 
             // Create the context menu item
             CustomMenuItem item = new CustomMenuItem(completionBox, false);
             item.setOnAction(e -> triggerImmediateAutocompletionUsingResult(completion));
+            item.setId(AUTOCOMPLETE_MENU_ITEM_ID_PREFIX + i);
             menuItems.add(item);
 
             // Handle special case styling
@@ -292,6 +340,7 @@ public class AutocompleteTextField extends TextField {
                 completionLabelFront.setText("... (more options hidden)");
                 completionLabelBack.setText(null);
                 item.setDisable(true);
+                item.setOnAction(e -> {});
                 break; // Stop further processing immediately - only one of this should be displayed.
 
             }
@@ -301,18 +350,21 @@ public class AutocompleteTextField extends TextField {
         autocompletePopup.getItems().clear();
         autocompletePopup.getItems().addAll(menuItems);
 
-        // Update popup display state accordingly
+        // Hide the popup regardless if it should be shown or not.
+        //
+        // This is done to work around a weird quirk/bug in JavaFX where the text field would steal focus after an
+        // autocompletion result has been invoked, leading to the inability to use arrow keys to navigate the
+        // autocomplete list.
+        autocompletePopup.hide();
+
+        // Show the popup given that we have items in the list to show.
         if (menuItems.size() > 0) {
-            if (!autocompletePopup.isShowing()) {
-                autocompletePopup.show(AutocompleteTextField.this, Side.BOTTOM, 0, 0);
-            }
-        } else {
-            autocompletePopup.hide();
+            autocompletePopup.show(AutocompleteTextField.this, Side.BOTTOM, 0, 0);
         }
     }
 
     /**
-     * Update undo history tracked state based on the change for text field old values to new values.
+     * Updates undo history tracked state based on the change for text field old values to new values.
      */
     protected void updateUndoHistoryState(String previousValue, String currentValue) {
 

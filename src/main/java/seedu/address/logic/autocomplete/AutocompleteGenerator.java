@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.autocomplete.components.PartitionedCommand;
 import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 

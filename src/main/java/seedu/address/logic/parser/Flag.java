@@ -7,9 +7,12 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * A flag is an argument in and of itself. It functions as a option specifier, or as a marker for the beginning of a
+ * A flag is an argument in and of itself. It functions as an option specifier, or as a marker for the beginning of a
  * command argument.
- * E.g. '--t' in 'add James --t friend'.
+ *
+ * <p>
+ * For example, '--t' in 'add James --t friend' is a flag with name 't' and prefix '--'.
+ * </p>
  */
 public class Flag {
 
@@ -104,8 +107,23 @@ public class Flag {
 
     /**
      * Parses the given string using the default prefix and postfix format into a {@link Flag}.
-     * This will work for both full flag strings and flag aliases. However, this may not return the same result
-     * as an existing flag that has both a full value and alias pair - for those, try {@link #findMatch} instead.
+     *
+     * <p>
+     * This will work for both full flag strings and flag aliases. However, this will not return the same instance
+     * as an existing flag, especially if it has both a full value and alias pair. For those, try {@link #findMatch}
+     * instead.
+     * </p>
+     *
+     * <p>
+     * Full flag strings passed into this method and flags constructed in {@link #Flag(String)} are equal
+     * if they have the same name, prefix, and postfix.
+     * </p>
+     *
+     * <p>
+     * Aliased flag strings passed into this method and flags constructed in {@link #Flag(String)}, and then
+     * obtaining an alias-only definition via {@link #getAliasOnlyDefinition()}, will have an exact equivalent
+     * representation.
+     * </p>
      *
      * @param string The string to parse as a flag.
      * @return The corresponding {@link Flag} instance.
@@ -144,6 +162,7 @@ public class Flag {
      *
      * @param string The string to check for flag-like formats.
      * @return An optional containing the flag if it is a valid flag format.
+     * @see #parse(String)
      */
     public static Optional<Flag> parseOptional(String string) {
         try {
@@ -152,7 +171,6 @@ public class Flag {
             return Optional.empty();
         }
     }
-
 
     /**
      * Finds a {@link Flag} from the given {@code flags} that matches the given string representation.
@@ -173,62 +191,6 @@ public class Flag {
             }
         }
         return Optional.empty();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public String getPostfix() {
-        return postfix;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public String getAliasPrefix() {
-        return aliasPrefix;
-    }
-
-    public String getAliasPostfix() {
-        return aliasPostfix;
-    }
-
-    /**
-     * Returns the full string that would be used by the user to input a flag.
-     *
-     * <p>
-     * This is the full string that would be used by a user to input a flag.
-     * This means it's the concatenated result of prefix, name, postfix together.
-     * </p>
-     */
-    public String getFlagString() {
-        return this.getPrefix() + this.getName() + this.getPostfix();
-    }
-
-    /**
-     * Returns the alias string that would be used by the user to input a flag.
-     * It may be the same as {@link #getFlagString()} if there's no alias assigned to this flag.
-     *
-     * <p>
-     * This is the full alias string that would be used by a user to input a flag.
-     * This means it's the concatenated result of alias prefix, alias, alias postfix together.
-     * </p>
-     */
-    public String getFlagAliasString() {
-        return this.getAliasPrefix() + this.getAlias() + this.getAliasPostfix();
-    }
-
-    /**
-     * Returns whether the flag has a distinct alias from its full string form.
-     */
-    public boolean hasAlias() {
-        return !this.getFlagString().equals(this.getFlagAliasString());
     }
 
     /**
@@ -264,6 +226,88 @@ public class Flag {
         return false;
     }
 
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getPostfix() {
+        return postfix;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public String getAliasPrefix() {
+        return aliasPrefix;
+    }
+
+    public String getAliasPostfix() {
+        return aliasPostfix;
+    }
+
+    /**
+     * Returns whether the flag has a distinct alias from its full string form.
+     */
+    public boolean hasAlias() {
+        return !this.getFlagString().equals(this.getFlagAliasString());
+    }
+
+    /**
+     * Returns the full string that would be used by the user to input a flag.
+     *
+     * <p>
+     * This is the full string that would be used by a user to input a flag.
+     * This means it's the concatenated result of prefix, name, postfix together.
+     * </p>
+     */
+    public String getFlagString() {
+        return this.getPrefix() + this.getName() + this.getPostfix();
+    }
+
+    /**
+     * Returns the alias string that would be used by the user to input a flag.
+     * It may be the same as {@link #getFlagString()} if there's no alias assigned to this flag.
+     *
+     * <p>
+     * This is the full alias string that would be used by a user to input a flag.
+     * This means it's the concatenated result of alias prefix, alias, alias postfix together.
+     * </p>
+     */
+    public String getFlagAliasString() {
+        return this.getAliasPrefix() + this.getAlias() + this.getAliasPostfix();
+    }
+
+    /**
+     * Returns a flag variant derived from the current one which uses the alias as the name.
+     *
+     * <p>
+     * If this flag does not have an alias (as per {@link #hasAlias()}), the newly created flag would be equivalent to
+     * the current flag in all properties.
+     * </p>
+     */
+    public Flag getAliasOnlyDefinition() {
+        return new Flag(alias, prefix, postfix, alias, aliasPrefix, aliasPostfix);
+    }
+
+    /**
+     * Returns a flag variant derived from the current one which has no alias.
+     *
+     * <p>
+     * If this flag already does not have an alias (as per {@link #hasAlias()}), the newly created flag would be
+     * equivalent to the current flag in all properties.
+     * </p>
+     */
+    public Flag getNameOnlyDefinition() {
+        return new Flag(name, prefix, postfix, null, null, null);
+    }
+
     /**
      * Returns a string representation of this flag.
      * Equivalent to the result from {@link #getFlagString()}.
@@ -277,7 +321,7 @@ public class Flag {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, prefix, postfix, alias, aliasPrefix, aliasPostfix);
+        return Objects.hash(name, prefix, postfix);
     }
 
     /**
@@ -291,7 +335,6 @@ public class Flag {
         return this.getFlagString().equals(other.getFlagString());
     }
 
-
     /**
      * Returns whether the two flags have the same flag alias formats.
      */
@@ -303,6 +346,14 @@ public class Flag {
         return this.getFlagAliasString().equals(other.getFlagAliasString());
     }
 
+    /**
+     * Returns whether the two objects are equal.
+     *
+     * <p>
+     * Two flags are equal as long as the full form is equal for all properties, or if not,
+     * if at least one of them doesn't have a name, they're equal if their alias forms are equal for all properties.
+     * </p>
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -315,11 +366,18 @@ public class Flag {
         }
 
         Flag otherFlag = (Flag) other;
-        return Objects.equals(name, otherFlag.name)
+
+        boolean isFullFormEqual = Objects.equals(name, otherFlag.name)
                 && Objects.equals(prefix, otherFlag.prefix)
-                && Objects.equals(postfix, otherFlag.postfix)
-                && Objects.equals(alias, otherFlag.alias)
+                && Objects.equals(postfix, otherFlag.postfix);
+
+        boolean isAliasFormEqual = Objects.equals(alias, otherFlag.alias)
                 && Objects.equals(aliasPrefix, otherFlag.aliasPrefix)
                 && Objects.equals(aliasPostfix, otherFlag.aliasPostfix);
+
+        boolean requiresAliasOnlyMatch =
+                alias.equals(name) || otherFlag.alias.equals(otherFlag.name);
+
+        return isFullFormEqual || (requiresAliasOnlyMatch && isAliasFormEqual);
     }
 }

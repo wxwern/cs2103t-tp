@@ -166,6 +166,10 @@ class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
         if (type == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
         }
+        if (!Type.isValidType(type)) {
+            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
+        }
+
         final Type modelType = Type.fromString(type);
 
         switch (modelType) {
@@ -198,12 +202,25 @@ class JsonAdaptedContact implements Comparable<JsonAdaptedContact> {
             );
         }
         default:
-            throw new IllegalValueException(Contact.MESSAGE_MISSING_TYPE);
+            assert false : "We should not reach this stage - there is a developer error and the contact type "
+                    + modelType + "is not handled!";
+
+            throw new IllegalStateException();
         }
     }
 
     @Override
     public int compareTo(JsonAdaptedContact o) {
+        boolean isThisTypeValid = Type.isValidType(this.type);
+        boolean isOtherTypeValid = Type.isValidType(o.type);
+
+        if (!isThisTypeValid) {
+            return isOtherTypeValid ? 1 : 0;
+        }
+        if (!isOtherTypeValid) {
+            return -1;
+        }
+
         return Type.fromString(this.type).compareTo(Type.fromString(o.type));
     }
 }

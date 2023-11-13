@@ -191,11 +191,13 @@ public class EditApplicationCommand extends EditCommand {
             }
 
             EditApplicationDescriptor editDescriptor = (EditApplicationDescriptor) other;
-            return this.jobDescription.equals(editDescriptor.jobDescription)
-                    && this.applicationStage.equals(editDescriptor.applicationStage)
-                    && this.deadline.equals(editDescriptor.deadline)
-                    && this.jobTitle.equals(editDescriptor.jobTitle)
-                    && this.status.equals(editDescriptor.status);
+
+            // Objects.equals handles null cases as well.
+            return Objects.equals(this.jobDescription, editDescriptor.jobDescription)
+                    && Objects.equals(this.applicationStage, editDescriptor.applicationStage)
+                    && Objects.equals(this.deadline, editDescriptor.deadline)
+                    && Objects.equals(this.jobTitle, editDescriptor.jobTitle)
+                    && Objects.equals(this.status, editDescriptor.status);
         }
     }
 }
