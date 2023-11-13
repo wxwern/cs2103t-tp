@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.logic.autocomplete.components;
 
 import java.util.function.BiFunction;
 import java.util.stream.Stream;

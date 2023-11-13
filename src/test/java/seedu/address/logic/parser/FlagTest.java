@@ -170,6 +170,7 @@ public class FlagTest {
 
     @Test
     public void equals() {
+        // Case 1: Basic equality checks
         Flag aaa = Flag.ofCustomFormat("aaa", "-", "");
 
         assertEquals(aaa, aaa);
@@ -179,6 +180,32 @@ public class FlagTest {
         assertNotEquals(aaa, "-aaa");
         assertNotEquals(aaa, Flag.ofCustomFormat("aab", "-", null));
         assertNotEquals(aaa, Flag.ofCustomFormat("aaa", null, "/"));
+
+        // Case 2: Advanced equality checks
+        Flag a = new Flag("aaa", "a");
+        Flag aCopy = new Flag("aaa", "a");
+        Flag aAlt = a.getNameOnlyDefinition();
+
+        Flag b = new Flag("bbb", "b");
+        Flag bAlt = b.getAliasOnlyDefinition();
+
+        Flag aAliasB = new Flag("aaa", "b");
+
+        // - Trivial comparisons
+        assertEquals(a, a);
+        assertEquals(a, aCopy);
+
+        assertNotEquals(a, b);
+        assertNotEquals(a, bAlt);
+        assertNotEquals(b, aAlt);
+        assertNotEquals(aAlt, bAlt);
+
+        // - Non-trivial comparisons
+        assertEquals(a, aAlt); // Same name, excluding alias: equal
+        assertEquals(a, aAliasB); // Same name, different alias: equal
+
+        assertEquals(b, bAlt); // Excluding name, same alias: equal
+        assertNotEquals(b, aAliasB); // Diff name; same alias: not equal
     }
 
     @Test

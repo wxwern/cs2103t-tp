@@ -64,11 +64,7 @@ public abstract class Command {
             }
 
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            // Should not reach here...
-
-            assert cls.equals(Command.class)
-                    : "a public COMMAND_WORD static field should be present for Command subclasses, but missing in "
-                            + cls.getName();
+            // Leave value as null...
         }
 
         return Optional.ofNullable(value);
