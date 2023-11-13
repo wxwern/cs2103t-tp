@@ -461,25 +461,27 @@ sort --FLAG_TO_SORT [--ascending / --descending]
 
 This sorts contacts or job applications by the specified field.
 
-##### Supported fields <sub>(only 1 may be provided)</sub>
+##### Supported primary fields <sub>(only 1 may be provided)</sub>
 
 ###### Fields for Contacts
-* `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--name` - The name of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
+* `--address` - Will sort alphabetically.
+* `--email` - Will sort alphabetically.
+* `--id` - Will sort alphabetically.
+* `--name` - Will sort alphabetically.
+* `--phone` - Will sort alphabetically.
+* `--url` - Will sort alphabetically.
 
 ###### Fields for Job Applications
-* `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
-* `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
-* `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
-* `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
-* `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
+* `--by` - Will sort chronologically.
+* `--stage` - Will sort by stage order.
+* `--stale` - Will sort chronologically.
+* `--status` - Will sort by status order.
+* `--title` - Will sort alphabetically.
 
 ###### Resetting the sort order
 * `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
+
+##### Supported secondary fields
 
 ###### Changing the sort order
 * `--ascending` - The specified flag will sort in ascending order.
@@ -489,9 +491,10 @@ If neither `--ascending` or `--descending` are provided, the list will be sorted
 
 Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
 
-`sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
+Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
 
 ##### Sample demonstration
+* To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
 
 [SCREENSHOT HERE]
 
@@ -511,6 +514,7 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 | `sort`                     | No field provided.                          |
 | `sort --org`               | Invalid field.                              |
 | `sort --none --descending` | `--none` and `--descending` both specified. |
+| `sort --title --name`      | More than 1 field specified.                |
 
 
 ### Reminding about deadlines - `remind`
