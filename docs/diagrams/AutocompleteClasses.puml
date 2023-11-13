@@ -1,42 +1,51 @@
 @startuml
 !include style.puml
-skinparam arrowThickness 1.1
-skinparam arrowColor AUTOCOMPLETE_COLOR_T4
-skinparam classBackgroundColor AUTOCOMPLETE_COLOR
+skinparam arrowThickness 1.2
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+skinparam class {
+    'workaround to render generics properly without breaking the rest
+    BorderColor LOGIC_COLOR
+    BorderThickness 0
+    StereotypeFontColor LOGIC_COLOR_T2
+    StereotypeFontSize 14
+}
 
 package Autocomplete as AutocompletePackage <<Rectangle>> {
-    class AutocompleteSupplier
     class AutocompleteGenerator
-    class AutocompleteItemSet
-    class PartitionedCommand
+    class AutocompleteSupplier
+
+    class "AutocompleteItemSet<T>" as AutocompleteItemSet
+    class "<<interface>>\nAutocompleteConstraint<T>" as AutocompleteConstraint
+
     class "<<interface>>\nFlagValueSupplier" as FlagValueSupplier
-    class "<<interface>>\nAutocompleteConstraint" as AutocompleteConstraint
+    class PartitionedCommand
 }
 
 package Model as ModelPackage <<Rectangle>> {
     class "<<interface>>\nModel" as Model
 }
-package "Parser classes" {
+package "Parser classes" <<Rectangle>> {
     class Flag
 }
 
 Class " " as HiddenOutside1 #FFFFFF
-HiddenOutside1 .down.> AutocompleteGenerator
-
 Class " " as HiddenOutside2 #FFFFFF
+HiddenOutside1 .down.> AutocompleteGenerator
 HiddenOutside2 .right.> AutocompleteSupplier
 
-AutocompleteGenerator .down.> "1" AutocompleteSupplier : uses >
+AutocompleteGenerator -down-> "1" AutocompleteSupplier : uses >
 
-AutocompleteSupplier ..> "1" AutocompleteItemSet
-AutocompleteSupplier ..> "*" FlagValueSupplier
+AutocompleteSupplier --> "1" AutocompleteItemSet
+AutocompleteSupplier --> "*" FlagValueSupplier
 AutocompleteSupplier ..> Flag
 
-AutocompleteItemSet ..> "*" AutocompleteConstraint : contains >
+AutocompleteItemSet --> "*" AutocompleteConstraint : contains >
 
 AutocompleteGenerator ..> PartitionedCommand : creates >
 FlagValueSupplier .right.> PartitionedCommand : uses >
 
 FlagValueSupplier ..down.> Model : uses >
-PartitionedCommand ..down.> Flag : depends on >
+PartitionedCommand ..down.> Flag
 @enduml
