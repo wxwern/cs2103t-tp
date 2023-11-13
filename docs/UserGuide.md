@@ -779,13 +779,14 @@ Exits the program.
 
 ## Glossary
 
-| Term | Definition |
-|------|------------|
-| **Top Level Domain** | A Top Level Domain (TLD) is the part of the website address where it comes after the last dot (i.e. ".com", ".org", ".net") and before the first slash. (E.g. www.example.**com**/path). |
-| **Whitespace**       | In the context of this application, a whitespace is any number of spaces or tabs that is in the input.                                                                                   |
-| **Contact**          | A contact in Jobby is can be an **organization** or a **recruiter**.                                                                                                                     |
-| **Substring**        | A substring is a contiguous sequence of characters within a string. <br> e.g. "pp" is a substring of "apple", "mac" is a substring of "macDonald" and "intimacy"                         |
-
+| Term                 | Definition                                                                                                                                                                                                              |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Index**            | An index is a number that is used to identify a contact or job application in a list. <br><br> (e.g. `2` would be the index of the contact labelled **2.** in the contacts list).                                       |
+| **Whitespace**       | In the context of this application, a whitespace is any number of spaces that is in the input.                                                                                                                          |
+| **Contact**          | A contact in Jobby is can be an <span class="jobby-data-class">Organization</span> or a <span class="jobby-data-class">Recruiter</span>.                                                                                |
+| **Substring**        | A substring is a contiguous sequence of characters within a string <br><br> (e.g. "pp" is a substring of "apple", "mac" is a substring of "macDonald" and "intimacy").                                                  |
+| **Subsequence**      | A subsequence is a sequence obtainable from another sequence by deleting some or no elements without changing the order of the remaining elements <br><br> (e.g. "abc", "1b2", "123" are all subsequences of "a1b2c3"). |
+| **Top Level Domain** | A Top Level Domain (TLD) is the part of the website address where it comes after the last dot (i.e. ".com", ".org", ".net") and before the first slash <br><br> (e.g. www.example.**com**/path).                        |
 
 ## Appendices
 
