@@ -156,7 +156,7 @@ You can use [`add --org`{:.language-sh}](#adding-organizations---add---org) to a
 
 ![Adding Organization](images/ug-images/org-added.png)
 
-You have successfully added **Google**, with the email **google@gmail.com** into your **organization contact**!
+You have successfully added **Google**, with the email **google@gmail.com** into Jobby!
 
 ### Adding your first Recruiter
 
@@ -191,7 +191,7 @@ command structures and formats, or visit the [Features](#features) section to se
 
 ## Using Jobby
 
-This section explains how we can understand and interact with Jobby via commands.
+This section explains how you can understand and interact with Jobby via commands.
 
 If you're looking for the list of available commands, check out the [Features](#features) section instead.
 
@@ -265,7 +265,7 @@ Throughout this guide and within Jobby itself, you will find symbols and placeho
 
   * e.g., if you see something like `< add some text here >`, it means you should replace it with your own text.
 
-Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a--acceptable-values-for-parameters) later.
+Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a-acceptable-values-for-parameters) later.
 
 
 ### Autocompleting Commands
