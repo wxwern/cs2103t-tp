@@ -671,6 +671,8 @@ Reminds you of upcoming deadlines for job applications.
 
 ### Viewing help - `help`
 
+<span class="beginner pill">Beginner</span>
+
 ##### Format
 ```sh
 help
@@ -697,6 +699,8 @@ Clears all data from your <span class="jobby-data-class pill">Contacts</span> an
 
 
 ### Exiting the program - `exit`
+
+<span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
