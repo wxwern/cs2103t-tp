@@ -15,7 +15,7 @@ title: User Guide
 
 ### Purpose of this guide
 
-  The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding an contacts into the application for tracking to how our application can assist you in tracking every steps of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
+  The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding contacts into the application for tracking to how our application can assist you in tracking every step of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
 
 ### How to use this guide
 
@@ -156,7 +156,7 @@ You can use [`add --org`{:.language-sh}](#adding-organizations---add---org) to a
 
 ![Adding Organization](images/ug-images/org-added.png)
 
-You have successfully added **Google**, with the email **google@gmail.com** into your **organization contact**!
+You have successfully added **Google**, with the email **google@gmail.com** into Jobby!
 
 ### Adding your first Recruiter
 
@@ -191,7 +191,7 @@ command structures and formats, or visit the [Features](#features) section to se
 
 ## Using Jobby
 
-This section explains how we can understand and interact with Jobby via commands.
+This section explains how you can understand and interact with Jobby via commands.
 
 If you're looking for the list of available commands, check out the [Features](#features) section instead.
 
@@ -265,7 +265,7 @@ Throughout this guide and within Jobby itself, you will find symbols and placeho
 
   * e.g., if you see something like `< add some text here >`, it means you should replace it with your own text.
 
-Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a--acceptable-values-for-parameters) later.
+Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a-acceptable-values-for-parameters) later.
 
 
 ### Autocompleting Commands
@@ -338,9 +338,9 @@ Adds an organization contact with the details given to the command.
 
 | Command                                                                                                                | Reason                                                       |
 |------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| `add --org --name J&J`{:.language-sh}                                                                                                 | Adding an organization **J&J**.                              |
-| `add --org --name Google --id g-sg --phone 98765432 `{:.language-sh}                                                                  | Adding an organization **Google** with other flags.          |
-| `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`{:.language-sh} | Adding an organization **Examination NUS** with other flags. |
+| `add --org --name J&J`{:.language-sh}                                                                                                 | Adds an organization **J&J**.                              |
+| `add --org --name Google --id g-sg --phone 98765432 `{:.language-sh}                                                                  | Adds an organization **Google** with other flags.          |
+| `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`{:.language-sh} | Adds an organization **Examination NUS** with other flags. |
 
 
 ##### Invalid examples
@@ -410,8 +410,8 @@ Edits the given contact according to the parameters given.
 
 | Command                                                         | Reason                                                                                                                         |
 |-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `edit google --phone 91292951`{:.language-sh}                                  | Change phone number of organization with **ID** google to **91292951**.                                                        |
-| `edit 1 --name Jane Street`{:.language-sh}                                     | Change name of contact at index 1 to **Jane Street**.                                                                          |
+| `edit google --phone 91292951`{:.language-sh}                                  | Changes phone number of organization with **ID** google to **91292951**.                                                        |
+| `edit 1 --name Jane Street`{:.language-sh}                                     | Changes name of contact at index 1 to **Jane Street**.                                                                          |
 | `edit 1 --name Google --phone 91241412 --email google@gmail.sg`{:.language-sh} | Changes the name, phone number and email of the contact at index 1 to `Google`, `91241412` and `google@gmail.sg` respectively. |
 
 ##### Invalid examples
@@ -419,6 +419,35 @@ Edits the given contact according to the parameters given.
 | Command                                 | Reason                                                                              |
 |-----------------------------------------|-------------------------------------------------------------------------------------|
 | `edit google --phone 8124!@#$`{:.language-sh}          | `--phone`{:.language-sh} has an [invalid parameter](#appendix-a-acceptable-values-for-parameters)  |
+
+### Deleting contacts - `delete`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+
+<span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
+
+##### Format
+```sh
+delete INDEX/ID [--recursive]
+```
+Deletes the contact at the given `INDEX` or `ID`.
+* `--recursive`{:.language-sh} flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
+
+##### Valid examples
+
+| Command                | Reason                                                                                 |
+|------------------------|----------------------------------------------------------------------------------------|
+| `delete 1`             | Deletes the contact at index 1.                                               |
+| `delete josh`          | Deletes the contact with the **ID** of **josh**.                              |
+| `delete 1 --recursive`{:.language-sh} | Deletes a contact and all its associated recruiter contacts and applications. |
+
+##### Invalid examples
+
+| Command                | Reason                                                              |
+|------------------------|---------------------------------------------------------------------|
+| `delete 0`             | Invalid index, as index starts from 1.                              |
 
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
@@ -437,8 +466,8 @@ Applies to the given organization by creating a job application associated with 
 
 | Command                                                                                                                          | Reason                                                                                                                         |
 |----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `apply 1 --title SWE`{:.language-sh}                                                                                                            | Apply to the **organization** at index 1, for the title of **SWE**.                                                            |
-| `apply google --title Unit Tester --by 12-12-2023`{:.language-sh}                                                                               | Apply to the **organization** with ID of *google** for title of **Unit Tester** by **12-12-2023**.                             |
+| `apply 1 --title SWE`{:.language-sh}                                                                                                            | Applies to the **organization** at index 1, for the title of **SWE**.                                                            |
+| `apply google --title Unit Tester --by 12-12-2023`{:.language-sh}                                                                               | Applies to the **organization** with ID of *google** for title of **Unit Tester** by **12-12-2023**.                             |
 
 ##### Invalid examples
 
@@ -467,8 +496,8 @@ Edits the given job application according to the parameters given.
 
 | Command                                    | Reason                                                          |
 |--------------------------------------------|-----------------------------------------------------------------|
-| `edit --application 1 --title SRE`{:.language-sh}         | Change the title of the job application at index 1 to **SRE**.  |
-| `edit --application 1 --status pending`{:.language-sh}    | Change the status of job application at index 1 to **pending**. |
+| `edit --application 1 --title SRE`{:.language-sh}         | Changes the title of the job application at index 1 to **SRE**.  |
+| `edit --application 1 --status pending`{:.language-sh}    | Changes the status of job application at index 1 to **pending**. |
 
 ##### Invalid examples
 
@@ -478,43 +507,12 @@ Edits the given job application according to the parameters given.
 | `edit --application 1`{:.language-sh}                       | None of the fields to edit are given. |
 | `edit --application 1 --by 31-31-2023`{:.language-sh}       | The date is invalid.                  |
 
-
-### Deleting data - `delete`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
-
-The `delete` command allows you to delete contacts and job applications if they are no longer relevant. To learn more about deleting a contact or application, check out the sections below.
-
-#### Deleting contacts - `delete`
-
-<span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-##### Format
-```sh
-delete INDEX/ID [--recursive]
-```
-Deletes the contact at the given `INDEX` or `ID`.
-* `--recursive`{:.language-sh} flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
-* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
-
-##### Valid examples
-
-| Command                | Reason                                                                                 |
-|------------------------|----------------------------------------------------------------------------------------|
-| `delete 1`             | This will delete the contact at index 1.                                               |
-| `delete josh`          | This will delete the contact with the **ID** of **josh**.                              |
-| `delete 1 --recursive`{:.language-sh} | This will delete a contact and all its associated recruiter contacts and applications. |
-
-##### Invalid examples
-
-| Command                | Reason                                                              |
-|------------------------|---------------------------------------------------------------------|
-| `delete 0`             | Invalid index, as index starts from 1.                              |
-
-#### Deleting job applications - `delete --application`{:.language-sh}
+### Deleting job applications - `delete --application`{:.language-sh}
+<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
 
 <span class="learning-outcome pill">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
 ##### Format
 ```sh
@@ -527,7 +525,7 @@ Deletes the job application at the given `INDEX`.
 
 | Command                  | Reason                                                              |
 |--------------------------|---------------------------------------------------------------------|
-| `delete --application 1`{:.language-sh} | This will delete the application at index 1.                        |
+| `delete --application 1`{:.language-sh} | Deletes the application at index 1.                        |
 
 ##### Invalid examples
 
@@ -556,9 +554,9 @@ Lists all contacts. If you provide a parameter, the contacts listed will be only
 | Command          | Reason                                                            |
 |------------------|-------------------------------------------------------------------|
 | `list`           | List all **contacts**.                                            |
-| `list --org`{:.language-sh}     | List all **organization contacts**.                               |
-| `list --rec`{:.language-sh}     | List all **recruiter contacts**.                                  |
-| `list --toapply`{:.language-sh} | List all **organization contacts** that have not been applied to. |
+| `list --org`{:.language-sh}     | Lists all **organization contacts**.                               |
+| `list --rec`{:.language-sh}     | Lists all **recruiter contacts**.                                  |
+| `list --toapply`{:.language-sh} | Lists all **organization contacts** that have not been applied to. |
 
 
 ### Searching contacts - `find`
@@ -652,10 +650,10 @@ Sorts contacts or job applications for you by the specified flag.
 
 | Command                     | Reason                                                                                                     |
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| `sort --title --ascending`{:.language-sh}  | Sort **job applications** by title, in ascending alphabetical order.                                       |
-| `sort --url`{:.language-sh}                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
-| `sort --stale --descending`{:.language-sh} | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
-| `sort --none`{:.language-sh}               | Reset the sorting order of **contacts** and **job applications**.                                          |
+| `sort --title --ascending`{:.language-sh}  | Sorts **job applications** by title, in ascending alphabetical order.                                       |
+| `sort --url`{:.language-sh}                | Sorts **contacts** by url, in the default order - ascending alphabetical.                                   |
+| `sort --stale --descending`{:.language-sh} | Sorts **job applications** by last updated time, in reverse chronological order, from most recent to least. |
+| `sort --none`{:.language-sh}               | Resets the sorting order of **contacts** and **job applications**.                                          |
 
 ##### Invalid examples
 
@@ -688,8 +686,8 @@ Reminds you of upcoming deadlines for job applications.
 
 | Command             | Reason                                                                               |
 |---------------------|--------------------------------------------------------------------------------------|
-| `remind --earliest`{:.language-sh} | List the application deadlines in order of urgency, from earliest to latest.         |
-| `remind --latest`{:.language-sh}   | List the application deadlines in order of reverse urgency, from latest to earliest. |
+| `remind --earliest`{:.language-sh} | Lists the application deadlines in order of urgency, from earliest to latest.         |
+| `remind --latest`{:.language-sh}   | Lists the application deadlines in order of reverse urgency, from latest to earliest. |
 
 ##### Invalid examples
 
@@ -716,6 +714,7 @@ Shows a message explaining how to access the help page.
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
 
 <span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span> <br>
+
 <span class="danger pill">:warning: The deletion of all data is permanent and there is no way to undo it.</span>
 
 ##### Format
@@ -783,6 +782,7 @@ Jobby's data are saved automatically as a JSON file `[JAR file location]/data/jo
 |-----------|------------------|
 | **Clear** | `clear`          |
 | **Help**  | `help`           |
+| **Exit**  | `exit`           |
 
 </div>
 
@@ -807,7 +807,7 @@ Jobby's data are saved automatically as a JSON file `[JAR file location]/data/jo
 |-----------|---------|--------------|----------|
 | `INDEX` | [`edit`](#editing-contacts---edit) <br><br> [`apply`](#applying-to-organizations---apply) <br><br> [`edit --application`{:.language-sh}](#editing-job-applications---edit---application) <br><br> [`delete`](#deleting-contacts---delete) <br><br> [`delete --application`{:.language-sh}](#deleting-job-applications---delete---application) | A valid index can accept any positive integer up to the number of items displayed in the contact or job application list where applicable. | `1`<br>`10` |
 | `NAME` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) | A valid name can accept any non-empty value. | `Ryan Koh`<br>`小明` |
-| `ID` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) <br><br> [`apply`](#applying-to-organizations---apply) <br><br> [`delete`](#deleting-contacts---delete) | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | `woogle123`<br>`ryan_soc-rec` |
+| `ID` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) <br><br> [`apply`](#applying-to-organizations---apply) <br><br> [`delete`](#deleting-contacts---delete) | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric characters and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`). However it cannot have consecutive underscores and dashes. | `woogle123`<br>`ryan_soc-rec` |
 | `NUMBER` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits. | `999`<br>`91824137`                                                                 |
 | `EMAIL` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`                                              |
 | `URL` | [`add --org`{:.language-sh}](#adding-organizations---add---org) <br><br> [`add --rec`{:.language-sh}](#adding-recruiters---add---rec) <br><br> [`edit`](#editing-contacts---edit) | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period. | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more`  |
