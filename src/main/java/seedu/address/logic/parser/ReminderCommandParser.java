@@ -21,6 +21,8 @@ public class ReminderCommandParser implements Parser<ReminderCommand> {
                 ArgumentTokenizer.tokenize(args,
                         ReminderCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
+        argMultimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_EARLIEST, FLAG_LATEST);
+
         if (argMultimap.hasFlag(FLAG_EARLIEST)) {
             return new ReminderCommand(true);
         } else if (argMultimap.hasFlag(FLAG_LATEST)) {
