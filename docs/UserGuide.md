@@ -636,7 +636,9 @@ Sorts contacts or job applications for you by the specified flag.
 * To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
 * In the Application Details section of Jobby, you should see your <span class="jobby-data-class">Job Applications</span> now ordered by most urgent deadline.
 
-![Sort Deadline](images/sort_deadline.png)
+<div style="text-align: center;">
+<img src="images/sort_deadline.png" width=500 />
+</div>
 
 ##### Valid examples
 
