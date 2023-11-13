@@ -38,8 +38,8 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Table of contents
 <div style="page-break-after: always"></div>
+## Table of contents
 * Table of Contents
 {:toc}
 <div style="page-break-after: always"></div>
