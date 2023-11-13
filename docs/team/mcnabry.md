@@ -36,13 +36,14 @@ Given below are my contributions to the project.
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for features `add --recruiter`: [#??]()
+    * Added documentation for features `add --recruiter`: [#165](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/165)
+    * Added glossary and an appendix detailing acceptable features for the command parameters [#163](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/163)
   * Developer Guide:
-    * Added documentation for Recruiter class: [#??]()
-    * Added documentation for linking Organization and Recruiter: [#??]()
+    * Added documentation on the Organization-Recruiter link: [#173](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/173)
+    * Added appendix on effort taken to evolve AB3 to Jobby: [#190](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/190)
 
 * **Community**:
-  * PRs reviewed (with non-trivial review comments): 
-  * Reported [bugs and suggestions](https://github.com/McNaBry/ped/issues) for other teams
+  * PRs reviewed (with non-trivial review comments): [#7](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/7), [#164](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/164)
+  * Reported [bugs and suggestions](https://github.com/McNaBry/ped/issues) for other teams.
 
 </div>
