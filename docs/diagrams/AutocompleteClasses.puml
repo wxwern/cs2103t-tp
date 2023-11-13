@@ -1,0 +1,42 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor AUTOCOMPLETE_COLOR_T4
+skinparam classBackgroundColor AUTOCOMPLETE_COLOR
+
+package Autocomplete as AutocompletePackage <<Rectangle>> {
+    class AutocompleteSupplier
+    class AutocompleteGenerator
+    class AutocompleteItemSet
+    class PartitionedCommand
+    class "<<interface>>\nFlagValueSupplier" as FlagValueSupplier
+    class "<<interface>>\nAutocompleteConstraint" as AutocompleteConstraint
+}
+
+package Model as ModelPackage <<Rectangle>> {
+    class "<<interface>>\nModel" as Model
+}
+package "Parser classes" {
+    class Flag
+}
+
+Class " " as HiddenOutside1 #FFFFFF
+HiddenOutside1 .down.> AutocompleteGenerator
+
+Class " " as HiddenOutside2 #FFFFFF
+HiddenOutside2 .right.> AutocompleteSupplier
+
+AutocompleteGenerator .down.> "1" AutocompleteSupplier : uses >
+
+AutocompleteSupplier ..> "1" AutocompleteItemSet
+AutocompleteSupplier ..> "*" FlagValueSupplier
+AutocompleteSupplier ..> Flag
+
+AutocompleteItemSet ..> "*" AutocompleteConstraint : contains >
+
+AutocompleteGenerator ..> PartitionedCommand : creates >
+FlagValueSupplier .right.> PartitionedCommand : uses >
+
+FlagValueSupplier ..down.> Model : uses >
+PartitionedCommand ..down.> Flag : depends on >
+@enduml

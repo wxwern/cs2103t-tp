@@ -241,19 +241,19 @@ Since the organization has to be added to the `AddressBook` before any recruiter
     * Pros: Computationally less expensive and easier to deal with.
     * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
 
-### Command Autocompletion
+### Command Autocompletion Internals
 
 #### Overview
 
 Jobby's Command Autocompletion is designed to provide users with intelligent command suggestions and offer autocompletion by analyzing the existing partial command input and the current application state.
 
-Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match.
+Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match. For instance, type "sort -tt" and press **TAB** to finish the command as "sort --title".
 
-It consists of several key components:
+The internal implementation consists of a few notable components:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
-  - It takes an `AutocompleteItemSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It takes an `AutocompleteItemSet<Flag>`, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint<Flag>`s applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
 
 - **`AutocompleteGenerator`**:
@@ -261,58 +261,184 @@ It consists of several key components:
   - Users can invoke `AutocompleteGenerator#generateCompletions(command, model)` to get autocomplete suggestions.
   - It does the hard work of taking the possible values provided by either supplier, performing subsequence fuzzy match, and then "predict" what the user is typing.
 
+For code looking to generation completion results from a command, the `AutocompleteGenerator` class is the only class that needs to be used, and any command that has autocomplete results will have a static constant of their respective `AutocompleteSupplier`.
 
-#### `AutocompleteConstraint`
+#### Autocomplete Constraints
 
-The `AutocompleteConstraint` class provides a way to specify rules for autocomplete suggestions. It is a functional interface, so it can be treated as a lambda function.
+Autocompletion constraints are defined via the `AutocompleteConstraint<T>` functional interface. It provides a way to specify rules for autocomplete suggestions.
 
-It offers static factory methods for quickly defining common rulesets. Examples include:
-- `#oneAmongAllOf(items...)`: Specifies that one of the provided items must be present in the command.
-- `#onceForEachOf(items...)`: Ensures that each of the provided items can only appear once in the command.
-- `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
-- `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
+```java
+@FunctionalInterface
+public interface AutocompleteConstraint<T> {
+    boolean isAllowed(T input, Set<T> existingFlags);
+}
+```
 
-#### `AutocompleteItemSet`
+**API Reference:** [AutocompleteConstraint,java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteConstraint.java)
 
-The `AutocompleteItemSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+This interface can be thought of as a lambda function that takes in the *input item* and *existing items*, then returns a boolean value indicating whether the input should be allowed.
+
+In our autocomplete implementation, we use constraints to define rules for what flags can be added to an existing set of flags. We hence use the type `AutocompleteConstraint<Flag>`.
+
+##### Built-in Constraints
+
+The interface offers static factory methods for quick creation of many common constraints. For example:
+
+- `#oneAmongAllOf(items...)`: Enforces that at most one of the provided items must be present in the command.
+- `#onceForEachOf(items...)`: Enforces that each of the provided items can only appear once in the command.
+- `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain items are prerequisites before its dependents may appear.
+
+##### Custom Constraints
+
+It is possible to declare your own constraints.
+
+Hence, to create a constraint that **all** flags cannot be used more than once, we can simply declare it just like so:
+
+```java
+AutocompleteConstraint<Flag> cannotBeUsedMoreThanOnce = (input, existingItems) -> 
+        !existingFlags.contains(input);
+```
+
+#### Autocomplete Item Sets
+
+An autocomplete item set - represented by the `AutocompleteItemSet<T>` class - is a custom set of items with an additional perk: it retains knowledge of which items have what rules and constraints. 
+
+Hence, in our autocomplete implementation, we use `AutocompleteItemSet<Flag>` to easily store and determine which flags can be added to an existing set of flags given the known constraints.
+
+**API Reference:** [AutocompleteItemSet.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteItemSet.java)
+
+##### Built-in Item Set Factories
 
 This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
+
 - `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
 - `#onceForEachOf(items...)`: Ensures that each of the provided items can appear only once.
 - `#anyNumberOf(items...)`: Creates a set with the rule that items in the set may appear any number of times.
 
-Additionally, some helper operations are provided in a chainable fashion. For example:
-- `#concat(sets...)`: Combines sets together to create complex combinations of flag rules and flags.
-- `#addDependents(items...)`: Establishes dependencies between flags. This way, flag may require another flag to exist in order to be used.
+##### Helper Chainable Operations
+
+Some helper operations are provided in a chainable fashion to simplify workflows. For example:
+
+- `#concat(sets...)`: Combines sets together to create complex combinations of items and their rules.
+- `#addDependents(items...)`: Establishes dependencies between items. This way, an item may require another different item to exist in order to be used.
 - `#addConstraints(constraints...)`: Adds more custom constraints as desired.
 
-Finally, we need a way to compute what items are usable given existing set of items that are present. This class exposes one such method:
+##### Usage Example
+
+Suppose we have a set of flags, some supporting repeated usage (`FLAG_REP_1`, `FLAG_REP_2`), and some that may only be used once (`FLAG_ONCE_1`, `FLAG_ONCE_2`).
+
+We can create such a set, with all the constraints automatically combined, like so:
+
+```java
+AutocompleteItemSet<Flag> set = AutocompleteItemSet.concat(
+        AutocompleteItemSet.anyNumberOf(FLAG_REP_1, FLAG_REP_2),
+        AutocompleteItemSet.onceForEachOf(FLAG_ONCE_1, FLAG_ONCE_2)
+);
+```
+
+##### Computing Usable Items
+
+Finally, we need a way to compute what items are usable given existing set of items that are present. `AutocompleteItemSet` exposes one final method that is exactly what we need:
+
 - `#getElementsAfterConsuming(items...)`: Gets the remaining set of elements after "consuming" the given ones.
 
-#### `FlagValueSupplier`
+#### Flag Value Suppliers
 
-The `FlagValueSupplier` interface is a simple one that behaves like a lambda function with one task: Given a partial command for a flag and the app's **model** generate all possible suggestion results.
+In some cases, Jobby should be capable of provide suggestions for flags with preset or known values, such as "`--status pending`", or "`--oid alex_yeoh_inc`". This is where flag value suppliers come in.
 
-By taking in both the command and the app model, it is possible to specify arbitrary suppliers with any data, even from the model itself, like corresponding Id values when using the `--oid` flag for recruiters.
+The `FlagValueSupplier` functional interface is a simple one that behaves like a lambda function with one task: Given a **partial command** for a flag and the app's **model**, generate all possible values a flag may have.
 
-#### `AutocompleteSupplier`
+```java
+@FunctionalInterface
+public interface FlagValueSupplier extends 
+        BiFunction<PartitionedCommand, Model, Stream<String>> {
+    
+    Stream<String> apply(PartitionedCommand partialCommand, Model model);
+}
+```
 
-The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet` and `FlagValueSupplier`.
+**API Reference:** [FlagValueSupplier.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/FlagValueSupplier.java)
 
-Internally, it uses `AutocompleteItemSet` to determine what flags can be added after a given set of flags has been used in a command.
+With the provided details, it is possible to specify arbitrary suppliers with any data. You can supply a preset list of completions, or even retrieve values from the model itself.
 
-This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
+Accessing the partial command is useful if you'd like to change the results based on the heuristically detected type, such as fields that accept either an `INDEX` or an `ID`.
 
-Additionally, it uses `FlagValueSupplier` to provide suggestions for flags with preset values, such as "`--status pending`."
+**Note to developers:** Custom `FlagValueSupplier`s need not actually do any prefix or subsequence matching - that is done automatically at the `AutocompleteGenerator` class later. 
 
-#### `AutocompleteGenerator`
+#### Partitioning Command Strings
 
-The `AutocompleteGenerator` serves as a wrapper for autocomplete functionality, regardless of it's source.
+The `PartitionedCommand` class is a simple wrapper for a command string that has been partitioned into its constituent parts, specifically for the purposes of autocomplete.
 
-It takes an `AutocompleteSupplier` or a `Supplier<Stream<String>` and generates autocomplete suggestions.
+**API Reference:** [PartitionedCommand.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/PartitionedCommand.java)
 
-Once initialized, users can call `AutocompleteGenerator#generateCompletions(command, model)` to receive suggestions from their partial command input.
+Most notably, it is capable of separating a command into these fundamental parts:
 
+```
+[command name] [middle, untouched text] [autocompletable text]
+```
+
+For example, given the partial command "`add --org --name Alice --oid ama`", the partitioned command would be:
+
+```
+[add] [--rec --name Alice --oid ] [ama]
+```
+
+It also provides other quick access properties which can be found in the API reference.
+
+#### The Autocomplete Supplier
+
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet<Flag>` and `FlagValueSupplier` together to form a full supplier for a single command.
+
+**API Reference:** [AutocompleteSupplier.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/AutocompleteSupplier.java)
+
+Internally, it must be initialized with an `AutocompleteItemSet<Flag>` to determine what flags can be added to a command at any point in time, inclusive of all known restrictions. It is most easily done via the factory method `#from`.
+
+Additionally, one may optionally assign `FlagValueSupplier`s into `Flag`s by inputting `Map<Flag, FlagValueSupplier>`. This allows the supplier to provide suggestions for flags with preset or known values.
+
+You may configure both `AutocompleteItemSet<Flag>` and `Map<Flag, FlagValueSupplier>` in the same constructor call, or use factory and chaining methods to create such a set - refer to publicly exposed API calls for more details.
+
+##### Usage Example
+
+Recall the example from earlier where we created an `AutocompleteItemSet<Flag>`? A way to create a full `AutocompleteSupplier` from that is as follows:
+
+```java
+AutocompleteSupplier supplier = AutocompleteSupplier.from(set);
+```
+
+We can add more details on an existing supplier by using a configurator. Suppose we have a `FlagValueSupplier` for a status flag. This is how we can add it to the supplier:
+
+```java
+supplier.configureValueMap(map -> map.put(FLAG_STATUS, statusFlagValueSupplier));
+```
+
+##### Obtaining Results
+
+The supplier exposes methods to obtain the possible flags and values:
+
+- `#getOtherPossibleFlagsAsideFromFlagsPresent(Flags...)`: Gets the remaining set of flags that can be added to the command, given the flags that are already present.
+
+- `#getValidValuesForFlag(Flag, PartitionedCommand, Model)`: Gets the possible values for a flag, given the partial command and the model.
+
+This is used by `AutocompleteGenerator` to generate suggestions later.
+
+#### The Autocomplete Generator
+
+The `AutocompleteGenerator` is the final stage of the autocompletion generation process.
+
+It supports generating results based on those supplied by an `AutocompleteSupplier`, or any arbitrary `Supplier<Stream<String>`, and generates autocomplete suggestions.
+
+Once initialized, users can simply call the `#generateCompletions(command, model)` method to receive suggestions from their partial command input. It's that easy!
+
+**API Reference:** [AutocompleteGenerator.java](https://github.com/ay2324s1-cs2103t-w08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/AutocompleteGenerator.java)
+
+##### High-level Internal Implementation
+
+Internally, whenever requested, the `AutocompleteGenerator`:
+1. obtains a command's parts with `PartitionedCommand`,
+2. uses the given supplier to obtain the results based on the available parts, 
+3. automatically performs fuzzy (subsequence) matching to filter results, 
+4. ranks them based on their relevance, 
+5. and finally returns a stream of autocompleted commands.
 
 #### Design Considerations
 
@@ -323,7 +449,6 @@ Jobby's Command Autocompletion to provide context-aware suggestions to users, wh
 
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
-
 
 ### \[Proposed\] Undo/redo feature
 
@@ -529,6 +654,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
 
+
+**Use case: Inputting commands with autocomplete**
+
+**MSS**
+
+1. User inputs a command partially.
+2. Jobby shows a list of possible completions that matches the partial command.
+3. User selects a completion from the list.
+4. Jobby updates the user input with the selected completion.
+5. User repeats from step 1 until the command is complete.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a1. Jobby does not have any suggestions to list for the partial command.
+
+  Use case resumes at step 5.
+
+* 3a. User dismisses the list of suggestions.
+
+  Use case resumes at step 5.
+
+* 1a. User requests to undo the last completion.
+  * 1a1. Jobby undoes the last completion, if any.
+
+    Use case resumes at step 2.
 
 
 **Use case: Add an application**
