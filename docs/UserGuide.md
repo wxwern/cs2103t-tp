@@ -1,3 +1,6 @@
+<div class="reset-page-break-defaults" markdown="1">
+
+
 ---
 layout: page
 title: User Guide
@@ -32,6 +35,8 @@ title: User Guide
   _The different symbols and formats used are explained in [this section](#navigating-the-guide)._
 
   _The summary of the commands can be found [here](#command-summary)._
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
