@@ -100,23 +100,73 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AppParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+* Executing a command:
 
-Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+  1. When `Logic` is called upon to execute a command, it is passed to `AppParser` which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+
+  2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+
+  3. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).
+
+  4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+  
+* Autocompleting a command:
+
+  1. When `Logic` is called upon to autocomplete a command, it is passed to `AppParser` which in turn creates an autocompletion generator capable of generate autocompletion results for this command.
+  
+  2. This results in an `AutocompleteGenerator` which is executed by the `LogicManager`.
+  
+  3. The `AutocompleteGenerator` can communicate with the `Model` to obtain the current application state (e.g. to obtain the list of all contact ids) when supplying autocompletion results. 
+
+  4. This results in a `Stream<String>` representing the possible completions, which is returned back from `Logic`.
+
+Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command for both execution and autocompletion:
+
+#### Parser classes
 
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AppParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AppParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+1. When called upon to parse a user command, the `AppParser` class looks up the corresponding **Command Parser** (e.g., `AddCommandParser` if it detects an "add" command).
+
+2. There are two cases here:
+
+   1. If there exists a `Parser` for the corresponding command, it will use the other classes shown above to parse the user command and create a `Command` object (e.g., `AddCommand`).
+   
+   2. Otherwise, it will create a `Command` object corresponding to the command name (e.g., `AddCommand`) with no arguments.
+
+3. Finally, `AppParser` returns back the `Command` object.
 
 How arguments from a raw command input may be obtained by parsers:
+
 * When arguments are needed for a command, `ArgumentTokenizer` is used to prepare and tokenize the raw input string, which can then convert it to an `ArgumentMultimap` for easy access.
+
 * An `ArgumentMultimap` represents the command data (which has the format `name preamble text --flag1 value 1 --flag2 value 2`) in their distinct fields: **preamble**, **flags** and their mapped **values**. Note that as a multimap, multiple values can be mapped to the same flag.
-* All parsers can use the `ArgumentMultimap` (obtained from using the raw input on `ArgumentTokenizer`) to access the required arguments to create and execute a `Command`.
+
+* With that, all parsers can use resulting `ArgumentMultimap` (obtained from using the raw input on `ArgumentTokenizer`) to access the required arguments to create and execute a `Command`.
+
+Design Notes:
+
+* All **Command Parser** classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+#### Autocomplete classes
+
+<img src="images/AutocompleteClasses.png" width="600"/>
+
+How autocompletion works:
+
+1. When called upon to generate autocompletions for a partially typed command, `Logic` passes the request to `AppParser` class.
+
+2. There are two cases after this happens:
+
+   1. If a command name is specified and complete (i.e., user added a space after the command name), `AppParser` will look up the corresponding `AutocompleteSupplier` for the command, and create an `AutocompleteGenerator` with it.
+
+   2. Otherwise, `AppParser` will create an `AutocompleteGenerator` with a `Supplier<Stream<String>>` that returns all possible command names.
+
+3. `AppParser` then returns the `AutocompleteGenerator` to the requester so as they can generate autocompletion results.
+
+For full details of the autocomplete design and implementation, refer to the [Command Autocompletion Internals](#command-autocompletion-internals) section.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -249,21 +299,30 @@ Jobby's Command Autocompletion is designed to provide users with intelligent com
 
 Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match. For instance, type "sort -tt" and press **TAB** to finish the command as "sort --title".
 
-The internal implementation consists of a few notable components:
+#### The Autocomplete Package
+
+The full autocomplete package (and some of its dependencies) can be summarized by the following class diagram:
+
+<img src="images/AutocompleteClasses.png" width="600" />
+
+The implementation consists of two notable classes that will be used by high-level users:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
   - It takes an `AutocompleteItemSet<Flag>`, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint<Flag>`s applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
+  - All commands with customizable input should prepare an instance of this class to be used for autocompletion. 
 
 - **`AutocompleteGenerator`**:
   - This component takes in an `AutocompleteSupplier` or a `Supplier<Stream<String>>` and generates autocomplete results based on a partial command input and the current application model.
   - Users can invoke `AutocompleteGenerator#generateCompletions(command, model)` to get autocomplete suggestions.
   - It does the hard work of taking the possible values provided by either supplier, performing subsequence fuzzy match, and then "predict" what the user is typing.
 
-For code looking to generation completion results from a command, the `AutocompleteGenerator` class is the only class that needs to be used, and any command that has autocomplete results will have a static constant of their respective `AutocompleteSupplier`.
+The process used to generate autocomplete suggestions with these two classes is mentioned in the [high-level Logic component previously discussed](#logic-component).
 
-#### Autocomplete Constraints
+In summary, the `AutocompleteGenerator` class is used to generate completions, and any command that has the ability to supply autocomplete results should have their respective `AutocompleteSupplier`s defined and available to be fed into the generator.
+
+#### Autocompletion Constraints
 
 Autocompletion constraints are defined via the `AutocompleteConstraint<T>` functional interface. It provides a way to specify rules for autocomplete suggestions.
 

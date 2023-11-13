@@ -8,10 +8,22 @@ skinparam class {
     'workaround to render generics properly without breaking the rest
     BorderColor LOGIC_COLOR
     BorderThickness 0
+
     StereotypeFontColor LOGIC_COLOR_T2
     StereotypeFontSize 14
 }
 
+'hidden boxes
+class " " as HiddenOutside1 <<Hidden>>
+class " " as HiddenOutside2 <<Hidden>>
+skinparam class {
+    BorderColor<<Hidden>> #FFFFFF
+    BackgroundColor<<Hidden>> #FFFFFF
+    StereotypeFontColor<<Hidden>> #FFFFFF
+    StereotypeFontSize<<Hidden>> 1
+}
+
+'packages
 package Autocomplete as AutocompletePackage <<Rectangle>> {
     class AutocompleteGenerator
     class AutocompleteSupplier
@@ -23,15 +35,13 @@ package Autocomplete as AutocompletePackage <<Rectangle>> {
     class PartitionedCommand
 }
 
-package Model as ModelPackage <<Rectangle>> {
-    class "<<interface>>\nModel" as Model
+package Model as ModelPackage {
 }
 package "Parser classes" <<Rectangle>> {
     class Flag
 }
 
-Class " " as HiddenOutside1 #FFFFFF
-Class " " as HiddenOutside2 #FFFFFF
+'relationships
 HiddenOutside1 .down.> AutocompleteGenerator
 HiddenOutside2 .right.> AutocompleteSupplier
 
@@ -46,6 +56,6 @@ AutocompleteItemSet --> "*" AutocompleteConstraint : contains >
 AutocompleteGenerator ..> PartitionedCommand : creates >
 FlagValueSupplier .right.> PartitionedCommand : uses >
 
-FlagValueSupplier ..down.> Model : uses >
+FlagValueSupplier ..down.> ModelPackage : uses >
 PartitionedCommand ..down.> Flag
 @enduml
