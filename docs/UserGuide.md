@@ -784,7 +784,27 @@ Exits the program.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known Issues
+## Frequently Asked Questions
+
+##### _How do I transfer my data to another device?_ 
+* Jobby currently does not directly support data transfer. 
+  You can transfer your contact data and job application data by copying the data folder in your old _jobby.jar_ home folder to the new home folder for _jobby.jar_.
+
+##### _I want to try out Jobby with some sample data. How can I do so?_
+* You can delete the data folder in the home folder of _jobby.jar_, and launch Jobby again. 
+  There will be sample data generated on launch. 
+  * Alternatively, you can move the data folder somewhere else if you still want to keep the data.
+
+##### _I am currently facing issues with Jobby._
+* We would like to hear the details of the issues that you are having. 
+  You can report them through our [bug tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
+
+##### _I would like to suggest a new feature for Jobby._
+* We are always looking for suggestions to improve Jobby! 
+  You can suggest a new feature to us via the [issue tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
+
+--------------------------------------------------------------------------------------------------------------------
+## Issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the _preferences.json_ file created by the application before running the application again.
 
