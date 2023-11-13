@@ -1,4 +1,4 @@
-
+<div class="reset-page-break-defaults" markdown="1">
 
 ---
 layout: page
@@ -9,7 +9,6 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div class="reset-page-break-defaults" markdown="1">
 
 ## Introduction
 
@@ -101,7 +100,7 @@ title: User Guide
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
 
-Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+Jobby comes equipped with a user interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
 
 ![ui overview](images/ug-images/labelled-gui.png)
 
@@ -134,21 +133,22 @@ Click on any of the hyperlinks below to jump to respective sections of the guide
 ### The Beginning
 
 When you first launch Jobby, you will notice that it comes preloaded with sample data for you to play with. You may use 
-the sample data to familiarise yourself with the various [features](#features) that Jobby provides straightaway!
+the sample data to familiarise yourself with the various features that Jobby provides straightaway!
 
 If you wish to continue following our guide to learn the basic operations of Jobby, you can easily remove the sample data by:
-1. type `clear` into the command box
-2. Hit **ENTER**
+1. Type `clear` into the command box
+2. press **ENTER**
 
 Solid! Now it's time to get started with Jobby!
 
 ### Adding your first Organization
 
-Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**.
+Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**. 
+(This is not their real email, of course)
 
 You can use [`add --org`](#adding-organizations---add---org) command here to add Google into your organization:
-1. type `add --org --name Google --id google_id --email google@gmail.com` into the command box
-2. press **ENTER**
+1. Type `add --org --name Google --id google_id --email google@gmail.com` into the command box
+2. Press **ENTER**
 
 ![Adding Organization](images/ug-images/org-added.png)
 
@@ -160,8 +160,8 @@ In a job fair, you managed to meet a **Google** internship recruiter, **Josh Mao
 **91219121**.
 
 Here is how you can use [`add --rec`](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
-1. type `add --rec --name Josh Mao --oid google_id --phone 91219121` into the command box
-2. press **ENTER**
+1. Type `add --rec --name Josh Mao --oid google_id --phone 91219121` into the command box
+2. Press **ENTER**
 
 ![Adding Recruiter](images/ug-images/rec-added.png)
 
@@ -172,14 +172,14 @@ You have successfully added **Josh Mao**, who is a **recruiter** from Google, wh
 After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **22-11-2023**.
 
 Here is how you can use [`apply`](#applying-to-organizations---apply) command to track your application in Jobby:
-1. type `apply google_id --title Software Engineer --by 22-11-2023` into the command box
-2. press **ENTER**
+1. Type `apply google_id --title Software Engineer --by 22-11-2023` into the command box
+2. Press **ENTER**
 
 ![Adding Application](images/ug-images/app-added.png)
 
-You managed to add your application to **Google**! With the role you are interested in, **Software Engineer** and the application deadline which is **22-11-2023**.
+You have successfully added your job application to **Google**!
 
-**Congratulations!** You have ran through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
+**Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
 basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby Section](#using-jobby) to understand
 the command structure of Jobby, or visit [Features Section](#features) to see the full capabilities of Jobby!
 
@@ -396,10 +396,9 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 
 ##### Invalid examples
 
-| Command                                 | Reason                                  |
-|-----------------------------------------|-----------------------------------------|
-| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter]()  |
-
+| Command                                 | Reason                                                                              |
+|-----------------------------------------|-------------------------------------------------------------------------------------|
+| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](appendix-a--acceptable-values-for-parameters)  |
 
 ### Searching contacts - `find`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
@@ -445,8 +444,6 @@ list [--org / --rec / --toapply]
 * Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
 
 * Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
-
-[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
 
 ##### Valid examples
 * `list`
