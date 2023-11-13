@@ -391,37 +391,6 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 | `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter]()  |
 
 
-### Searching contacts - `find`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
-
-<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
-
-##### Format
-```sh
-find KEYWORD/ID...
-```
-* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
-
-##### Valid examples
-
-| Command           | Reason                                                                                              |
-|-------------------|-----------------------------------------------------------------------------------------------------|
-| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
-| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
-| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
-
-##### Rules
-<span class="intermediate pill">Intermediate</span>
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
-* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
-
-
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
 
@@ -551,6 +520,37 @@ list [--org / --rec / --toapply]
 | `list --org`     | List all **organization contacts**.                               |
 | `list --rec`     | List all **recruiter contacts**.                                  |
 | `list --toapply` | List all **organization contacts** that have not been applied to. |
+
+
+### Searching contacts - `find`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+
+<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+find KEYWORD/ID...
+```
+* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
+
+##### Valid examples
+
+| Command           | Reason                                                                                              |
+|-------------------|-----------------------------------------------------------------------------------------------------|
+| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
+| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
+| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
+
+##### Rules
+<span class="intermediate pill">Intermediate</span>
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
+* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
 
 
 ### Sorting data - `sort`
