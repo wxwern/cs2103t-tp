@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 public class DeadlineTest {
@@ -36,9 +38,9 @@ public class DeadlineTest {
         String invalidDeadline5 = "29-02-2022";
         String invalidDeadline6 = "31-04-2022";
 
-        String validDeadline1 = "23-02-2022";
+        String validDeadline1 = "29-02-2000";
         String validDeadline2 = "29-02-2020";
-        String validDeadline3 = "30-04-2022";
+        String validDeadline3 = "30-4-2022";
 
         // null deadline
         assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
@@ -62,10 +64,12 @@ public class DeadlineTest {
         Deadline d1 = new Deadline("22-11-2022");
         Deadline d2 = new Deadline("22-11-2022");
         Deadline d3 = new Deadline("11-12-2022");
+        Deadline d4 = new Deadline(LocalDate.MAX);
 
         assertEquals(d1.compareTo(d2), 0);
         assertTrue(d1.compareTo(d3) < 0);
         assertTrue(d3.compareTo(d1) > 0);
+        assertTrue(d4.compareTo(d3) > 0);
     }
 
     @Test
