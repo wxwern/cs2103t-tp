@@ -83,6 +83,8 @@ img.emoji {
   font-size: 75%;
   vertical-align: text-bottom;
 
+  display: inline-block;
+
   .pill {
     /* so nesting pills will look the same */
     font-size: 100%;
@@ -139,10 +141,8 @@ img.emoji {
     border-color: #e8e6e5;
     color: #444444;
 
-    padding: 4px 12px;
     padding-right: 2px;
     margin: 4px 2px;
-    display: inline-block;
 
     &.jobby-data-class:not(:first-child) {
       margin-left: 0;
