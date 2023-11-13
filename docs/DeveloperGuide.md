@@ -256,7 +256,7 @@ Autocompletion constraints are defined via the `AutocompleteConstraint<T>` funct
 ```java
 @FunctionalInterface
 public interface AutocompleteConstraint<T> {
-    boolean isAllowed(T input, Set<T> existingItems);
+    boolean isAllowed(T input, Set<? extends T> existingItems);
 }
 ```
 
