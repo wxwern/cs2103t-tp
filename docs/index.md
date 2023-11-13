@@ -20,4 +20,4 @@ title: Jobby
 
 **Acknowledgements**
 
-* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
+Refer to the [Developer Guide's Acknowledgements section](DeveloperGuide.html#acknowledgements).
