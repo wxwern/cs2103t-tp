@@ -2,6 +2,7 @@ package seedu.address.model.jobapplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,10 @@ public class JobStatusTest {
     }
 
     @Test
-    public void fromString_invalidStrings_givesUnknown() {
-        assertEquals(JobStatus.fromString(""), JobStatus.UNKNOWN);
-        assertEquals(JobStatus.fromString("test"), JobStatus.UNKNOWN);
-        assertEquals(JobStatus.fromString("pening"), JobStatus.UNKNOWN);
+    public void fromString_invalidStrings_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> JobStatus.fromString(""));
+        assertThrows(IllegalArgumentException.class, () -> JobStatus.fromString("test"));
+        assertThrows(IllegalArgumentException.class, () -> JobStatus.fromString("pening"));
     }
 
     @Test

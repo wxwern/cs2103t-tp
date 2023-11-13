@@ -20,8 +20,8 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
-import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
 import seedu.address.model.jobapplication.JobApplication;
@@ -33,12 +33,12 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
-            AutocompleteDataSet.concat(
-                    AutocompleteDataSet.oneAmongAllOf(
+            AutocompleteItemSet.concat(
+                    AutocompleteItemSet.oneAmongAllOf(
                             FLAG_NAME, FLAG_ID, FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
                             FLAG_STALE, FLAG_STAGE, FLAG_STATUS, FLAG_DEADLINE, FLAG_TITLE,
                             FLAG_NONE
-                    ), AutocompleteDataSet.oneAmongAllOf(
+                    ), AutocompleteItemSet.oneAmongAllOf(
                             FLAG_ASCENDING, FLAG_DESCENDING
                     )
             ).addConstraint(

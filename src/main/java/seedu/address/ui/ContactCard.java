@@ -15,7 +15,7 @@ import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Recruiter;
 
 /**
- * An UI component that displays information of a {@code Contact}.
+ * A UI component that displays information of a {@code Contact}.
  */
 public class ContactCard extends UiPart<Region> {
 
@@ -83,10 +83,9 @@ public class ContactCard extends UiPart<Region> {
 
             final Optional<Id> linkedOrgId = recruiter.getOrganizationId();
 
-            setVboxInnerLabelText(
-                    linkedParentOrganization, () ->
-                            linkedOrgId.map(oid -> String.format(
-                                    "from %s (%s)", "organization" /* TODO: Use org name instead */, oid.value))
+            // TODO: This should display organization name instead of ID in the future
+            setVboxInnerLabelText(linkedParentOrganization, () ->
+                    linkedOrgId.map(oid -> String.format("from %s (%s)", "organization", oid.value))
                             .orElse(null)
             );
             break;
