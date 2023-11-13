@@ -484,7 +484,7 @@ The following sequence diagram shows how job applications are added to Jobby
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Appendix A: Requirements**
 
 ### Product scope
 
@@ -710,7 +710,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix B: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -828,7 +828,7 @@ testers are expected to do more *exploratory* testing.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Planned Enhancements**
+## **Appendix C: Planned Enhancements**
 
 ### Do checks to ensure that old data is not the same as new data when editing data.
 
