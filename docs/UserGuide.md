@@ -338,9 +338,9 @@ Adds an organization contact with the details given to the command.
 
 | Command                                                                                                                | Reason                                                       |
 |------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| `add --org --name J&J`{:.language-sh}                                                                                                 | Adding an organization **J&J**.                              |
-| `add --org --name Google --id g-sg --phone 98765432 `{:.language-sh}                                                                  | Adding an organization **Google** with other flags.          |
-| `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`{:.language-sh} | Adding an organization **Examination NUS** with other flags. |
+| `add --org --name J&J`{:.language-sh}                                                                                                 | Adds an organization **J&J**.                              |
+| `add --org --name Google --id g-sg --phone 98765432 `{:.language-sh}                                                                  | Adds an organization **Google** with other flags.          |
+| `add --org --name Examinations NUS --phone 65166269 --email examinations@nus.edu.sg --url https://luminus.nus.edu.sg/`{:.language-sh} | Adds an organization **Examination NUS** with other flags. |
 
 
 ##### Invalid examples
@@ -410,8 +410,8 @@ Edits the given contact according to the parameters given.
 
 | Command                                                         | Reason                                                                                                                         |
 |-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `edit google --phone 91292951`{:.language-sh}                                  | Change phone number of organization with **ID** google to **91292951**.                                                        |
-| `edit 1 --name Jane Street`{:.language-sh}                                     | Change name of contact at index 1 to **Jane Street**.                                                                          |
+| `edit google --phone 91292951`{:.language-sh}                                  | Changes phone number of organization with **ID** google to **91292951**.                                                        |
+| `edit 1 --name Jane Street`{:.language-sh}                                     | Changes name of contact at index 1 to **Jane Street**.                                                                          |
 | `edit 1 --name Google --phone 91241412 --email google@gmail.sg`{:.language-sh} | Changes the name, phone number and email of the contact at index 1 to `Google`, `91241412` and `google@gmail.sg` respectively. |
 
 ##### Invalid examples
@@ -437,8 +437,8 @@ Applies to the given organization by creating a job application associated with 
 
 | Command                                                                                                                          | Reason                                                                                                                         |
 |----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `apply 1 --title SWE`{:.language-sh}                                                                                                            | Apply to the **organization** at index 1, for the title of **SWE**.                                                            |
-| `apply google --title Unit Tester --by 12-12-2023`{:.language-sh}                                                                               | Apply to the **organization** with ID of *google** for title of **Unit Tester** by **12-12-2023**.                             |
+| `apply 1 --title SWE`{:.language-sh}                                                                                                            | Applies to the **organization** at index 1, for the title of **SWE**.                                                            |
+| `apply google --title Unit Tester --by 12-12-2023`{:.language-sh}                                                                               | Applies to the **organization** with ID of *google** for title of **Unit Tester** by **12-12-2023**.                             |
 
 ##### Invalid examples
 
@@ -467,8 +467,8 @@ Edits the given job application according to the parameters given.
 
 | Command                                    | Reason                                                          |
 |--------------------------------------------|-----------------------------------------------------------------|
-| `edit --application 1 --title SRE`{:.language-sh}         | Change the title of the job application at index 1 to **SRE**.  |
-| `edit --application 1 --status pending`{:.language-sh}    | Change the status of job application at index 1 to **pending**. |
+| `edit --application 1 --title SRE`{:.language-sh}         | Changes the title of the job application at index 1 to **SRE**.  |
+| `edit --application 1 --status pending`{:.language-sh}    | Changes the status of job application at index 1 to **pending**. |
 
 ##### Invalid examples
 
@@ -497,9 +497,9 @@ Deletes the contact at the given `INDEX` or `ID`.
 
 | Command                | Reason                                                                                 |
 |------------------------|----------------------------------------------------------------------------------------|
-| `delete 1`             | This will delete the contact at index 1.                                               |
-| `delete josh`          | This will delete the contact with the **ID** of **josh**.                              |
-| `delete 1 --recursive`{:.language-sh} | This will delete a contact and all its associated recruiter contacts and applications. |
+| `delete 1`             | Deletes the contact at index 1.                                               |
+| `delete josh`          | Deletes the contact with the **ID** of **josh**.                              |
+| `delete 1 --recursive`{:.language-sh} | Deletes a contact and all its associated recruiter contacts and applications. |
 
 ##### Invalid examples
 
@@ -525,7 +525,7 @@ Deletes the job application at the given `INDEX`.
 
 | Command                  | Reason                                                              |
 |--------------------------|---------------------------------------------------------------------|
-| `delete --application 1`{:.language-sh} | This will delete the application at index 1.                        |
+| `delete --application 1`{:.language-sh} | Deletes the application at index 1.                        |
 
 ##### Invalid examples
 
@@ -554,9 +554,9 @@ Lists all contacts. If you provide a parameter, the contacts listed will be only
 | Command          | Reason                                                            |
 |------------------|-------------------------------------------------------------------|
 | `list`           | List all **contacts**.                                            |
-| `list --org`{:.language-sh}     | List all **organization contacts**.                               |
-| `list --rec`{:.language-sh}     | List all **recruiter contacts**.                                  |
-| `list --toapply`{:.language-sh} | List all **organization contacts** that have not been applied to. |
+| `list --org`{:.language-sh}     | Lists all **organization contacts**.                               |
+| `list --rec`{:.language-sh}     | Lists all **recruiter contacts**.                                  |
+| `list --toapply`{:.language-sh} | Lists all **organization contacts** that have not been applied to. |
 
 
 ### Searching contacts - `find`
@@ -650,10 +650,10 @@ Sorts contacts or job applications for you by the specified flag.
 
 | Command                     | Reason                                                                                                     |
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| `sort --title --ascending`{:.language-sh}  | Sort **job applications** by title, in ascending alphabetical order.                                       |
-| `sort --url`{:.language-sh}                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
-| `sort --stale --descending`{:.language-sh} | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
-| `sort --none`{:.language-sh}               | Reset the sorting order of **contacts** and **job applications**.                                          |
+| `sort --title --ascending`{:.language-sh}  | Sorts **job applications** by title, in ascending alphabetical order.                                       |
+| `sort --url`{:.language-sh}                | Sorts **contacts** by url, in the default order - ascending alphabetical.                                   |
+| `sort --stale --descending`{:.language-sh} | Sorts **job applications** by last updated time, in reverse chronological order, from most recent to least. |
+| `sort --none`{:.language-sh}               | Resets the sorting order of **contacts** and **job applications**.                                          |
 
 ##### Invalid examples
 
@@ -686,8 +686,8 @@ Reminds you of upcoming deadlines for job applications.
 
 | Command             | Reason                                                                               |
 |---------------------|--------------------------------------------------------------------------------------|
-| `remind --earliest`{:.language-sh} | List the application deadlines in order of urgency, from earliest to latest.         |
-| `remind --latest`{:.language-sh}   | List the application deadlines in order of reverse urgency, from latest to earliest. |
+| `remind --earliest`{:.language-sh} | Lists the application deadlines in order of urgency, from earliest to latest.         |
+| `remind --latest`{:.language-sh}   | Lists the application deadlines in order of reverse urgency, from latest to earliest. |
 
 ##### Invalid examples
 
