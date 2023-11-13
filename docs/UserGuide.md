@@ -476,6 +476,8 @@ Edits the given job application according to the parameters given.
 
 <span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
+The `delete` command allows you to delete contacts and job applications if they are no longer relevant. To learn more about deleting a contact or application, check out the sections below.
+
 #### Deleting contacts - `delete`
 
 <span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
