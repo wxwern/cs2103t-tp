@@ -422,132 +422,6 @@ find KEYWORD/ID...
 * Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
 
 
-### Listing data - `list`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by conditions</span> <span class="intermediate pill">Intermediate</span>
-
-##### Format
-```sh
-list [--org / --rec / --toapply]
-```
-
-* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
-
-* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
-
-[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
-
-
-##### Valid examples
-
-| Command          | Reason                                                            |
-|------------------|-------------------------------------------------------------------|
-| `list`           | List all **contacts**.                                            |
-| `list --org`     | List all **organization contacts**.                               |
-| `list --rec`     | List all **recruiter contacts**.                                  |
-| `list --toapply` | List all **organization contacts** that have not been applied to. |
-
-
-### Sorting data - `sort`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-##### Format
-```sh
-sort --FLAG_TO_SORT [--ascending / --descending]
-```
-
-This sorts contacts or job applications by the specified field.
-
-##### Supported primary fields <sub>(only 1 may be provided)</sub>
-
-###### Fields for Contacts
-* `--address` - Will sort alphabetically.
-* `--email` - Will sort alphabetically.
-* `--id` - Will sort alphabetically.
-* `--name` - Will sort alphabetically.
-* `--phone` - Will sort alphabetically.
-* `--url` - Will sort alphabetically.
-
-###### Fields for Job Applications
-* `--by` - Will sort chronologically.
-* `--stage` - Will sort by stage order.
-* `--stale` - Will sort chronologically.
-* `--status` - Will sort by status order.
-* `--title` - Will sort alphabetically.
-
-###### Resetting the sort order
-* `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
-
-##### Supported secondary fields
-
-###### Changing the sort order
-* `--ascending` - The specified flag will sort in ascending order.
-* `--descending` - The specified flag will sort in descending order.
-
-If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
-
-Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
-
-Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
-
-##### Sample demonstration
-* To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
-
-[SCREENSHOT HERE]
-
-##### Valid examples
-
-| Command                     | Reason                                                                                                     |
-|-----------------------------|------------------------------------------------------------------------------------------------------------|
-| `sort --title --ascending`  | Sort **job applications** by title, in ascending alphabetical order.                                       |
-| `sort --url`                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
-| `sort --stale --descending` | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
-| `sort --none`               | Reset the sorting order of **contacts** and **job applications**.                                          |
-
-##### Invalid examples
-
-| Command                    | Reason                                      |
-|----------------------------|---------------------------------------------|
-| `sort`                     | No field provided.                          |
-| `sort --org`               | Invalid field.                              |
-| `sort --none --descending` | `--none` and `--descending` both specified. |
-| `sort --title --name`      | More than 1 field specified.                |
-
-
-### Reminding about deadlines - `remind`
-<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-Reminds the user of upcoming deadlines for job applications.
-
-##### Format
-```sh
-remind --earliest / --latest
-```
-
-##### Sample demonstration
-* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
-
-![Remind Earliest](images/starter-guide/remind-earliest.jpg)
-
-##### Valid examples
-
-| Command             | Reason                                                                               |
-|---------------------|--------------------------------------------------------------------------------------|
-| `remind --earliest` | List the application deadlines in order of urgency, from earliest to latest.         |
-| `remind --latest`   | List the application deadlines in order of reverse urgency, from latest to earliest. |
-
-##### Invalid examples
-
-| Command                               | Reason                                              |
-|---------------------------------------|-----------------------------------------------------|
-| `remind`                              | No urgency level specified.                         |
-
-
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
 
@@ -650,6 +524,133 @@ delete --application INDEX
 | Command                  | Reason                                            |
 |--------------------------|---------------------------------------------------|
 | `delete --application 0` | Invalid index, as index starts from 1.            |
+
+
+### Listing data - `list`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by conditions</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+list [--org / --rec / --toapply]
+```
+
+* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
+
+* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
+
+[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
+
+
+##### Valid examples
+
+| Command          | Reason                                                            |
+|------------------|-------------------------------------------------------------------|
+| `list`           | List all **contacts**.                                            |
+| `list --org`     | List all **organization contacts**.                               |
+| `list --rec`     | List all **recruiter contacts**.                                  |
+| `list --toapply` | List all **organization contacts** that have not been applied to. |
+
+
+### Sorting data - `sort`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+sort --FLAG_TO_SORT [--ascending / --descending]
+```
+
+This sorts contacts or job applications by the specified field.
+`--FLAG_TO_SORT` represents a parameter of the contact or job application (i.e. `--phone` represents the phone number of a contact).
+
+##### Supported primary parameters <sub>(only 1 may be provided)</sub>
+
+###### Fields for Contacts
+* `--address` - Will sort alphabetically.
+* `--email` - Will sort alphabetically.
+* `--id` - Will sort alphabetically.
+* `--name` - Will sort alphabetically.
+* `--phone` - Will sort alphabetically.
+* `--url` - Will sort alphabetically.
+
+###### Fields for Job Applications
+* `--by` - Will sort chronologically.
+* `--stage` - Will sort by stage order.
+* `--stale` - Will sort chronologically.
+* `--status` - Will sort by status order.
+* `--title` - Will sort alphabetically.
+
+###### Resetting the sort order
+* `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
+
+##### Supported secondary parameters
+
+###### Changing the sort order
+* `--ascending` - The specified flag will sort in ascending order.
+* `--descending` - The specified flag will sort in descending order.
+
+If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
+Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
+Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
+
+##### Sample demonstration
+* To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
+
+[SCREENSHOT HERE]
+
+##### Valid examples
+
+| Command                     | Reason                                                                                                     |
+|-----------------------------|------------------------------------------------------------------------------------------------------------|
+| `sort --title --ascending`  | Sort **job applications** by title, in ascending alphabetical order.                                       |
+| `sort --url`                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
+| `sort --stale --descending` | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
+| `sort --none`               | Reset the sorting order of **contacts** and **job applications**.                                          |
+
+##### Invalid examples
+
+| Command                    | Reason                                      |
+|----------------------------|---------------------------------------------|
+| `sort`                     | No field provided.                          |
+| `sort --org`               | Invalid field.                              |
+| `sort --none --descending` | `--none` and `--descending` both specified. |
+| `sort --title --name`      | More than 1 field specified.                |
+
+
+### Reminding about deadlines - `remind`
+<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+Reminds the user of upcoming deadlines for job applications.
+
+##### Format
+```sh
+remind --earliest / --latest
+```
+
+##### Sample demonstration
+* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
+
+![Remind Earliest](images/starter-guide/remind-earliest.jpg)
+
+##### Valid examples
+
+| Command             | Reason                                                                               |
+|---------------------|--------------------------------------------------------------------------------------|
+| `remind --earliest` | List the application deadlines in order of urgency, from earliest to latest.         |
+| `remind --latest`   | List the application deadlines in order of reverse urgency, from latest to earliest. |
+
+##### Invalid examples
+
+| Command                               | Reason                                              |
+|---------------------------------------|-----------------------------------------------------|
+| `remind`                              | No urgency level specified.                         |
 
 
 --------------------------------------------------------------------------------------------------------------------
