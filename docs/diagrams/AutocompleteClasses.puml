@@ -1,0 +1,61 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.2
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+skinparam class {
+    'workaround to render generics properly without breaking the rest
+    BorderColor LOGIC_COLOR
+    BorderThickness 0
+
+    StereotypeFontColor LOGIC_COLOR_T2
+    StereotypeFontSize 14
+}
+
+'hidden boxes
+class " " as HiddenOutside1 <<Hidden>>
+class " " as HiddenOutside2 <<Hidden>>
+skinparam class {
+    BorderColor<<Hidden>> #FFFFFF
+    BackgroundColor<<Hidden>> #FFFFFF
+    StereotypeFontColor<<Hidden>> #FFFFFF
+    StereotypeFontSize<<Hidden>> 1
+}
+
+'packages
+package Autocomplete as AutocompletePackage <<Rectangle>> {
+    class AutocompleteGenerator
+    class AutocompleteSupplier
+
+    class "AutocompleteItemSet<T>" as AutocompleteItemSet
+    class "<<interface>>\nAutocompleteConstraint<T>" as AutocompleteConstraint
+
+    class "<<interface>>\nFlagValueSupplier" as FlagValueSupplier
+    class PartitionedCommand
+}
+
+package Model as ModelPackage {
+}
+package "Parser classes" <<Rectangle>> {
+    class Flag
+}
+
+'relationships
+HiddenOutside1 .down.> AutocompleteGenerator
+HiddenOutside2 .right.> AutocompleteSupplier
+
+AutocompleteGenerator -down-> "1" AutocompleteSupplier : uses >
+
+AutocompleteSupplier --> "1" AutocompleteItemSet
+AutocompleteSupplier --> "*" FlagValueSupplier
+AutocompleteSupplier ..> Flag
+
+AutocompleteItemSet --> "*" AutocompleteConstraint : contains >
+
+AutocompleteGenerator ..> PartitionedCommand : creates >
+FlagValueSupplier .right.> PartitionedCommand : uses >
+
+FlagValueSupplier ..down.> ModelPackage : uses >
+PartitionedCommand ..down.> Flag
+@enduml

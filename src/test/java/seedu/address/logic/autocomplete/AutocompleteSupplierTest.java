@@ -130,19 +130,19 @@ public class AutocompleteSupplierTest {
         var emptyCommand = new PartitionedCommand("");
 
         // Should use the lambda's values
-        assertEquals(LIST_A, supplier.getValidValues(FLAG_A, emptyCommand, null)
+        assertEquals(LIST_A, supplier.getValidValuesForFlag(FLAG_A, emptyCommand, null)
                 .get().collect(Collectors.toList()));
-        assertEquals(LIST_B, supplier.getValidValues(FLAG_B, emptyCommand, null)
+        assertEquals(LIST_B, supplier.getValidValuesForFlag(FLAG_B, emptyCommand, null)
                 .get().collect(Collectors.toList()));
-        assertEquals(LIST_C, supplier.getValidValues(FLAG_C, emptyCommand, null)
+        assertEquals(LIST_C, supplier.getValidValuesForFlag(FLAG_C, emptyCommand, null)
                 .get().collect(Collectors.toList()));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_D, emptyCommand, null)
+        assertEquals(LIST_EMPTY, supplier.getValidValuesForFlag(FLAG_D, emptyCommand, null)
                 .get().collect(Collectors.toList()));
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_E, emptyCommand, null)
+        assertEquals(LIST_EMPTY, supplier.getValidValuesForFlag(FLAG_E, emptyCommand, null)
                 .get().collect(Collectors.toList()));
 
         // NPEs should be caught if the lambda does not handle it
-        assertEquals(LIST_EMPTY, supplier.getValidValues(FLAG_F, emptyCommand, null)
+        assertEquals(LIST_EMPTY, supplier.getValidValuesForFlag(FLAG_F, emptyCommand, null)
                 .get().collect(Collectors.toList()));
     }
 

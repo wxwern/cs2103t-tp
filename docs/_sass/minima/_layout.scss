@@ -370,6 +370,8 @@
     page-break-before: always !important;
   }
 
-
+  tr {
+    page-break-inside: avoid;
+  }
 
 }

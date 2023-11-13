@@ -56,6 +56,7 @@ img.emoji {
 }
 
 // Syntax highlighting term overrides
+// - Multiline
 .language-sh, .language-bash, .language-shell {
   .highlight code {
     .nb {
@@ -66,6 +67,13 @@ img.emoji {
       /* do not wrap --flags */
       white-space: nowrap;
     }
+  }
+}
+// - Inline
+code.language-plaintext, code.language-sh, code.language-bash, code.language-shell {
+  .nt {
+    /* do not wrap --flags */
+    white-space: nowrap;
   }
 }
 
@@ -82,6 +90,8 @@ img.emoji {
   font-family: verdana;
   font-size: 75%;
   vertical-align: text-bottom;
+
+  display: inline-block;
 
   .pill {
     /* so nesting pills will look the same */
@@ -139,10 +149,8 @@ img.emoji {
     border-color: #e8e6e5;
     color: #444444;
 
-    padding: 4px 12px;
     padding-right: 2px;
     margin: 4px 2px;
-    display: inline-block;
 
     &.jobby-data-class:not(:first-child) {
       margin-left: 0;

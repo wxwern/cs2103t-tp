@@ -150,14 +150,14 @@ public class AutocompleteGenerator {
     ) {
         Optional<String> flagString = command.getLastConfirmedFlagString();
         if (flagString.isEmpty()) {
-            return supplier.getValidValues(null, command, model);
+            return supplier.getValidValuesForFlag(null, command, model);
         }
 
         Optional<Flag> targetFlag = Flag.findMatch(
                 flagString.get(),
                 supplier.getAllPossibleFlags().toArray(Flag[]::new)
         );
-        return targetFlag.flatMap(f -> supplier.getValidValues(f, command, model));
+        return targetFlag.flatMap(f -> supplier.getValidValuesForFlag(f, command, model));
     }
 
 }

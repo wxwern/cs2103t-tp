@@ -9,11 +9,19 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* UI rendering via: [JavaFX](https://openjfx.io/)
+* Testing suite via: [JUnit5](https://github.com/junit-team/junit5)
+* JSON data saving and loading via: [Jackson](https://github.com/FasterXML/jackson)
+
+* Jobby base UI adapted from: [AddressBook Level-3](https://se-education.org/addressbook-level3/)
+* Autocompletion base UI adapted from: [@floralvikings's AutoCompleteTextBox.java](https://gist.github.com/floralvikings/10290131)
+
+* New user tutorial structure inspired from: [AY2324S1-CS2103T-T17-03](https://ay2324s1-cs2103t-t17-3.github.io/tp/UserGuide.html)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
+{: .reset-page-break-defaults}
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
@@ -21,9 +29,10 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ## **Design**
 
-<div markdown="span" class="alert alert-primary">
+<div markdown="span" class="alert alert-primary h2-summary">
 
 :bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+
 </div>
 
 ### Architecture
@@ -36,7 +45,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +77,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+**API Reference** : [`Ui.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ContactListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,7 +94,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API Reference** : [`Logic.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -100,26 +109,76 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AppParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+* Executing a command:
 
-Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+  1. When `Logic` is called upon to execute a command, it is passed to `AppParser` which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+
+  2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+
+  3. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).
+
+  4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+  
+* Autocompleting a command:
+
+  1. When `Logic` is called upon to autocomplete a command, it is passed to `AppParser` which in turn creates an autocompletion generator capable of generate autocompletion results for this command.
+  
+  2. This results in an `AutocompleteGenerator` which is executed by the `LogicManager`.
+  
+  3. The `AutocompleteGenerator` can communicate with the `Model` to obtain the current application state (e.g. to obtain the list of all contact ids) when supplying autocompletion results. 
+
+  4. This results in a `Stream<String>` representing the possible completions, which is returned back from `Logic`.
+
+Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command for both execution and autocompletion:
+
+#### Parser classes
 
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AppParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AppParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+1. When called upon to parse a user command, the `AppParser` class looks up the corresponding **Command Parser** (e.g., `AddCommandParser` if it detects an "add" command).
+
+2. There are two cases here:
+
+   1. If there exists a `Parser` for the corresponding command, it will use the other classes shown above to parse the user command and create a `Command` object (e.g., `AddCommand`).
+   
+   2. Otherwise, it will create a `Command` object corresponding to the command name (e.g., `AddCommand`) with no arguments.
+
+3. Finally, `AppParser` returns back the `Command` object.
 
 How arguments from a raw command input may be obtained by parsers:
+
 * When arguments are needed for a command, `ArgumentTokenizer` is used to prepare and tokenize the raw input string, which can then convert it to an `ArgumentMultimap` for easy access.
+
 * An `ArgumentMultimap` represents the command data (which has the format `name preamble text --flag1 value 1 --flag2 value 2`) in their distinct fields: **preamble**, **flags** and their mapped **values**. Note that as a multimap, multiple values can be mapped to the same flag.
-* All parsers can use the `ArgumentMultimap` (obtained from using the raw input on `ArgumentTokenizer`) to access the required arguments to create and execute a `Command`.
+
+* With that, all parsers can use resulting `ArgumentMultimap` (obtained from using the raw input on `ArgumentTokenizer`) to access the required arguments to create and execute a `Command`.
+
+Design Notes:
+
+* All **Command Parser** classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+#### Autocomplete classes
+
+<img src="images/AutocompleteClasses.png" width="600"/>
+
+How autocompletion works:
+
+1. When called upon to generate autocompletions for a partially typed command, `Logic` passes the request to `AppParser` class.
+
+2. There are two cases after this happens:
+
+   1. If a command name is specified and complete (i.e., user added a space after the command name), `AppParser` will look up the corresponding `AutocompleteSupplier` for the command, and create an `AutocompleteGenerator` with it.
+
+   2. Otherwise, `AppParser` will create an `AutocompleteGenerator` with a `Supplier<Stream<String>>` that returns all possible command names.
+
+3. `AppParser` then returns the `AutocompleteGenerator` to the requester so as they can generate autocompletion results.
+
+For full details of the autocomplete design and implementation, refer to the [Command Autocompletion Internals](#command-autocompletion-internals) section.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API Reference** : [`Model.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -140,7 +199,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API Reference** : [`Storage.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -159,88 +218,234 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Command Autocompletion
+### Command Autocompletion Internals
 
 #### Overview
 
 Jobby's Command Autocompletion is designed to provide users with intelligent command suggestions and offer autocompletion by analyzing the existing partial command input and the current application state.
 
-Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match.
+Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match. For instance, type "sort -tt" and press **TAB** to finish the command as "sort --title".
 
-It consists of several key components:
+#### The Autocomplete Package
+
+The full autocomplete package (and some of its dependencies) can be summarized by the following class diagram:
+
+<img src="images/AutocompleteClasses.png" width="600" />
+
+The implementation consists of two notable classes that will be used by high-level users:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
-  - It takes an `AutocompleteItemSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It takes an `AutocompleteItemSet<Flag>`, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint<Flag>`s applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
+  - All commands with customizable input should prepare an instance of this class to be used for autocompletion. 
 
 - **`AutocompleteGenerator`**:
   - This component takes in an `AutocompleteSupplier` or a `Supplier<Stream<String>>` and generates autocomplete results based on a partial command input and the current application model.
   - Users can invoke `AutocompleteGenerator#generateCompletions(command, model)` to get autocomplete suggestions.
   - It does the hard work of taking the possible values provided by either supplier, performing subsequence fuzzy match, and then "predict" what the user is typing.
 
+The process used to generate autocomplete suggestions with these two classes is mentioned in the [high-level Logic component previously discussed](#logic-component).
 
-#### `AutocompleteConstraint`
+In summary, the `AutocompleteGenerator` class is used to generate completions, and any command that has the ability to supply autocomplete results should have their respective `AutocompleteSupplier`s defined and available to be fed into the generator.
 
-The `AutocompleteConstraint` class provides a way to specify rules for autocomplete suggestions. It is a functional interface, so it can be treated as a lambda function.
+#### Autocompletion Constraints
 
-It offers static factory methods for quickly defining common rulesets. Examples include:
-- `#oneAmongAllOf(items...)`: Specifies that one of the provided items must be present in the command.
-- `#onceForEachOf(items...)`: Ensures that each of the provided items can only appear once in the command.
-- `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
-- `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
+Autocompletion constraints are defined via the `AutocompleteConstraint<T>` functional interface. It provides a way to specify rules for autocomplete suggestions.
 
-#### `AutocompleteItemSet`
+```java
+@FunctionalInterface
+public interface AutocompleteConstraint<T> {
+    boolean isAllowed(T input, Set<T> existingFlags);
+}
+```
 
-The `AutocompleteItemSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+**API Reference:** [AutocompleteConstraint,java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteConstraint.java)
+
+This interface can be thought of as a lambda function that takes in the *input item* and *existing items*, then returns a boolean value indicating whether the input should be allowed.
+
+In our autocomplete implementation, we use constraints to define rules for what flags can be added to an existing set of flags. We hence use the type `AutocompleteConstraint<Flag>`.
+
+##### Built-in Constraints
+
+The interface offers static factory methods for quick creation of many common constraints. For example:
+
+- `#oneAmongAllOf(items...)`: Enforces that at most one of the provided items must be present in the command.
+- `#onceForEachOf(items...)`: Enforces that each of the provided items can only appear once in the command.
+- `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain items are prerequisites before its dependents may appear.
+
+##### Custom Constraints
+
+It is possible to declare your own constraints.
+
+Hence, to create a constraint that **all** flags cannot be used more than once, we can simply declare it just like so:
+
+```java
+AutocompleteConstraint<Flag> cannotBeUsedMoreThanOnce = (input, existingItems) -> 
+        !existingFlags.contains(input);
+```
+
+#### Autocomplete Item Sets
+
+An autocomplete item set - represented by the `AutocompleteItemSet<T>` class - is a custom set of items with an additional perk: it retains knowledge of which items have what rules and constraints. 
+
+Hence, in our autocomplete implementation, we use `AutocompleteItemSet<Flag>` to easily store and determine which flags can be added to an existing set of flags given the known constraints.
+
+**API Reference:** [AutocompleteItemSet.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteItemSet.java)
+
+##### Built-in Item Set Factories
 
 This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
+
 - `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
 - `#onceForEachOf(items...)`: Ensures that each of the provided items can appear only once.
 - `#anyNumberOf(items...)`: Creates a set with the rule that items in the set may appear any number of times.
 
-Additionally, some helper operations are provided in a chainable fashion. For example:
-- `#concat(sets...)`: Combines sets together to create complex combinations of flag rules and flags.
-- `#addDependents(items...)`: Establishes dependencies between flags. This way, flag may require another flag to exist in order to be used.
+##### Helper Chainable Operations
+
+Some helper operations are provided in a chainable fashion to simplify workflows. For example:
+
+- `#concat(sets...)`: Combines sets together to create complex combinations of items and their rules.
+- `#addDependents(items...)`: Establishes dependencies between items. This way, an item may require another different item to exist in order to be used.
 - `#addConstraints(constraints...)`: Adds more custom constraints as desired.
 
-Finally, we need a way to compute what items are usable given existing set of items that are present. This class exposes one such method:
+##### Usage Example
+
+Suppose we have a set of flags, some supporting repeated usage (`FLAG_REP_1`, `FLAG_REP_2`), and some that may only be used once (`FLAG_ONCE_1`, `FLAG_ONCE_2`).
+
+We can create such a set, with all the constraints automatically combined, like so:
+
+```java
+AutocompleteItemSet<Flag> set = AutocompleteItemSet.concat(
+        AutocompleteItemSet.anyNumberOf(FLAG_REP_1, FLAG_REP_2),
+        AutocompleteItemSet.onceForEachOf(FLAG_ONCE_1, FLAG_ONCE_2)
+);
+```
+
+##### Computing Usable Items
+
+Finally, we need a way to compute what items are usable given existing set of items that are present. `AutocompleteItemSet` exposes one final method that is exactly what we need:
+
 - `#getElementsAfterConsuming(items...)`: Gets the remaining set of elements after "consuming" the given ones.
 
-#### `FlagValueSupplier`
+#### Flag Value Suppliers
 
-The `FlagValueSupplier` interface is a simple one that behaves like a lambda function with one task: Given a partial command for a flag and the app's **model** generate all possible suggestion results.
+In some cases, Jobby should be capable of provide suggestions for flags with preset or known values, such as "`--status pending`", or "`--oid alex_yeoh_inc`". This is where flag value suppliers come in.
 
-By taking in both the command and the app model, it is possible to specify arbitrary suppliers with any data, even from the model itself, like corresponding Id values when using the `--oid` flag for recruiters.
+The `FlagValueSupplier` functional interface is a simple one that behaves like a lambda function with one task: Given a **partial command** for a flag and the app's **model**, generate all possible values a flag may have.
 
-#### `AutocompleteSupplier`
+```java
+@FunctionalInterface
+public interface FlagValueSupplier extends 
+        BiFunction<PartitionedCommand, Model, Stream<String>> {
+    
+    Stream<String> apply(PartitionedCommand partialCommand, Model model);
+}
+```
 
-The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet` and `FlagValueSupplier`.
+**API Reference:** [FlagValueSupplier.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/FlagValueSupplier.java)
 
-Internally, it uses `AutocompleteItemSet` to determine what flags can be added after a given set of flags has been used in a command.
+With the provided details, it is possible to specify arbitrary suppliers with any data. You can supply a preset list of completions, or even retrieve values from the model itself.
 
-This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
+Accessing the partial command is useful if you'd like to change the results based on the heuristically detected type, such as fields that accept either an `INDEX` or an `ID`.
 
-Additionally, it uses `FlagValueSupplier` to provide suggestions for flags with preset values, such as "`--status pending`."
+**Note to developers:** Custom `FlagValueSupplier`s need not actually do any prefix or subsequence matching - that is done automatically at the `AutocompleteGenerator` class later. 
 
-#### `AutocompleteGenerator`
+#### Partitioning Command Strings
 
-The `AutocompleteGenerator` serves as a wrapper for autocomplete functionality, regardless of it's source.
+The `PartitionedCommand` class is a simple class for quick access for a command string's constituent parts, specifically for the purposes of autocomplete. This is done simply by initializing it with a partial command string.
 
-It takes an `AutocompleteSupplier` or a `Supplier<Stream<String>` and generates autocomplete suggestions.
+**API Reference:** [PartitionedCommand.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/PartitionedCommand.java)
 
-Once initialized, users can call `AutocompleteGenerator#generateCompletions(command, model)` to receive suggestions from their partial command input.
+For example, given the partial command "`add --org --name Alice --oid ama`", you will be able to extract the partitions in the following forms:
 
+| Command Name |        Middle Text         | Autocompletable Text |
+|:------------:|:--------------------------:|:--------------------:|
+|    `add`     | `--org --name Alice --oid` |        `ama`         |
 
-#### Design Considerations
+|          Leading Text          | Trailing Text |
+|:------------------------------:|:-------------:|
+| `add --org --name Alice --oid` |     `ama`     |
+
+There are also helper methods to detect flag strings and other properties of the command, which can be found in the API reference.
+
+#### The Autocomplete Supplier
+
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet<Flag>` and `FlagValueSupplier` together to form a full supplier for a single command.
+
+**API Reference:** [AutocompleteSupplier.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/AutocompleteSupplier.java)
+
+Internally, it must be initialized with an `AutocompleteItemSet<Flag>` to determine what flags can be added to a command at any point in time, inclusive of all known restrictions. It is most easily done via the factory method `#from`.
+
+Additionally, one may optionally assign `FlagValueSupplier`s into `Flag`s by inputting `Map<Flag, FlagValueSupplier>`. This allows the supplier to provide suggestions for flags with preset or known values.
+
+You may configure both `AutocompleteItemSet<Flag>` and `Map<Flag, FlagValueSupplier>` in the same constructor call, or use factory and chaining methods to create such a set - refer to publicly exposed API calls for more details.
+
+##### Usage Example
+
+Recall the example from earlier where we created an `AutocompleteItemSet<Flag>`? A way to create a full `AutocompleteSupplier` from that is as follows:
+
+```java
+AutocompleteSupplier supplier = AutocompleteSupplier.from(set);
+```
+
+We can add more details on an existing supplier by using a configurator. Suppose we have a `FlagValueSupplier` for a status flag. This is how we can add it to the supplier:
+
+```java
+supplier.configureValueMap(map -> map.put(FLAG_STATUS, statusFlagValueSupplier));
+```
+
+##### Obtaining Results
+
+The supplier exposes methods to obtain the possible flags and values:
+
+- `#getOtherPossibleFlagsAsideFromFlagsPresent(Flags...)`: Gets the remaining set of flags that can be added to the command, given the flags that are already present.
+
+- `#getValidValuesForFlag(Flag, PartitionedCommand, Model)`: Gets the possible values for a flag, given the partial command and the model.
+
+This is used by `AutocompleteGenerator` to generate suggestions later.
+
+#### The Autocomplete Generator
+
+The `AutocompleteGenerator` is the final stage of the autocompletion generation process.
+
+It supports generating results based on those supplied by an `AutocompleteSupplier`, or any arbitrary `Supplier<Stream<String>`, and generates autocomplete suggestions.
+
+Once initialized, users can simply call the `#generateCompletions(command, model)` method to receive suggestions from their partial command input. It's that easy!
+
+**API Reference:** [AutocompleteGenerator.java](https://github.com/ay2324s1-cs2103t-w08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/AutocompleteGenerator.java)
+
+##### Execution Flow
+
+Internally, whenever requested, the `AutocompleteGenerator`:
+1. obtains a command's parts with `PartitionedCommand`,
+2. uses the `AutocompleteSupplier` provided when initialized to obtain the results based on the available parts, 
+3. automatically performs fuzzy (subsequence) matching to filter results, 
+4. ranks them based on their relevance, 
+5. and finally returns a stream of autocompleted commands.
+
+### Design Considerations
 
 When designing the Autocomplete feature, important considerations include the ability to flexibly define and craft new constraints based on heuristically determined rules.
 
-By abstracting away all operations into simple components like sets and constraints, the current carefully crafted design allows
-Jobby's Command Autocompletion to provide context-aware suggestions to users, while adhering to simple constraints defined on a per command basis.
+By abstracting away all operations into simple components like sets and constraints, the current carefully crafted design allows Jobby's Command Autocompletion to provide context-aware suggestions to users, while adhering to simple constraints defined on a per command basis.
 
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
+
+#### Alternatives Considered
+
+##### Alternative 1: Using Hardcoded Rules in Java
+
+One obvious alternative is to simply the possible autocompletion results for each command in standard Java. We may achieve this by manually checking against a command string for each command type, and using existing tokenization classes like `ArgumentTokenizer` and `ArgumentMultimap`. 
+
+While this would incur less overhead in initial development time, more explicit coding is required - it is neither quick to write nor scalable to tons of commands. This is especially important as autocomplete was developed in parallel with other new features being added to Jobby, which would require constant changes to the autocomplete rules.
+
+##### Alternative 2: Using a Graph-based Approach
+
+A graph based approach, e.g., having a tree structure to define constraints and dependencies, may be more efficient than the current solution (which has to check against _all_ known rules every single time). 
+
+However, it will consume even more development time to implement and model the rules as a graph. Since the current implementation involves one set with a list of constraints, multiple sets can be combined by simply concatenation of both the items and the constraints.
 
 ### Adding Organization
 
@@ -475,6 +680,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is `Jobby` and the **Actor** is the `user`, unless specified otherwise)
 
+
+**Use case: UC00 - Inputting commands with autocomplete**
+
+**MSS**
+
+1. User inputs a command partially.
+2. Jobby shows a list of possible completions that matches the partial command.
+3. User selects a completion from the list.
+4. Jobby updates the user input with the selected completion.
+5. User repeats from step 1 until the command is complete.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a1. Jobby does not have any suggestions to list for the partial command.
+
+  Use case resumes at step 5.
+
+* 3a. User dismisses the list of suggestions.
+
+  Use case resumes at step 5.
+
+* 1a. User requests to undo the last completion.
+  * 1a1. Jobby undoes the last completion, if any.
+
+    Use case resumes at step 2.
 
 
 **Use case: UC01 - Add an application**
@@ -999,11 +1231,17 @@ Additionally, a huge amount of time was spent creating test cases and modifying 
 
 ### Autocompletion
 
-To improve user experience, we wanted to incorporate an autocomplete feature which allows users to know which flags could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+To improve user experience, we wanted to incorporate support for command autocompletion, which allows users to know which parameters and values could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+
+Additionally, the addition of autocompletion allows us to use full-length flags (e.g., `--description`), yet allowing the user to simply type `-dc ` to obtain the full flag, removing the need to memorize multiple 1-, 2-letter abbreviations.
 
 This involved:
-* Creating an entire class to encapsulate this feature.
-* Modify the parser to aid in autocompletion.
-* Modifying JavaFX to incorporate autocompletion.
+* Creating multiple classes to better organize and provide autocompletion,
+* Modifying the parser, tokenizer, flag syntax, etc., to aid in autocompletion, and
+* Modifying JavaFX elements and intercepting the appropriate keystroke events to incorporate autocompletion.
 
-This was extremely challenging as including a proper autocompletion in JavaFX was not simple and straightforward. 
+The end-to-end process of parsing the user text and determining what are plausible inputs is not trivial - we need to correctly decide which parameters and values are suggestable values based on command rules, such as "only one of `--name` allowed".
+
+Additionally, despite the complex implementation, the autocompletion package has a comprehensive ~80% test coverage, with expected behaviors clearly documented within the tests themselves to guard against unexpected changes.
+
+For more details, refer to the [Command Autocompletion Internals](#command-autocompletion-internals).
