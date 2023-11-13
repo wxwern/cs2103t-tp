@@ -22,7 +22,7 @@ title: User Guide
   _(For users who just want to see the table of contents, click [here](#table-of-contents).)_  
 
   To begin using this guide, ensure you have [installed Jobby](#installation). 
-  Once this is done, go to the [tutorial](#jobby-tutorial--for-new-users-) section to get started on the basic features of Jobby. 
+  Once this is done, go to the [tutorial](#jobby-tutorial-for-new-users) section to get started on the basic features of Jobby. 
   
   When you become more familiar with the basic features, you can move on to understand [how Jobby's commands are structured and how to use autocomplete to your advantage](#using-jobby). 
   
@@ -105,10 +105,10 @@ Jobby comes equipped with a user interface that provides visual feedback to you.
 
 | Component           | Description                                                                                                |
 |---------------------|------------------------------------------------------------------------------------------------------------|
-| Command Box         | You will enter your [commands](#glossary) along with its input here.                                       |
+| Command Box         | You will enter your commands along with its input here.                                       |
 | Result Display      | Displays the results of your commands.<br/>Any error messages will also be displayed here.                 |
 | Contact Details     | Contains information related to the [contact](#glossary) like name, phone number, email etc.               |
-| Application Details | Contains information related to the [internship application](#glossary) details like status, deadline etc. |
+| Application Details | Contains information related to the internship application details like status, deadline etc. |
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -322,8 +322,10 @@ The `add` command allows you to create contacts to track details about the organ
 ```sh
 add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Adds an organization contact with the details given to the command.
 
 * If an `ID` is not specified, one will be automatically generated.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -350,10 +352,11 @@ add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--
 ```sh
 add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Adds a recruiter contact with the details given to the command.
 
-* When adding in parameters, be aware of the [accepted parameters](#appendix-a-acceptable-values-for-parameters).
 * If an `ID` is not specified, one will be automatically generated.
-* If a <span class="jobby-data-class">Recruiter</span> is associated to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> that is associated with the <span class="jobby-data-class">Recruiter</span> you are adding.
+* To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Sample demonstration
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
@@ -391,6 +394,9 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 ```sh
 edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Edits the given contact according to the parameters given.
+* You can supply more than one parameter to change multiple details of a contact in one command.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -404,7 +410,7 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 
 | Command                                 | Reason                                                                              |
 |-----------------------------------------|-------------------------------------------------------------------------------------|
-| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](appendix-a--acceptable-values-for-parameters)  |
+| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](#appendix-a-acceptable-values-for-parameters)  |
 
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
@@ -416,6 +422,8 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 ```sh
 apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]
 ```
+Applies to the given organization by creating a job application associated with it.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -443,6 +451,10 @@ apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-Y
 edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]
 ```
 
+Edits the given job application according to the parameters given.
+* You can supply more than one parameter to change multiple details of an application in one command.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
+
 ##### Valid examples
 
 | Command                                    | Reason                                                          |
@@ -464,6 +476,8 @@ edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADL
 
 <span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
+The `delete` command allows you to delete contacts and job applications if they are no longer relevant. To learn more about deleting a contact or application, check out the sections below.
+
 #### Deleting contacts - `delete`
 
 <span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
@@ -472,7 +486,9 @@ edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADL
 ```sh
 delete INDEX/ID [--recursive]
 ```
+Deletes the contact at the given `INDEX` or `ID`.
 * `--recursive` flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -496,6 +512,8 @@ delete INDEX/ID [--recursive]
 ```sh
 delete --application INDEX
 ```
+Deletes the job application at the given `INDEX`.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -538,32 +556,33 @@ Lists all contacts. If you provide a parameter, the contacts listed will be only
 ### Searching contacts - `find`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
-<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by keyword</span> <span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
-find KEYWORD/ID...
+find KEYWORD...
 ```
-* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
+
+Finds the contacts whose `NAME` or `ID` contains the given `KEYWORD`.
+* You can supply multiple keywords as long as they are separated by [whitespace](#glossary).
+* If you wish to know more about the requirements for the parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
 | Command           | Reason                                                                                              |
 |-------------------|-----------------------------------------------------------------------------------------------------|
-| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
-| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
-| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
+| `find jo`         | Finds contacts whose `NAME` or `ID` contains the [substring](#glossary) "jo".      |
+| `find 1231`       | Finds contacts whose `NAME` or `ID` contains the substring "1231".                 |
+| `find alex david` | Finds contacts whose `NAME` or `ID` contains the substring "alex" or "david".      |
 
 ##### Rules
 <span class="intermediate pill">Intermediate</span>
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans` and `1231` will match `id_1231`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
-* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 
 ### Sorting data - `sort`
@@ -617,7 +636,9 @@ Sorts contacts or job applications for you by the specified flag.
 * To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
 * In the Application Details section of Jobby, you should see your <span class="jobby-data-class">Job Applications</span> now ordered by most urgent deadline.
 
-![Sort Deadline](images/sort_deadline.png)
+<div style="text-align: center;">
+<img src="images/sort_deadline.png" width=500 />
+</div>
 
 ##### Valid examples
 
@@ -669,6 +690,47 @@ Reminds you of upcoming deadlines for job applications.
 | `remind`                              | No urgency level specified.                         |
 
 
+### Viewing help - `help`
+
+<span class="learning-outcome pill">:trophy: How to find help on Jobby's commands</span>  <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+help
+```
+
+Shows a message explaining how to access the help page.
+
+![Help Message](images/helpMessage.png)
+
+
+### Clearing all data - `clear`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="danger pill">:warning: The deletion of all data is permanent and there is no way to undo it.</span>
+
+<span class="learning-outcome pill">:trophy: How to clear all contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+clear
+```
+
+Clears all <span class="jobby-data-class">Contact</span> and <span class="jobby-data-class">Job Application</span> data from Jobby.
+
+
+### Exiting the program - `exit`
+
+<span class="learning-outcome pill">:trophy: How to exit Jobby</span> <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+exit
+```
+
+Exits the program.
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
@@ -710,8 +772,8 @@ Reminds you of upcoming deadlines for job applications.
 
 ## Glossary
 
-| Term                 | Definition                                                                                                                                                                               |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Term | Definition |
+|------|------------|
 | **Top Level Domain** | A Top Level Domain (TLD) is the part of the website address where it comes after the last dot (i.e. ".com", ".org", ".net") and before the first slash. (E.g. www.example.**com**/path). |
 | **Whitespace**       | In the context of this application, a whitespace is any number of spaces or tabs that is in the input.                                                                                   |
 | **Contact**          | A contact in Jobby is can be an **organization** or a **recruiter**.                                                                                                                     |
@@ -722,23 +784,23 @@ Reminds you of upcoming deadlines for job applications.
 
 ### Appendix A: Acceptable values for parameters
 
-| Parameter     | Used by                                                                                                                                                                                                                                                                                         | Requirements                                                                                                                                                                                                                                                                                                                                                                                                                | Examples                                                                            |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| `INDEX`       | [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) <br> [`delete`](#deleting-contacts---delete) <br> [`delete --application`](#deleting-job-applications---delete---application) | A valid index can accept any positive integer up to the number of items in the contact or job application list where applicable.                                                                                                                                                                                                                                                                                            | `1`<br>`10`                                                                         |
-| `NAME`        | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid name can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                                | `Ryan Koh`<br>`小明`                                                                  |
-| `ID`          | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`delete`](#deleting-contacts---delete)                                                     | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`)                                                                                                                                                                                                                                                                                         | `woogle123`<br>`ryan_soc-rec`                                                       |
-| `NUMBER`      | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits.                                                                                                                                                                                                                                                                                                                   | `999`<br>`91824137`                                                                 |
-| `EMAIL`       | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`                                              |
-| `URL`         | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period.                                                                                                                                                                                                                                                                            | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more`  |
-| `ADDRESS`     | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address.                                                                                                                                                                                                                                                                                                                   | `21 Lower Kent Ridge Rd`                                                            |
-| `TAG`         | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid tag can consist of only alphanumeric characters.                                                                                                                                                                                                                                                                                                                                                                    | `internship`<br>`network`<br>`parttime`<br>`jobPortal`                              |
-| `ORG_ID`      | [`add --rec`](#adding-recruiters---add---rec)                                                                                                                                                                                                                                                   | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book.                                                                                                                                                                                                                                | `woogle123`<br>`meta_sg-1`                                                          |
-| `TITLE`       | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric.                                                                                                                                                                                                                                                                                                                  | `Software Engineer`<br>`Level 3 Engineer`                                           |
-| `DESCRIPTION` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid description can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                         | `Senior Role`<br>`Hourly rate: $25`                                                 |
-| `DEADLINE`    | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits.                                                                                                                                                                                                                                                                                | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`                                          |
-| `STAGE`       | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                         | `resume`<br>`online assessment`<br>`interview`                                      |
-| `STATUS`      | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                    | `pending`<br>`offered`<br>`accepted`<br>`turned down`                               |
-| `KEYWORD`     | [`find`](#searching-contacts---find)                                                                                                                                                                                                                                                            | A valid keyword is a single word that can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                       | `software`<br>`Ryan`                                                                |
+| Parameter | Used by | Requirements | Examples |
+|-----------|---------|--------------|----------|
+| `INDEX` | [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) <br> [`delete`](#deleting-contacts---delete) <br> [`delete --application`](#deleting-job-applications---delete---application) | A valid index can accept any positive integer up to the number of items displayed in the contact or job application list where applicable. | `1`<br>`10` |
+| `NAME` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid name can accept any non-empty value. | `Ryan Koh`<br>`小明` |
+| `ID` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`delete`](#deleting-contacts---delete) | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`) | `woogle123`<br>`ryan_soc-rec` |
+| `NUMBER` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits. | `999`<br>`91824137`                                                                 |
+| `EMAIL` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`                                              |
+| `URL` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period. | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more`  |
+| `ADDRESS`| [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address. | `21 Lower Kent Ridge Rd`                                                            |
+| `TAG` | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) | A valid tag can consist of only alphanumeric characters. | `internship`<br>`network`<br>`parttime`<br>`jobPortal` |
+| `ORG_ID` | [`add --rec`](#adding-recruiters---add---rec) | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book. | `woogle123`<br>`meta_sg-1` |
+| `TITLE` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric. | `Software Engineer`<br>`Level 3 Engineer`                                           |
+| `DESCRIPTION` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) | A valid description can accept any non-empty value. | `Senior Role`<br>`Hourly rate: $25` |
+| `DEADLINE` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits. | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`                                          |
+| `STAGE` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown. | `resume`<br>`online assessment`<br>`interview` |
+| `STATUS` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown. | `pending`<br>`offered`<br>`accepted`<br>`turned down` |
+| `KEYWORD` | [`find`](#searching-contacts---find) | A valid keyword is a single word that can accept any non-empty value. | `software`<br>`Ryan` |
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -765,4 +827,8 @@ Reminds you of upcoming deadlines for job applications.
 --------------------------------------------------------------------------------------------------------------------
 ## Issues
 
-(Where to report issues and what bugs currently exist)
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the _preferences.json_ file created by the application before running the application again.
+
+2. **When requesting to sort applications after a call to `list --rec`**, the command will succeed but display nothing, since no organizations are currently listed, and so no linked applications will display. The remedy is to call `list` before sorting applications and calling the sort command once more.
+
+3. Parameter names use either the `-` or `--` prefix, but **all commands as of the current version only use the `--` prefix.** The `-` prefix is currently unused, but in future updates it may become relevant.
