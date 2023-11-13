@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.FLAG_EARLIEST;
 import static seedu.address.logic.parser.CliSyntax.FLAG_LATEST;
 
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.model.Model;
 import seedu.address.model.jobapplication.JobApplication;
 
@@ -16,7 +16,7 @@ public class ReminderCommand extends Command {
     public static final String COMMAND_WORD = "remind";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
-            AutocompleteDataSet.oneAmongAllOf(
+            AutocompleteItemSet.oneAmongAllOf(
                     FLAG_EARLIEST, FLAG_LATEST
             )
     ).configureValueMap(map -> {

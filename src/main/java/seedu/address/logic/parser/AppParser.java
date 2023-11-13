@@ -35,9 +35,9 @@ public class AppParser {
     /**
      * Parses user input into command for execution.
      *
-     * @param userInput full user input string
-     * @return the command based on the user input
-     * @throws ParseException if the user input does not conform the expected format
+     * @param userInput full user input string.
+     * @return the command based on the user input.
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -107,8 +107,8 @@ public class AppParser {
     /**
      * Parses user input into an evaluator that can be executed to obtain autocompletion results.
      *
-     * @param userInput full user input string
-     * @return the command based on the user input
+     * @param userInput full user input string.
+     * @return the command based on the user input.
      */
     public AutocompleteGenerator parseCompletionGenerator(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());

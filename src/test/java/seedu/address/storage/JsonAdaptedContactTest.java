@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.contact.Address;
-import seedu.address.model.contact.Contact;
 import seedu.address.model.contact.Email;
 import seedu.address.model.contact.Name;
 import seedu.address.model.contact.Organization;
@@ -74,7 +73,7 @@ public class JsonAdaptedContactTest {
                 VALID_PHONE, VALID_EMAIL, VALID_URL, VALID_ADDRESS,
                 VALID_OID, VALID_TAGS, null
         );
-        String expectedMessage = Contact.MESSAGE_MISSING_TYPE;
+        String expectedMessage = Type.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () -> contact.toModelType(addressBook));
     }
 

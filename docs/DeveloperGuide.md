@@ -253,7 +253,7 @@ It consists of several key components:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
-  - It takes an `AutocompleteDataSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It takes an `AutocompleteItemSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
 
 - **`AutocompleteGenerator`**:
@@ -272,9 +272,9 @@ It offers static factory methods for quickly defining common rulesets. Examples 
 - `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
 - `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
 
-#### `AutocompleteDataSet`
+#### `AutocompleteItemSet`
 
-The `AutocompleteDataSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+The `AutocompleteItemSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
 
 This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
 - `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
@@ -297,9 +297,9 @@ By taking in both the command and the app model, it is possible to specify arbit
 
 #### `AutocompleteSupplier`
 
-The `AutocompleteSupplier` leverages the capabilities of `AutocompleteDataSet` and `FlagValueSupplier`.
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet` and `FlagValueSupplier`.
 
-Internally, it uses `AutocompleteDataSet` to determine what flags can be added after a given set of flags has been used in a command.
+Internally, it uses `AutocompleteItemSet` to determine what flags can be added after a given set of flags has been used in a command.
 
 This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
 
@@ -428,11 +428,6 @@ Step 3. When the user want decide to add more information regarding the Organiza
 * **Alternative 1 (current choice):** Adds the Organization with a JSON's key 'type': "Organization"
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
-
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
