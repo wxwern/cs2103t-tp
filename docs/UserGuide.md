@@ -737,6 +737,17 @@ exit
 
 Exits the program.
 
+### Saving the data
+
+AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+### Editing the data file
+
+AddressBook data are saved automatically as a JSON file `[JAR file location]/data/jobby.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<div markdown="block" class="alert alert-warning">
+:warning: **Caution:** If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it. 
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
