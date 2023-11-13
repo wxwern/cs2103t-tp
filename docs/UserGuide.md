@@ -438,11 +438,15 @@ list [--org / --rec / --toapply]
 
 [SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
 
+
 ##### Valid examples
-* `list`
-* `list --org`
-* `list --rec`
-* `list --toapply`
+
+| Command          | Reason                                                            |
+|------------------|-------------------------------------------------------------------|
+| `list`           | List all **contacts**.                                            |
+| `list --org`     | List all **organization contacts**.                               |
+| `list --rec`     | List all **recruiter contacts**.                                  |
+| `list --toapply` | List all **organization contacts** that have not been applied to. |
 
 
 ### Sorting data - `sort`
@@ -492,15 +496,21 @@ Neither `--ascending` nor `--descending` may be specified if the flag is `--none
 [SCREENSHOT HERE]
 
 ##### Valid examples
-* `sort --title --ascending`
-* `sort --url`
-* `sort --stale --descending`
-* `sort --none`
+
+| Command                     | Reason                                                                                                     |
+|-----------------------------|------------------------------------------------------------------------------------------------------------|
+| `sort --title --ascending`  | Sort **job applications** by title, in ascending alphabetical order.                                       |
+| `sort --url`                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
+| `sort --stale --descending` | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
+| `sort --none`               | Reset the sorting order of **contacts** and **job applications**.                                          |
 
 ##### Invalid examples
-* `sort` _No flag provided._
-* `sort --organization` _Invalid flag._
-* `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
+
+| Command                    | Reason                                      |
+|----------------------------|---------------------------------------------|
+| `sort`                     | No field provided.                          |
+| `sort --org`               | Invalid field.                              |
+| `sort --none --descending` | `--none` and `--descending` both specified. |
 
 
 ### Reminding about deadlines - `remind`
@@ -515,19 +525,23 @@ Reminds the user of upcoming deadlines for job applications.
 remind --earliest / --latest
 ```
 
-* Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
-
-* Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
-
-
 ##### Sample demonstration
 * To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
 
 ![Remind Earliest](images/starter-guide/remind-earliest.jpg)
 
 ##### Valid examples
-* `remind --earliest`
-* `remind --latest`
+
+| Command             | Reason                                                                               |
+|---------------------|--------------------------------------------------------------------------------------|
+| `remind --earliest` | List the application deadlines in order of urgency, from earliest to latest.         |
+| `remind --latest`   | List the application deadlines in order of reverse urgency, from latest to earliest. |
+
+##### Invalid examples
+
+| Command                               | Reason                                              |
+|---------------------------------------|-----------------------------------------------------|
+| `remind`                              | No urgency level specified.                         |
 
 
 ### Applying to organizations - `apply`
