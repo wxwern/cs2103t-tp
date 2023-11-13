@@ -7,9 +7,7 @@ title: Bryan's Project Portfolio Page
 
 ### Project: Jobby
 
-Jobby is a desktop app for managing job applications and contacts,
-optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
-Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion.
+Jobby is a desktop app for managing job applications and contacts. It can help you manage the tracking of your job applications and contacts in a more streamlined fashion.
 
 Given below are my contributions to the project.
 
@@ -36,7 +34,7 @@ Given below are my contributions to the project.
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for features `add --recruiter`: [#165](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/165)
+    * Added documentation for adding recruiter: [#165](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/165)
     * Added glossary and an appendix detailing acceptable features for the command parameters [#163](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/163)
   * Developer Guide:
     * Added documentation on the Organization-Recruiter link: [#173](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/173)
