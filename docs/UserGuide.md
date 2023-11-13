@@ -65,6 +65,8 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div class="reset-page-break-defaults" markdown="1">
+
 ## Navigating the Guide
 
 
@@ -92,6 +94,8 @@ title: User Guide
 
 <div markdown="block" class="alert alert-warning">
 :warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
+</div>
+
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
