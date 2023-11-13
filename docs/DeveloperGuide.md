@@ -878,9 +878,7 @@ testers are expected to do more *exploratory* testing.
     1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
     1. Re-launch the app by double-clicking the jar file.<br>
-   Expected: The most recent window size and location is retained. // TODO: Check if it is valid.
-
-1. _{ more test cases …​ }_
+   Expected: The most recent window size and location is retained.
 
 ### Resetting to default data for Jobby
 
@@ -965,11 +963,20 @@ testers are expected to do more *exploratory* testing.
 ### Saving data
 
 1. Dealing with missing/corrupted data files
+   1. Prerequisite: None.
+   2. Test case: Delete half of a contact in the json data file. <br>
+      Expected: An empty list of contacts and applications are displayed on startup.
+   3. Test case: Delete the data file in Jobby's home folder. <br>
+      Expected: The sample list of contacts and applications is displayed on startup.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
-
+2. Modifying the list of contacts and job applications
+   1. Prerequisite: Having existing contacts and applications when editing or deleting data.
+   2. Test case: Adding a new contact/job application and closing the application. <br>
+      Expected: The new contact/job application is displayed when the application starts up again.
+   3. Test case: Editing an existing contact/job application <br>
+      Expected: The edits are saved and is correctly displayed when the application starts up again. 
+   4. Test case: Deletes an existing contact/job application <br>
+      Expected: The contact/job application is not displayed when the application starts up again.
 
 --------------------------------------------------------------------------------------------------------------------
 
