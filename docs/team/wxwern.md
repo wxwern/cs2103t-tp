@@ -11,7 +11,7 @@ Jobby is a desktop application used for managing your job applications and assoc
 
 Given below are my contributions to the project.
 
-* **New Feature**: Command Autocompletion
+* **New Feature**: Command Autocompletion ([PR #63](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/63))
 
     * This allows users to autocomplete their commands, just like command terminals or programming IDEs, such as by pressing **TAB**, and even undo when you **BACKSPACE**.
 
@@ -28,7 +28,8 @@ Given below are my contributions to the project.
 * **Project management**:
 
   * Configuring the Issue Tracker Tags and Milestones for the project.
-  * Setting up GitHub Actions for the project, including Java CI, CodeCov and GitHub Pages.
+  * Setting up GitHub Actions for the project, including Java CI, CodeCov, GitHub Pages, PR Checks.
+  * Managed releases [v1.2 and v1.3](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
   * Styling the website for optimal readability and print formatting, including:
 
       * Styling headers with improved spacing, typography and color for increased readability.
@@ -43,40 +44,27 @@ Given below are my contributions to the project.
 * **Enhancements to existing features**:
 
   * Revamped the parameter syntax to use a prefix of `--param`.
-
     * This allows for improved autocompletion UX as compared to `param/`, since we can immediately determine if the user intends to type a parameter based on the first character.
-
-    * It is also much less likely to clash with an existing user input.
-
+    * It is also much less likely to clash with an existing user input.<br><br>
   * Swapped out random ID generation with an implementation to derive IDs from an input name.
-
     * This allows for improved UX when editing details that require an ID, combined with autocomplete integration.
-
-    * e.g., `google-sg-a8b3fe` can be derived from an input of `Google SG`.
+    * e.g., `google-sg-a8b3fe` can be derived from an input of `Google SG`.<br><br>
 
 * **Documentation**:
 
   * User Guide:
-
-    * Added a structured command syntax introduction, and instructions to interpret command formats in the UG and app.
-
+    * Added a structured command syntax introduction, and instructions to interpret command formats.
     * Added usage guides for command autocompletion.
-
-    * Styling the website for improved overall readability and automated print formatting (see above in Project Management).
-
+    * Styling the website for improved overall readability and automated print formatting (see above in Project Management).<br><br>
   * Developer Guide:
-
     * Integrated explanations of how "Autocomplete classes" work in the context of the `Logic` package.
-
     * Updated how `AppParser` (formerly `AddressBookParser`) operates in the context of our app, since we now dynamically look up details and also support autocompletion.
-
-    * Added a complete high-level explanation of Jobby's internal autocomplete implementation and interactions.
-
-    * Added use cases for autocompletion.
+    * Added a complete high-level explanation of Jobby's internal autocomplete implementation.
+    * Added use cases for autocompletion.<br><br>
 
 * **Community**:
-  * Detailed PR Reviews (e.g., )
-  * Forum contributions (e.g., )
+  * Detailed PR Reviews (e.g., [#32](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/32), [#34](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/34), [#39](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/39), [#69](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/69), [#183](https://github.com/AY2324S1-CS2103T-W08-3/tp/pull/183))
+  * Forum contributions (e.g., [#30](https://github.com/nus-cs2103-AY2324S1/forum/issues/30), [#103](https://github.com/nus-cs2103-AY2324S1/forum/issues/103))
   * Reported bugs and suggestions for other teams (e.g., during PE-D)
 
 </div>
