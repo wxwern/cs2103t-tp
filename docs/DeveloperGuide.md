@@ -432,7 +432,7 @@ Step 3. When the user want decide to add more information regarding the Organiza
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
 
-The following sequence diagram shows how job applications are added to Jobby
+The following sequence diagram shows how job applications are added to Jobby.
 
 <img src="images/apply-command/ApplyCommand.png">
 
@@ -466,6 +466,33 @@ The following sequence diagram shows how job applications are added to Jobby
   * Pros: Easier to implement, can make use of existing structures surrounding the add command.
   * Cons: Overloading the add command too much.
 
+### Sort feature
+The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
+
+The following sequence diagram shows how Jobby sorts contacts or job applications (in this example, a job application).
+
+<img src="images/sort-command/SortCommand.png">
+
+#### Design Considerations
+**Aspect: Sorting by multiple flags**
+
+* **Actual: Sort does not support sorting by multiple flags.**
+    * Pros: Easy to implement.
+    * Cons: Limited utility.
+
+* **Alternative 1: Sort supports sorting by multiple flags.**
+    * Pros: Sorting can be more complex, allowing for multi-level sorting, or simultaneous sorting of both contacts and job applications.
+    * Cons: More complex implementation. Would require a rework of the way the lists of contacts and job applications are stored.
+
+**Aspect: Sorting order**
+
+* **Actual: Each field has a default sorting order, which can be specified as ascending or descending.**
+    * Pros: Easy to implement, clear to user what the sorting order will be.
+    * Cons: Little flexibility when sorting, especially when it comes to dates (sorting chronologically does not take current date into account).
+
+* **Alternative 1: Allow the user to specify sorting conditions (such as "after certain date").**
+    * Pros: More utility for sorting command, allowing the user to better arrange data.
+    * Cons: More difficult to implement.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -526,7 +553,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 
-**Use case: Add an application**
+**Use case: UC01 - Add an application**
 
 **MSS**
 
@@ -543,7 +570,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 
-**Use case: Delete an application**
+**Use case: UC02 - Delete an application**
 
 **MSS**
 
@@ -559,7 +586,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Jobby shows an error message.
       Use case ends.
 
-**Use case: Edit an application**
+
+**Use case: UC03 - Edit an application**
 
 **MSS**
 
@@ -579,8 +607,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
+**Use case: UC04 - Add a contact**
 
-**Use case: Edit a contact**
+**MSS**
+
+1.  User requests to add a contact.
+2.  Jobby adds the contact.
+3.  Jobby shows that the contact has been added.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given contact does not have a required field.
+    * 1a1. Jobby shows an error message.
+      Use case ends.
+
+
+**Use case: UC05 - Edit a contact**
 
 **MSS**
 
@@ -596,8 +640,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-
-**Use case: Delete a contact**
+**Use case: UC06 - Delete a contact**
 
 **MSS**
 
@@ -629,8 +672,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-
-**Use case: List contacts**
+**Use case: UC07 - List contacts**
 
 **MSS**
 
@@ -651,7 +693,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case ends.
 
-**Use case: Find contacts**
+* 1c. User requests to list organizations that have no applications.
+    * 1b1. Jobby shows a list of organizations that have no applications.
+
+      Use case ends.
+
+
+**Use case: UC08 - Find contacts**
 
 **MSS**
 
@@ -680,6 +728,51 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1d. No match found.
     * 1d1. Jobby shows 0 matched result.
     
+      Use case ends.
+
+
+**Use case: UC09 - Sort data**
+
+**MSS**
+
+1.  User requests to sort contacts.
+2.  Jobby shows a sorted list of contacts.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to sort job applications.
+    * 1a1. Jobby shows a sorted list of job applications.
+
+      Use case ends.
+
+* 1b. User requests to reset sorting order.
+    * 1b1. Jobby resets the sorting order.
+    * 1b2. Jobby shows an unsorted list of contacts and an unsorted list of job applications.
+
+      Use case ends.
+
+* 1c. User requests to sort by multiple fields.
+    * 1b1. Jobby shows an error message.
+
+      Use case ends.
+
+
+**Use case: UC10 - Remind about deadlines**
+
+**MSS**
+
+1.  User requests to remind about upcoming deadlines.
+2.  Jobby shows a list of job applications, sorted by most urgent deadline.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User requests to remind about non-urgent deadlines.
+    * 1a1. Jobby shows list of job applications, sorted by least urgent deadline.
+
       Use case ends.
 
 
