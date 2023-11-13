@@ -22,7 +22,7 @@ title: User Guide
   _(For users who just want to see the table of contents, click [here](#table-of-contents).)_  
 
   To begin using this guide, ensure you have [installed Jobby](#installation). 
-  Once this is done, go to the [tutorial](#jobby-tutorial--for-new-users-) section to get started on the basic features of Jobby. 
+  Once this is done, go to the [tutorial](#jobby-tutorial-for-new-users) section to get started on the basic features of Jobby. 
   
   When you become more familiar with the basic features, you can move on to understand [how Jobby's commands are structured and how to use autocomplete to your advantage](#using-jobby). 
   
@@ -105,10 +105,10 @@ Jobby comes equipped with a user interface that provides visual feedback to you.
 
 | Component           | Description                                                                                                |
 |---------------------|------------------------------------------------------------------------------------------------------------|
-| Command Box         | You will enter your [commands](#glossary) along with its input here.                                       |
+| Command Box         | You will enter your commands along with its input here.                                       |
 | Result Display      | Displays the results of your commands.<br/>Any error messages will also be displayed here.                 |
 | Contact Details     | Contains information related to the [contact](#glossary) like name, phone number, email etc.               |
-| Application Details | Contains information related to the [internship application](#glossary) details like status, deadline etc. |
+| Application Details | Contains information related to the internship application details like status, deadline etc. |
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -402,7 +402,7 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 
 | Command                                 | Reason                                                                              |
 |-----------------------------------------|-------------------------------------------------------------------------------------|
-| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](appendix-a--acceptable-values-for-parameters)  |
+| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](#appendix-a-acceptable-values-for-parameters)  |
 
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
@@ -548,7 +548,7 @@ find KEYWORD/ID...
 
 | Command           | Reason                                                                                              |
 |-------------------|-----------------------------------------------------------------------------------------------------|
-| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
+| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#glossary) "jo".      |
 | `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
 | `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
 
