@@ -32,7 +32,7 @@ title: User Guide
 
 1. Ensure you have _Java 11_ or above installed in your computer.
    * Download Java [here](https://www.oracle.com/java/technologies/downloads/)
-   * How to check your Java version on [Windows](https://www.howtogeek.com/717330/how-to-check-your-java-version-on-windows-10/) and [macOS](https://www.wikihow.com/Check-Java-Version-on-a-Mac) 
+   * How to check your Java version on [Windows](https://www.howtogeek.com/717330/how-to-check-your-java-version-on-windows-10/), [macOS](https://www.wikihow.com/Check-Java-Version-on-a-Mac), and [Linux](https://stackoverflow.com/questions/47627270/how-to-check-java-version-at-linux-redhat6). 
 
 1. Download the latest _jobby.jar_ from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
@@ -40,10 +40,10 @@ title: User Guide
 
 1. Open a command terminal, navigate into the folder you put the jar file in, and enter `java -jar jobby.jar` in the terminal to run the application.<br>
    A window similar to the below should appear in a few seconds. Notice that the app contains some sample data.<br>
-   * If you do not know how to navigate to your folder in the terminal, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/) and [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/).
+   * If you do not know how to navigate to your folder in the terminal, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/), [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/), and [Linux](https://askubuntu.com/questions/232442/how-do-i-navigate-between-directories-in-terminal).
   ![Ui](images/Ui.png)
 
-1. Type a command in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
+1. Type a command in the command box and press Enter to execute it - e.g., typing `help` and pressing Enter will open the help window.<br>
 
 1. Refer to the [Features](#features) below for details of each command.
 
