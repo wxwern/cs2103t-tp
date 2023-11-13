@@ -948,3 +948,54 @@ However, the find feature for applications may need to change that behavior, sin
 This can be made possible by making `JobApplication` searchable, by providing a method to check if the keyword matches any of its fields, such as title and description. 
 This will allow a list of job applications that have a match to be generated, and therefore now the `Model` can filter the contact list based on whether the contact is associated to the job application.
 
+## **Appendix D: Effort**
+
+This section documents the effort taken to evolve AB3 into Jobby.
+
+### Renaming `Contact` to `Person`
+
+To suit the application we were creating, we renamed the original `Person` class to `Contact`.
+
+This involved:
+* Refactoring method names and parameters. (e.g `UniquePersonList` to `UniqueContactList`)
+* Refactoring existing javadocs.
+* Refactoring the User Guide and Developer Guide. (including existing diagrams)
+* Renaming the `person` package to `contact`.
+
+### Creating three new types of data: `Organization`, `Recruiter` and `JobApplication`
+
+The `Contact` class was insufficient in representing the two new entities that we wanted to create for our application and we wanted to include a third to represent job applications.
+
+This involved:
+* Making `Contact` an abstract class.
+* Create classes for the new fields (e.g. `Url`, `Id`)
+* Extending existing testing infrastructure. (e.g. `OrganizationBuilder` and `RecruiterBuilder`)
+* Creating and improving new test cases for these classes.
+* Adding new documentation on these classes.
+
+This was challenging as it a huge amount of time was spent modifying AB3's existing design and overhauling the test cases.
+
+### Different command modes
+
+As we created new types of data, each with their own set of requirements, AB3's existing command syntax was inadaequate. We had to extend commands such as `add`, `edit` and `delete` to encompass this change.
+
+For example, `add` can be used to add organizations (`add --org`) or add recruiters (`add --rec`). 
+
+### Linking the `Organization` and `Recruiter` classes
+
+As multiple recruiters could be associated with a single organization, we wanted to represent this relationship in Jobby.
+
+Implementing this feature was challenging as AB3's existing design (especially its immutability and execution process) was not suited to easily incorporate this feature.
+
+Additionally, a huge amount of time was spent creating test cases and modifying previous test cases to include this new feature.
+
+### Autocompletion
+
+To improve user experience, we wanted to incorporate an autocomplete feature which allows users to know which flags could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+
+This involved:
+* Creating an entire class to encapsulate this feature.
+* Modify the parser to aid in autocompletion.
+* Modifying JavaFX to incorporate autocompletion.
+
+This was extremely challenging as including a proper autocompletion in JavaFX was not simple and straightforward. 
