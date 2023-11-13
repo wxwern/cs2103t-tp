@@ -8,10 +8,10 @@ participant ":AppParser" as AddressBookParser LOGIC_COLOR
 participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
 end box
 
-[-> LogicManager : execute("edit --application 1 --name Jay --title SWE")
+[-> LogicManager : execute("edit &#45;&#45;application 1 &#45;&#45;name Jay &#45;&#45;title SWE")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("edit --application 1 --name Jay --title SWE")
+LogicManager -> AddressBookParser : parseCommand("edit &#45;&#45;application 1 &#45;&#45;name Jay &#45;&#45;title SWE")
 activate AddressBookParser
 
 create EditCommandParser
@@ -21,7 +21,7 @@ activate EditCommandParser
 EditCommandParser --> AddressBookParser
 deactivate EditCommandParser
 
-AddressBookParser -> EditCommandParser : parse("--application 1 --name Jay --title SWE")
+AddressBookParser -> EditCommandParser : parse("&#45;&#45;application 1 &#45;&#45;name Jay &#45;&#45;title SWE")
 activate EditCommandParser
 
 EditCommandParser -> EditCommandParser : validateFlags()

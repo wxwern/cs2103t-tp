@@ -159,88 +159,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### `Recruiter`-`Organization` link
-
-#### Overview
-
-There are two types of contacts in Jobby - `Recruiter` and `Organization`.
-
-Each recruiter can only be linked to zero or one organization while an organization can be linked to multiple recruiters. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
-
-#### Implementing the parent-child relationship
-
-For the `Contact` class:
-  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
-
-<br>
-
-For the `Recruiter` class:
-  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
-
-  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
-
-<br>
-
-For the `Organization` class:
-  * The organization does not maintain a direct list of recruiters linked to it.
-
-  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
-
-<br>
-
-Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
-
-**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
-
-**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
-
-**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
-
-<img src="images/AddRecruiterActivityDiagram.png" width=600 />
-
-**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
-
-#### Editing and deleting the linked contacts
-
-Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
-
-As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
-
-When **editing** the `Organization`:
-  * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
-
-<br>
-
-When **editing** the `Recruiter`:
-  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
-
-  * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
-
-  * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
-
-<br>
-
-The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
-
-#### Storing the `Recruiter`-`Organization` link
-
-Since only the recruiter stores a direct link to its parent organization, it is sufficient to store this link in the `JsonAdaptedContact` of a recruiter.
-
-As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
-
-Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
-
-#### Design Considerations
-
-**Aspect: How `Recruiter` and `Organization` are being linked**
-
-  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
-    * Pros: Adheres to AB3's immutability of contacts.
-    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
-  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
-    * Pros: Computationally less expensive and easier to deal with.
-    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
-
 ### Command Autocompletion
 
 #### Overview
@@ -324,92 +242,11 @@ Jobby's Command Autocompletion to provide context-aware suggestions to users, wh
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
 
+### Adding Organization
 
-### \[Proposed\] Undo/redo feature
+#### Implementation
 
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th contact in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new contact. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the contact was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the contact being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Adding Organization
-
-#### Proposed Implementation
-
-The proposed AddOrganization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
+The add Organization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
 
 These operations are parsed in the `AddCommandParser` class, where the user inputs e.g. `add --org --name Google` will be handled and saved into the JSON database and displayed in the GUI.
 
@@ -428,6 +265,88 @@ Step 3. When the user want decide to add more information regarding the Organiza
 * **Alternative 1 (current choice):** Adds the Organization with a JSON's key 'type': "Organization"
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
+
+### `Recruiter`-`Organization` link
+
+#### Overview
+
+There are two types of contacts in Jobby - `Recruiter` and `Organization`.
+
+Each recruiter can only be linked to zero or one organization while an organization can be linked to multiple recruiters. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
+
+#### Implementing the parent-child relationship
+
+For the `Contact` class:
+  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+
+<br>
+
+For the `Recruiter` class:
+  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
+
+  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
+
+<br>
+
+For the `Organization` class:
+  * The organization does not maintain a direct list of recruiters linked to it.
+
+  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
+
+<br>
+
+Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
+
+**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
+
+**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
+
+**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
+
+<img src="images/AddRecruiterActivityDiagram.png" width=600 />
+
+**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
+
+#### Editing and deleting the linked contacts
+
+Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
+
+As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
+
+When **editing** the `Organization`:
+  * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
+
+<br>
+
+When **editing** the `Recruiter`:
+  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
+
+  * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
+
+  * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
+
+<br>
+
+The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
+
+#### Storing the `Recruiter`-`Organization` link
+
+Since only the recruiter stores a direct link to its parent organization, it is sufficient to store this link in the `JsonAdaptedContact` of a recruiter.
+
+As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
+
+Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
+
+#### Design Considerations
+
+**Aspect: How `Recruiter` and `Organization` are being linked**
+
+  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
+    * Pros: Adheres to AB3's immutability of contacts.
+    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
+  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
+    * Pros: Computationally less expensive and easier to deal with.
+    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
 
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
@@ -507,6 +426,11 @@ The following sequence diagram shows how Jobby sorts contacts or job application
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix A: Requirements**
+
+This section documents the requirements of Jobby. This consists of:
+* The [scope](#product-scope) of the product
+* The [user stories](#user-stories) and [use cases](#use-cases) that are relevant to Jobby.
+* [Non-functional requirements](#non-functional-requirements)
 
 ### Product scope
 
@@ -729,7 +653,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1d1. Jobby shows 0 matched result.
     
       Use case ends.
-
+      
 
 **Use case: UC09 - Sort data**
 
@@ -776,7 +700,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -786,9 +709,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
 6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
-
-
-*{More to be added}*
 
 ### Glossary
 
@@ -918,6 +838,8 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix C: Planned Enhancements**
 
+This section documents the enhancements that will be added to Jobby in the future.
+
 ### Do checks to ensure that old data is not the same as new data when editing data.
 
 Currently, Jobby sometimes allow editing of data such that the old data to be replaced with has the same contents as the new data.
@@ -966,8 +888,6 @@ This can be done with a simple fix. Every command alreadly has a list of flags t
 At the command parsing level, add additional checks against the list of flags provided by the command to ensure that every flag present in the command is applicable to the command used.
 
 <img src="images/enhancements/FlagChecker.png">
-
-Note: Due to the limitations of PlantUML, `--application 1 --name Jay --title SWE` is interpreted as: ~~application 1~~ name Jay --title SWE
 
 ### Better Formatting for Contacts
 
