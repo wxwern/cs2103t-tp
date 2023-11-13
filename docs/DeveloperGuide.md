@@ -36,7 +36,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +68,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+**API Reference** : [`Ui.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,7 +85,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API Reference** : [`Logic.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -169,7 +169,7 @@ How autocompletion works:
 For full details of the autocomplete design and implementation, refer to the [Command Autocompletion Internals](#command-autocompletion-internals) section.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API Reference** : [`Model.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -190,7 +190,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API Reference** : [`Storage.java`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -426,23 +426,21 @@ Accessing the partial command is useful if you'd like to change the results base
 
 #### Partitioning Command Strings
 
-The `PartitionedCommand` class is a simple wrapper for a command string that has been partitioned into its constituent parts, specifically for the purposes of autocomplete.
+The `PartitionedCommand` class is a simple class for quick access for a command string's constituent parts, specifically for the purposes of autocomplete. This is done simply by initializing it with a partial command string.
 
 **API Reference:** [PartitionedCommand.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/PartitionedCommand.java)
 
-Most notably, it is capable of separating a command into these fundamental parts:
+For example, given the partial command "`add --org --name Alice --oid ama`", you will be able to extract the partitions in the following forms:
 
-```
-[command name] [middle, untouched text] [autocompletable text]
-```
+| Command Name |        Middle Text         | Autocompletable Text |
+|:------------:|:--------------------------:|:--------------------:|
+|    `add`     | `--org --name Alice --oid` |        `ama`         |
 
-For example, given the partial command "`add --org --name Alice --oid ama`", the partitioned command would be:
+|          Leading Text          | Trailing Text |
+|:------------------------------:|:-------------:|
+| `add --org --name Alice --oid` |     `ama`     |
 
-```
-[add] [--rec --name Alice --oid ] [ama]
-```
-
-It also provides other quick access properties which can be found in the API reference.
+There are also helper methods to detect flag strings and other properties of the command, which can be found in the API reference.
 
 #### The Autocomplete Supplier
 
@@ -490,24 +488,37 @@ Once initialized, users can simply call the `#generateCompletions(command, model
 
 **API Reference:** [AutocompleteGenerator.java](https://github.com/ay2324s1-cs2103t-w08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/AutocompleteGenerator.java)
 
-##### High-level Internal Implementation
+##### Execution Flow
 
 Internally, whenever requested, the `AutocompleteGenerator`:
 1. obtains a command's parts with `PartitionedCommand`,
-2. uses the given supplier to obtain the results based on the available parts, 
+2. uses the `AutocompleteSupplier` provided when initialized to obtain the results based on the available parts, 
 3. automatically performs fuzzy (subsequence) matching to filter results, 
 4. ranks them based on their relevance, 
 5. and finally returns a stream of autocompleted commands.
 
-#### Design Considerations
+### Design Considerations
 
 When designing the Autocomplete feature, important considerations include the ability to flexibly define and craft new constraints based on heuristically determined rules.
 
-By abstracting away all operations into simple components like sets and constraints, the current carefully crafted design allows
-Jobby's Command Autocompletion to provide context-aware suggestions to users, while adhering to simple constraints defined on a per command basis.
+By abstracting away all operations into simple components like sets and constraints, the current carefully crafted design allows Jobby's Command Autocompletion to provide context-aware suggestions to users, while adhering to simple constraints defined on a per command basis.
 
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
+
+#### Alternatives Considered
+
+##### Alternative 1: Using Hardcoded Rules in Java
+
+One obvious alternative is to simply the possible autocompletion results for each command in standard Java. We may achieve this by manually checking against a command string for each command type, and using existing tokenization classes like `ArgumentTokenizer` and `ArgumentMultimap`. 
+
+While this would incur less overhead in initial development time, more explicit coding is required - it is neither quick to write nor scalable to tons of commands. This is especially important as autocomplete was developed in parallel with other new features being added to Jobby, which would require constant changes to the autocomplete rules.
+
+##### Alternative 2: Using a Graph-based Approach
+
+A graph based approach, e.g., having a tree structure to define constraints and dependencies, may be more efficient than the current solution (which has to check against _all_ known rules every single time). 
+
+However, it will consume even more development time to implement and model the rules as a graph. Since the current implementation involves one set with a list of constraints, multiple sets can be combined by simply concatenation of both the items and the constraints.
 
 ### \[Proposed\] Undo/redo feature
 
