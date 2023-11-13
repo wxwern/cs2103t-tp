@@ -754,9 +754,9 @@ Reminds you of upcoming deadlines for job applications.
   There will be sample data generated on launch. 
   * Alternatively, you can move the data folder somewhere else if you still want to keep the data.
 
-##### _I am currently facing an issue with Jobby._
-* We would like to hear the details of the issue that you are having. 
-  You can report the bugs through our [bug tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
+##### _I am currently facing issues with Jobby._
+* We would like to hear the details of the issues that you are having. 
+  You can report them through our [bug tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
 
 ##### _I would like to suggest a new feature for Jobby._
 * We are always looking for suggestions to improve Jobby! 
