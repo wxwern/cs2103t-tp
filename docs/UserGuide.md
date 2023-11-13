@@ -184,18 +184,18 @@ Here is how you can use [`apply`](#applying-to-organizations---apply) command to
 You have successfully added your job application to **Google**!
 
 **Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
-basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby Section](#using-jobby) to understand
-the command structure of Jobby, or visit [Features Section](#features) to see the full capabilities of Jobby!
+basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby](#using-jobby) section to understand
+Jobby's command structures, or visit the [Features](#features) section to see the full capabilities of Jobby!
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Using Jobby
 
-This section explains the details of how we can interact with Jobby.
+This section explains how we can understand and interact with Jobby via commands.
 
 If you're looking for the list of available commands, check out the [Features](#features) section instead.
 
-### Command Structure
+### Understanding the Command Structure
 
 <span class="learning-outcome pill">:trophy: How to understand and write Jobby commands</span> <span class="beginner pill">Beginner</span>
 
@@ -227,11 +227,11 @@ Any extra parameters and values to commands that don't accept them will either b
 
 </div>
 
-### Command Explanations
+### Reading Command Formats
 
-<span class="learning-outcome pill">:trophy: How to interpret this guide's command explanations</span> <span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to interpret Jobby-formatted command explanations</span> <span class="beginner pill">Beginner</span>
 
-Throughout this guide, you will find symbols and placeholders used to describe a command format. They are:
+Throughout this guide and within Jobby itself, you will find symbols and placeholders used to describe a command format. They are:
 
 * **Words in `UPPER_CASE`**
 
@@ -259,9 +259,16 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 
   * e.g., `[--tag TAG]...`{:.language-sh} means `--tag`{:.language-sh} and its value can be repeated from 0 to any number of times.
 
+* **Terms surrounded by `<` and `>`**
+
+  * A high level description of the parameter or option.
+
+  * e.g., if will see something like `< add some text here >`, which means you should replace it with your own text.
+
+Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a--acceptable-values-for-parameters) later.
 
 
-### Command Autocomplete
+### Autocompleting Commands
 
 <span class="learning-outcome pill">:trophy: How to use Jobby's command autocompletion</span> <span class="beginner pill">Beginner</span>
 
