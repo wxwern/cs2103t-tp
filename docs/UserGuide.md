@@ -695,7 +695,7 @@ Shows a message explaining how to access the help page.
 clear
 ```
 
-Clears all data from your <span class="jobby-data-class pill">Contacts</span> and <span class="jobby-data-class pill">Job Applications</span>.
+Clears all <span class="jobby-data-class">Contact</span> and <span class="jobby-data-class">Job Application</span> data from Jobby.
 
 
 ### Exiting the program - `exit`
