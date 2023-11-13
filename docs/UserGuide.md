@@ -478,17 +478,12 @@ Edits the given job application according to the parameters given.
 | `edit --application 1`{:.language-sh}                       | None of the fields to edit are given. |
 | `edit --application 1 --by 31-31-2023`{:.language-sh}       | The date is invalid.                  |
 
-
-### Deleting data - `delete`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
-
-The `delete` command allows you to delete contacts and job applications if they are no longer relevant. To learn more about deleting a contact or application, check out the sections below.
-
-#### Deleting contacts - `delete`
+### Deleting contacts - `delete`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
 <span class="learning-outcome pill">:trophy: How to delete contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
 ##### Format
 ```sh
@@ -512,9 +507,12 @@ Deletes the contact at the given `INDEX` or `ID`.
 |------------------------|---------------------------------------------------------------------|
 | `delete 0`             | Invalid index, as index starts from 1.                              |
 
-#### Deleting job applications - `delete --application`{:.language-sh}
+### Deleting job applications - `delete --application`{:.language-sh}
+<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
 
 <span class="learning-outcome pill">:trophy: Able to delete job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+<span class="danger pill">:warning: The deletion of data is permanent and there is no way to undo it.</span>
 
 ##### Format
 ```sh
