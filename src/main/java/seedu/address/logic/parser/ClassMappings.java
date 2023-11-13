@@ -27,8 +27,14 @@ public class ClassMappings {
     public static final Map<Class<? extends Command>, Optional<Class<? extends Parser<? extends Command>>>>
             COMMAND_TO_PARSER_MAP = getCommandToParserMap();
 
-    private ClassMappings() { } // Should not be initialized.
-
+    /**
+     * Creates and returns an ordered map of command classes as keys, and optionally their corresponding parsers
+     * if they accept arguments.
+     *
+     * <p>
+     * Developer's note: This method may be modified to include support for new commands.
+     * </p>
+     */
     private static Map<Class<? extends Command>, Optional<Class<? extends Parser<? extends Command>>>>
         getCommandToParserMap() {
 
@@ -58,16 +64,32 @@ public class ClassMappings {
         return orderedMap;
     }
 
+    /**
+     * This is a helper method to validate whether the given map of commands and parsers meet the expected
+     * specifications.
+     *
+     * <ul>
+     *     <li>All commands must have a command word.</li>
+     *     <li>All commands must either have a parser that can initialize with no arguments, or itself be initalized
+     *     with no-arguments</li>
+     * </ul>
+     *
+     * <p>
+     *     This method's purpose for validating the specifications is because we would be retrieving values
+     *     directly via Java's Reflection API and initializing the instances that way, which does not have compile time
+     *     checks. Adding an assertion to ensure this works helps validate that no programmer error has slipped by.
+     * </p>
+     */
     private static boolean isCommandToParserMapOperational(
             Map<Class<? extends Command>, Optional<Class<? extends Parser<? extends Command>>>> map
     ) {
         try {
-            // Assert that no programmer error slips by,
-            // since we're utilizing reflections to obtain values and initialize classes.
             for (var entry: map.entrySet()) {
 
                 // We must have a command word for every command.
-                assert Command.getCommandWord(entry.getKey()).isPresent();
+                assert Command.getCommandWord(entry.getKey()).isPresent()
+                        : "All commands must have COMMAND_WORD set, but "
+                        + entry.getKey().getSimpleName() + " does not!";
 
                 if (entry.getValue().isPresent()) {
                     // If there's a parser class, we must be able to initialize them with no args without errors.

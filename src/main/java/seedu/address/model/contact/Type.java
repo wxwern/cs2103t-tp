@@ -1,19 +1,23 @@
 package seedu.address.model.contact;
 
-import seedu.address.model.contact.exceptions.InvalidContactTypeStringException;
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.util.EnumUtil;
 
 /**
  * Represents the type of {@code Contact} instances.
  */
 public enum Type {
-    ORGANIZATION("organization"),
-    RECRUITER("recruiter"),
-    UNKNOWN("unknown");
 
+    ORGANIZATION("organization"),
+    RECRUITER("recruiter");
+
+    public static final String MESSAGE_CONSTRAINTS = "Contact type must be 'organization' or 'recruiter'.";
 
     private final String textRepresentation;
 
     Type(String textRepresentation) {
+        requireNonNull(textRepresentation);
         this.textRepresentation = textRepresentation;
     }
 
@@ -29,21 +33,24 @@ public enum Type {
     }
 
     /**
-     * Returns a corresponding {@code ContactType} enum value matching the given string representation of it.
+     * Returns a corresponding {@code ContactType} enum value matching the given text representation of it.
      *
      * @param textRepresentation The text representation of the {@code ContactType}.
      * @return The corresponding {@code ContactType}.
-     * @throws InvalidContactTypeStringException if the given input does not represent any known {@code ContactType}.
+     * @throws IllegalArgumentException if the given input does not represent any known {@code ContactType}.
      */
-    public static Type fromString(String textRepresentation) {
-        for (Type type : Type.values()) {
-            if (type.textRepresentation.equalsIgnoreCase(textRepresentation)) {
-                return type;
-            }
-        }
-        return UNKNOWN;
-        // TODO: We should throw an exception instead like the below. We are using UNKNOWN for now for compatibility.
-        // throw new InvalidContactTypeStringException(textRepresentation);
+    public static Type fromString(String textRepresentation) throws IllegalArgumentException {
+        return EnumUtil.lookupByToString(Type.class, textRepresentation);
+    }
+
+    /**
+     * Verifies if the given input is a valid contact type.
+     *
+     * @param textRepresentation The text representation of the {@code Type}.
+     * @return Whether the contact type matches a known value.
+     */
+    public static boolean isValidType(String textRepresentation) {
+        return EnumUtil.hasMatchingToString(Type.class, textRepresentation);
     }
 
 }

@@ -18,7 +18,6 @@ import seedu.address.model.jobapplication.JobApplication;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
     Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = contact -> true;
     Predicate<Contact> PREDICATE_SHOW_ONLY_ORGANIZATIONS = contact -> contact.getType() == Type.ORGANIZATION;
     Predicate<Contact> PREDICATE_SHOW_ONLY_RECRUITERS = contact -> contact.getType() == Type.RECRUITER;
@@ -141,7 +140,7 @@ public interface Model {
     Contact getContactByIdXorIndex(Id id, Index index) throws IllegalValueException;
 
     /**
-     * Replaces the old {@code JobApplication} with the new {@code JobApplication}
+     * Replaces the old {@code JobApplication} with the new {@code JobApplication}.
      */
     void replaceApplication(JobApplication oldApplication, JobApplication newApplication) throws IllegalValueException;
 
@@ -151,18 +150,21 @@ public interface Model {
     void deleteApplication(JobApplication application) throws IllegalValueException;
 
 
-    /** Returns an unmodifiable view of the displayed contact list */
+    /** Returns an unmodifiable view of the displayed contact list. */
     ObservableList<Contact> getDisplayedContactList();
 
     /**
-     * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Updates the filtered contact list to filter by the given {@code predicate}. May not be null.
      */
     void updateFilteredContactList(Predicate<Contact> predicate);
 
+    /**
+     * Updates the sorted contact list to sort by the given {@code comparator}. May be null to disable sorting.
+     */
     void updateSortedContactList(Comparator<Contact> comparator);
 
-    /** Returns an unmodifiable view of the filtered application list */
+
+    /** Returns an unmodifiable view of the displayed application list. */
     ObservableList<JobApplication> getDisplayedApplicationList();
 
     void updateSortedApplicationList(Comparator<JobApplication> comparator);

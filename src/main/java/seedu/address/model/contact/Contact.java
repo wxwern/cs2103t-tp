@@ -19,7 +19,6 @@ import seedu.address.model.tag.Tag;
  * Guarantees: name and id are present and not null, field values are immutable and if present, are validated.
  */
 public abstract class Contact {
-    public static final String MESSAGE_MISSING_TYPE = "There is no type specified for this Contact";
 
     // Identity fields
     private final Name name;

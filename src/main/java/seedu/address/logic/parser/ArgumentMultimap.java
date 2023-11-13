@@ -19,7 +19,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ArgumentMultimap {
 
-    /** Flags mapped to their respective arguments. **/
+    /** Flags mapped to their respective values. **/
     private final Map<Flag, List<String>> argMultimap = new HashMap<>();
 
     /** The preamble value (the text before the first valid flag). **/
@@ -112,10 +112,19 @@ public class ArgumentMultimap {
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
     public List<String> getAllValues(Flag flag) {
-        if (!argMultimap.containsKey(flag)) {
-            return new ArrayList<>();
+        // Attempt to look up the flag as is
+        if (argMultimap.containsKey(flag)) {
+            return new ArrayList<>(argMultimap.get(flag));
         }
-        return new ArrayList<>(argMultimap.get(flag));
+
+        // Attempt to search for the alias-only version as fallback
+        Flag aliasOnlyDefinition = flag.getAliasOnlyDefinition();
+        if (argMultimap.containsKey(aliasOnlyDefinition)) {
+            return new ArrayList<>(argMultimap.get(aliasOnlyDefinition));
+        }
+
+        // No results found
+        return new ArrayList<>();
     }
 
     /**
@@ -127,11 +136,11 @@ public class ArgumentMultimap {
 
     /**
      * Throws a {@code ParseException} if any of the flags given in {@code flags} appeared more than
-     * once among the arguments.
+     * once among the arguments, i.e., the given flags may only be used once each.
      */
     public void verifyNoDuplicateFlagsFor(Flag... flags) throws ParseException {
         Flag[] duplicatedFlags = Stream.of(flags).distinct()
-                .filter(flag -> argMultimap.containsKey(flag) && argMultimap.get(flag).size() > 1)
+                .filter(flag -> getAllValues(flag).size() > 1)
                 .toArray(Flag[]::new);
 
         if (duplicatedFlags.length > 0) {
@@ -141,7 +150,7 @@ public class ArgumentMultimap {
 
     /**
      * Throws a {@code ParseException} if there exists any more flags than the ones given in {@code flags}
-     * among the ones put in this map.
+     * among the ones put in this map, i.e., the given flags are the maximally allowed set of flags.
      */
     public void verifyNoExtraneousFlagsOnTopOf(Flag... flags) throws ParseException {
         List<Flag> referenceFlagsList = List.of(flags);
@@ -157,7 +166,7 @@ public class ArgumentMultimap {
 
     /**
      * Throws a {@code ParseException} if any of the flags given in {@code flags} have a non-empty value
-     * assigned to it.
+     * assigned to it, i.e., the given flags must be empty and not have values set.
      */
     public void verifyAllEmptyValuesAssignedFor(Flag... flags) throws ParseException {
         Flag[] flagsWithUsefulValues = Stream.of(flags).distinct()
@@ -172,11 +181,11 @@ public class ArgumentMultimap {
 
     /**
      * Throws a {@code ParseException} if there are more than one of the given {@code flags} simultanouesly
-     * put in this map, i.e., they cannot be used together.
+     * put in this map, i.e., the given flags cannot be used together.
      */
     public void verifyAtMostOneOfFlagsUsedOutOf(Flag... flags) throws ParseException {
         Flag[] existingFlags = Stream.of(flags).distinct()
-                .filter(flag -> argMultimap.containsKey(flag) && argMultimap.get(flag).size() > 0)
+                .filter(flag -> getAllValues(flag).size() > 0)
                 .toArray(Flag[]::new);
 
         if (existingFlags.length > 1) {
