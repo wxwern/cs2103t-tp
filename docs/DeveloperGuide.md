@@ -16,6 +16,8 @@ title: Developer Guide
 * Jobby base UI adapted from: [AddressBook Level-3](https://se-education.org/addressbook-level3/)
 * Autocompletion base UI adapted from: [@floralvikings's AutoCompleteTextBox.java](https://gist.github.com/floralvikings/10290131)
 
+* New user tutorial structure inspired from: [AY2324S1-CS2103T-T17-03](https://ay2324s1-cs2103t-t17-3.github.io/tp/UserGuide.html)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
