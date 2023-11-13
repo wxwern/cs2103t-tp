@@ -22,7 +22,7 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/cj-lee01.png" width="200px">
 
 [[github](https://github.com/CJ-Lee01)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/cj-lee01.md)]
 
 * Role: Member
 
