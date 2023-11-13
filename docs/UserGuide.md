@@ -322,8 +322,10 @@ The `add` command allows you to create contacts to track details about the organ
 ```sh
 add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Adds an organization contact with the details given to the command.
 
 * If an `ID` is not specified, one will be automatically generated.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -350,10 +352,11 @@ add --org --name NAME [--id ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--
 ```sh
 add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Adds a recruiter contact with the details given to the command.
 
-* When adding in parameters, be aware of the [accepted parameters](#appendix-a-acceptable-values-for-parameters).
 * If an `ID` is not specified, one will be automatically generated.
 * To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Sample demonstration
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
@@ -389,6 +392,9 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 ```sh
 edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...
 ```
+Edits the given contact according to the parameters given.
+* You can supply more than one parameter to change multiple details of a contact in one command.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -414,6 +420,8 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 ```sh
 apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-YYYY] [--stage APPLICATION STAGE: resume | online assessment | interview] [--status STATUS: pending | offered | accepted | turned down]
 ```
+Applies to the given organization by creating a job application associated with it.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -440,6 +448,10 @@ apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE: DD-MM-Y
 ```sh
 edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]
 ```
+
+Edits the given job application according to the parameters given.
+* You can supply more than one parameter to change multiple details of an application in one command.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -470,7 +482,9 @@ edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADL
 ```sh
 delete INDEX/ID [--recursive]
 ```
+Deletes the contact at the given `INDEX` or `ID`.
 * `--recursive` flag deletes the associated recruiter contacts and internship applications if the contact to delete is an organization.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -494,6 +508,8 @@ delete INDEX/ID [--recursive]
 ```sh
 delete --application INDEX
 ```
+Deletes the job application at the given `INDEX`.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
@@ -542,7 +558,9 @@ Lists all contacts. If you provide a parameter, the contacts listed will be only
 ```sh
 find KEYWORD/ID...
 ```
-* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
+
+Finds and lists the contacts containing the given `KEYWORD` or contact with the given `ID`.
+* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
