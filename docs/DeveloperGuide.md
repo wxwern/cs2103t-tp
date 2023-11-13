@@ -347,7 +347,7 @@ Since the organization has to be added to the `AddressBook` before any recruiter
   * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
     * Pros: Computationally less expensive and easier to deal with.
     * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
-    
+
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
 
@@ -399,6 +399,11 @@ The following sequence diagram shows how job applications are added to Jobby
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix A: Requirements**
+
+This section documents the requirements of Jobby. This consists of:
+* The [scope](#product-scope) of the product
+* The [user stories](#user-stories) and [use cases](#use-cases) that are relevant to Jobby.
+* [Non-functional requirements](#non-functional-requirements)
 
 ### Product scope
 
@@ -601,9 +606,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
       Use case ends.
 
-
-*{More to be added}*
-
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -612,9 +614,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
 6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
-
-
-*{More to be added}*
 
 ### Glossary
 
@@ -743,6 +742,8 @@ testers are expected to do more *exploratory* testing.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix C: Planned Enhancements**
+
+This section documents the enhancements that will be added to Jobby in the future.
 
 ### Do checks to ensure that old data is not the same as new data when editing data.
 
