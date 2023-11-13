@@ -65,10 +65,10 @@ title: User Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div class="reset-page-break-defaults" markdown="1">
 
 ## Navigating the Guide
 
+<div class="reset-page-break-defaults" markdown="1">
 
 ### Code blocks for entering commands
 
@@ -116,6 +116,9 @@ Jobby comes equipped with a user interface that provides visual feedback to you.
 --------------------------------------------------------------------------------------------------------------------
 ## Jobby Tutorial (for new users)
 
+<div class="reset-page-break-defaults" markdown="1">
+
+
 Hello and welcome to Jobby! We are delighted that you've chosen our platform to track your internship application process!
 
 Before we begin, please ensure that you have viewed the following sections of the guide:
@@ -141,6 +144,8 @@ If you wish to continue following our guide to learn the basic operations of Job
 2. press **ENTER**
 
 Solid! Now it's time to get started with Jobby!
+
+</div>
 
 ### Adding your first Organization
 
