@@ -552,34 +552,33 @@ Lists all contacts. If you provide a parameter, the contacts listed will be only
 ### Searching contacts - `find`
 <div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
 
-<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by keyword</span> <span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
-find KEYWORD/ID...
+find KEYWORD...
 ```
 
-Finds and lists the contacts containing the given `KEYWORD` or contact with the given `ID`.
-* If you wish to know more about the requirements for each parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
+Finds the contacts whose `NAME` or `ID` contains the given `KEYWORD`.
+* You can supply multiple keywords as long as they are separated by [whitespace](#glossary).
+* If you wish to know more about the requirements for the parameter, check out the [given appendix](#appendix-a-acceptable-values-for-parameters).
 
 ##### Valid examples
 
 | Command           | Reason                                                                                              |
 |-------------------|-----------------------------------------------------------------------------------------------------|
-| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#glossary) "jo".      |
-| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
-| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
+| `find jo`         | Finds contacts whose `NAME` or `ID` contains the [substring](#glossary) "jo".      |
+| `find 1231`       | Finds contacts whose `NAME` or `ID` contains the substring "1231".                 |
+| `find alex david` | Finds contacts whose `NAME` or `ID` contains the substring "alex" or "david".      |
 
 ##### Rules
 <span class="intermediate pill">Intermediate</span>
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans` and `1231` will match `id_1231`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
-* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 
 ### Sorting data - `sort`
