@@ -2,14 +2,15 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.util.EnumUtil;
+
 /**
  * The different stages of internship application.
  */
 public enum ApplicationStage {
     RESUME("resume"),
     ONLINE_ASSESSMENT("online assessment"),
-    INTERVIEW("interview"),
-    UNKNOWN("unknown");
+    INTERVIEW("interview");
 
     public static final ApplicationStage DEFAULT_STAGE = ApplicationStage.RESUME;
     public static final String MESSAGE_CONSTRAINTS = "Applications accept one of these values: resume | online "
@@ -31,22 +32,23 @@ public enum ApplicationStage {
     }
 
     /**
-     * Returns a corresponding {@code ApplicationStage} enum value matching the given string representation of it.
+     * Returns a corresponding {@code ApplicationStage} enum value matching the given text representation of it.
      *
      * @param textRepresentation The text representation of the {@code ApplicationStage}.
      * @return The corresponding {@code JobStatus}.
+     * @throws IllegalArgumentException if the text representation does not match any known values.
      */
     public static ApplicationStage fromString(String textRepresentation) {
-        for (ApplicationStage applicationStage : ApplicationStage.values()) {
-            if (applicationStage.textRepresentation.equalsIgnoreCase(textRepresentation)) {
-                return applicationStage;
-            }
-        }
-        return UNKNOWN;
-        // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
+        return EnumUtil.lookupByToString(ApplicationStage.class, textRepresentation);
     }
 
+    /**
+     * Verifies if the given input is a valid job application stage.
+     *
+     * @param textRepresentation The text representation of the {@code ApplicationStage}.
+     * @return Whether the application stage matches a known value.
+     */
     public static boolean isValidApplicationStage(String textRepresentation) {
-        return !ApplicationStage.fromString(textRepresentation).equals(UNKNOWN);
+        return EnumUtil.hasMatchingToString(ApplicationStage.class, textRepresentation);
     }
 }

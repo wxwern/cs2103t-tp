@@ -22,8 +22,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
-import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Address;
@@ -44,15 +44,15 @@ public abstract class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
-            AutocompleteDataSet.oneAmongAllOf(
+            AutocompleteItemSet.oneAmongAllOf(
                     FLAG_ORGANIZATION, FLAG_RECRUITER
             ).addDependents(
-                    AutocompleteDataSet.onceForEachOf(
+                    AutocompleteItemSet.onceForEachOf(
                             FLAG_NAME, FLAG_ID,
                             FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
                             FLAG_ORGANIZATION_ID
                     ),
-                    AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+                    AutocompleteItemSet.anyNumberOf(FLAG_TAG)
             ).addConstraints(List.of(
                     AutocompleteConstraint.where(FLAG_RECRUITER)
                             .isPrerequisiteFor(FLAG_ORGANIZATION_ID)

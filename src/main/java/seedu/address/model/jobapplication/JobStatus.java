@@ -2,6 +2,8 @@ package seedu.address.model.jobapplication;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.util.EnumUtil;
+
 /**
  * Information on the status of the job application: pending, rejected, offered, accepted, turned-down
  */
@@ -10,8 +12,7 @@ public enum JobStatus {
     REJECTED("rejected"),
     OFFERED("offered"),
     ACCEPTED("accepted"),
-    TURNED_DOWN("turned down"),
-    UNKNOWN("unknown");
+    TURNED_DOWN("turned down");
 
     public static final JobStatus DEFAULT_STATUS = JobStatus.PENDING;
 
@@ -35,22 +36,23 @@ public enum JobStatus {
     }
 
     /**
-     * Returns a corresponding {@code JobStatus} enum value matching the given string representation of it.
+     * Returns a corresponding {@code JobStatus} enum value matching the given text representation of it.
      *
      * @param textRepresentation The text representation of the {@code JobStatus}.
      * @return The corresponding {@code JobStatus}.
+     * @throws IllegalArgumentException if the text representation does not match any known values.
      */
     public static JobStatus fromString(String textRepresentation) {
-        for (JobStatus jobStatus : JobStatus.values()) {
-            if (jobStatus.textRepresentation.equalsIgnoreCase(textRepresentation)) {
-                return jobStatus;
-            }
-        }
-        return UNKNOWN;
-        // TODO: We should throw an exception instead. We are using UNKNOWN for now for compatibility.
+        return EnumUtil.lookupByToString(JobStatus.class, textRepresentation);
     }
 
-    public static boolean isValidJobStatus(String status) {
-        return !JobStatus.fromString(status).equals(UNKNOWN);
+    /**
+     * Verifies if the given input is a valid job status.
+     *
+     * @param textRepresentation The text representation of the {@code JobStatus}.
+     * @return Whether the job status matches a known value.
+     */
+    public static boolean isValidJobStatus(String textRepresentation) {
+        return EnumUtil.hasMatchingToString(JobStatus.class, textRepresentation);
     }
 }

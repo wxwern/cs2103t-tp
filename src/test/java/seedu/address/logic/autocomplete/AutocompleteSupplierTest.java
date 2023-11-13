@@ -10,8 +10,9 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
+import seedu.address.logic.autocomplete.components.PartitionedCommand;
 import seedu.address.logic.parser.Flag;
 
 public class AutocompleteSupplierTest {
@@ -37,8 +38,8 @@ public class AutocompleteSupplierTest {
         assertEquals(Set.of(FLAG_A, FLAG_B), supplier.getAllPossibleFlags());
 
         supplier = AutocompleteSupplier.from(
-                AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
-                AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+                AutocompleteItemSet.onceForEachOf(FLAG_A, FLAG_B),
+                AutocompleteItemSet.anyNumberOf(FLAG_C, FLAG_D)
         );
         assertEquals(Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D), supplier.getAllPossibleFlags());
     }
@@ -63,8 +64,8 @@ public class AutocompleteSupplierTest {
 
         // Mixed flags
         supplier = AutocompleteSupplier.from(
-                AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
-                AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+                AutocompleteItemSet.onceForEachOf(FLAG_A, FLAG_B),
+                AutocompleteItemSet.anyNumberOf(FLAG_C, FLAG_D)
         );
         assertEquals(
                 Set.of(FLAG_A, FLAG_B, FLAG_C, FLAG_D),
@@ -77,9 +78,9 @@ public class AutocompleteSupplierTest {
 
         // Mixed advanced combination.
         supplier = AutocompleteSupplier.from(
-                AutocompleteDataSet.concat(
-                        AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B),
-                        AutocompleteDataSet.anyNumberOf(FLAG_C, FLAG_D)
+                AutocompleteItemSet.concat(
+                        AutocompleteItemSet.onceForEachOf(FLAG_A, FLAG_B),
+                        AutocompleteItemSet.anyNumberOf(FLAG_C, FLAG_D)
                 ).addConstraints(List.of(
                         AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B), // A & B cannot coexist
                         AutocompleteConstraint.oneAmongAllOf(FLAG_B, FLAG_C) // B & C cannot coexist
@@ -111,9 +112,9 @@ public class AutocompleteSupplierTest {
     @Test
     public void getValidValues() {
         var supplier = new AutocompleteSupplier(
-                AutocompleteDataSet.concat(
-                        AutocompleteDataSet.onceForEachOf(FLAG_A, FLAG_B, FLAG_C),
-                        AutocompleteDataSet.anyNumberOf(FLAG_D)
+                AutocompleteItemSet.concat(
+                        AutocompleteItemSet.onceForEachOf(FLAG_A, FLAG_B, FLAG_C),
+                        AutocompleteItemSet.anyNumberOf(FLAG_D)
                 ).addConstraint(
                         AutocompleteConstraint.oneAmongAllOf(FLAG_A, FLAG_B) // A & B cannot coexist
                 ),

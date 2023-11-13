@@ -72,7 +72,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ContactListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -81,7 +81,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Contact` object residing in the `Model`.
 
 ### Logic component
 
@@ -126,12 +126,12 @@ How arguments from a raw command input may be obtained by parsers:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Contact` objects (which are contained in a `UniqueContactList` object).
+* stores the currently 'selected' `Contact` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Contact>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Contact` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Contact` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
@@ -253,7 +253,7 @@ It consists of several key components:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
-  - It takes an `AutocompleteDataSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It takes an `AutocompleteItemSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
 
 - **`AutocompleteGenerator`**:
@@ -272,9 +272,9 @@ It offers static factory methods for quickly defining common rulesets. Examples 
 - `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
 - `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
 
-#### `AutocompleteDataSet`
+#### `AutocompleteItemSet`
 
-The `AutocompleteDataSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+The `AutocompleteItemSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
 
 This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
 - `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
@@ -297,9 +297,9 @@ By taking in both the command and the app model, it is possible to specify arbit
 
 #### `AutocompleteSupplier`
 
-The `AutocompleteSupplier` leverages the capabilities of `AutocompleteDataSet` and `FlagValueSupplier`.
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet` and `FlagValueSupplier`.
 
-Internally, it uses `AutocompleteDataSet` to determine what flags can be added after a given set of flags has been used in a command.
+Internally, it uses `AutocompleteItemSet` to determine what flags can be added after a given set of flags has been used in a command.
 
 This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
 
@@ -693,10 +693,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 500 contacts (recruiters and organizations) and 1000 job applications without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
 
 
 *{More to be added}*

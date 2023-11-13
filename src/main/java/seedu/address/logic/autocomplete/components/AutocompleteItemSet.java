@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete.data;
+package seedu.address.logic.autocomplete.components;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A set of items that can be used for autocompletion with any corresponding constraints on them.
+ * A set of items that can be used for autocompletion. It stores any corresponding constraints on them in itself.
  *
  * <p>
  * Suppose a command already has specific items, and some items have restrictions such as being only able to
@@ -29,19 +29,19 @@ import java.util.stream.Collectors;
  * preservation of insertion order.
  * </p>
  */
-public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
+public final class AutocompleteItemSet<T> extends LinkedHashSet<T> {
 
     private final Set<AutocompleteConstraint<? super T>> constraints = new LinkedHashSet<>();
 
     /**
-     * Creates an empty {@link AutocompleteDataSet}.
+     * Creates an empty {@link AutocompleteItemSet}.
      */
-    public AutocompleteDataSet() {
+    public AutocompleteItemSet() {
         super();
     }
 
     /**
-     * Creates a {@link AutocompleteDataSet} with the given elements and constraints.
+     * Creates a {@link AutocompleteItemSet} with the given elements and constraints.
      *
      * <p>
      * This is mainly useful if your rules are complex. Otherwise, the convenience factory
@@ -56,7 +56,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * @see #oneAmongAllOf
      * @see #anyNumberOf
      */
-    private AutocompleteDataSet(
+    private AutocompleteItemSet(
             Collection<? extends T> collection,
             Collection<AutocompleteConstraint<? super T>> constraints
     ) {
@@ -65,47 +65,48 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
     }
 
     /**
-     * Creates an {@link AutocompleteDataSet} with the given elements,
+     * Creates an {@link AutocompleteItemSet} with the given elements,
      * and the constraint that each given element may exist at most once in a command.
      */
     @SafeVarargs
-    public static <T> AutocompleteDataSet<T> onceForEachOf(T... items) {
-        return new AutocompleteDataSet<T>(
+    public static <T> AutocompleteItemSet<T> onceForEachOf(T... items) {
+        return new AutocompleteItemSet<T>(
             List.of(items),
             List.of(AutocompleteConstraint.onceForEachOf(items))
         );
     }
 
     /**
-     * Creates an {@link AutocompleteDataSet} with the given elements,
+     * Creates an {@link AutocompleteItemSet} with the given elements,
      * and the constraint that only one of the given elements may exist in a command.
      */
     @SafeVarargs
-    public static <T> AutocompleteDataSet<T> oneAmongAllOf(T... items) {
-        return new AutocompleteDataSet<T>(
+    public static <T> AutocompleteItemSet<T> oneAmongAllOf(T... items) {
+        return new AutocompleteItemSet<T>(
                 List.of(items),
                 List.of(AutocompleteConstraint.oneAmongAllOf(items))
         );
     }
 
     /**
-     * Creates an {@link AutocompleteDataSet} with the given elements,
+     * Creates an {@link AutocompleteItemSet} with the given elements,
      * and the constraint that all given elements may exist any number of times in a command.
      */
     @SafeVarargs
-    public static <T> AutocompleteDataSet<T> anyNumberOf(T... items) {
-        return new AutocompleteDataSet<T>(
+    public static <T> AutocompleteItemSet<T> anyNumberOf(T... items) {
+        return new AutocompleteItemSet<T>(
                 List.of(items),
                 List.of()
         );
     }
 
     /**
-     * Concatenates all provided {@link AutocompleteDataSet}s.
+     * Concatenates all provided {@link AutocompleteItemSet}s. This includes merging all information between them,
+     * i.e., all items and constraints.
      */
     @SafeVarargs
-    public static <T> AutocompleteDataSet<T> concat(AutocompleteDataSet<T>... sets) {
-        return new AutocompleteDataSet<T>(
+    public static <T> AutocompleteItemSet<T> concat(AutocompleteItemSet<T>... sets) {
+        return new AutocompleteItemSet<T>(
                 Arrays.stream(sets).flatMap(Collection::stream).collect(Collectors.toList()),
                 Arrays.stream(sets).flatMap(s -> s.constraints.stream()).collect(Collectors.toList())
         );
@@ -114,8 +115,8 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
     /**
      * Returns a copy of the current instance.
      */
-    public AutocompleteDataSet<T> copy() {
-        return new AutocompleteDataSet<T>(this, constraints);
+    public AutocompleteItemSet<T> copy() {
+        return new AutocompleteItemSet<T>(this, constraints);
     }
 
 
@@ -126,9 +127,9 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * elements in {@code dependencies} to exist in a command.
      */
     @SafeVarargs
-    public final AutocompleteDataSet<T> addDependents(AutocompleteDataSet<T>... dependencies) {
+    public final AutocompleteItemSet<T> addDependents(AutocompleteItemSet<T>... dependencies) {
 
-        AutocompleteDataSet<T> mergedDependencies = AutocompleteDataSet.concat(dependencies);
+        AutocompleteItemSet<T> mergedDependencies = AutocompleteItemSet.concat(dependencies);
 
         // Create a dependency array
         // - The unchecked cast is required for generics since generic arrays cannot be made.
@@ -155,7 +156,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * @param constraint The constraint to add.
      * @return A reference to {@code this} instance, useful for chaining.
      */
-    public AutocompleteDataSet<T> addConstraint(AutocompleteConstraint<? super T> constraint) {
+    public AutocompleteItemSet<T> addConstraint(AutocompleteConstraint<? super T> constraint) {
         this.constraints.add(constraint);
         return this;
     }
@@ -166,7 +167,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * @param constraint The constraint to remove.
      * @return A reference to {@code this} instance, useful for chaining.
      */
-    public AutocompleteDataSet<T> removeConstraint(AutocompleteConstraint<? super T> constraint) {
+    public AutocompleteItemSet<T> removeConstraint(AutocompleteConstraint<? super T> constraint) {
         this.constraints.remove(constraint);
         return this;
     }
@@ -177,7 +178,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * @param constraints The constraints to add.
      * @return A reference to {@code this} instance, useful for chaining.
      */
-    public AutocompleteDataSet<T> addConstraints(Collection<AutocompleteConstraint<? super T>> constraints) {
+    public AutocompleteItemSet<T> addConstraints(Collection<AutocompleteConstraint<? super T>> constraints) {
         this.constraints.addAll(constraints);
         return this;
     }
@@ -188,7 +189,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * @param constraints The constraints to remove.
      * @return A reference to {@code this} instance, useful for chaining.
      */
-    public AutocompleteDataSet<T> removeConstraints(Collection<AutocompleteConstraint<? super T>> constraints) {
+    public AutocompleteItemSet<T> removeConstraints(Collection<AutocompleteConstraint<? super T>> constraints) {
         this.constraints.removeAll(constraints);
         return this;
     }
@@ -206,7 +207,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * Adds the item to the set.
      * Equivalent to {@link #add}, but returns {@code this}, so is useful for chaining.
      */
-    public AutocompleteDataSet<T> addElement(T e) {
+    public AutocompleteItemSet<T> addElement(T e) {
         this.add(e);
         return this;
     }
@@ -215,7 +216,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * Removes the item from the set.
      * Equivalent to {@link #remove}, but returns {@code this}, so is useful for chaining.
      */
-    public AutocompleteDataSet<T> removeElement(T e) {
+    public AutocompleteItemSet<T> removeElement(T e) {
         this.remove(e);
         return this;
     }
@@ -224,7 +225,7 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * Adds the items to the set.
      * Equivalent to {@link #addAll}, but returns {@code this}, so is useful for chaining.
      */
-    public AutocompleteDataSet<T> addElements(Collection<? extends T> e) {
+    public AutocompleteItemSet<T> addElements(Collection<? extends T> e) {
         this.addAll(e);
         return this;
     }
@@ -233,14 +234,14 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
      * Removes the items from the set.
      * Equivalent to {@link #removeAll}, but returns {@code this}, so is useful for chaining.
      */
-    public AutocompleteDataSet<T> removeElements(Collection<? extends T> e) {
+    public AutocompleteItemSet<T> removeElements(Collection<? extends T> e) {
         this.removeAll(e);
         return this;
     }
 
     /**
      * Returns the elements in this instance in a new {@link Set} instance.
-     * Properties like iteration order are preserved.
+     * Iteration order is preserved.
      */
     public Set<T> getElements() {
         return new LinkedHashSet<>(this);
@@ -266,11 +267,11 @@ public final class AutocompleteDataSet<T> extends LinkedHashSet<T> {
     public boolean equals(Object o) {
 
         // instanceof checks null implicitly.
-        if (!(o instanceof AutocompleteDataSet)) {
+        if (!(o instanceof AutocompleteItemSet)) {
             return false;
         }
 
-        AutocompleteDataSet<?> otherSet = (AutocompleteDataSet<?>) o;
+        AutocompleteItemSet<?> otherSet = (AutocompleteItemSet<?>) o;
 
         return super.equals(o) && this.constraints.equals(otherSet.constraints);
     }

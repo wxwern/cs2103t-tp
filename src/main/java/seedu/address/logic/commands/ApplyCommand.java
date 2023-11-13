@@ -15,7 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.contact.Contact;
@@ -37,7 +37,7 @@ public class ApplyCommand extends Command {
     public static final String COMMAND_WORD = "apply";
 
     public static final AutocompleteSupplier AUTOCOMPLETE_SUPPLIER = AutocompleteSupplier.from(
-            AutocompleteDataSet.onceForEachOf(
+            AutocompleteItemSet.onceForEachOf(
                     FLAG_TITLE, FLAG_DESCRIPTION,
                     FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS
             )

@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
+import seedu.address.logic.autocomplete.components.FlagValueSupplier;
+import seedu.address.logic.autocomplete.components.PartitionedCommand;
 import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
 
@@ -16,7 +18,7 @@ import seedu.address.model.Model;
  */
 public class AutocompleteSupplier {
 
-    private final AutocompleteDataSet<Flag> flags;
+    private final AutocompleteItemSet<Flag> flags;
     private final Map<Flag, FlagValueSupplier> values;
 
     /**
@@ -27,7 +29,7 @@ public class AutocompleteSupplier {
      * @param values  A map of auto-completable values for each flag that may be obtained via a model.
      */
     public AutocompleteSupplier(
-            AutocompleteDataSet<Flag> flags,
+            AutocompleteItemSet<Flag> flags,
             Map<Flag, FlagValueSupplier> values
     ) {
         // Create new copies to prevent external modification.
@@ -41,9 +43,9 @@ public class AutocompleteSupplier {
      *
      * @param flags The set of flags that should be used as part of the autocomplete results.
      *
-     * @see #AutocompleteSupplier(AutocompleteDataSet, Map)
+     * @see #AutocompleteSupplier(AutocompleteItemSet, Map)
      */
-    public static AutocompleteSupplier from(AutocompleteDataSet<Flag> flags) {
+    public static AutocompleteSupplier from(AutocompleteItemSet<Flag> flags) {
         return new AutocompleteSupplier(flags, Map.of());
     }
 
@@ -54,8 +56,8 @@ public class AutocompleteSupplier {
      * @param flagSets The sets of flags that should be used together as part of the autocomplete results.
      */
     @SafeVarargs
-    public static AutocompleteSupplier from(AutocompleteDataSet<Flag>... flagSets) {
-        return from(AutocompleteDataSet.concat(flagSets));
+    public static AutocompleteSupplier from(AutocompleteItemSet<Flag>... flagSets) {
+        return from(AutocompleteItemSet.concat(flagSets));
     }
 
     /**
@@ -67,7 +69,7 @@ public class AutocompleteSupplier {
      */
     public static AutocompleteSupplier fromUniqueFlags(Flag... uniqueFlags) {
         return AutocompleteSupplier.from(
-                AutocompleteDataSet.onceForEachOf(uniqueFlags)
+                AutocompleteItemSet.onceForEachOf(uniqueFlags)
         );
     }
 
@@ -80,7 +82,7 @@ public class AutocompleteSupplier {
      */
     public static AutocompleteSupplier fromRepeatableFlags(Flag... repeatableFlags) {
         return AutocompleteSupplier.from(
-                AutocompleteDataSet.anyNumberOf(repeatableFlags)
+                AutocompleteItemSet.anyNumberOf(repeatableFlags)
         );
     }
 
@@ -108,8 +110,7 @@ public class AutocompleteSupplier {
      *
      * @param flag The flag to check against. This may be null to represent the preamble.
      * @param currentCommand The current command structure. This should not be null.
-     * @param model The model to be supplied for generation. This may be null if model-data is not essential
-     *              for any purpose.
+     * @param model The model to be supplied for generation. This may be null if the model is unavailable.
      */
     public Optional<Stream<String>> getValidValues(Flag flag, PartitionedCommand currentCommand, Model model) {
         try {
@@ -129,7 +130,7 @@ public class AutocompleteSupplier {
      * Configures the set of flags within this autocomplete supplier using the given {@code operator}.
      * This also returns {@code this} instance, which is useful for chaining.
      */
-    public AutocompleteSupplier configureFlagSet(Consumer<AutocompleteDataSet<Flag>> operator) {
+    public AutocompleteSupplier configureFlagSet(Consumer<AutocompleteItemSet<Flag>> operator) {
         operator.accept(this.flags);
         return this;
     }
