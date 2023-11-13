@@ -324,11 +324,11 @@ Jobby's Command Autocompletion to provide context-aware suggestions to users, wh
 Most notably, it also allows for advanced rulesets to be specified in a human-readable fashion.
 Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS2103T-W08-3/tp/blob/c484696fe4c12d514ad3fb6a71ff2dfea089fe32/src/main/java/seedu/address/logic/commands/AddCommand.java#L47).
 
-### \[Proposed\] Adding Organization
+### Adding Organization
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed AddOrganization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
+The add Organization mechanism is facilitated by `AddOrganization`. It extends `AddContact`.
 
 These operations are parsed in the `AddCommandParser` class, where the user inputs e.g. `add --org --name Google` will be handled and saved into the JSON database and displayed in the GUI.
 
