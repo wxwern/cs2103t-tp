@@ -245,7 +245,7 @@ Throughout this guide, you will find symbols and placeholders used to describe a
 
   * These may be included in the parameter names or value description.
 
-  * e.g., `--a/--b`{:.language-sh} means either `--a`{:.language-sh} or `--b`{:.language-sh} but not `--a --b`{:.language-sh}.
+  * e.g., `--a / --b`{:.language-sh} means either `--a`{:.language-sh} or `--b`{:.language-sh} but not `--a --b`{:.language-sh}.
 
 * **Terms surrounded by `[` and `]`**
 
@@ -744,8 +744,8 @@ Exits the program.
 | **Delete Contact**   | `delete INDEX/ID [--recursive]`{:.language-sh} <br> e.g., `delete 3`, `delete id-55tg`                                                                                                                                                        |
 | **Edit Contact**     | `edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL] [--address ADDRESS] [--tag TAG]...`{:.language-sh}                                                                                                         |
 | **Find**             | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                     |
-| **List**             | `list [--org/--rec/--toapply]`{:.language-sh}                                                                                                                                                                                                 |
-| **Sort Contacts**    | `sort --address/--email/--id/--name/--phone/--url [--ascending/--descending]`{:.language-sh}                                                                                                                                                  |
+| **List**             | `list [--org / --rec / --toapply]`{:.language-sh}                                                                                                                                                                                                 |
+| **Sort Contacts**    | `sort --address / --email / --id / --name / --phone / --url [--ascending / --descending]`{:.language-sh}                                                                                                                                                  |
 
 ### Commands for Handling Job Applications
 
@@ -757,7 +757,7 @@ Exits the program.
 | **Delete Application** | `delete --application INDEX`{:.language-sh} <br> e.g., `delete --application 2`{:.language-sh}                                                                                                           |
 | **Edit Application**   | `edit --application INDEX [--title TITLE] [--description DESCRIPTION] [--by DEADLINE] [--status STATUS] [--stage STAGE]`{:.language-sh} <br> e.g., `edit --application 2 --title Analyst`{:.language-sh} |
 | **Apply**              | `apply INDEX/ID --title TITLE [--description DESCRIPTION] [--by DEADLINE] [--stage STAGE] [--status STATUS]`{:.language-sh}                                                               |
-| **Sort Applications**  | `sort --by/--stage/--stale/--status/--title [--ascending/--descending]`{:.language-sh}                                                                                                    |
+| **Sort Applications**  | `sort --by / --stage / --stale / --status / --title [--ascending / --descending]`{:.language-sh}                                                                                                    |
 
 ### Other Commands
 
