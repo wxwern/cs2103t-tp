@@ -224,7 +224,7 @@ This section describes some noteworthy details on how certain features are imple
 
 Jobby's Command Autocompletion is designed to provide users with intelligent command suggestions and offer autocompletion by analyzing the existing partial command input and the current application state.
 
-Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match. For instance, type "sort -tt" and press **TAB** to finish the command as "sort --title".
+Just like programming IDEs, a user may type a prefix subsequence of a long command part, and simply press **TAB** to finish the command using the suggested match. For instance, type `sort -tt` and press **TAB** to finish the command as `sort --title`.
 
 #### The Autocomplete Package
 
@@ -256,11 +256,11 @@ Autocompletion constraints are defined via the `AutocompleteConstraint<T>` funct
 ```java
 @FunctionalInterface
 public interface AutocompleteConstraint<T> {
-    boolean isAllowed(T input, Set<T> existingFlags);
+    boolean isAllowed(T input, Set<T> existingItems);
 }
 ```
 
-**API Reference:** [AutocompleteConstraint,java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteConstraint.java)
+**API Reference:** [AutocompleteConstraint.java](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/logic/autocomplete/components/AutocompleteConstraint.java)
 
 This interface can be thought of as a lambda function that takes in the *input item* and *existing items*, then returns a boolean value indicating whether the input should be allowed.
 
@@ -409,7 +409,7 @@ This is used by `AutocompleteGenerator` to generate suggestions later.
 
 The `AutocompleteGenerator` is the final stage of the autocompletion generation process.
 
-It supports generating results based on those supplied by an `AutocompleteSupplier`, or any arbitrary `Supplier<Stream<String>`, and generates autocomplete suggestions.
+It supports generating results based on those supplied by an `AutocompleteSupplier`, or any arbitrary `Supplier<Stream<String>>`, and generates autocomplete suggestions.
 
 Once initialized, users can simply call the `#generateCompletions(command, model)` method to receive suggestions from their partial command input. It's that easy!
 
@@ -437,7 +437,7 @@ Take a look at [AddCommand#AUTOCOMPLETE_SUPPLIER](https://github.com/AY2324S1-CS
 
 ###### Alternative 1: Using Hardcoded Rules in Java
 
-One obvious alternative is to simply the possible autocompletion results for each command in standard Java. We may achieve this by manually checking against a command string for each command type, and using existing tokenization classes like `ArgumentTokenizer` and `ArgumentMultimap`. 
+One obvious alternative is to simply compute the possible autocompletion results for each command in standard Java. We may achieve this by manually checking against a command string for each command type, and using existing tokenization classes like `ArgumentTokenizer` and `ArgumentMultimap`. 
 
 While this would incur less overhead in initial development time, more explicit coding is required - it is neither quick to write nor scalable to tons of commands. This is especially important as autocomplete was developed in parallel with other new features being added to Jobby, which would require constant changes to the autocomplete rules.
 
@@ -445,7 +445,7 @@ While this would incur less overhead in initial development time, more explicit 
 
 A graph based approach, e.g., having a tree structure to define constraints and dependencies, may be more efficient than the current solution (which has to check against _all_ known rules every single time). 
 
-However, it will consume even more development time to implement and model the rules as a graph. Since the current implementation involves one set with a list of constraints, multiple sets can be combined by simply concatenation of both the items and the constraints.
+However, it will consume even more development time to implement and model the rules as a graph. Since the current implementation involves one set with a list of constraints, multiple sets can be combined by simple concatenation of both the items and the constraints.
 
 ### Adding Organization
 
