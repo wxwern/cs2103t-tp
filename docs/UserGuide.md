@@ -347,7 +347,7 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 * The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is associated to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
 
 <div style="text-align: center;">
-<img src="images/add_recruiter_success.png" width=400 />
+<img src="images/add_recruiter_success.png" width=500 />
 </div>
 
 ##### Valid examples
