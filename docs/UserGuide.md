@@ -3,8 +3,6 @@ layout: page
 title: User Guide
 ---
 
---------------------------------------------------------------------------------------------------------------------
-
 ## Introduction
 
 <div class="reset-page-break-defaults" markdown="1">
