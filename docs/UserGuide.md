@@ -263,7 +263,7 @@ Throughout this guide and within Jobby itself, you will find symbols and placeho
 
   * A high level description of the parameter or option.
 
-  * e.g., if will see something like `< add some text here >`, which means you should replace it with your own text.
+  * e.g., if you see something like `< add some text here >`, it means you should replace it with your own text.
 
 Parameters may have certain value format restrictions - Jobby will let you know if you do not meet a requirement when you input your command. Optionally, you may also refer to their details in [Appendix A](#appendix-a--acceptable-values-for-parameters) later.
 
