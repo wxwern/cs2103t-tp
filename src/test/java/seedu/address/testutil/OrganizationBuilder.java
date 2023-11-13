@@ -1,11 +1,18 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.model.contact.Organization;
+import seedu.address.model.jobapplication.JobApplication;
 
 /**
  * A utility class to help with building Organization objects.
  */
 public class OrganizationBuilder extends ContactBuilder {
+
+    private final List<JobApplication> applications = new ArrayList<>();
 
     /**
      * Creates a {@code OrganizationBuilder} with the default details.
@@ -56,9 +63,17 @@ public class OrganizationBuilder extends ContactBuilder {
         return (OrganizationBuilder) super.withUrl(url);
     }
 
+    /**
+     * Adds job applications to the organization we are building.
+     */
+    public OrganizationBuilder withApplications(JobApplication... applications) {
+        this.applications.addAll(Arrays.asList(applications));
+        return this;
+    }
+
     @Override
     public Organization build() {
-        return new Organization(name, id, phone, email, url, address, tags);
+        return new Organization(name, id, phone, email, url, address, tags, applications);
     }
 
 }

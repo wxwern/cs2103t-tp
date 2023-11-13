@@ -6,35 +6,34 @@ Jobby is a desktop address book and job application tracking tool. The user inte
 
 Given below are my contributions to the project.
 
-* **New Feature**:
-    * What it does:
-    * Justification:
-    * Highlights:
-    * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
-
-* **New Feature**:
+* **New Feature**: Add Organization
+    * What it does: This adds an organization contact into Jobby
+    * Justification: We want our Jobby application to be able to track both Organization Contact and Recruiter Contact with different parameters, hence we added different functions in order to add these 2 different type of contacts.
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=AY2324S1-CS2103T-W08-3&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2023-09-22&tabOpen=true&tabType=authorship&tabAuthor=tanshiyu1999&tabRepo=AY2324S1-CS2103T-W08-3%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~other~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 * **Project management**:
+  * Forked the team repo.
 
-* **Enhancements to existing features**:
+* **Enhancements to existing features**: Modified find command
+  * What it does: Find now is able to find substring instead of the entire keyword as specified by AB3
+  * Justification: The initial find function can only look for the keyword if it is we input the entire keyword. Which is unrealistic as users might not be able to remember the entire keyword. Hence, being able to look up a substring is useful.
 
+* **Enhancements to existing features**: Modified edit command
+  * What it does: Edit target can be selected via both index and the substring for name.
+  * Justification: Initially, edit only works via selection by index. However, we want it to be flexible enough that we can select the target by its name, hence this is being implemented.
 
 * **Documentation**:
     * User Guide:
-        *
+        * Added documentation for Add Organization in the User Guide.
+        * Created the starter guide for the documentation.
+        * Help to create GUI Breakdown, and edit the UG for find, edit, apply and delete.
     * Developer Guide:
-        *
+        * Documented the implementation of Add Organization into the Developer Guide.
+        * Added more user stories.
 
 * **Community**:
-    * PRs reviewed (with non-trivial review comments):
-    * Contributed to forum discussions (examples: )
-    * Reported bugs and suggestions for other teams in the class (examples: )
-
-* **Tools**:
-    *
-
-* _{you can add/remove categories in the list above}_
+    * Reported bugs and suggestions for other teams in the class (examples: During PE-D)
+    * Reviewed PR from Teammates
 
 </div>

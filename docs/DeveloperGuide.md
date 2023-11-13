@@ -72,7 +72,7 @@ The sections below give more details of each component.
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ContactListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2324S1-CS2103T-W08-3/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -81,7 +81,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Contact` object residing in the `Model`.
 
 ### Logic component
 
@@ -176,12 +176,12 @@ For full details of the autocomplete design and implementation, refer to the [Co
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Contact` objects (which are contained in a `UniqueContactList` object).
+* stores the currently 'selected' `Contact` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Contact>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Contact` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Contact` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
@@ -624,11 +624,6 @@ Step 3. When the user want decide to add more information regarding the Organiza
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
 
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
 
@@ -679,7 +674,7 @@ The following sequence diagram shows how job applications are added to Jobby
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Appendix A: Requirements**
 
 ### Product scope
 
@@ -915,10 +910,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 500 contacts (recruiters and organizations) and 1000 job applications without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
 
 
 *{More to be added}*
@@ -931,7 +927,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix B: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -1049,7 +1045,7 @@ testers are expected to do more *exploratory* testing.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Planned Enhancements**
+## **Appendix C: Planned Enhancements**
 
 ### Do checks to ensure that old data is not the same as new data when editing data.
 
@@ -1169,3 +1165,54 @@ However, the find feature for applications may need to change that behavior, sin
 This can be made possible by making `JobApplication` searchable, by providing a method to check if the keyword matches any of its fields, such as title and description. 
 This will allow a list of job applications that have a match to be generated, and therefore now the `Model` can filter the contact list based on whether the contact is associated to the job application.
 
+## **Appendix D: Effort**
+
+This section documents the effort taken to evolve AB3 into Jobby.
+
+### Renaming `Contact` to `Person`
+
+To suit the application we were creating, we renamed the original `Person` class to `Contact`.
+
+This involved:
+* Refactoring method names and parameters. (e.g `UniquePersonList` to `UniqueContactList`)
+* Refactoring existing javadocs.
+* Refactoring the User Guide and Developer Guide. (including existing diagrams)
+* Renaming the `person` package to `contact`.
+
+### Creating three new types of data: `Organization`, `Recruiter` and `JobApplication`
+
+The `Contact` class was insufficient in representing the two new entities that we wanted to create for our application and we wanted to include a third to represent job applications.
+
+This involved:
+* Making `Contact` an abstract class.
+* Create classes for the new fields (e.g. `Url`, `Id`)
+* Extending existing testing infrastructure. (e.g. `OrganizationBuilder` and `RecruiterBuilder`)
+* Creating and improving new test cases for these classes.
+* Adding new documentation on these classes.
+
+This was challenging as it a huge amount of time was spent modifying AB3's existing design and overhauling the test cases.
+
+### Different command modes
+
+As we created new types of data, each with their own set of requirements, AB3's existing command syntax was inadaequate. We had to extend commands such as `add`, `edit` and `delete` to encompass this change.
+
+For example, `add` can be used to add organizations (`add --org`) or add recruiters (`add --rec`). 
+
+### Linking the `Organization` and `Recruiter` classes
+
+As multiple recruiters could be associated with a single organization, we wanted to represent this relationship in Jobby.
+
+Implementing this feature was challenging as AB3's existing design (especially its immutability and execution process) was not suited to easily incorporate this feature.
+
+Additionally, a huge amount of time was spent creating test cases and modifying previous test cases to include this new feature.
+
+### Autocompletion
+
+To improve user experience, we wanted to incorporate an autocomplete feature which allows users to know which flags could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+
+This involved:
+* Creating an entire class to encapsulate this feature.
+* Modify the parser to aid in autocompletion.
+* Modifying JavaFX to incorporate autocompletion.
+
+This was extremely challenging as including a proper autocompletion in JavaFX was not simple and straightforward. 

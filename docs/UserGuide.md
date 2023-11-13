@@ -3,48 +3,103 @@ layout: page
 title: User Guide
 ---
 
-
-* Table of Contents
-{:toc}
-
---------------------------------------------------------------------------------------------------------------------
 ## Introduction
 
-Welcome to the **Jobby** User Guide!
+<div class="reset-page-break-defaults" markdown="1">
 
-**Jobby** is a **desktop app designed for Computer Science students looking for a systematic way to manage job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
+  Welcome to the **Jobby** User Guide!
 
-The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding an contacts into the application for tracking to how our application can assist you in tracking every steps of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
+  **Jobby** is a **desktop app designed for Computer Science students looking for a systematic way to manage their job applications and networking contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). Jobby can help you manage tracking your job applications and contacts in a more streamlined fashion. If you can type fast, Jobby can get your contact management tasks done faster than traditional GUI apps.
 
-To begin using this guide, ensure you meet the [Minimum System Requirements](). Once this is done, go to the Quick Start section to get the app up and running. Once you have done so, please feel free to go through the features sections to find out what features Jobby has installed. We recommend going through it in the order of this guide but any order works as well! You may check out our table of contents to jump to any section of your choice.
+  It is assumed that you know how the job application process is like, and that you know how to look for job applications.
+
+### Purpose of this guide
+
+  The purpose of this guide is to get you familiar with the features of **Jobby** - from the very basics, to the most advanced features the application has to offer. These features range from the simple task of adding an contacts into the application for tracking to how our application can assist you in tracking every steps of your application process. We will go through every feature **Jobby** has to offer within this guide. You can check out the Table of Contents to navigate to a feature you might be interested in using.
+
+### How to use this guide
+
+  _(For users who just want to see the table of contents, click [here](#table-of-contents).)_  
+
+  To begin using this guide, ensure you have [installed Jobby](#installation). 
+  Once this is done, go to the [tutorial](#jobby-tutorial--for-new-users-) section to get started on the basic features of Jobby. 
+  
+  When you become more familiar with the basic features, you can move on to understand [how Jobby's commands are structured and how to use autocomplete to your advantage](#using-jobby). 
+  
+  Afterwards, please feel free to go through the [features section](#features) to find out what features Jobby has installed. We recommend going through it in the order of this guide but any order works as well! You may check out our table of contents to jump to any section of your choice.
+
+  _The different symbols and formats used are explained in [this section](#navigating-the-guide)._
+
+  _The summary of the commands can be found [here](#command-summary)._
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
+
+## Table of contents
+<div class="reset-page-break-defaults" markdown="1">
+* Table of Contents
+{:toc}
+</div>
 
 ## Installation
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have _Java 11_ or above installed in your computer.
+   * Download Java [here](https://www.oracle.com/java/technologies/downloads/)
+   * How to check your Java version on [Windows](https://www.howtogeek.com/717330/how-to-check-your-java-version-on-windows-10/), [macOS](https://www.wikihow.com/Check-Java-Version-on-a-Mac), and [Linux](https://stackoverflow.com/questions/47627270/how-to-check-java-version-at-linux-redhat6). 
 
-1. Download the latest `jobby.jar` from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
+1. Download the latest _jobby.jar_ from [here](https://github.com/AY2324S1-CS2103T-W08-3/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Jobby Application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar jobby.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+1. Open a command terminal, navigate into the folder you put the jar file in, and enter `java -jar jobby.jar` in the terminal to run the application.<br>
+   A window similar to the below should appear in a few seconds. Notice that the app contains some sample data.<br>
+   * If you do not know how to navigate to your folder in the terminal, check out these links for [Windows](https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/), [macOS](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/), and [Linux](https://askubuntu.com/questions/232442/how-do-i-navigate-between-directories-in-terminal).
+  ![Ui](images/Ui.png)
 
-1. Type a command in the command box and press Enter to execute it - e.g., typing **`help`** and pressing Enter will open the help window.<br>
+1. Type a command in the command box and press Enter to execute it - e.g., typing `help` and pressing Enter will open the help window.<br>
 
 1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
+
 ## Navigating the Guide
 
+<div class="reset-page-break-defaults" markdown="1">
+
+### Code blocks for entering commands
+
+<code> </code> &nbsp; denotes a command or a part of a command that can be entered in Jobby. For example, `add --org --name Woogle` is a command. `add` is also part of a command.
+
+### Small information pills
+
+| Component                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                           |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <span class="learning-outcome pill">:trophy: Learning outcomes</span>                                                                                                         | The learning outcome of the section.                                                                                                                                                                                                                                                                                  |
+| <span class="beginner pill">Beginner</span><br><span class="intermediate pill">Intermediate</span><br><span class="expert pill">Expert</span>                                 | The difficulty level of the section, with <span class="beginner pill">Beginner</span> for new users, <span class="intermediate pill">Intermediate</span> for users who have completed the tutorial, and <span class="expert pill">Expert</span> for users who have completed and used the features in the User Guide. |
+| <span class="information pill">:information_source: An info pill</span>                                                                                                       | Contains some additional information, such as assumptions and useful information.                                                                                                                                                                                                                                     |
+| <span class="warning pill">:warning: Some warning</span>                                                                                                                      | Contains a short warning regarding the use of a feature.                                                                                                                                                                                                                                                              |
+| <span class="danger pill">:warning: A danger pill</span>                                                                                                                      | Contains a short danger message regarding the use of a feature.                                                                                                                                                                                                                                                       |
+| <span class="jobby-data-class pill">Organization</span><br><span class="jobby-data-class pill">Recruiter</span><br><span class="jobby-data-class pill">Job Application</span> | The different objects of interest in Jobby: Organizations, Recruiters and Job Applications.                                                                                                                                                                                                                           |
+| <span class="applies-to pill"><span class="jobby-data-class pill">Organization</span></span>                                                                                  | Contains information on which objects of interest in Jobby the feature can be used on.                                                                                                                                                                                                                                |
+
+### Large information sections
+
+<div markdown="block" class="alert alert-info">
+:bulb: This is a blue box. It can be used for additional tips or more useful information.
+</div>
+
+<div markdown="block" class="alert alert-warning">
+:warning: This is a warning box. It can be used to give more details on the warnings and limitations of features.
+</div>
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 ## Navigating the Interface
 
-Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+Jobby comes equipped with a user interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
 
 ![ui overview](images/ug-images/labelled-gui.png)
 
@@ -59,119 +114,78 @@ Jobby comes equipped with a [GUI]() interface that provides visual feedback to y
 --------------------------------------------------------------------------------------------------------------------
 ## Jobby Tutorial (for new users)
 
-Hello and welcoem to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
+<div class="reset-page-break-defaults" markdown="1">
+
+
+Hello and welcome to Jobby! We are delighted that you've chosen our platform to track your internship application process!
 
 Before we begin, please ensure that you have viewed the following sections of the guide:
-* [Quick Start]() to help you get Jobby up and running
-* [Navigating the Interface]() to get you familiarised with navigating Jobby
+* [Installation](#installation) to help you get Jobby up and running.
+* [Navigating the Interface](#navigating-the-interface) to get you familiarised with Jobby's User Interface.
 
-This tutorial aims to guide you through the most essential features and functionalities of Jobby that you will use on a day-to-day
-basis. In this guide, you will learn how to add your first tutor and corresponding schedule!
+Following this tutorial will guide you through the basic workflow and functionalities of Jobby. 
+Here, you will learn how to add your first **Organization**, **Recruiter** and **Application**!
 
-Click on any of the hyperlinks below to jump to respective sections of the tutorial!
-* Beginning
-* Adding your first contact
-* Adding your first application
+Click on any of the hyperlinks below to jump to respective sections of the guide!
+* [The Beginning](#the-beginning)
+* [Adding your first Organization](#adding-your-first-organization)
+* [Adding your first Recruiter](#adding-your-first-recruiter)
+* [Adding your first Application](#adding-your-first-application)
 
-Jobby comes equipped with a [GUI]() interface that provides visual feedback to you. Below is a quick overview of the various components of our interface.
+### The Beginning
 
-![ui overview](images/ug-images/labelled-gui.png)
+When you first launch Jobby, you will notice that it comes preloaded with sample data for you to play with. You may use 
+the sample data to familiarise yourself with the various features that Jobby provides straightaway!
 
-### Adding `Contact`
-Jobby can create `Contacts`. In the form of `Organization` and `Recruiter`, which you can add into your database with simple CLI commands.
+If you wish to continue following our guide to learn the basic operations of Jobby, you can easily remove the sample data by:
+1. Type `clear` into the command box
+2. press **ENTER**
 
-Let's say you want to track your job application for the `Organization: Woogle`, with a `Recruiter: John`.
+Solid! Now it's time to get started with Jobby!
 
-You can add the `Organization` into Jobby with a simple command:
-```add --org --name Woogle --id woogle_id```
+</div>
 
-![Add Organization](images/starter-guide/add-woogle.jpg)
+### Adding your first Organization
 
+Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**. 
+(This is not their real email, of course)
 
-You can then add a **recruiter** that's related to the "Woogle" organization like so::
-```add --rec --name John --id john_id --oid woogle_id```
+You can use [`add --org`](#adding-organizations---add---org) command here to add Google into your organization:
+1. Type `add --org --name Google --id google_id --email google@gmail.com` into the command box
+2. Press **ENTER**
 
-![Add Recruiter](images/starter-guide/add-john.jpg)
+![Adding Organization](images/ug-images/org-added.png)
 
+You have successfully added **Google**, with the email **google@gmail.com** into your **organization contact**!
 
-> To find out all of `Organization` and `Recruiter`'s flags, go [organization documentation]()
-> and [recruiter documentation]()
+### Adding your first Recruiter
 
-### Adding `Application`
-Let's say now you want to apply to `Woogle` for the position of `Junior Software Engineer` role. You will be able to create
-an `Application` for this company with the by including the `Organization ID` in the command:
-`apply woogle_id --title Software Engineer --by 22-11-2023`
+In a job fair, you managed to meet a **Google** internship recruiter, **Josh Mao**, and he provided you with his number
+**91219121**.
 
-![Add Application](images/starter-guide/add-application.jpg)
+Here is how you can use [`add --rec`](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
+1. Type `add --rec --name Josh Mao --oid google_id --phone 91219121` into the command box
+2. Press **ENTER**
 
-`Application` will automatically generates the fields if there are no inputs on your end.
-- `Status: Pending`
-- `Stage: Resume`
+![Adding Recruiter](images/ug-images/rec-added.png)
 
-> You will be able to add different details of `Application`, see the [applcation documentation]() here.
+You have successfully added **Josh Mao**, who is a **recruiter** from Google, whose number is **91219121**.
 
-### Editing `Contact`
-Now that you have both your Contacts and Applications. You received new informations about your `Contacts`, you will have to edit your `Contact` data.
+### Adding your first Application
 
-We can do so with the `edit` CLI command with the desired id and input.
+After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **22-11-2023**.
 
-Let's say we want to change the phone detail of `Organization: Woogle` and email of `Recruiter: John`.
-We can use the commands:
-`edit woogle_id --phone 12345678` and `edit john_id --email john@gmail.com`
+Here is how you can use [`apply`](#applying-to-organizations---apply) command to track your application in Jobby:
+1. Type `apply google_id --title Software Engineer --by 22-11-2023` into the command box
+2. Press **ENTER**
 
-![Edit Contact](images/starter-guide/edit-john.jpg)
+![Adding Application](images/ug-images/app-added.png)
 
+You have successfully added your job application to **Google**!
 
-After executing the commands,
-`Organization: Woogle`'s number changed to `phone: 12345678`.
-`Recruiter: John`'s email changed to `Email: john@gmail.com`.
-
-> To find more ways to `edit` `Organization` and `Recruiter`, see the [edit documentation](LINK TO ORGANIZATION AND RECRUITER DOCUMENTATION)
-
-### Editing `Application`
-For your `Woogle` application, you managed to pass the resume screening stage! And you will have to change your `Stage` to
-the `Interview` stage.
-
-You will be able to do it simply with:
-`edit --application 5 --stage interview`
-
-![edit application](images/starter-guide/edit-application.jpg)
-
-
-This will change your `Stage` from `Resume` to `Interview`, indicating that you are onto the next stage of the application process.
-> To find more fields of the `Application` to edit, see the [edit documentation](LINK TO EDIT APPLICATION DOCUMENTATION)
-
-### Get `Reminder`
-During your internship application process, you might feel that there are many deadlines that you have to keep track of,
-in Jobby, we have a `Remind` command that will help you sort your applications by their `Deadlines`.
-
-You can do so with a simple command:
-`remind --earliest`
-to see your application deadlines from the earliest to latest.
-
-![Remind Earliest](images/starter-guide/remind-earliest.jpg)
-
-
-> To find out more ways to use `remind`, see the [remind documentation](LINK TO REMIND DOCUMENTATION).
-
-### Finding `Organization` and its related `Applications
-Let's say there is a specific organization application you are looking for, like **Woogle**, you will be able to easily find it via
-this command:
-```
-find woogle
-```
-
-SCREENSHOT
-
-> To find out more ways to use `find`, see the [find documentation](LINK TO find DOCUMENTATION).
-
-
-
-
-![List](images/starter-guide/list.jpg)
-
-
-
+**Congratulations!** You have run through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
+basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby Section](#using-jobby) to understand
+the command structure of Jobby, or visit [Features Section](#features) to see the full capabilities of Jobby!
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -209,7 +223,7 @@ Any extra parameters and values to commands that don't accept them will either b
 
 * Any parameter names not following the required format will be treated as data input, so an input like *"-5 degrees"* will work.
 
-* Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
+* <span class="expert pill">Expert</span> Although Jobby's syntax resembles the usual Unix syntax, you should not quote your text, and you should not leave a trailing `=`.
 
 </div>
 
@@ -339,30 +353,32 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 
 * When adding in parameters, be aware of the [accepted parameters](#appendix-a-acceptable-values-for-parameters).
 * If an `ID` is not specified, one will be automatically generated.
-* To link a <span class="jobby-data-class">Recruiter</span> to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> you want to link to.
+* If a <span class="jobby-data-class">Recruiter</span> is associated to an <span class="jobby-data-class">Organization</span> in the contacts list, make sure you include `--oid` and pass in the `ID` of the <span class="jobby-data-class">Organization</span> that is associated with the <span class="jobby-data-class">Recruiter</span> you are adding.
 
 ##### Sample demonstration
 * If you execute the command: `add --rec --name Ryan Koh --oid job_seeker_plus`, you should see a new <span class="jobby-data-class">Recruiter</span> being added to the bottom of the contacts list.
 
-* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is linked to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
+* The newly added contact will have a special label _from organization (job\_seeker\_plus)_ to indicate that the <span class="jobby-data-class">Recruiter</span> is associated to the <span class="jobby-data-class">Organization</span> with that particular `ID`.
 
-![add-recruiter](images/add_recruiter_success.png)
+<div style="text-align: center;">
+<img src="images/add_recruiter_success.png" width=500 />
+</div>
 
 ##### Valid examples
 
-| Command                                                                                                                                                                     | Reason                                                                                                                 |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| `add --rec --name John Doe`                                                                                                                                                 | Adds a recruiter that is not linked to any organization.                                                               |
-| `add --rec --name John Doe --tag friendly --tag woogle`                                                                                                                     | Adds a recruiter with two tags - friendly and woogle.                                                                  |
-| `add --rec --name John Doe --oid job_seeker_plus`                                                                                                                           | Adds a recruiter that is linked to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
-| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.                                                                         |
+| Command | Reason |
+|-------|----------|
+| `add --rec --name John Doe` | Adds a recruiter that is not associated to any organization. |
+| `add --rec --name John Doe --tag friendly --tag woogle` | Adds a recruiter with two tags - friendly and woogle. |
+| `add --rec --name John Doe --oid job_seeker_plus` | Adds a recruiter that is associated to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
+| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields. |
 
 ##### Invalid examples
 
-| Command                                     | Reason                                                                         |
-|---------------------------------------------|--------------------------------------------------------------------------------|
-| `add --rec`                                 | Missing a name.                                                                |
-| `add --rec --name John Doe --phone`         | Optional fields (in this case `--phone`) were used but not specified.          |
+| Command | Reason |
+|---------|--------|
+| `add --rec` | Missing a name. |
+| `add --rec --name John Doe --phone` | Optional fields (in this case `--phone`) were used but not specified. |
 | `add --rec --name John Doe --oid bogus-org` | Given that no organization with the id "bogus-org" exists in the address book. |
 
 
@@ -386,149 +402,9 @@ edit INDEX/ID [--name NAME] [--id ID] [--phone PHONE] [--email EMAIL] [--url URL
 
 ##### Invalid examples
 
-| Command                                 | Reason                                  |
-|-----------------------------------------|-----------------------------------------|
-| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter]()  |
-
-
-### Searching contacts - `find`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
-
-<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
-
-##### Format
-```sh
-find KEYWORD/ID...
-```
-* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
-
-##### Valid examples
-
-| Command           | Reason                                                                                              |
-|-------------------|-----------------------------------------------------------------------------------------------------|
-| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
-| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
-| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
-
-##### Rules
-<span class="intermediate pill">Intermediate</span>
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
-* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
-
-
-### Listing data - `list`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by conditions</span> <span class="intermediate pill">Intermediate</span>
-
-##### Format
-```sh
-list [--org / --rec / --toapply]
-```
-
-* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
-
-* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
-
-[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
-
-##### Valid examples
-* `list`
-* `list --org`
-* `list --rec`
-* `list --toapply`
-
-
-### Sorting data - `sort`
-<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-##### Format
-```sh
-sort --FLAG_TO_SORT [--ascending / --descending]
-```
-
-This sorts contacts or job applications by the specified field.
-
-##### Supported fields <sub>(only 1 may be provided)</sub>
-
-###### Fields for Contacts
-* `--address` - The address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--email` - The email address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--id` - The identification string of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--name` - The name of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--phone` - The phone number of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-* `--url` - The web address of the <span class="jobby-data-class">Contact</span>. Will sort alphabetically.
-
-###### Fields for Job Applications
-* `--by` - The deadline of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
-* `--stage` - The stage of the <span class="jobby-data-class">Job Application</span>. Will sort by stage order.
-* `--stale` - The time of last update of the <span class="jobby-data-class">Job Application</span>. Will sort chronologically.
-* `--status` - The status of the <span class="jobby-data-class">Job Application</span>. Will sort by status order.
-* `--title` - The title of the <span class="jobby-data-class">Job Application</span>. Will sort alphabetically.
-
-###### Resetting the sort order
-* `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
-
-###### Changing the sort order
-* `--ascending` - The specified flag will sort in ascending order.
-* `--descending` - The specified flag will sort in descending order.
-
-If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
-
-Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
-
-`sort` will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist.
-
-##### Sample demonstration
-
-[SCREENSHOT HERE]
-
-##### Valid examples
-* `sort --title --ascending`
-* `sort --url`
-* `sort --stale --descending`
-* `sort --none`
-
-##### Invalid examples
-* `sort` _No flag provided._
-* `sort --organization` _Invalid flag._
-* `sort --none --ascending` _Flags `--none` and `--ascending` both specified._
-
-
-### Reminding about deadlines - `remind`
-<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
-
-<span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
-
-Reminds the user of upcoming deadlines for job applications.
-
-##### Format
-```sh
-remind --earliest / --latest
-```
-
-* Specifying `--earliest` will list the application deadlines in order of urgency, from earliest to latest.
-
-* Specifying `--latest` will list the application deadlines in order of reverse urgency, from latest to earliest.
-
-
-##### Sample demonstration
-* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
-
-![Remind Earliest](images/starter-guide/remind-earliest.jpg)
-
-##### Valid examples
-* `remind --earliest`
-* `remind --latest`
-
+| Command                                 | Reason                                                                              |
+|-----------------------------------------|-------------------------------------------------------------------------------------|
+| `edit google --phone 8124!@#$`          | `--phone` has an [invalid parameter](appendix-a--acceptable-values-for-parameters)  |
 
 ### Applying to organizations - `apply`
 <div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
@@ -634,6 +510,165 @@ delete --application INDEX
 | `delete --application 0` | Invalid index, as index starts from 1.            |
 
 
+### Listing data - `list`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to list organizations and recruiters in Jobby by conditions</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+list [--org / --rec / --toapply]
+```
+Lists all contacts. If you provide a parameter, the contacts listed will be only those that fit the given parameter.
+
+* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
+
+* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
+
+##### Valid examples
+
+| Command          | Reason                                                            |
+|------------------|-------------------------------------------------------------------|
+| `list`           | List all **contacts**.                                            |
+| `list --org`     | List all **organization contacts**.                               |
+| `list --rec`     | List all **recruiter contacts**.                                  |
+| `list --toapply` | List all **organization contacts** that have not been applied to. |
+
+
+### Searching contacts - `find`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span></div>
+
+<span class="learning-outcome pill">:trophy: How to find organizations and recruiters by name or id</span> <span class="beginner pill">Beginner</span>
+
+##### Format
+```sh
+find KEYWORD/ID...
+```
+* This will return any <span class="jobby-data-class">Organization</span> or <span class="jobby-data-class">Recruiter</span> that contains the given keywords.
+
+##### Valid examples
+
+| Command           | Reason                                                                                              |
+|-------------------|-----------------------------------------------------------------------------------------------------|
+| `find jo`         | Finds Contacts and Applications whose **KEYWORD/ID** contains the [substring](#Glossary) "jo".      |
+| `find 1231`       | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "1231".                 |
+| `find alex david` | Finds Contacts and Applications whose **KEYWORD/ID** contains the substring "alex" or "david".      |
+
+##### Rules
+<span class="intermediate pill">Intermediate</span>
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* You can match partial keywords. e.g. searching for `ha` will match with `hamburger`.
+* Partial IDs can match the entire ID. e.g. searching for `1234` will match with `id_12345`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Can match with multiple ids `12345 id_51231` will match with `id_12345` and `id_51231`
+
+
+### Sorting data - `sort`
+<div class="applies-to pill"><span class="jobby-data-class pill">Organization</span> <span class="jobby-data-class pill">Recruiter</span> <span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to sort contacts and job applications in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+sort --FLAG_TO_SORT [--ascending / --descending]
+```
+
+Sorts contacts or job applications for you by the specified flag.
+`--FLAG_TO_SORT` represents a parameter of the contact or job application (i.e. `--phone` represents the phone number of a contact).
+
+##### Supported primary parameters <sub>(only 1 may be provided)</sub>
+
+###### Fields for Contacts
+* `--address` - Will sort alphabetically.
+* `--email` - Will sort alphabetically.
+* `--id` - Will sort alphabetically.
+* `--name` - Will sort alphabetically.
+* `--phone` - Will sort alphabetically.
+* `--url` - Will sort alphabetically.
+
+###### Fields for Job Applications
+* `--by` - Will sort chronologically.
+* `--stage` - Will sort by stage order.
+* `--stale` - Will sort chronologically.
+* `--status` - Will sort by status order.
+* `--title` - Will sort alphabetically.
+
+###### Resetting the sort order
+* `--none` - Will reset the sorting order of <span class="jobby-data-class">Contacts</span> and <span class="jobby-data-class">Job Applications</span>.
+
+##### Supported secondary parameters
+
+###### Changing the sort order
+* `--ascending` - The specified flag will sort in ascending order.
+* `--descending` - The specified flag will sort in descending order.
+
+
+
+* If neither `--ascending` or `--descending` are provided, the list will be sorted in ascending order by default.
+
+* Neither `--ascending` nor `--descending` may be specified if the flag is `--none`.
+
+* Sorting will work even if no <span class="jobby-data-class">Contacts</span> or <span class="jobby-data-class">Job Applications</span> exist. In that case, nothing will happen.
+
+##### Sample demonstration
+* To order your <span class="jobby-data-class">Job Applications</span> by order of earliest deadline, you can use the command `sort --by`.
+* In the Application Details section of Jobby, you should see your <span class="jobby-data-class">Job Applications</span> now ordered by most urgent deadline.
+
+![Sort Deadline](images/sort_deadline.png)
+
+##### Valid examples
+
+| Command                     | Reason                                                                                                     |
+|-----------------------------|------------------------------------------------------------------------------------------------------------|
+| `sort --title --ascending`  | Sort **job applications** by title, in ascending alphabetical order.                                       |
+| `sort --url`                | Sort **contacts** by url, in the default order - ascending alphabetical.                                   |
+| `sort --stale --descending` | Sort **job applications** by last updated time, in reverse chronological order, from most recent to least. |
+| `sort --none`               | Reset the sorting order of **contacts** and **job applications**.                                          |
+
+##### Invalid examples
+
+| Command                    | Reason                                      |
+|----------------------------|---------------------------------------------|
+| `sort`                     | No field provided.                          |
+| `sort --org`               | Invalid field.                              |
+| `sort --none --descending` | `--none` and `--descending` both specified. |
+| `sort --title --name`      | More than 1 field specified.                |
+
+
+### Reminding about deadlines - `remind`
+<div class="applies-to pill"><span class="jobby-data-class pill">Job Application</span></div>
+
+<span class="learning-outcome pill">:trophy: How to get reminders of deadlines in Jobby</span> <span class="intermediate pill">Intermediate</span>
+
+##### Format
+```sh
+remind --earliest / --latest
+```
+
+Reminds you of upcoming deadlines for job applications.
+
+##### Sample demonstration
+* To see your application deadlines from the earliest to latest, use the command `remind --earliest`.
+
+![Remind Earliest](images/starter-guide/remind-earliest.jpg)
+
+##### Valid examples
+
+| Command             | Reason                                                                               |
+|---------------------|--------------------------------------------------------------------------------------|
+| `remind --earliest` | List the application deadlines in order of urgency, from earliest to latest.         |
+| `remind --latest`   | List the application deadlines in order of reverse urgency, from latest to earliest. |
+
+##### Invalid examples
+
+| Command                               | Reason                                              |
+|---------------------------------------|-----------------------------------------------------|
+| `remind`                              | No urgency level specified.                         |
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
@@ -652,6 +687,9 @@ delete --application INDEX
 
 ### Commands for Handling Job Applications
 
+<div class="reset-page-break-defaults" markdown="1">
+
+
 | Action                 | Format, Examples                                                                                                                                                           |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Delete Application** | `delete --application INDEX` <br> e.g., `delete --application 2`                                                                                                           |
@@ -665,6 +703,8 @@ delete --application INDEX
 |-----------|------------------|
 | **Clear** | `clear`          |
 | **Help**  | `help`           |
+
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -682,26 +722,47 @@ delete --application INDEX
 
 ### Appendix A: Acceptable values for parameters
 
-| Parameter     | Requirements                                                                                                                                                                                                                                                                                                                                                                                                                | Examples                                                                           |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| `INDEX`       | A valid index can accept any positive integer up to the number of items in the contact or job application list where applicable.                                                                                                                                                                                                                                                                                            | `1`<br>`10`                                                                        |
-| `NAME`        | A valid name can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                                | `Ryan Koh`<br>`小明`                                                                 |
-| `ID`          | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`)                                                                                                                                                                                                                                                                                         | `woogle123`<br>`ryan_soc-rec`                                                      |
-| `NUMBER`      | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits.                                                                                                                                                                                                                                                                                                                   | `999`<br>`91824137`                                                                |
-| `EMAIL`       | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`                                             |
-| `URL`         | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period.                                                                                                                                                                                                                                                                            | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more` |
-| `ADDRESS`     | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address.                                                                                                                                                                                                                                                                                                                   | `21 Lower Kent Ridge Rd`                                                           |
-| `TAG`         | A valid tag can consist of only alphanumeric characters.                                                                                                                                                                                                                                                                                                                                                                    | `internship`<br>`network`<br>`parttime`<br>`jobPortal`                             |
-| `ORG_ID`      | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book.                                                                                                                                                                                                                                | `woogle123`<br>`meta_sg-1`                                                         |
-| `TITLE`       | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric.                                                                                                                                                                                                                                                                                                                  | `Software Engineer`<br>`Level 3 Engineer`                                          |
-| `DESCRIPTION` | A valid description can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                         | `Senior Role`<br>`Hourly rate: $25`                                                |
-| `DEADLINE`    | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits.                                                                                                                                                                                                                                                                                | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`                                         |
-| `STAGE`       | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                         | `resume`<br>`online assessment`<br>`interview`                                     |
-| `STATUS`      | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                    | `pending`<br>`offered`<br>`accepted`<br>`turned down`                              |
-| `KEYWORD`     | A valid keyword is a single word that can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                       | `software`<br>`Ryan`                                                               |
+| Parameter     | Used by                                                                                                                                                                                                                                                                                         | Requirements                                                                                                                                                                                                                                                                                                                                                                                                                | Examples                                                                            |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| `INDEX`       | [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application) <br> [`delete`](#deleting-contacts---delete) <br> [`delete --application`](#deleting-job-applications---delete---application) | A valid index can accept any positive integer up to the number of items in the contact or job application list where applicable.                                                                                                                                                                                                                                                                                            | `1`<br>`10`                                                                         |
+| `NAME`        | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid name can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                                | `Ryan Koh`<br>`小明`                                                                  |
+| `ID`          | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit) <br> [`apply`](#applying-to-organizations---apply) <br> [`delete`](#deleting-contacts---delete)                                                     | A valid ID has to start with a letter.<br><br>It can consist of alphanumeric and basic symbols (i.e. `a-z`, `A-Z`, `0-9`, `-`, `_`)                                                                                                                                                                                                                                                                                         | `woogle123`<br>`ryan_soc-rec`                                                       |
+| `NUMBER`      | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid phone number can consist of only numbers with no whitespace.<br><br>It must be at least 3 digits.                                                                                                                                                                                                                                                                                                                   | `999`<br>`91824137`                                                                 |
+| `EMAIL`       | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid email should be in the form of `local-part@domain` where the `local-part` and `domain` must be separated by a single **@**.<br><br>The `local-part` can consist of any character except whitespace.<br><br>The `domain` name can comprise of one or more labels separated by periods, and each label can include any character except whitespace. The last `domain` label must be a minimum of two characters long. | `ryankoh@nus`<br>`ryan-koh@nus.edu.sg`                                              |
+| `URL`         | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid url should include a part in the form of `domain.tld` where the `domain` and the `tld` (top level domain) must be separated by a period.                                                                                                                                                                                                                                                                            | `example.com`<br>`example.more.com`<br>`https://example.com`<br>`example.com/more`  |
+| `ADDRESS`     | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid address can accept any non-empty value.<br><br>For a contact, it designates its physical address.                                                                                                                                                                                                                                                                                                                   | `21 Lower Kent Ridge Rd`                                                            |
+| `TAG`         | [`add --org`](#adding-organizations---add---org) <br> [`add --rec`](#adding-recruiters---add---rec) <br> [`edit`](#editing-contacts---edit)                                                                                                                                                     | A valid tag can consist of only alphanumeric characters.                                                                                                                                                                                                                                                                                                                                                                    | `internship`<br>`network`<br>`parttime`<br>`jobPortal`                              |
+| `ORG_ID`      | [`add --rec`](#adding-recruiters---add---rec)                                                                                                                                                                                                                                                   | A valid organization ID is subject to the same requirements as the ID parameter.<br><br>It must belong to an <span class="jobby-data-class">Organization</span> contact in the address book.                                                                                                                                                                                                                                | `woogle123`<br>`meta_sg-1`                                                          |
+| `TITLE`       | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid title can accept multiple words separated with spaces, as long as the characters are alphanumeric.                                                                                                                                                                                                                                                                                                                  | `Software Engineer`<br>`Level 3 Engineer`                                           |
+| `DESCRIPTION` | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid description can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                                         | `Senior Role`<br>`Hourly rate: $25`                                                 |
+| `DEADLINE`    | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid deadline should be a date in the form of `DD-MM-YYYY`.<br><br>The day (`DD`) and month (`MM`) can be either single or double digits.                                                                                                                                                                                                                                                                                | `09-02-2022`<br>`9-2-2022`<br>`19-11-2022`                                          |
+| `STAGE`       | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid job application stage can accept only one of the three values: `resume`, `online assessment`, `interview`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                         | `resume`<br>`online assessment`<br>`interview`                                      |
+| `STATUS`      | [`apply`](#applying-to-organizations---apply) <br> [`edit --application`](#editing-job-applications---edit---application)                                                                                                                                                                       | A valid job application status can accept only one of the four values: `pending`, `offered`, `accepted`, `turned down`.<br><br>The values are ranked in the order shown.                                                                                                                                                                                                                                                    | `pending`<br>`offered`<br>`accepted`<br>`turned down`                               |
+| `KEYWORD`     | [`find`](#searching-contacts---find)                                                                                                                                                                                                                                                            | A valid keyword is a single word that can accept any non-empty value.                                                                                                                                                                                                                                                                                                                                                       | `software`<br>`Ryan`                                                                |
+
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Frequently Asked Questions
+
+##### _How do I transfer my data to another device?_ 
+* Jobby currently does not directly support data transfer. 
+  You can transfer your contact data and job application data by copying the data folder in your old _jobby.jar_ home folder to the new home folder for _jobby.jar_.
+
+##### _I want to try out Jobby with some sample data. How can I do so?_
+* You can delete the data folder in the home folder of _jobby.jar_, and launch Jobby again. 
+  There will be sample data generated on launch. 
+  * Alternatively, you can move the data folder somewhere else if you still want to keep the data.
+
+##### _I am currently facing issues with Jobby._
+* We would like to hear the details of the issues that you are having. 
+  You can report them through our [bug tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
+
+##### _I would like to suggest a new feature for Jobby._
+* We are always looking for suggestions to improve Jobby! 
+  You can suggest a new feature to us via the [issue tracker](https://github.com/AY2324S1-CS2103T-W08-3/tp/issues).
+
+--------------------------------------------------------------------------------------------------------------------
 ## Issues
 
 (Where to report issues and what bugs currently exist)

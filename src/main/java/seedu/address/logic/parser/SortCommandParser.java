@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.FLAG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.FLAG_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.FLAG_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.FLAG_EMAIL;
@@ -48,6 +49,11 @@ public class SortCommandParser implements Parser<SortCommand> {
                 ArgumentTokenizer.tokenize(args,
                         SortCommand.AUTOCOMPLETE_SUPPLIER.getAllPossibleFlags().toArray(Flag[]::new));
 
+        argMultimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_NONE, FLAG_ADDRESS, FLAG_EMAIL,
+                FLAG_ID, FLAG_NAME, FLAG_PHONE, FLAG_URL, FLAG_DEADLINE, FLAG_STAGE, FLAG_STALE,
+                FLAG_STATUS, FLAG_TITLE);
+        argMultimap.verifyAtMostOneOfFlagsUsedOutOf(FLAG_NONE, FLAG_ASCENDING, FLAG_DESCENDING);
+
         if (argMultimap.hasFlag(FLAG_NONE)) {
             return new SortCommand(null, null, true);
         }
@@ -59,7 +65,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         if (argMultimap.hasFlag(FLAG_DESCENDING)) {
             isReverse = true;
         }
-        //I feel there should be a more elegant way to write this.
+
         if (argMultimap.hasFlag(FLAG_ADDRESS)) {
             if (isReverse) {
                 contactComparator = COMPARATOR_ADDRESS_REVERSED;
