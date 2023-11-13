@@ -352,19 +352,19 @@ add --rec --name NAME [-id ID] [--oid ORG_ID] [--phone NUMBER] [--email EMAIL] [
 
 ##### Valid examples
 
-| Command                                                                                                                                                                     | Reason                                                                                                                 |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| `add --rec --name John Doe`                                                                                                                                                 | Adds a recruiter that is not associated to any organization.                                                               |
-| `add --rec --name John Doe --tag friendly --tag woogle`                                                                                                                     | Adds a recruiter with two tags - friendly and woogle.                                                                  |
-| `add --rec --name John Doe --oid job_seeker_plus`                                                                                                                           | Adds a recruiter that is associated to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
-| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields.                                                                         |
+| Command | Reason |
+|-------|----------|
+| `add --rec --name John Doe` | Adds a recruiter that is not associated to any organization. |
+| `add --rec --name John Doe --tag friendly --tag woogle` | Adds a recruiter with two tags - friendly and woogle. |
+| `add --rec --name John Doe --oid job_seeker_plus` | Adds a recruiter that is associated to an organization (if it exists in the address book) with the id **job_seeker_plus**. |
+| `add --rec --name John Doe --id johndoe_123 --oid job_seeker_plus --number 912832192 --email johndoe@nus.edu.sg --url example.com --address 21 Kent Ridge Rd --tag network` | Adds a recruiter with all the possible fields. |
 
 ##### Invalid examples
 
-| Command                                     | Reason                                                                         |
-|---------------------------------------------|--------------------------------------------------------------------------------|
-| `add --rec`                                 | Missing a name.                                                                |
-| `add --rec --name John Doe --phone`         | Optional fields (in this case `--phone`) were used but not specified.          |
+| Command | Reason |
+|---------|--------|
+| `add --rec` | Missing a name. |
+| `add --rec --name John Doe --phone` | Optional fields (in this case `--phone`) were used but not specified. |
 | `add --rec --name John Doe --oid bogus-org` | Given that no organization with the id "bogus-org" exists in the address book. |
 
 
