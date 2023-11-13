@@ -32,8 +32,8 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.autocomplete.AutocompleteSupplier;
-import seedu.address.logic.autocomplete.data.AutocompleteConstraint;
-import seedu.address.logic.autocomplete.data.AutocompleteDataSet;
+import seedu.address.logic.autocomplete.components.AutocompleteConstraint;
+import seedu.address.logic.autocomplete.components.AutocompleteItemSet;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Flag;
 import seedu.address.model.Model;
@@ -59,19 +59,19 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteDataSet.concat(
-            AutocompleteDataSet.onceForEachOf(
+    public static final AutocompleteItemSet<Flag> AUTOCOMPLETE_SET_STANDARD = AutocompleteItemSet.concat(
+            AutocompleteItemSet.onceForEachOf(
                     FLAG_NAME, FLAG_ID,
                     FLAG_PHONE, FLAG_EMAIL, FLAG_ADDRESS, FLAG_URL,
                     FLAG_ORGANIZATION_ID
             ),
-            AutocompleteDataSet.anyNumberOf(FLAG_TAG)
+            AutocompleteItemSet.anyNumberOf(FLAG_TAG)
     );
 
-    public static final AutocompleteDataSet<Flag> AUTOCOMPLETE_SET_APPLICATION = AutocompleteDataSet
+    public static final AutocompleteItemSet<Flag> AUTOCOMPLETE_SET_APPLICATION = AutocompleteItemSet
             .onceForEachOf(FLAG_APPLICATION)
             .addDependents(
-                    AutocompleteDataSet.onceForEachOf(
+                    AutocompleteItemSet.onceForEachOf(
                             FLAG_TITLE, FLAG_DESCRIPTION, FLAG_DEADLINE, FLAG_STAGE, FLAG_STATUS
                     ))
             .addConstraint(
@@ -201,6 +201,9 @@ public class EditCommand extends Command {
         requireNonNull(model);
         if (this.targetId != null) {
             Contact contactToEdit = model.getContactById(targetId);
+            if (contactToEdit == null) {
+                throw new CommandException(Messages.MESSAGE_NO_SUCH_CONTACT);
+            }
             return updateModelAndGetCommandResult(model, contactToEdit);
         }
 

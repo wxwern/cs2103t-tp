@@ -22,6 +22,7 @@ public class TypicalContacts {
             .withUrl("www.nus.edu.sg")
             .withAddress("Computing 1, 13 Computing Drive")
             .withTags("computing", "worldClass")
+            .withApplications(TypicalJobApplications.JOB_APPLICATIONS)
             .build();
 
     public static final Organization NTU = new OrganizationBuilder()

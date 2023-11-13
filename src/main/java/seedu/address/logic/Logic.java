@@ -18,6 +18,7 @@ import seedu.address.model.jobapplication.JobApplication;
 public interface Logic {
     /**
      * Executes the command and returns the result.
+     *
      * @param commandText The command as entered by the user.
      * @return the result of the command execution.
      * @throws CommandException If an error occurs during command execution.
@@ -27,6 +28,7 @@ public interface Logic {
 
     /**
      * Parses the command and returns any autocompletion results.
+     *
      * @param commandText The command as entered by the user.
      * @return the result of the command execution.
      */
@@ -39,10 +41,10 @@ public interface Logic {
      */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Returns a view of the list of contacts */
+    /** Returns an unmodifiable view of the filtered and sorted list of contacts. */
     ObservableList<Contact> getDisplayedContactList();
 
-    /** Returns an unmodifiable view of the filtered list of applications. */
+    /** Returns an unmodifiable view of the filtered and sorted list of applications. */
     ObservableList<JobApplication> getDisplayedApplicationList();
 
     /**
@@ -56,7 +58,7 @@ public interface Logic {
     GuiSettings getGuiSettings();
 
     /**
-     * Set the user prefs' GUI settings.
+     * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
 }

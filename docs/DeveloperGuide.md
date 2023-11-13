@@ -72,7 +72,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ContactListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -81,7 +81,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Contact` object residing in the `Model`.
 
 ### Logic component
 
@@ -126,12 +126,12 @@ How arguments from a raw command input may be obtained by parsers:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Contact` objects (which are contained in a `UniqueContactList` object).
+* stores the currently 'selected' `Contact` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Contact>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Contact` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Contact` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
@@ -159,28 +159,87 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add Recruiter and Recruiter-Organization Link Feature
-The `Recruiter` class is a `Contact` that can have a link to zero or one `Organization` that exists within the `AddressBook`.
+### `Recruiter`-`Organization` link
 
-As it extends the `Contact` class, it inherits all the fields present in `Contact` and also accepts an additional `Organization`. The accepted organization represents an immutable link between the recruiter and the given organization.
+#### Overview
 
-To represent this relationship within the existing Model, `Contact` was modified to accept another `Contact` which serves as its parent. The parent contact can be retrieved via `Contact#getParent()`.
+There are two types of contacts in Jobby - `Recruiter` and `Organization`.
 
-As this represents a Contact-Contact relationship, `Recruiter` overrides the getter method and cast the parent contact to an `Organization` so that it better represents the Recruiter-Organization relationship.
+Each recruiter can only be linked to zero or one organization while an organization can be linked to multiple recruiters. This association can be represented via a **parent-child** relationship where the parent (`Organization`) is linked to multiple children (`Recruiter`).
 
-To store this relationship in a JSON format, the unique `Id` of the linked organization is stored as an oid attribute on the recruiter. Hence, when the application is launched again, the `oid` is used to identify the organization in the `AddressBook`. This means that all organizations must be parsed and added to the `AddressBook` before `Storage` parses the JSON data for the recruiters. Thus, each time `AddressBook` is written to storage, it is sorted, placing all organizations before recruiters. 
+#### Implementing the parent-child relationship
+
+For the `Contact` class:
+  * In order to incorporate this relationship into the existing model, the `Contact` class was modified to accept another `Contact` as its parent, accessible through `Contact#getParent()`.
+
+<br>
+
+For the `Recruiter` class:
+  * Since the `Contact` class now accepts another `Contact` as its parent, the `Recruiter` can pass in an existing `Organization` to set it as its parent.
+
+  * The parent `Organization` can be retrieved via `Recruiter#getOrganization()` which returns an Optional that contains the `Organization` or an empty Optional if the `Recruiter` is not linked to any.
+
+<br>
+
+For the `Organization` class:
+  * The organization does not maintain a direct list of recruiters linked to it.
+
+  * Instead, it is retrieved via `Contact#getChildren(Model model)` where each contact in the model is checked to see whether its parent matches the organization.
+
+<br>
 
 Given below is an example usage scenario and how a recruiter can be linked to an existing organization at each step.
 
-Step 1: The user launches the application. Assume that the `AddressBook` contains a single unlinked organization with the `Id` that has a value of "alex_yeoh" and no recruiters.
+**Step 1.** The user launches the application. Assume that the `AddressBook` contains a single unlinked organization that has the id _alex_yeoh_ and no recruiters.
 
-Step 2: The user executes `add --rec --name Ryan --oid alex_yeoh`. The add command parses the `--rec` flag and knows the user wishes to create a recruiter. It also parses "alex_yeoh" as the `Id of the organization the recruiter will be linked to.
+**Step 2.** The user executes `add --rec --name Ryan --oid alex_yeoh`. As the `--rec` flag is used, the `AddCommandParser` returns a `AddRecruiterCommand`. It also parses _alex_yeoh_ as the id of the organization the recruiter will be linked to and passes it into the `AddRecruiterCommand`.
 
-The `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the `Id` "alex_yeoh" and pass it into the new `Recruiter` that will be added to the AddressBook
+**Step 3.** During its execution, the `AddRecruiterCommand` will attempt to retrieve a `Contact` that has the id _alex_yeoh_ and pass it into the new `Recruiter` that will be added to the `AddressBook`. This step can be summarized with the activity diagram below:
 
-Once done, the UI will display the link as a single line: `from organization (alex_yeoh)`
+<img src="images/AddRecruiterActivityDiagram.png" width=600 />
 
-On the other hand, the Organization class can have links to multiple Recruiters. Hence, a single parent Contact can have multiple children contacts.
+**Step 4.** Once done, the UI will add a new `ContactCard` to the bottom of the contacts list, displaying the details of the newly created `Recruiter`. The link will be displayed as a label within the `ContactCard`: _from organization (alex_yeoh)_
+
+#### Editing and deleting the linked contacts
+
+Now that the basic implementation has been discussed, the next concern is about editing and deleting the linked contacts.
+
+As each field in the `Contact` is `final`, editing it would require creating a new `editedContact` and replacing the old one via `AddressBook#setContact(target, editedContact)`.
+
+When **editing** the `Organization`:
+  * As each recruiter maintains an immutable link to the object of its parent organization, editing the organization would require replacing every linked recruiter with a new recruiter that has its parent set to the edited organization.
+
+<br>
+
+When **editing** the `Recruiter`:
+  * Since the `Organization` class does not maintain a direct link to its children and dynamically retrieves them, editing its linked recruiter does not require any edits to itself.
+
+  * Changing the organization the recruiter is linked to would require the user to supply a value to the `--oid` flag when executing the `edit` command.
+
+  * If the value matches the id of an organization within the `AddressBook`, the organization retrieved via `AddressBook#getContactById(Id id)` would be used in creating the new edited recruiter.
+
+<br>
+
+The same principle applies when deleting the linked contacts without recursion. Deleting the parent organization requires replacing every recruiter linked to it, setting their parent to null while deleting its linked recruiter requires no additional replacement.
+
+#### Storing the `Recruiter`-`Organization` link
+
+Since only the recruiter stores a direct link to its parent organization, it is sufficient to store this link in the `JsonAdaptedContact` of a recruiter.
+
+As the id field can uniquely identify the organization, an additional oid field is added to the `JsonAdaptedContact` which records the id of the parent organization. 
+
+Since the organization has to be added to the `AddressBook` before any recruiters can be linked to it, the data is sorted which places any organization at the front of the list, followed by the recruiters. This is performed before writing and after reading from the json data file.
+
+#### Design Considerations
+
+**Aspect: How `Recruiter` and `Organization` are being linked**
+
+  * **Alternative 1 (current choice):** `Recruiter` maintains a direct link to `Organization` while `Organization` dynamically retrieves a list of its linked `Recruiter` contacts.
+    * Pros: Adheres to AB3's immutability of contacts.
+    * Cons: Expensive to always comb through the `AddressBook` to retrieve all linked `Recruiter` contacts.
+  * **Alternative 2:** `Organization` maintains a list of linked `Recruiters` that can be changed via setter methods.
+    * Pros: Computationally less expensive and easier to deal with.
+    * Cons: Since AB3's design was implemented with immutability in mind, making part of `Organization` mutable might cause unwanted bugs or mistakes in other parts of the application. Additionally, overhauling the classes to be mutable would incur huge cost in development time. 
 
 ### Command Autocompletion
 
@@ -194,7 +253,7 @@ It consists of several key components:
 
 - **`AutocompleteSupplier`**:
   - This class is responsible for generating possible flags and values to be used for suggestions.
-  - It takes an `AutocompleteDataSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
+  - It takes an `AutocompleteItemSet` of flags, an optional `FlagValueSupplier` mapped to each flag, and can have corresponding `AutocompleteConstraint` applied to flags.
   - It helps determine what flags can be added to an existing command phrase based on constraints and existing flags.
 
 - **`AutocompleteGenerator`**:
@@ -213,9 +272,9 @@ It offers static factory methods for quickly defining common rulesets. Examples 
 - `#where(item)#isPrerequisiteFor(dependents...)`: Defines dependencies between items, indicating that certain flags are prerequisites for others.
 - `#where(item)#cannotExistAlongsideAnyOf(items...)`: Defines that an item cannot be present when any of the others are present.
 
-#### `AutocompleteDataSet`
+#### `AutocompleteItemSet`
 
-The `AutocompleteDataSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
+The `AutocompleteItemSet` is a set of flags that retains knowledge of which flags have what rules and constraints. It helps determine which flags can be added to an existing set of flags given the known constraints.
 
 This dataset can be constructed manually with flags and constraints, but it also offers static factory methods for quick creation of flag sets with common constraints. For example:
 - `#oneAmongAllOf(items...)`: Creates a set where at most one out of all the provided items may appear.
@@ -238,9 +297,9 @@ By taking in both the command and the app model, it is possible to specify arbit
 
 #### `AutocompleteSupplier`
 
-The `AutocompleteSupplier` leverages the capabilities of `AutocompleteDataSet` and `FlagValueSupplier`.
+The `AutocompleteSupplier` leverages the capabilities of `AutocompleteItemSet` and `FlagValueSupplier`.
 
-Internally, it uses `AutocompleteDataSet` to determine what flags can be added after a given set of flags has been used in a command.
+Internally, it uses `AutocompleteItemSet` to determine what flags can be added after a given set of flags has been used in a command.
 
 This allows it to make suggestions based on constraints like "`--org` cannot exist together with `--rec`."
 
@@ -369,11 +428,6 @@ Step 3. When the user want decide to add more information regarding the Organiza
 * **Alternative 1 (current choice):** Adds the Organization with a JSON's key 'type': "Organization"
     * Pros: Easy to implement and flexible to implement more types.
     * Cons: NIL
-
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ### Apply feature
 The apply feature makes use of existing structures to function, notably the `Parser`, `Model` and `Storage`
@@ -634,10 +688,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 500 contacts (recruiters and organizations) and 1000 job applications without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  A user with familiarity with common Unix/Linux shell command syntax should find the syntax of Jobby to match their habits and easy to pick up.
 5.  The command syntax should not conflict with something that a user could plausibly use as legitimate data input.
+6.  This application does not automatically sync with a user's job application, e.g. Does not sync to the user's LinkedIn account to track job applications. 
 
 
 *{More to be added}*

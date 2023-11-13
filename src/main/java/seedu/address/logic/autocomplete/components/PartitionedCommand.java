@@ -1,4 +1,4 @@
-package seedu.address.logic.autocomplete;
+package seedu.address.logic.autocomplete.components;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class PartitionedCommand {
     /**
      * Initializes and prepares the given command as distinct partitions.
      */
-    PartitionedCommand(String partialCommand) {
+    public PartitionedCommand(String partialCommand) {
         List<String> words = List.of(partialCommand.split(" ", -1)); // -1 stops stripping adjacent spaces.
 
         if (words.size() <= 1) {
@@ -170,8 +170,8 @@ public class PartitionedCommand {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        seedu.address.logic.autocomplete.PartitionedCommand
-                other = (seedu.address.logic.autocomplete.PartitionedCommand) o;
+        PartitionedCommand
+                other = (PartitionedCommand) o;
         return Objects.equals(name, other.name)
                 && Objects.equals(middleText, other.middleText)
                 && Objects.equals(trailingText, other.trailingText);
