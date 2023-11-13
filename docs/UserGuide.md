@@ -671,7 +671,7 @@ Reminds you of upcoming deadlines for job applications.
 
 ### Viewing help - `help`
 
-<span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to find help on Jobby's commands</span>  <span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
@@ -700,7 +700,7 @@ Clears all <span class="jobby-data-class">Contact</span> and <span class="jobby-
 
 ### Exiting the program - `exit`
 
-<span class="beginner pill">Beginner</span>
+<span class="learning-outcome pill">:trophy: How to exit Jobby</span> <span class="beginner pill">Beginner</span>
 
 ##### Format
 ```sh
