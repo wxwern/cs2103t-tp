@@ -59,28 +59,29 @@ Jobby comes equipped with a [GUI]() interface that provides visual feedback to y
 --------------------------------------------------------------------------------------------------------------------
 ## Jobby Tutorial (for new users)
 
-Hello and welcoem to Jobby! We are delighted that you've chosen our platform to manage your internship application process!
+Welcome to Jobby! We are happy that you have chosen our application to track your internship application process.
 
 Before we begin, please ensure that you have viewed the following sections of the guide:
 * [Installation](#installation) to help you get Jobby up and running.
-* [Navigating the Interface](#navigating-the-interface) to get you familiarised with navigating Jobby.
+* [Navigating the Interface](#navigating-the-interface) to get you familiarised with Jobby's User Interface.
 
-This tutorial aims to guide you through the most essential features and functionalities of Jobby that you will use on a day-to-day
-basis. In this guide, you will learn how to add your first tutor and corresponding schedule!
+Following this tutorial will guide you through the basic workflow and functionalities of Jobby. 
+Here, you will learn how to add your first **Organization**, **Recruiter** and **Application**!
 
-Click on any of the hyperlinks below to jump to respective sections of the tutorial!
-* [The Beginning](#beginning)
+Click on any of the hyperlinks below to jump to respective sections of the guide!
+* [The Beginning](#the-beginning)
 * [Adding your first Organization](#adding-your-first-organization)
 * [Adding your first Recruiter](#adding-your-first-recruiter)
 * [Adding your first Application](#adding-your-first-application)
 
 ### The Beginning
-When you first launch Jobby, you will notice that it comes preloaded with sample data for you to play with. You may use 
-the sample data to familiarise yourself with the various [features](#features) that Jobby provides.
 
-Once you're ready to start using Jobby for your internship tracking, you can easily remove the sample data:
+When you first launch Jobby, you will notice that it comes preloaded with sample data for you to play with. You may use 
+the sample data to familiarise yourself with the various [features](#features) that Jobby provides straightaway!
+
+If you wish to continue following our guide to learn the basic operations of Jobby, you can easily remove the sample data by:
 1. type `clear` into the command box
-2. Hit `enter`
+2. Hit **ENTER**
 
 Solid! Now it's time to get started with Jobby!
 
@@ -88,9 +89,9 @@ Solid! Now it's time to get started with Jobby!
 
 Let's say you are interested to applying to **Google** as your internship destination, and you found their email **google@gmail.com**.
 
-You can use [add --org](#adding-organizations---add---org) command here to add Google into your organization:
+You can use [`add --org`](#adding-organizations---add---org) command here to add Google into your organization:
 1. type `add --org --name Google --id google_id --email google@gmail.com` into the command box
-2. press `enter`
+2. press **ENTER**
 
 ![Adding Organization](images/ug-images/org-added.png)
 
@@ -101,9 +102,9 @@ You have successfully added **Google**, with the email **google@gmail.com** into
 In a job fair, you managed to meet a **Google** internship recruiter, **Josh Mao**, and he provided you with his number
 **91219121**.
 
-Here is how you can use [add --rec](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
+Here is how you can use [`add --rec`](#adding-recruiters---add---rec) command to track the Recruiter data in Jobby:
 1. type `add --rec --name Josh Mao --oid google_id --phone 91219121` into the command box
-2. press `enter`
+2. press **ENTER**
 
 ![Adding Recruiter](images/ug-images/rec-added.png)
 
@@ -111,17 +112,17 @@ You have successfully added **Josh Mao**, who is a **recruiter** from Google, wh
 
 ### Adding your first Application
 
-After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **2-11-2023**.
+After preparing your resume, you are ready to apply to **Google** as an intern for their **Software Engineer** role! And you know that the application deadline is on the **22-11-2023**.
 
-In order to track your application, you can use [apply](#applying-to-organizations---apply) to track your application:
+Here is how you can use [`apply`](#applying-to-organizations---apply) command to track your application in Jobby:
 1. type `apply google_id --title Software Engineer --by 22-11-2023` into the command box
-2. press `enter`
+2. press **ENTER**
 
 ![Adding Application](images/ug-images/app-added.png)
 
 You managed to add your application to **Google**! With the role you are interested in, **Software Engineer** and the application deadline which is **22-11-2023**.
 
-**Congratulations!** You have ran through the basics of Jobby. We hope that this tutorial has gave you an understanding of the 
+**Congratulations!** You have ran through the basics of Jobby. We hope that this tutorial has given you an understanding of the 
 basic workflow of Jobby. However, there are still many features that we have yet introduced. Please refer to the [Using Jobby Section](#using-jobby) to understand
 the command structure of Jobby, or visit [Features Section](#features) to see the full capabilities of Jobby!
 
