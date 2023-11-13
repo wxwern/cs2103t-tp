@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -34,6 +35,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.contact.Contact;
+import seedu.address.model.contact.Id;
 import seedu.address.model.contact.Organization;
 import seedu.address.model.contact.Recruiter;
 import seedu.address.model.contact.Type;
@@ -68,6 +70,16 @@ public class EditCommandTest {
         expectedModel.setContact(model.getDisplayedContactList().get(0), editedContact);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_editCommandByInvalidTargetId_failure() {
+        showContactAtIndex(model, INDEX_UNLINKED_ORGANIZATION);
+
+        EditCommand editCommand = new EditCommand(new Id(VALID_ID_BOB),
+                new EditContactDescriptorBuilder().withName(VALID_NAME_BOB).build());
+
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_NO_SUCH_CONTACT);
     }
 
     @Test
