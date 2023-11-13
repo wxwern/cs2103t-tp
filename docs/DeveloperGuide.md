@@ -1208,11 +1208,17 @@ Additionally, a huge amount of time was spent creating test cases and modifying 
 
 ### Autocompletion
 
-To improve user experience, we wanted to incorporate an autocomplete feature which allows users to know which flags could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+To improve user experience, we wanted to incorporate support for command autocompletion, which allows users to know which parameters and values could be used for a certain command. This reduced the reliance on the User Guide and would help new users familiarize themselves with Jobby.
+
+Additionally, the addition of autocompletion allows us to use full-length flags (e.g., `--description`), yet allowing the user to simply type `-dc ` to obtain the full flag, removing the need to memorize multiple 1-, 2-letter abbreviations.
 
 This involved:
-* Creating an entire class to encapsulate this feature.
-* Modify the parser to aid in autocompletion.
-* Modifying JavaFX to incorporate autocompletion.
+* Creating multiple classes to better organize and provide autocompletion,
+* Modifying the parser, tokenizer, flag syntax, etc., to aid in autocompletion, and
+* Modifying JavaFX elements and intercepting the appropriate keystroke events to incorporate autocompletion.
 
-This was extremely challenging as including a proper autocompletion in JavaFX was not simple and straightforward. 
+The end-to-end process of parsing the user text and determining what are plausible inputs is not trivial - we need to correctly decide which parameters and values are suggestable values based on command rules, such as "only one of `--name` allowed".
+
+Additionally, despite the complex implementation, the autocompletion package has a comprehensive ~80% test coverage, with expected behaviors clearly documented within the tests themselves to guard against unexpected changes.
+
+For more details, refer to the [Command Autocompletion Internals](#command-autocompletion-internals).
