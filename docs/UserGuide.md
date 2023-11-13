@@ -559,13 +559,11 @@ delete --application INDEX
 ```sh
 list [--org / --rec / --toapply]
 ```
+Lists all contacts. If a parameter is provided, the contacts listed will be only those that fit the given parameter.
 
-* Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
+Supplying `--org` lists only <span class="jobby-data-class">Organizations</span> while supplying `--rec` lists only <span class="jobby-data-class">Recruiters</span>. Specifying neither will list all contacts.
 
-* Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
-
-[SCREENSHOT HERE - LEFT SIDE: LIST --ORG, RIGHT SIDE: LIST --REC]
-
+Supplying `--toapply` lists <span class="jobby-data-class">Organizations</span> you have not applied to.
 
 ##### Valid examples
 
@@ -618,7 +616,7 @@ find KEYWORD/ID...
 sort --FLAG_TO_SORT [--ascending / --descending]
 ```
 
-This sorts contacts or job applications by the specified field.
+Sorts contacts or job applications by the specified flag.
 `--FLAG_TO_SORT` represents a parameter of the contact or job application (i.e. `--phone` represents the phone number of a contact).
 
 ##### Supported primary parameters <sub>(only 1 may be provided)</sub>
