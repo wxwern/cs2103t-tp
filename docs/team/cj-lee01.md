@@ -1,3 +1,8 @@
+---
+layout: page
+title: Bryan's Project Portfolio Page
+---
+
 <div class="reset-page-break-defaults" markdown="1">
 
 ### Project: Jobby
