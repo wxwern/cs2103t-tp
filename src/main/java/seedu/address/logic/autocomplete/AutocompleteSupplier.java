@@ -112,7 +112,7 @@ public class AutocompleteSupplier {
      * @param currentCommand The current command structure. This should not be null.
      * @param model The model to be supplied for generation. This may be null if the model is unavailable.
      */
-    public Optional<Stream<String>> getValidValues(Flag flag, PartitionedCommand currentCommand, Model model) {
+    public Optional<Stream<String>> getValidValuesForFlag(Flag flag, PartitionedCommand currentCommand, Model model) {
         try {
             return Optional.ofNullable(
                     this.values.getOrDefault(flag, (c, m) -> Stream.empty())
