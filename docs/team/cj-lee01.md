@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Bryan's Project Portfolio Page
+title: Chun Jie's Project Portfolio Page
 ---
 
 <div class="reset-page-break-defaults" markdown="1">
