@@ -1,3 +1,8 @@
+---
+layout: page
+title: Chun Jie's Project Portfolio Page
+---
+
 <div class="reset-page-break-defaults" markdown="1">
 
 ### Project: Jobby
@@ -32,6 +37,7 @@ Given below are my contributions to the project.
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=AY2324S1-CS2103T-W08-3&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2023-09-22&tabOpen=true&tabType=authorship&tabAuthor=CJ-Lee01&tabRepo=AY2324S1-CS2103T-W08-3%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~other~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 * **Project management**:
+  * Identify and allocate work among team: E.g. sections of UG, DG, bugs to fix
 
 * **Enhancements to existing features**: Delete recursive
   * Allows users to delete recruiters linked to an organization when deleting the organization.
