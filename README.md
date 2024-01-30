@@ -6,8 +6,10 @@ Jobby is a desktop application that helps you manage your job applications by ea
 
 ![Ui](docs/images/Ui.png)
 
+* This project is developed and maintained by a team of 5 members.
 * The project simulates an ongoing software project for a desktop application used for managing contact details regarding organizations and recruiters and job application status info.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
+  * It is **written in OOP fashion**.
+  * It contains a **reasonably well-written** code base of around 16 KLoC, with test coverage and code style enforcements.
   * It comes with a **reasonable level of user and developer documentation**.
   * It is an extension built on top of **[Address Book Level 3 by se-education.org](https://se-education.org/addressbook-level3)**.
 * For detailed documentation of this project, see the **[Jobby Product Website](https://ay2324s1-cs2103t-w08-3.github.io/tp/)**.
